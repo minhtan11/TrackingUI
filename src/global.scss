@@ -24,3 +24,73 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+.form-control{
+    font-size: 0.6rem;
+    caret-color: #ffb400;
+}
+
+input:focus{
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: #ced4da !important;
+}
+
+ion-content{
+    --offset-bottom: auto!important;
+    --overflow: hidden;
+    background-color: white !important;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+}
+
+.tab-selected{
+    color: #ffb400 !important;
+    border-top: 1px solid #ffb400 !important;
+}
+
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+    animation-fill-mode: both;
+}
+  
+@keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+}
+
+.mySlides {
+    display: none;
+} 
+
+.btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+
+.btn-app-home{
+    border-radius: 0.4rem;
+    background-color: #ffb400;
+    border: none;
+    width: 30px;
+    height: 30px;
+}
+
+.btn-app-home:active,
+.btn-app-home:hover,
+.btn-app-home:focus{
+    background-color: #ffb400 !important;
+}
+
+.no-data{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}

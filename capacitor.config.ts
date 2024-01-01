@@ -1,11 +1,20 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'com.tracking.app',
   appName: 'Tracking_UI',
   webDir: 'www',
+  plugins: {
+    PushNotifications: {
+      presentationOptions: ["badge", "sound", "alert"],
+    },
+    CapacitorHttp:{
+      enabled:true
+    },
+  },
   server: {
-    androidScheme: 'https'
+    androidScheme: 'https',
+    cleartext: true,
   }
 };
 

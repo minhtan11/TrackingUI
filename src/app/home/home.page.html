@@ -1,20 +1,65 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-app>
+  <ion-content>
+    <ion-card style="border: none;box-shadow: none;text-align: center;" class="mx-0">
+      <ion-card-header style="padding-bottom: 0.4rem;">
+        <ion-avatar style="display: block;
+        margin-left: auto;
+        margin-right: auto;">
+          <img style="border-radius: 1rem;" src="../../assets/image/logo2.webp" alt="">
+        </ion-avatar>
+      </ion-card-header>
+      <ion-card-content>
+        <div style="line-height: 0.6rem;">
+          <ion-label style="font-size: 0.5rem;" class="ion-text-wrap font-weight-bold">NHẬN SHIP HÀNG - MỘT CHỮ TÍN VẠN NIỀM TIN</ion-label>
+        </div>
+        <div style="line-height: 0.6rem;" class="mb-10">
+          <ion-label color="medium" style="font-size: 0.5rem;" class="ion-text-wrap">Nhận ship hàng luôn đặt lợi ích của khách hàng lên hàng đầu</ion-label>
+        </div>
+        <ion-grid [fixed]="true">
+          <ion-row>
+            <ion-col>
+              <ion-item style="border: 1px solid #ced4da;border-radius: 10px;" lines="none" class="">
+                <input name="userName" style="border: none;" type="text" class="form-control py-0 px-0" placeholder="Tên đăng nhập">
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item style="border: 1px solid #ced4da;border-radius: 10px;" lines="none" class="">
+                <div class="d-flex align-items-center w-100">
+                  <input name="passWord" style="border: none;" [type]="showPass ? 'text' : 'password'" class="form-control py-0 px-0" placeholder="Mật khẩu">
+                  <i style="font-size: 0.8rem;padding-left: 0.5rem;" slot="end" (click)="showPassword()" [class]="!showPass ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
+                </div>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button (click)="onSignIn()" style="--background: #ffb400;border: none;font-size: 0.7rem;" expand="block" shape="round">ĐĂNG NHẬP</ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label class="font-weight-bold" style="font-size: 0.7rem;"><u>Quên mật khẩu?</u></ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label style="font-size: 0.6rem;">Bạn không có tài khoản? </ion-label>
+              <ion-label (click)="goSignUpPage()" style="font-size: 0.7rem;color:#ffb400" class="font-weight-bold"><u>Đăng ký</u></ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <img  class="img-home" style="width: 200px;height: auto;object-fit: contain;display: block;
+      margin-left: auto;
+      margin-right: auto;" src="../../assets/image/delivery-service.png" alt="">
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+</ion-app>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>

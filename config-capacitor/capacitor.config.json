@@ -1,0 +1,14 @@
+{
+  "appId": "com.tracking.app",
+  "appName": "tracking",
+  "bundledWebRuntime": false,
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    },
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
+}
