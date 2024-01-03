@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainPage } from './main.page';
 import { HomePageComponent } from './home-page/home-page.component';
 import { OrderPageComponent } from './order-page/order-page.component';
+import { OrderPageDetailComponent } from './order-page/order-page-detail/order-page-detail.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'order',
     component: OrderPageComponent,
+  },
+  {
+    path: 'order/detail',
+    component: OrderPageDetailComponent,
   },
   
 ];

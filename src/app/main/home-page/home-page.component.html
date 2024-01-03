@@ -1,99 +1,120 @@
 <ion-header class="ion-no-border">
   <ion-toolbar style="--background:white;">
-    <ion-title style="font-size: 0.6rem;">Trang chủ</ion-title>
+    <ng-container *ngIf="isload">
+      <ion-title>Trang chủ</ion-title>
+    </ng-container>
+    
   </ion-toolbar>
 </ion-header>
-<ion-content [forceOverscroll]="true">
-  <ion-card class="mx-0 my-0">
+<ion-content >
+  <ng-container *ngIf="isload">
+    <ion-card class="mx-0 my-0">
       <ion-card-content class="px-0 py-0">
         <div class="slideshow-container w-100">
           <div class="mySlides fade" style="display: block;">
-            <img src="https://www.nhanshiphang.vn/wp-content/uploads/b1acd2f165fa9fa4c6eb.jpg" style="width:100%;height: 200px;">
+            <img src="https://www.nhanshiphang.vn/wp-content/uploads/b1acd2f165fa9fa4c6eb.jpg" style="width:100%;height: 20em;">
           </div>
           <div class="mySlides fade">
-            <img src="https://www.nhanshiphang.vn/wp-content/uploads/968f17d2a0d95a8703c8.jpg" style="width:100%;height: 200px;">
+            <img src="https://www.nhanshiphang.vn/wp-content/uploads/968f17d2a0d95a8703c8.jpg" style="width:100%;height: 20em;">
           </div>
           <div class="mySlides fade">
-            <img src="https://www.nhanshiphang.vn/wp-content/uploads/d7503e0d890673582a17.jpg" style="width:100%;height: 200px;;">
+            <img src="https://www.nhanshiphang.vn/wp-content/uploads/d7503e0d890673582a17.jpg" style="width:100%;height: 20em;">
           </div>
           <div class="mySlides fade">
-            <img src="https://www.nhanshiphang.vn/wp-content/uploads/6372ad2f1a24e07ab935.jpg" style="width:100%;height: 200px;">
+            <img src="https://www.nhanshiphang.vn/wp-content/uploads/6372ad2f1a24e07ab935.jpg" style="width:100%;height: 20em;">
           </div>
           </div>
       </ion-card-content>
     </ion-card> 
-    <ion-card style="border-radius: 10px;margin-top: -2.5rem;margin-bottom: 1rem;">
-      <ion-card-header>
-        <div class="d-flex align-items-center">
-          <img  style="width: 35px;
-              height: 35px;
-              border-radius: 50%;
-              box-shadow: 1px 1px 15px -5px black;margin-right: 1rem;" height="20px" src="../../../assets/image/logo-user.png" alt="">
-          <div>
-            <ion-label style="font-size: 0.6rem;">Chào buổi chiều!</ion-label>
-            <ion-card-title style="font-size: 0.8rem;">Trần minh tân</ion-card-title>
+    <div class="d-flex justify-content-center align-items-center">
+      <ion-card style="border-radius: 1em;margin-top: -2.5rem;margin-bottom: 1rem;width: 35em;">
+        <ion-card-header>
+          <div class="d-flex align-items-center">
+            <img  style="width: 4em;
+                border-radius: 2em;
+                margin-right: 1rem;"src="../../../assets/image/logo-user.png" alt="">
+            <div>
+              <ion-text>
+                Chào buổi chiều!
+              </ion-text>
+              <ion-text>
+                <ion-card-title>Trần minh tân</ion-card-title>
+              </ion-text>
+            </div>
           </div>
-        </div>
-      </ion-card-header>
-      <ion-card-content>
-        <div class="d-flex align-items-center">
-          <i style="font-size: 0.8rem;" class="bi bi-wallet2 mx-2"></i>
-          <ion-label style="font-size: 0.8rem;">Ví cá nhân:</ion-label>
-          &nbsp;
-          <ion-label style="font-size: 0.8rem;color:#ffb400;"  class="font-weight-bold">1.000.000đ</ion-label>
-          &nbsp;&nbsp;
-          <i style="font-size: 0.8rem;" class="bi bi-eye"></i>
-        </div>
-      </ion-card-content>
-    </ion-card>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="d-flex align-items-center">
+            <i class="bi bi-wallet2 mx-2"></i>
+            <ion-text>
+              Ví cá nhân:
+            </ion-text>
+            &nbsp;
+            <ion-text class="font-weight-bold" style="color:#ffb400;">
+              1.000.000đ
+            </ion-text>
+            &nbsp;&nbsp;
+            <i class="bi bi-eye"></i>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
     <ion-grid [fixed]="true">
       <ion-row>
         <ion-col class="text-center" size="3">
           <div class="d-flex justify-content-center align-items-center">
             <button type="button" class="btn btn-primary btn-sm btn-app-home">
               <div class="d-flex justify-content-center align-items-center">
-                <ion-icon style="font-size: 1.2rem;position: absolute;" name="arrow-redo-circle-outline"></ion-icon>
+                <ion-icon style="font-size:2em;position: absolute;" name="arrow-redo-circle-outline"></ion-icon>
               </div>
             </button>
           </div>
-          <div style="line-height: 0.4rem;margin-top: 0.2rem;">
-            <ion-label style="font-size: 0.5rem;margin-top: 0.3rem;">Nạp tiền</ion-label>
+          <div style="margin-top: 0.2rem;">
+            <ion-text>
+              Nạp tiền
+            </ion-text>
           </div>
         </ion-col>
         <ion-col class="text-center" size="3">
           <div class="d-flex justify-content-center align-items-center">
             <button type="button" class="btn btn-primary btn-sm btn-app-home">
               <div class="d-flex justify-content-center align-items-center">
-                <ion-icon style="font-size: 1.2rem;position: absolute;" name="cube-outline"></ion-icon>
+                <ion-icon style="font-size:2em;position: absolute;" name="cube-outline"></ion-icon>
               </div>
             </button>
           </div>
-          <div style="line-height: 0.4rem;margin-top: 0.2rem;">
-            <ion-label style="font-size: 0.5rem;margin-top: 0.3rem;">Kiện hàng</ion-label>
+          <div style="margin-top: 0.2rem;">
+            <ion-text>
+              Kiện hàng
+            </ion-text>
           </div>
         </ion-col>
         <ion-col class="text-center" size="3">
           <div class="d-flex justify-content-center align-items-center">
             <button (click)="goOrderPage()" type="button" class="btn btn-primary btn-sm btn-app-home">
               <div class="d-flex justify-content-center align-items-center">
-                <ion-icon style="font-size: 1.2rem;position: absolute;" name="document-text-outline"></ion-icon>
+                <ion-icon style="font-size:2em;position: absolute;" name="document-text-outline"></ion-icon>
               </div>
             </button>
           </div>
-          <div style="line-height: 0.4rem;margin-top: 0.2rem;">
-            <ion-label style="font-size: 0.5rem;margin-top: 0.3rem;">Đơn hàng</ion-label>
+          <div style="margin-top: 0.2rem;">
+            <ion-text>
+              Đơn hàng
+            </ion-text>
           </div>
         </ion-col>
         <ion-col class="text-center" size="3">
           <div class="d-flex justify-content-center align-items-center">
             <button type="button" class="btn btn-primary btn-sm btn-app-home">
               <div class="d-flex justify-content-center align-items-center">
-                <ion-icon style="font-size: 1.2rem;position: absolute;" name="cash-outline"></ion-icon>
+                <ion-icon style="font-size:2em;position: absolute;" name="cash-outline"></ion-icon>
               </div>
             </button>
           </div>
-          <div style="line-height: 0.4rem;margin-top: 0.2rem;">
-            <ion-label style="font-size: 0.5rem;margin-top: 0.3rem;">Phí vận chuyển</ion-label>
+          <div style="margin-top: 0.2rem;">
+            <ion-text>
+              Phí vận chuyển
+            </ion-text>
           </div>
         </ion-col>
       </ion-row>
@@ -102,24 +123,29 @@
       <ion-row style="padding-left: 1rem;padding-right: 1rem;">
         <ion-col size="6">
           <div class="card text-center">
-            <img class="card-img-top" src="../../../assets/image/payment.jpg">
+            <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;" src="../../../assets/image/payment.jpg">
             <div class="card-body">
-              <div style="line-height: 0.7rem;">
-                <ion-label style="font-size: 0.6rem;font-weight: bold;">Đang chờ thanh toán</ion-label>
-              </div>
-              <p style="font-size: 0.7rem;" class="card-text">0</p>
-              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+              <ion-text class="font-weight-bold">
+                Đang chờ thanh toán
+              </ion-text>
+              <br>
+              <ion-text class="font-weight-bold">
+                0
+              </ion-text>
             </div>
           </div>
         </ion-col>
         <ion-col size="6">
           <div class="card text-center">
-            <img class="card-img-top" src="../../../assets/image/plan-delivery.jpg">
+            <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;" src="../../../assets/image/plan-delivery.jpg">
             <div class="card-body">
-              <div style="line-height: 0.7rem;">
-                <ion-label style="font-size: 0.6rem;font-weight: bold;">Kiện đang vận chuyển</ion-label>
-              </div>
-              <p style="font-size: 0.7rem;" class="card-text">0</p>
+              <ion-text class="font-weight-bold">
+                Kiện đang vận chuyển
+              </ion-text>
+              <br>
+              <ion-text class="font-weight-bold">
+                0
+              </ion-text>
             </div>
           </div>
         </ion-col>
@@ -127,27 +153,35 @@
       <ion-row style="padding-left: 1rem;padding-right: 1rem;">
         <ion-col size="6">
           <div class="card text-center">
-            <img class="card-img-top" src="../../../assets/image/payment-done.jpg" alt="Card image cap">
+            <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;" src="../../../assets/image/payment-done.jpg">
             <div class="card-body">
-              <div style="line-height: 0.7rem;">
-                <ion-label style="font-size: 0.6rem;font-weight: bold;">Đã thanh toán</ion-label>
-              </div>
-              <p style="font-size: 0.7rem;" class="card-text">0</p>
+              <ion-text class="font-weight-bold">
+                Đã thanh toán
+              </ion-text>
+              <br>
+              <ion-text class="font-weight-bold">
+                0
+              </ion-text>
             </div>
           </div>
         </ion-col>
         <ion-col size="6">
           <div class="card text-center">
-            <img class="card-img-top" src="../../../../assets/image/delivery-done.jpg" alt="Card image cap">
+            <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;" src="../../../../assets/image/delivery-done.jpg">
             <div class="card-body">
-              <div style="line-height: 0.7rem;">
-                <ion-label style="font-size: 0.6rem;font-weight: bold;">Đã nhận hàng</ion-label>
-              </div>
-              <p style="font-size: 0.7rem;" class="card-text">0</p>
+              <ion-text class="font-weight-bold">
+                Đã nhận hàng
+              </ion-text>
+              <br>
+              <ion-text class="font-weight-bold">
+                0
+              </ion-text>
             </div>
           </div>
         </ion-col>
       </ion-row>
     </ion-grid>
     
+  </ng-container>
+  
 </ion-content>

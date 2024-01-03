@@ -36,15 +36,15 @@ input:focus{
     border-color: #ced4da !important;
 }
 
-ion-content{
-    --offset-bottom: auto!important;
-    --overflow: hidden;
-    background-color: white !important;
-    overflow: auto;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-}
+// ion-content{
+//     --offset-bottom: auto!important;
+//     --overflow: hidden;
+//     background-color: white !important;
+//     overflow: auto;
+//     &::-webkit-scrollbar {
+//       display: none;
+//     }
+// }
 
 .tab-selected{
     color: #ffb400 !important;

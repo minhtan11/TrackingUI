@@ -12,22 +12,22 @@
         <ion-grid [fixed]="true">
           <ion-row>
             <ion-col>
-              <ion-item style="border: 1px solid #ced4da;border-radius: 10px;" lines="none" class="">
+              <ion-item style="border: 1px solid #ced4da;border-radius: 1em;" lines="none" class="">
                 <input name="userName" style="border: none;" type="text" class="form-control py-0 px-0" placeholder="Họ">
               </ion-item>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-item style="border: 1px solid #ced4da;border-radius: 10px;" lines="none" class="">
+              <ion-item style="border: 1px solid #ced4da;border-radius: 1em" lines="none" class="">
                 <input name="userName" style="border: none;" type="text" class="form-control py-0 px-0" placeholder="Tên">
               </ion-item>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-item style="border: 1px solid #ced4da;border-radius: 10px;" lines="none">
-                <ion-select class="ion-select-sign" style="border: none;font-size: 0.6rem;background-color: white;" label="Giới tính" name="gender" interface="action-sheet">
+              <ion-item style="border: 1px solid #ced4da;border-radius: 1em" lines="none">
+                <ion-select class="ion-select-sign" style="border: none;background-color: white;" label="Giới tính" name="gender" interface="action-sheet">
                   <ion-select-option [value]="0">Nam</ion-select-option>
                   <ion-select-option [value]="1">Nữ</ion-select-option>
                 </ion-select>
@@ -36,35 +36,35 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-item style="border: 1px solid #ced4da;border-radius: 10px;" lines="none" class="">
-                <input name="birthDay" style="border: none;font-size: 0.6rem;;" type="date" class="form-control py-0 px-0" placeholder="Ngày sinh">
+              <ion-item style="border: 1px solid #ced4da;border-radius: 1em" lines="none" class="">
+                <input name="birthDay" style="border: none;" type="date" class="form-control py-0 px-0" placeholder="Ngày sinh">
               </ion-item>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-item style="border: 1px solid #ced4da;border-radius: 10px;" lines="none" class="">
+              <ion-item style="border: 1px solid #ced4da;border-radius: 1em" lines="none" class="">
                 <input name="phone" style="border: none;" type="text" class="form-control py-0 px-0" placeholder="Số điện thoại">
               </ion-item>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-item style="border: 1px solid #ced4da;border-radius: 10px;" lines="none" class="">
+              <ion-item style="border: 1px solid #ced4da;border-radius: 1em" lines="none" class="">
                 <input name="email" style="border: none;" type="text" class="form-control py-0 px-0" placeholder="Email">
               </ion-item>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-item style="border: 1px solid #ced4da;border-radius: 10px;" lines="none" class="">
+              <ion-item style="border: 1px solid #ced4da;border-radius: 1em" lines="none" class="">
                 <input name="userName" style="border: none;" type="text" class="form-control py-0 px-0" placeholder="Tên tài khoản">
               </ion-item>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-item style="border: 1px solid #ced4da;border-radius: 10px;" lines="none" class="">
+              <ion-item style="border: 1px solid #ced4da;border-radius: 1em" lines="none" class="">
                 <div class="d-flex align-items-center w-100">
                   <input name="passWord" style="border: none;" [type]="showPass ? 'text' : 'password'" class="form-control py-0 px-0" placeholder="Mật khẩu">
                   <i style="font-size: 0.8rem;padding-left: 0.5rem;" slot="end" (click)="showPassword()" [class]="!showPass ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
@@ -74,8 +74,12 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label style="font-size: 0.6rem;">Bạn đã có tài khoản? </ion-label>
-              <ion-label (click)="goSignInPage()" style="font-size: 0.7rem;color:#ffb400" class="font-weight-bold"><u>Đăng nhập</u></ion-label>
+              <ion-text>
+                Bạn đã có tài khoản? 
+              </ion-text>
+              <ion-text style="color: #ffb400;">
+                <u>Đăng nhập</u>
+              </ion-text>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -84,8 +88,8 @@
   </ion-content>
   <ion-footer *ngIf="!isHideFooter" class="ion-no-border">
     <ion-toolbar style="--background:white">
-      <div style="padding-left: 1rem;padding-right: 1rem;">
-        <button (click)="onSignUp()" type="button" class="btn btn-primary btn-sm btn-block" style="border-radius: 50px;background-color: #ffb400;border: none;font-size: 0.6rem;">ĐĂNG KÝ</button>
+      <div style="padding-left: 1em;padding-right: 1em;">
+        <button (click)="onSignUp()" type="button" class="btn btn-primary btn-lg btn-block" style="border-radius: 1em;background-color: #ffb400;border: none;">ĐĂNG KÝ</button>
       </div>
     </ion-toolbar>
   </ion-footer>

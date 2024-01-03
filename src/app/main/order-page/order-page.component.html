@@ -1,8 +1,8 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="text-center" style="--background:white;">
-    <ion-back-button slot="start" style="color: #ffb400;font-size: 0.6rem;" text="Quay lại" icon="chevron-back-outline"></ion-back-button>
+    <ion-back-button slot="start" style="color: #ffb400;font-size: 1.2em;" text="Quay lại" icon="chevron-back-outline"></ion-back-button>
     <ion-title>Đơn hàng</ion-title>
-    <ion-icon style="font-size: 1.1rem;color: #ffb400;padding-right: 0.4rem;" slot="end" name="search-outline"></ion-icon>
+    <i slot="end" style="font-size: 1.4em;;padding-right: 0.4em;color: #ffb400" class="bi bi-search"></i>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -13,313 +13,131 @@
     </div>
   </ng-container> -->
   <ion-list>
-    <ion-item style="margin-bottom: 1rem;" lines="none">
-      <div class="card w-100">
-        <div class="card-header">
+    <ion-item lines="none">
+      <ion-card class="w-100" style="margin: 1em;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+        <ion-card-header>
           <div style="justify-content: space-between;" class="d-flex align-items-center">
             <div>
-              <ion-label style="font-size: 0.6rem;font-weight: bold;">Mã vận đơn</ion-label>
+              <ion-text style="font-size: 1.2em;" class="font-weight-bold">
+                Mã vận đơn
+              </ion-text>
             </div>
             <div class="d-flex align-items-center">
-              <ion-label style="font-size: 0.6rem;margin-right: 0.7rem;">12345679999</ion-label>
-              <ion-icon name="copy-outline"></ion-icon>
+              <ion-text style="font-size: 1.2em;">
+                12345679999
+              </ion-text>
+              &nbsp;&nbsp;
+              <ion-icon style="font-size: 1.5em;" name="copy-outline"></ion-icon>
             </div>
           </div>
-        </div>
-        <div class="card-body">
-          <ion-grid fixed>
-            <ion-row>
-              <ion-col size="3">
-                <img style="border-radius: 0%;width: 5rem;" src="../../../assets/image/document.png" alt="">
-              </ion-col>
-              <ion-col style="line-height: 0.6rem;" size="9">
-                <div style="line-height: 0.8rem;">
-                  <div>
-                    <span style="font-size: 0.7rem;">Vận chuyển: Nhanh</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Dịch vụ: Nhanh</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Ngày: 1/2/2024 10:05:33 PM</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Người tạo: Trần minh tân</span>
-                  </div>
-                </div>               
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="d-flex align-items-center">
+            <img  style="width: 4em;
+                margin-right: 1rem;" src="../../../assets/image/wait-order.png" alt="">
+            <div>
+              <ion-text>
+                Vận chuyển: Nhanh
+              </ion-text>
+              <br>
+              <ion-text>
+                Dịch vụ: Nhanh
+              </ion-text>
+              <br>
+              <ion-text>
+                Ngày: 1/2/2024 10:05:33 PM
+              </ion-text>
+              <br>
+              <ion-text>
+                Người tạo: Trần minh tân
+              </ion-text>
+              <ion-text>
+                <!-- <ion-card-title>Trần minh tân</ion-card-title> -->
+              </ion-text>
+            </div>
+          </div>
           <hr style="margin-top: 0.5rem;
           margin-bottom: 0.5rem;">
-          <div>
-            <span style="font-size: 0.7rem;font-weight: bold;">Tổng tiền:</span>&nbsp;<span style="font-size: 0.7rem;">2,000,000,000</span>
+          <div class="d-flex justify-content-end">
+            <ion-text class="font-weight-bold">
+              Tổng tiền:
+            </ion-text>
+            &nbsp;
+            <ion-text class="font-weight-bold">
+              2,000,000,000
+            </ion-text>
           </div>
-          <div>
-            <span style="font-size: 0.7rem;" class="badge badge-pill badge-success">Đã thanh toán</span>
-          </div>
-          <div style="margin-top: 1rem;" class="d-flex justify-content-center align-items-center">
-            <span style="font-size: 0.7rem;color: #ffb400;"><u>Xem chi tiết</u></span>
+          <div class="text-center">
+            <ion-text (click)="viewDetail()" style="color: #ffb400;">
+              <u>Xem chi tiết</u>
+            </ion-text>
           </div> 
-        </div>
-      </div>
+        </ion-card-content>
+      </ion-card>
     </ion-item>
-    <ion-item style="margin-bottom: 1rem;" lines="none">
-      <div class="card w-100">
-        <div class="card-header">
+    <ion-item lines="none">
+      <ion-card class="w-100" style="margin: 1em;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+        <ion-card-header>
           <div style="justify-content: space-between;" class="d-flex align-items-center">
             <div>
-              <ion-label style="font-size: 0.6rem;font-weight: bold;">Mã vận đơn</ion-label>
+              <ion-text style="font-size: 1.2em;" class="font-weight-bold">
+                Mã vận đơn
+              </ion-text>
             </div>
             <div class="d-flex align-items-center">
-              <ion-label style="font-size: 0.6rem;margin-right: 0.7rem;">12345679999</ion-label>
-              <ion-icon name="copy-outline"></ion-icon>
+              <ion-text style="font-size: 1.2em;">
+                12345679999
+              </ion-text>
+              &nbsp;&nbsp;
+              <ion-icon style="font-size: 1.5em;" name="copy-outline"></ion-icon>
             </div>
           </div>
-        </div>
-        <div class="card-body">
-          <ion-grid fixed>
-            <ion-row>
-              <ion-col size="3">
-                <img style="border-radius: 0%;width: 5rem;" src="../../../assets/image/document.png" alt="">
-              </ion-col>
-              <ion-col style="line-height: 0.6rem;" size="9">
-                <div style="line-height: 0.8rem;">
-                  <div>
-                    <span style="font-size: 0.7rem;">Vận chuyển: Nhanh</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Dịch vụ: Nhanh</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Ngày: 1/2/2024 10:05:33 PM</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Người tạo: Trần minh tân</span>
-                  </div>
-                </div>               
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-          <hr style="margin-top: 0.5rem;
-          margin-bottom: 0.5rem;">
-          <div>
-            <span style="font-size: 0.7rem;font-weight: bold;">Tổng tiền:</span>&nbsp;<span style="font-size: 0.7rem;">2,000,000,000</span>
-          </div>
-          <div>
-            <span style="font-size: 0.7rem;" class="badge badge-pill badge-success">Đã thanh toán</span>
-          </div>
-          <div style="margin-top: 1rem;" class="d-flex justify-content-center align-items-center">
-            <span style="font-size: 0.7rem;color: #ffb400;"><u>Xem chi tiết</u></span>
-          </div> 
-        </div>
-      </div>
-    </ion-item>
-    <ion-item style="margin-bottom: 1rem;" lines="none">
-      <div class="card w-100">
-        <div class="card-header">
-          <div style="justify-content: space-between;" class="d-flex align-items-center">
+        </ion-card-header>
+        <ion-card-content>
+          <div class="d-flex align-items-center">
+            <img  style="width: 4em;
+                margin-right: 1rem;" src="../../../assets/image/done-order.png" alt="">
             <div>
-              <ion-label style="font-size: 0.6rem;font-weight: bold;">Mã vận đơn</ion-label>
-            </div>
-            <div class="d-flex align-items-center">
-              <ion-label style="font-size: 0.6rem;margin-right: 0.7rem;">12345679999</ion-label>
-              <ion-icon name="copy-outline"></ion-icon>
+              <ion-text>
+                Vận chuyển: Nhanh
+              </ion-text>
+              <br>
+              <ion-text>
+                Dịch vụ: Nhanh
+              </ion-text>
+              <br>
+              <ion-text>
+                Ngày: 1/2/2024 10:05:33 PM
+              </ion-text>
+              <br>
+              <ion-text>
+                Người tạo: Trần minh tân
+              </ion-text>
+              <ion-text>
+              </ion-text>
             </div>
           </div>
-        </div>
-        <div class="card-body">
-          <ion-grid fixed>
-            <ion-row>
-              <ion-col size="3">
-                <img style="border-radius: 0%;width: 5rem;" src="../../../assets/image/document.png" alt="">
-              </ion-col>
-              <ion-col style="line-height: 0.6rem;" size="9">
-                <div style="line-height: 0.8rem;">
-                  <div>
-                    <span style="font-size: 0.7rem;">Vận chuyển: Nhanh</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Dịch vụ: Nhanh</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Ngày: 1/2/2024 10:05:33 PM</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Người tạo: Trần minh tân</span>
-                  </div>
-                </div>               
-              </ion-col>
-            </ion-row>
-          </ion-grid>
           <hr style="margin-top: 0.5rem;
           margin-bottom: 0.5rem;">
-          <div>
-            <span style="font-size: 0.7rem;font-weight: bold;">Tổng tiền:</span>&nbsp;<span style="font-size: 0.7rem;">2,000,000,000</span>
+          <div class="d-flex justify-content-end">
+            <ion-text class="font-weight-bold">
+              Tổng tiền:
+            </ion-text>
+            &nbsp;
+            <ion-text class="font-weight-bold">
+              2,000,000,000
+            </ion-text>
           </div>
-          <div>
-            <span style="font-size: 0.7rem;" class="badge badge-pill badge-success">Đã thanh toán</span>
-          </div>
-          <div style="margin-top: 1rem;" class="d-flex justify-content-center align-items-center">
-            <span style="font-size: 0.7rem;color: #ffb400;"><u>Xem chi tiết</u></span>
+          <div class="text-center">
+            <ion-text style="color: #ffb400;">
+              <u>Xem chi tiết</u>
+            </ion-text>
           </div> 
-        </div>
-      </div>
-    </ion-item>
-    <ion-item style="margin-bottom: 1rem;" lines="none">
-      <div class="card w-100">
-        <div class="card-header">
-          <div style="justify-content: space-between;" class="d-flex align-items-center">
-            <div>
-              <ion-label style="font-size: 0.6rem;font-weight: bold;">Mã vận đơn</ion-label>
-            </div>
-            <div class="d-flex align-items-center">
-              <ion-label style="font-size: 0.6rem;margin-right: 0.7rem;">12345679999</ion-label>
-              <ion-icon name="copy-outline"></ion-icon>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <ion-grid fixed>
-            <ion-row>
-              <ion-col size="3">
-                <img style="border-radius: 0%;width: 5rem;" src="../../../assets/image/document.png" alt="">
-              </ion-col>
-              <ion-col style="line-height: 0.6rem;" size="9">
-                <div style="line-height: 0.8rem;">
-                  <div>
-                    <span style="font-size: 0.7rem;">Vận chuyển: Nhanh</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Dịch vụ: Nhanh</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Ngày: 1/2/2024 10:05:33 PM</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Người tạo: Trần minh tân</span>
-                  </div>
-                </div>               
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-          <hr style="margin-top: 0.5rem;
-          margin-bottom: 0.5rem;">
-          <div>
-            <span style="font-size: 0.7rem;font-weight: bold;">Tổng tiền:</span>&nbsp;<span style="font-size: 0.7rem;">2,000,000,000</span>
-          </div>
-          <div>
-            <span style="font-size: 0.7rem;" class="badge badge-pill badge-success">Đã thanh toán</span>
-          </div>
-          <div style="margin-top: 1rem;" class="d-flex justify-content-center align-items-center">
-            <span style="font-size: 0.7rem;color: #ffb400;"><u>Xem chi tiết</u></span>
-          </div> 
-        </div>
-      </div>
-    </ion-item>
-    <ion-item style="margin-bottom: 1rem;" lines="none">
-      <div class="card w-100">
-        <div class="card-header">
-          <div style="justify-content: space-between;" class="d-flex align-items-center">
-            <div>
-              <ion-label style="font-size: 0.6rem;font-weight: bold;">Mã vận đơn</ion-label>
-            </div>
-            <div class="d-flex align-items-center">
-              <ion-label style="font-size: 0.6rem;margin-right: 0.7rem;">12345679999</ion-label>
-              <ion-icon name="copy-outline"></ion-icon>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <ion-grid fixed>
-            <ion-row>
-              <ion-col size="3">
-                <img style="border-radius: 0%;width: 5rem;" src="../../../assets/image/document.png" alt="">
-              </ion-col>
-              <ion-col style="line-height: 0.6rem;" size="9">
-                <div style="line-height: 0.8rem;">
-                  <div>
-                    <span style="font-size: 0.7rem;">Vận chuyển: Nhanh</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Dịch vụ: Nhanh</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Ngày: 1/2/2024 10:05:33 PM</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Người tạo: Trần minh tân</span>
-                  </div>
-                </div>               
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-          <hr style="margin-top: 0.5rem;
-          margin-bottom: 0.5rem;">
-          <div>
-            <span style="font-size: 0.7rem;font-weight: bold;">Tổng tiền:</span>&nbsp;<span style="font-size: 0.7rem;">2,000,000,000</span>
-          </div>
-          <div>
-            <span style="font-size: 0.7rem;" class="badge badge-pill badge-success">Đã thanh toán</span>
-          </div>
-          <div style="margin-top: 1rem;" class="d-flex justify-content-center align-items-center">
-            <span style="font-size: 0.7rem;color: #ffb400;"><u>Xem chi tiết</u></span>
-          </div> 
-        </div>
-      </div>
-    </ion-item>
-    <ion-item style="margin-bottom: 1rem;" lines="none">
-      <div class="card w-100">
-        <div class="card-header">
-          <div style="justify-content: space-between;" class="d-flex align-items-center">
-            <div>
-              <ion-label style="font-size: 0.6rem;font-weight: bold;">Mã vận đơn</ion-label>
-            </div>
-            <div class="d-flex align-items-center">
-              <ion-label style="font-size: 0.6rem;margin-right: 0.7rem;">12345679999</ion-label>
-              <ion-icon name="copy-outline"></ion-icon>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <ion-grid fixed>
-            <ion-row>
-              <ion-col size="3">
-                <img style="border-radius: 0%;width: 5rem;" src="../../../assets/image/document.png" alt="">
-              </ion-col>
-              <ion-col style="line-height: 0.6rem;" size="9">
-                <div style="line-height: 0.8rem;">
-                  <div>
-                    <span style="font-size: 0.7rem;">Vận chuyển: Nhanh</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Dịch vụ: Nhanh</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Ngày: 1/2/2024 10:05:33 PM</span>
-                  </div>
-                  <div>
-                    <span style="font-size: 0.7rem;">Người tạo: Trần minh tân</span>
-                  </div>
-                </div>               
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-          <hr style="margin-top: 0.5rem;
-          margin-bottom: 0.5rem;">
-          <div>
-            <span style="font-size: 0.7rem;font-weight: bold;">Tổng tiền:</span>&nbsp;<span style="font-size: 0.7rem;">2,000,000,000</span>
-          </div>
-          <div>
-            <span style="font-size: 0.7rem;" class="badge badge-pill badge-success">Đã thanh toán</span>
-          </div>
-          <div style="margin-top: 1rem;" class="d-flex justify-content-center align-items-center">
-            <span style="font-size: 0.7rem;color: #ffb400;"><u>Xem chi tiết</u></span>
-          </div> 
-        </div>
-      </div>
+        </ion-card-content>
+      </ion-card>
     </ion-item>
     
+  
   </ion-list>
   
   

@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
+  isload:any = false;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -17,7 +18,12 @@ export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
 
   ngOnInit() {}
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.isload = true;
+      this.dt.detectChanges();
+    }, 10);
+  }
 
   ngOnDestroy(): void {
     this.onDestroy();

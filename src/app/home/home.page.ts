@@ -9,18 +9,25 @@ import { NavController } from '@ionic/angular';
 })
 export class HomePage implements OnInit,AfterViewInit {
   showPass:any = false;
-  
+  isHideFooter:any=false;
   constructor(
     private dt : ChangeDetectorRef,
     private navCtrl: NavController
   ) {}
 
   ngOnInit() {
-    
   }
 
   ngAfterViewInit() {
-    
+    Keyboard.addListener('keyboardWillShow', info => {
+      this.isHideFooter = true;
+      this.dt.detectChanges();
+    });
+
+    Keyboard.addListener('keyboardWillHide', () => {
+      this.isHideFooter = false;
+      this.dt.detectChanges();
+    });
   }
 
   showPassword(){
@@ -28,7 +35,7 @@ export class HomePage implements OnInit,AfterViewInit {
   }
 
   onSignIn(){
-    this.navCtrl.navigateForward('main');
+    this.navCtrl.navigateForward('main',{animated:false});
   }
 
   

@@ -1,7 +1,7 @@
 <ion-app>
   <ion-content>
     <ion-card style="border: none;box-shadow: none;text-align: center;" class="mx-0">
-      <ion-card-header style="padding-bottom: 0.4rem;">
+      <ion-card-header>
         <ion-avatar style="display: block;
         margin-left: auto;
         margin-right: auto;">
@@ -9,51 +9,60 @@
         </ion-avatar>
       </ion-card-header>
       <ion-card-content>
-        <div >
-          <ion-label class="ion-text-wrap font-weight-bold">NHẬN SHIP HÀNG - MỘT CHỮ TÍN VẠN NIỀM TIN</ion-label>
-        </div>
-        <div class="mb-10">
-          <ion-label color="medium" class="ion-text-wrap">Nhận ship hàng luôn đặt lợi ích của khách hàng lên hàng đầu</ion-label>
-        </div>
-        <ion-grid [fixed]="true">
+        <ion-grid class="text-center" [fixed]="true" >
           <ion-row>
             <ion-col>
-              <ion-item style="border: 1px solid #ced4da;border-radius: 10px;" lines="none" class="">
+              <ion-text style="font-size: 0.8em;" class="ion-text-wrap font-weight-bold">
+                NHẬN SHIP HÀNG - MỘT CHỮ TÍN VẠN NIỀM TIN
+              </ion-text>
+              <br>
+              <ion-text style="font-size: 0.8em;" color="medium">
+                Nhận ship hàng luôn đặt lợi ích khách hàng lên hàng đầu
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item style="border: 1px solid #ced4da;border-radius: 1em;" lines="none" class="">
                 <input name="userName" style="border: none;" type="text" class="form-control py-0 px-0" placeholder="Tên đăng nhập">
               </ion-item>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-item style="border: 1px solid #ced4da;border-radius: 10px;" lines="none" class="">
+              <ion-item style="border: 1px solid #ced4da;border-radius: 1em;" lines="none" class="">
                 <div class="d-flex align-items-center w-100">
                   <input name="passWord" style="border: none;" [type]="showPass ? 'text' : 'password'" class="form-control py-0 px-0" placeholder="Mật khẩu">
-                  <i style="font-size: 0.8rem;padding-left: 0.5rem;" slot="end" (click)="showPassword()" [class]="!showPass ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
+                  <i slot="end" (click)="showPassword()" [class]="!showPass ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
                 </div>
               </ion-item>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-button (click)="onSignIn()" style="--background: #ffb400;border: none;font-size: 0.7rem;" expand="block" shape="round">ĐĂNG NHẬP</ion-button>
+              <button (click)="onSignIn()" style="background-color: #ffb400;border: none;border-radius: 1em;" type="button" class="btn btn-primary btn-lg btn-block">ĐĂNG NHẬP</button>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label class="font-weight-bold" style="font-size: 0.7rem;"><u>Quên mật khẩu?</u></ion-label>
+              <ion-text class="font-weight-bold">
+                <u>Quên mật khẩu?</u>
+              </ion-text>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-label style="font-size: 0.6rem;">Bạn không có tài khoản? </ion-label>
-              <ion-label (click)="goSignUpPage()" style="font-size: 0.7rem;color:#ffb400" class="font-weight-bold"><u>Đăng ký</u></ion-label>
+              <ion-text>
+                Bạn không có tài khoản?
+              </ion-text>
+              <ion-text (click)="goSignUpPage()" class="font-weight-bold" style="color: #ffb400;">
+                <u>Đăng ký</u>
+              </ion-text>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <img  class="img-home" style="width: 200px;height: auto;object-fit: contain;display: block;
-      margin-left: auto;
-      margin-right: auto;" src="../../assets/image/delivery-service.png" alt="">
+              <img style="width: 60%;height: auto;object-fit: contain;display: block;margin-left: auto;margin-right: auto;" src="../../assets/image/delivery-service.png" alt="">
             </ion-col>
           </ion-row>
         </ion-grid>

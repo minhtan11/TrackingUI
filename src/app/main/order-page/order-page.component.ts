@@ -1,4 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-order-page',
@@ -10,6 +11,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit,OnDestroy,DoChe
   height:any;
   constructor(
     private dt : ChangeDetectorRef,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -19,7 +21,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit,OnDestroy,DoChe
       this.height = (window.innerHeight - hheader) + 'px';
       this.dt.detectChanges();
       console.log(this.height);
-    }, 100);
+    }, 50);
   }
 
   ngAfterViewInit() {
@@ -32,6 +34,10 @@ export class OrderPageComponent  implements OnInit,AfterViewInit,OnDestroy,DoChe
 
   ngOnDestroy() {
     
+  }
+
+  viewDetail(){
+    this.navCtrl.navigateForward('main/order/detail');
   }
 
 }

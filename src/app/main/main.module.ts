@@ -9,6 +9,7 @@ import { MainPageRoutingModule } from './main-routing.module';
 import { MainPage } from './main.page';
 import { HomePageComponent } from './home-page/home-page.component';
 import { OrderPageComponent } from './order-page/order-page.component';
+import { OrderPageDetailComponent } from './order-page/order-page-detail/order-page-detail.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { OrderPageComponent } from './order-page/order-page.component';
     IonicModule.forRoot({mode:'ios'}),
     MainPageRoutingModule
   ],
-  declarations: [MainPage,HomePageComponent,OrderPageComponent]
+  declarations: [MainPage,HomePageComponent,OrderPageComponent,OrderPageDetailComponent]
 })
 export class MainPageModule {}
