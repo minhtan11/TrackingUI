@@ -26,7 +26,7 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 .form-control{
-    font-size: 0.6rem;
+    //font-size: 0.8em;
     caret-color: #ffb400;
 }
 
@@ -94,3 +94,48 @@ ion-content{
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+// css for all screen
+html {
+    font-size: 100%;
+    @media (max-width: 289px) {
+        font-size: 45%;
+    }
+    @media (min-width: 290px) {
+        font-size: 50%;
+    }
+    @media (min-width: 300px) {
+        font-size: 52.5%;
+    }
+    @media (min-width: 320px) {
+        font-size: 55.5%;
+    }
+    @media (min-width: 325px) {
+        font-size: 56.5%;
+    }
+    @media (min-width: 326px) {
+        font-size: 57%;
+    }
+    @media (min-width: 330px) {
+        font-size: 59%;
+    }
+    @media (min-width: 360px) {
+        font-size: 62.5%;
+    }
+    @media (min-width: 411px) {
+        font-size: 70%;
+    }
+    @media (min-width: 500px) {
+        font-size: 85%;
+    }
+    @media (min-width: 720px) {
+        font-size: 100%;
+    }
+    @media (min-width: 1000px) {
+        font-size: 110%;
+    }
+  }
+  html.ios {
+    @media (max-width: 359px) and (min-width: 320px) {
+        font-size: 59%;
+    }
+  }
