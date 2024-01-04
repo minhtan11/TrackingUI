@@ -37,7 +37,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit,OnDestroy,DoChe
   }
 
   viewDetail(){
-    this.navCtrl.navigateForward('main/order/detail');
+    this.navCtrl.navigateForward('main/order/detail',{queryParams:{orderID:'123456'}});
   }
 
 }
