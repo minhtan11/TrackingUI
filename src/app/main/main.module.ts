@@ -10,6 +10,8 @@ import { MainPage } from './main.page';
 import { HomePageComponent } from './home-page/home-page.component';
 import { OrderPageComponent } from './order-page/order-page.component';
 import { OrderPageDetailComponent } from './order-page/order-page-detail/order-page-detail.component';
+import { PackagePageComponent } from './package-page/package-page.component';
+import { RechargePageComponent } from './recharge-page/recharge-page.component';
 
 @NgModule({
   imports: [
@@ -18,6 +20,6 @@ import { OrderPageDetailComponent } from './order-page/order-page-detail/order-p
     IonicModule.forRoot({mode:'ios'}),
     MainPageRoutingModule
   ],
-  declarations: [MainPage,HomePageComponent,OrderPageComponent,OrderPageDetailComponent]
+  declarations: [MainPage,HomePageComponent,OrderPageComponent,OrderPageDetailComponent,PackagePageComponent,RechargePageComponent]
 })
 export class MainPageModule {}

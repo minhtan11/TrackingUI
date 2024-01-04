@@ -1,0 +1,65 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="text-center" style="--background:white;">
+    <ion-back-button slot="start" style="color: #ffb400;font-size: 1.2em;" text="Quay lại" icon="chevron-back-outline"></ion-back-button>
+    <ion-title>Danh sách kiện ký gửi</ion-title>
+    <i slot="end" style="font-size: 1.4em;;padding-right: 0.4em;color: #ffb400" class="bi bi-search"></i>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div style="padding: 1em;">
+    <ion-segment [scrollable]="true" value="1">
+      <ion-segment-button value="1">
+        <ion-text>
+          Tất cả
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button value="2">
+        <ion-text>
+          Chưa xác nhận
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button value="3">
+        <ion-text>
+          Hàng về kho TQ
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button value="4">
+        <ion-text>
+          Đang trên đường về HCM
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button value="5">
+        <ion-text>
+          Hàng về tới HCM
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button value="6">
+        <ion-text>
+          Đã nhận hàng
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button value="7">
+        <ion-text>
+          Đã hủy
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button value="8">
+        <ion-text>
+          Thất lạc
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button value="9">
+        <ion-text>
+          Không nhận được hàng
+        </ion-text>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+</ion-content>
+<ion-footer class="ion-no-border">
+  <ion-toolbar style="--background:white">
+    <div style="padding-left: 1em;padding-right: 1em;">
+      <button type="button" class="btn btn-primary btn-lg btn-block" style="border-radius: 1em;background-color: #ffb400;border: none;">TẠO MÃ VẬN ĐƠN</button>
+    </div>
+  </ion-toolbar>
+</ion-footer>
