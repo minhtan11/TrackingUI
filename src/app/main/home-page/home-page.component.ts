@@ -41,4 +41,8 @@ export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
     this.navCtrl.navigateForward('main/recharge');
   }
 
+  goServicechargePage(){
+    this.navCtrl.navigateForward('main/service-charge');
+  }
+
 }

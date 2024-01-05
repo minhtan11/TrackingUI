@@ -89,7 +89,11 @@
   <ion-footer *ngIf="!isHideFooter" class="ion-no-border">
     <ion-toolbar style="--background:white">
       <div style="padding-left: 1em;padding-right: 1em;">
-        <button (click)="onSignUp()" type="button" class="btn btn-primary btn-lg btn-block" style="border-radius: 1em;background-color: #ffb400;border: none;">ĐĂNG KÝ</button>
+        <button (click)="onSignUp()" type="button" class="btn btn-primary btn-lg btn-block" style="border-radius: 1em;background-color: #ffb400;border: none;">
+          <ion-text style="font-size: 0.9em;">
+            ĐĂNG KÝ
+          </ion-text>
+        </button>
       </div>
     </ion-toolbar>
   </ion-footer>

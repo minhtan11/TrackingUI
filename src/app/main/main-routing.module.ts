@@ -7,6 +7,7 @@ import { OrderPageComponent } from './order-page/order-page.component';
 import { OrderPageDetailComponent } from './order-page/order-page-detail/order-page-detail.component';
 import { PackagePageComponent } from './package-page/package-page.component';
 import { RechargePageComponent } from './recharge-page/recharge-page.component';
+import { ServicechargePageComponent } from './servicecharge-page/servicecharge-page.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path: 'recharge',
     component: RechargePageComponent,
+  },
+  {
+    path: 'service-charge',
+    component: ServicechargePageComponent,
   },
   
 ];
