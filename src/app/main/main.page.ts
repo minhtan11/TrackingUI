@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-main',
@@ -6,8 +7,9 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
   styleUrls: ['./main.page.scss'],
 })
 export class MainPage implements OnInit,AfterViewInit {
-  isLoad:any = false;
-  constructor() { }
+  constructor(
+    private navCtrl: NavController
+  ) { }
 
   ngOnInit() {
   }
@@ -15,5 +17,4 @@ export class MainPage implements OnInit,AfterViewInit {
   ngAfterViewInit(): void {
     
   }
-
 }

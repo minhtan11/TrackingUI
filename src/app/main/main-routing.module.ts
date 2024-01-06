@@ -8,6 +8,7 @@ import { OrderPageDetailComponent } from './order-page/order-page-detail/order-p
 import { PackagePageComponent } from './package-page/package-page.component';
 import { RechargePageComponent } from './recharge-page/recharge-page.component';
 import { ServicechargePageComponent } from './servicecharge-page/servicecharge-page.component';
+import { TransactionHistoryPageComponent } from './transaction-history-page/transaction-history-page.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,11 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomePageComponent,
+        
+      },
+      {
+        path: 'history',
+        component: TransactionHistoryPageComponent,
       },
       {
         path: '',

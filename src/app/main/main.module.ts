@@ -13,6 +13,7 @@ import { OrderPageDetailComponent } from './order-page/order-page-detail/order-p
 import { PackagePageComponent } from './package-page/package-page.component';
 import { RechargePageComponent } from './recharge-page/recharge-page.component';
 import { ServicechargePageComponent } from './servicecharge-page/servicecharge-page.component';
+import { TransactionHistoryPageComponent } from './transaction-history-page/transaction-history-page.component';
 
 @NgModule({
   imports: [
@@ -21,6 +22,6 @@ import { ServicechargePageComponent } from './servicecharge-page/servicecharge-p
     IonicModule.forRoot({mode:'ios'}),
     MainPageRoutingModule
   ],
-  declarations: [MainPage,HomePageComponent,OrderPageComponent,OrderPageDetailComponent,PackagePageComponent,RechargePageComponent,ServicechargePageComponent]
+  declarations: [MainPage,HomePageComponent,OrderPageComponent,OrderPageDetailComponent,PackagePageComponent,RechargePageComponent,ServicechargePageComponent,TransactionHistoryPageComponent]
 })
 export class MainPageModule {}
