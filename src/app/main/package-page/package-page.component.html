@@ -1,55 +1,54 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar class="text-center" style="--background:white;">
-    <ion-back-button slot="start" style="color: #ffb400;font-size: 1.2em;" text="Quay lại" icon="chevron-back-outline"></ion-back-button>
-    <ion-title>Danh sách kiện ký gửi</ion-title>
-    <i slot="end" style="font-size: 1.4em;;padding-right: 0.4em;color: #ffb400" class="bi bi-search"></i>
+  <ion-toolbar style="--background:white;">
+    <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button>
+    <ion-title mode="ios">Danh sách kiện ký gửi</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <div style="padding: 1em;">
     <ion-segment [scrollable]="true" value="1">
       <ion-segment-button value="1">
-        <ion-text>
+        <ion-text class="text-segment">
           Tất cả
         </ion-text>
       </ion-segment-button>
       <ion-segment-button value="2">
-        <ion-text>
+        <ion-text class="text-segment">
           Chưa xác nhận
         </ion-text>
       </ion-segment-button>
       <ion-segment-button value="3">
-        <ion-text>
+        <ion-text class="text-segment">
           Hàng về kho TQ
         </ion-text>
       </ion-segment-button>
       <ion-segment-button value="4">
-        <ion-text>
+        <ion-text class="text-segment">
           Đang trên đường về HCM
         </ion-text>
       </ion-segment-button>
       <ion-segment-button value="5">
-        <ion-text>
+        <ion-text class="text-segment">
           Hàng về tới HCM
         </ion-text>
       </ion-segment-button>
       <ion-segment-button value="6">
-        <ion-text>
+        <ion-text class="text-segment">
           Đã nhận hàng
         </ion-text>
       </ion-segment-button>
       <ion-segment-button value="7">
-        <ion-text>
+        <ion-text class="text-segment">
           Đã hủy
         </ion-text>
       </ion-segment-button>
       <ion-segment-button value="8">
-        <ion-text>
+        <ion-text class="text-segment">
           Thất lạc
         </ion-text>
       </ion-segment-button>
       <ion-segment-button value="9">
-        <ion-text>
+        <ion-text class="text-segment">
           Không nhận được hàng
         </ion-text>
       </ion-segment-button>

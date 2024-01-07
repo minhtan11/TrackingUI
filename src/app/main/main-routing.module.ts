@@ -2,13 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { MainPage } from './main.page';
-import { HomePageComponent } from './home-page/home-page.component';
 import { OrderPageComponent } from './order-page/order-page.component';
 import { OrderPageDetailComponent } from './order-page/order-page-detail/order-page-detail.component';
 import { PackagePageComponent } from './package-page/package-page.component';
 import { RechargePageComponent } from './recharge-page/recharge-page.component';
 import { ServicechargePageComponent } from './servicecharge-page/servicecharge-page.component';
-import { TransactionHistoryPageComponent } from './transaction-history-page/transaction-history-page.component';
 
 const routes: Routes = [
   {
@@ -17,12 +15,19 @@ const routes: Routes = [
     children:[
       {
         path: 'home',
-        component: HomePageComponent,
-        
+        loadChildren: () => import('./main-home/main-home.module').then( m => m.MainHomePageModule)
       },
       {
         path: 'history',
-        component: TransactionHistoryPageComponent,
+        loadChildren: () => import('./main-history/main-history.module').then( m => m.MainHistoryPageModule)
+      },
+      {
+        path: 'notification',
+        loadChildren: () => import('./main-notification/main-notification.module').then( m => m.MainNotificationPageModule)
+      },
+      {
+        path: 'setting',
+        loadChildren: () => import('./main-setting/main-setting.module').then( m => m.MainSettingPageModule)
       },
       {
         path: '',
@@ -51,6 +56,10 @@ const routes: Routes = [
     path: 'service-charge',
     component: ServicechargePageComponent,
   },
+  
+
+  
+
   
 ];
 

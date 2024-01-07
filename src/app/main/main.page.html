@@ -1,49 +1,65 @@
-<ion-tabs>
-  <ion-tab-bar style="border: none;" slot="bottom">
-    <ion-tab-button style="background-color: white;" tab="home">
-      <i class="bi bi-house"></i>
-      <ion-text>
-        Trang chủ
-      </ion-text>
-    </ion-tab-button>
-    <ion-tab-button style="background-color: white;" tab="history">
-      <i class="bi bi-clock-history"></i>
-      <ion-text>
-        Lịch sử GD
-      </ion-text>
-    </ion-tab-button>
-    <ion-tab-button style="background-color: white;">
-      <i class="bi bi-bell"></i>
-      <ion-text>
-        Thông báo
-      </ion-text>
-    </ion-tab-button>
-    <ion-tab-button style="background-color: white;">
-      <i class="bi bi-gear"></i>
-      <ion-text>
-        Cài đặt
-      </ion-text>
-    </ion-tab-button>
-  </ion-tab-bar>
-</ion-tabs>
+
 <!-- <ion-tabs>
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="home">
-      <ion-icon name="play-circle"></ion-icon>
-      Listen Now
+  <ion-tab-bar style="border: none;" slot="bottom">
+    <ion-tab-button style="--background:white;border-top: 1px solid white;font-size: 0.8rem;" tab="home">
+      <i style="font-size: 1.2rem;" class="bi bi-house"></i>
+      Trang chủ
     </ion-tab-button>
-    <ion-tab-button tab="history">
-      <ion-icon name="radio"></ion-icon>
-      Radio
+    <ion-tab-button style="--background:white;border-top: 1px solid white;font-size: 0.8rem;" tab="history">
+      <i style="font-size: 1.2rem;" class="bi bi-clock-history"></i>
+      Lịch sử GD
     </ion-tab-button>
-    <ion-tab-button tab="library">
-      <ion-icon name="library"></ion-icon>
-      Library
+    <ion-tab-button style="--background:white;;border-top: 1px solid white;font-size: 0.8rem;" tab="notification">
+      <i style="font-size: 1.2rem;" class="bi bi-bell"></i>
+      Thông báo
     </ion-tab-button>
-    <ion-tab-button tab="search">
-      <ion-icon name="search"></ion-icon>
-      Search
+    <ion-tab-button style="--background:white;;border-top: 1px solid white;font-size: 0.8rem;" tab="setting">
+      <i style="font-size: 1.2rem;" class="bi bi-gear"></i>
+      Cài đặt
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs> -->
+<ion-content>
+  <ion-router-outlet></ion-router-outlet>
+</ion-content>
+<ion-footer class="ion-no-border">
+  <mat-tab-group headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div (click)="goHomePage()" style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
+          <i style="font-size: 1.2rem;padding-bottom: 0.2em;" class="bi bi-house"></i>
+          <span style="font-size: 0.6rem;">Trang chủ</span>
+        </div>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div (click)="goHistoryPage()" style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
+          <i style="font-size: 1.2rem;padding-bottom: 0.2em;" class="bi bi-clock-history"></i>
+          <span style="font-size: 0.6rem;">Lịch sử GD</span>
+        </div>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div (click)="goNofiticationPage()" style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
+          <i style="font-size: 1.2rem;padding-bottom: 0.2em;" class="bi bi-bell"></i>
+          <span style="font-size: 0.6rem;">Thông báo</span>
+        </div>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div (click)="goSettingPage()" style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
+          <i style="font-size: 1.2rem;padding-bottom: 0.2em;" class="bi bi-gear"></i>
+          <span style="font-size: 0.6rem;">Cài đặt</span>
+        </div>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</ion-footer>
+
+
+
+
 

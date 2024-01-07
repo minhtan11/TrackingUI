@@ -127,8 +127,8 @@ ion-segment-button {
     border-radius: 0.8em;
     background-color: #ffb400;
     border: none;
-    width: 4em;
-    height: 4em;
+    width: 4rem;
+    height: 4rem;
 }
 
 .btn-app-home:active,
@@ -178,4 +178,22 @@ ul.timeline > li:before {
     width: 2em;
     height: 2em;
     z-index: 400;
+}
+
+.mdc-text-field--outlined {
+    --mdc-outlined-text-field-container-shape: 1em !important;
+}
+
+.text-segment{
+    font-size: 0.8em;
+}
+
+#tab-main{
+    .mdc-tab{
+        min-width: unset !important;
+        padding: unset !important;
+    }
+    .mat-ripple.mat-mdc-tab-ripple{
+        background-color: white !important;
+    }
 }

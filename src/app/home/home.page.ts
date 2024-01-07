@@ -35,7 +35,7 @@ export class HomePage implements OnInit,AfterViewInit {
   }
 
   onSignIn(){
-    this.navCtrl.navigateForward('main',{animated:false});
+    this.navCtrl.navigateForward('main');
   }
 
   
