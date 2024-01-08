@@ -12,7 +12,11 @@ import { OrderPageDetailComponent } from './order-page/order-page-detail/order-p
 import { PackagePageComponent } from './package-page/package-page.component';
 import { RechargePageComponent } from './recharge-page/recharge-page.component';
 import { ServicechargePageComponent } from './servicecharge-page/servicecharge-page.component';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
+import { HomePageComponent } from './home-page/home-page.component';
+import { HistoryPageComponent } from './history-page/history-page.component';
+import { NotificationPageComponent } from './notification-page/notification-page.component';
+import { SettingPageComponent } from './setting-page/setting-page.component';
 
 @NgModule({
   imports: [
@@ -22,6 +26,6 @@ import {MatTabsModule} from '@angular/material/tabs';
     MainPageRoutingModule,
     MatTabsModule
   ],
-  declarations: [MainPage,OrderPageComponent,OrderPageDetailComponent,PackagePageComponent,RechargePageComponent,ServicechargePageComponent]
+  declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent]
 })
-export class MainPageModule {}
+export class MainPageModule { }

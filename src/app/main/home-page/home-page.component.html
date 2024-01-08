@@ -114,7 +114,83 @@
       </div>
     </div>
   </div>
-  <div class="row p-3">
+  <ion-grid [fixed]="true" class="p-3">
+    <ion-row>
+      <ion-col size="6">
+        <ion-card mode="ios" class="m-0">
+          <ion-card-header>
+            <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;" src="../../../assets/image/payment.jpg">
+          </ion-card-header>
+          <ion-card-content>
+            <div class="text-center">
+              <ion-text class="font-weight-bold">
+                Đang chờ thanh toán
+              </ion-text>
+              <br>
+              <ion-text class="font-weight-bold">
+                0
+              </ion-text>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card mode="ios" class="m-0">
+          <ion-card-header>
+            <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;" src="../../../assets/image/plan-delivery.jpg">
+          </ion-card-header>
+          <ion-card-content>
+            <div class="text-center">
+              <ion-text class="font-weight-bold">
+                Kiện đang vận chuyển
+              </ion-text>
+              <br>
+              <ion-text class="font-weight-bold">
+                0
+              </ion-text>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card mode="ios" class="m-0">
+          <ion-card-header>
+            <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;" src="../../../assets/image/payment-done.jpg">
+          </ion-card-header>
+          <ion-card-content>
+            <div class="text-center">
+              <ion-text class="font-weight-bold">
+                Đã thanh toán
+              </ion-text>
+              <br>
+              <ion-text class="font-weight-bold">
+                0
+              </ion-text>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card mode="ios" class="m-0">
+          <ion-card-header>
+            <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;" src="../../../../assets/image/delivery-done.jpg">
+          </ion-card-header>
+          <ion-card-content>
+            <div class="text-center">
+              <ion-text class="font-weight-bold">
+                Đã nhận hàng
+              </ion-text>
+              <br>
+              <ion-text class="font-weight-bold">
+                0
+              </ion-text>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- <div class="row p-3">
     <div class="col-6">
       <div class="card text-center">
         <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;" src="../../../assets/image/payment.jpg">
@@ -173,129 +249,7 @@
         </div>
       </div>
     </div>
-  </div>
-  <!-- <ion-grid [fixed]="true">
-    <ion-row>
-      <ion-col class="text-center" size="3">
-        <div class="d-flex justify-content-center align-items-center">
-          <button (click)="goRechargePage()" type="button" class="btn btn-primary btn-sm btn-app-home">
-            <div class="d-flex justify-content-center align-items-center">
-              <ion-icon style="font-size:2.5rem;position: absolute;" name="arrow-redo-circle-outline"></ion-icon>
-            </div>
-          </button> 
-        </div>
-        <div style="margin-top: 0.2rem;">
-          <ion-text>
-            Nạp tiền
-          </ion-text>
-        </div>
-      </ion-col>
-      <ion-col class="text-center" size="3">
-        <div class="d-flex justify-content-center align-items-center">
-          <button (click)="goPackagePage()" type="button" class="btn btn-primary btn-sm btn-app-home">
-            <div class="d-flex justify-content-center align-items-center">
-              <ion-icon style="font-size:2.5rem;position: absolute;" name="cube-outline"></ion-icon>
-            </div>
-          </button>
-        </div>
-        <div style="margin-top: 0.2rem;">
-          <ion-text>
-            Kiện hàng
-          </ion-text>
-        </div>
-      </ion-col>
-      <ion-col class="text-center" size="3">
-        <div class="d-flex justify-content-center align-items-center">
-          <button (click)="goOrderPage()" type="button" class="btn btn-primary btn-sm btn-app-home">
-            <div class="d-flex justify-content-center align-items-center">
-              <ion-icon style="font-size:2.5rem;position: absolute;" name="document-text-outline"></ion-icon>
-            </div>
-          </button>
-        </div>
-        <div style="margin-top: 0.2rem;">
-          <ion-text>
-            Đơn hàng
-          </ion-text>
-        </div>
-      </ion-col>
-      <ion-col class="text-center" size="3">
-        <div class="d-flex justify-content-center align-items-center">
-          <button (click)="goServicechargePage()" type="button" class="btn btn-primary btn-sm btn-app-home">
-            <div class="d-flex justify-content-center align-items-center">
-              <ion-icon style="font-size:2.5rem;position: absolute;" name="cash-outline"></ion-icon>
-            </div>
-          </button>
-        </div>
-        <div style="margin-top: 0.2rem;">
-          <ion-text>
-            Phí vận chuyển
-          </ion-text>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-grid [fixed]="true">
-    <ion-row style="padding-left: 1rem;padding-right: 1rem;">
-      <ion-col size="6">
-        <div class="card text-center">
-          <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;" src="../../../assets/image/payment.jpg">
-          <div class="card-body">
-            <ion-text class="font-weight-bold">
-              Đang chờ thanh toán
-            </ion-text>
-            <br>
-            <ion-text class="font-weight-bold">
-              0
-            </ion-text>
-          </div>
-        </div>
-      </ion-col>
-      <ion-col size="6">
-        <div class="card text-center">
-          <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;" src="../../../assets/image/plan-delivery.jpg">
-          <div class="card-body">
-            <ion-text class="font-weight-bold">
-              Kiện đang vận chuyển
-            </ion-text>
-            <br>
-            <ion-text class="font-weight-bold">
-              0
-            </ion-text>
-          </div>
-        </div>
-      </ion-col>
-    </ion-row>
-    <ion-row style="padding-left: 1rem;padding-right: 1rem;">
-      <ion-col size="6">
-        <div class="card text-center">
-          <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;" src="../../../assets/image/payment-done.jpg">
-          <div class="card-body">
-            <ion-text class="font-weight-bold">
-              Đã thanh toán
-            </ion-text>
-            <br>
-            <ion-text class="font-weight-bold">
-              0
-            </ion-text>
-          </div>
-        </div>
-      </ion-col>
-      <ion-col size="6">
-        <div class="card text-center">
-          <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;" src="../../../../assets/image/delivery-done.jpg">
-          <div class="card-body">
-            <ion-text class="font-weight-bold">
-              Đã nhận hàng
-            </ion-text>
-            <br>
-            <ion-text class="font-weight-bold">
-              0
-            </ion-text>
-          </div>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid> -->
+  </div> -->
 </ion-content>
 
 
