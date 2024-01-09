@@ -23,19 +23,18 @@
     </ion-card-content>
   </ion-card> 
   <div class="d-flex justify-content-center align-items-center">
-    <ion-card style="border-radius: 1em;margin-top: -2.5rem;margin-bottom: 1rem;min-width: 20rem;
-    max-width: 30em;" mode="ios">
+    <ion-card style="border-radius: 1em;margin-top: -2.5rem;margin-bottom: 1rem;width: 80%;" mode="ios">
       <ion-card-header>
         <div class="d-flex align-items-center">
           <img  style="width: 4em;
               border-radius: 2em;
-              margin-right: 1rem;"src="../../../assets/image/logo-user.png" alt="">
+              margin-right: 1rem;" [src]="oUser.img ? oUser.img : '../../../assets/image/logo-user.png'" alt="">
           <div class="d-flex" style="flex-direction: column;">
-            <ion-text color="medium">
-              Chào buổi chiều!
+            <ion-text color="medium" class="ion-text-wrap">
+              {{titleTime}}
             </ion-text>
             <ion-text class="ion-text-uppercase font-weight-bold">
-              Trần minh tân
+              {{oUser.fullName ? oUser.fullName : oUser.username}}
             </ion-text>
           </div>
         </div>
@@ -43,15 +42,19 @@
       <ion-card-content>
         <div class="d-flex align-items-center">
           <i class="bi bi-wallet2 mx-2"></i>
-          <ion-text>
+          <ion-text style="white-space: nowrap;">
             Ví cá nhân:
           </ion-text>
           &nbsp;
-          <ion-text class="font-weight-bold" style="color:#ffb400;">
-            1.000.000đ
-          </ion-text>
+          <i  class="bi bi-eye"></i>
           &nbsp;&nbsp;
-          <i class="bi bi-eye"></i>
+          <div style="white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;">
+            <ion-text class="font-weight-bold" style="color:#ffb400;">
+              <span>{{oUser.wallet | currency: "VN":''}}</span>
+            </ion-text>
+          </div>
         </div>
       </ion-card-content>
     </ion-card>

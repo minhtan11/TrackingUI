@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -17,6 +17,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { HistoryPageComponent } from './history-page/history-page.component';
 import { NotificationPageComponent } from './notification-page/notification-page.component';
 import { SettingPageComponent } from './setting-page/setting-page.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { SettingPageComponent } from './setting-page/setting-page.component';
     FormsModule,
     IonicModule,
     MainPageRoutingModule,
-    MatTabsModule
+    MatTabsModule,
+    MatButtonModule
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent]
 })

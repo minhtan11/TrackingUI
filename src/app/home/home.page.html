@@ -1,30 +1,31 @@
 <ion-app>
-  <ion-content class="ion-padding no-scroll">
+  <ion-content class="ion-padding">
+    <app-apiservice></app-apiservice>
     <ion-grid class="text-center" [fixed]="true" >
-      <ion-row>
+      <ion-row [formGroup]="formGroup">
         <ion-col size="12">
           <img style="border-radius: 1em;display: block;
           margin-left: auto;
           margin-right: auto;width: 4em;height: 4em;;" src="../../assets/image/logo2.webp" alt="">
         </ion-col>
         <ion-col size="12">
-          <ion-text class="ion-text-wrap font-weight-bold">
+          <ion-text style="font-size: 0.8em;" class="ion-text-wrap font-weight-bold">
             NHẬN SHIP HÀNG - MỘT CHỮ TÍN VẠN NIỀM TIN
           </ion-text>
           <br>
-          <ion-text color="medium" class="ion-text-wrap">
+          <ion-text style="font-size: 0.8em;" color="medium" class="ion-text-wrap">
             Nhận ship hàng luôn đặt lợi ích khách hàng lên hàng đầu
           </ion-text>
         </ion-col>
         <ion-col size="12">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Tên đăng nhập</mat-label>
-            <input matInput>
+            <input #eleUserName formControlName="userName"  matInput>
           </mat-form-field>
           <div class="w-100">
             <mat-form-field class="w-100">
               <mat-label>Mật khẩu</mat-label>
-              <input matInput [type]="!showPass ? 'password' : 'text'">
+              <input #elePassword formControlName="passWord" matInput [type]="!showPass ? 'password' : 'text'">
               <button class="d-flex align-items-center justify-content-center" mat-icon-button matSuffix (click)="showPass = !showPass">
                 <ion-icon [name]="!showPass ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
               </button>
@@ -51,7 +52,7 @@
           <br>
         </ion-col>
         <ion-col>
-          
+          <!-- <img style="width: 60%;height: auto;object-fit: contain;display: block;margin-left: auto;margin-right: auto;" src="../../assets/image/delivery-service.png" alt=""> -->
         </ion-col>
       </ion-row>
     </ion-grid>
