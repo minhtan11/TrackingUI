@@ -12,9 +12,6 @@ const config: CapacitorConfig = {
     CapacitorHttp:{
       enabled:true
     },
-    // Keyboard: {
-    //   resize: KeyboardResize.None,
-    // },
   },
   server: {
     androidScheme: 'https',
