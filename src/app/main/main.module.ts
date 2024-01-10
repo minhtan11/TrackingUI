@@ -18,6 +18,7 @@ import { HistoryPageComponent } from './history-page/history-page.component';
 import { NotificationPageComponent } from './notification-page/notification-page.component';
 import { SettingPageComponent } from './setting-page/setting-page.component';
 import { MatButtonModule } from '@angular/material/button';
+import { DecodeVNPipe } from '../pipe/decode-VN/decode-vn.pipe';
 
 @NgModule({
   imports: [
@@ -26,8 +27,9 @@ import { MatButtonModule } from '@angular/material/button';
     IonicModule,
     MainPageRoutingModule,
     MatTabsModule,
-    MatButtonModule
+    MatButtonModule,
   ],
-  declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent]
+  declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
+  ,DecodeVNPipe]
 })
 export class MainPageModule { }

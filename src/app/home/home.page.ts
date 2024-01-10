@@ -29,7 +29,7 @@ export class HomePage implements OnInit,AfterViewInit {
     private dt : ChangeDetectorRef,
     private formBuilder: FormBuilder,
     private notification : NotificationServiceComponent,
-    private api : ApiserviceComponent
+    private api : ApiserviceComponent,
   ) {}
   //#endregion
 
@@ -80,8 +80,8 @@ export class HomePage implements OnInit,AfterViewInit {
     queryParams = queryParams.append("passWord",this.formGroup.value?.passWord);
     this.api.execByParameter('Authencation','login',queryParams,true).subscribe((res:any)=>{
       if (res && !res?.isError) {
-        this.notification.showNotiSuccess('','Đăng nhập thành công');
         this.router.navigate(['main/home'],{queryParams: {oUser:JSON.stringify(res.data)}});
+        this.notification.showNotiSuccess('','Đăng nhập thành công');
       }else{
         this.notification.showNotiError('',res?.message);
       }

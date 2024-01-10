@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -16,11 +17,11 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   constructor(
     private router: Router,
     private dt : ChangeDetectorRef,
-    private rt : ActivatedRoute
+    private rt : ActivatedRoute,
+    private navCtrl: NavController,
   ) { 
     this.rt.queryParams.subscribe((params :any) => {
       this.oUser = JSON.parse(params.oUser);
-      console.log(this.oUser);
     })
   }
   //#endregion
@@ -31,7 +32,6 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    
   }
 
   ngOnDestroy(): void {
