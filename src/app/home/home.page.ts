@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Keyboard } from '@capacitor/keyboard';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
 import { HttpParams } from '@angular/common/http';
@@ -37,6 +37,8 @@ export class HomePage implements OnInit, AfterViewInit {
     private api: ApiserviceComponent,
     private storage: StorageService,
     private rt: ActivatedRoute,
+    private navCtrl: NavController,
+    
   ) {
     this.rt.queryParams.subscribe((params: any) => {
       if (Object.keys(params).length != 0) {
@@ -51,7 +53,6 @@ export class HomePage implements OnInit, AfterViewInit {
       userName: ['', Validators.required],
       passWord: ['', Validators.required]
     });
-    //await this.storage.create();
   }
 
   async ngAfterViewInit() {
