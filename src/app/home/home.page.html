@@ -1,6 +1,6 @@
 <ion-app>
+  <app-apiservice></app-apiservice>
   <ion-content class="ion-padding">
-    <app-apiservice></app-apiservice>
     <ng-container *ngIf="isLoad">
       <div class="d-flex align-items-center justify-content-center h-100">
         <ion-grid class="text-center" [fixed]="true" style="margin: auto">
@@ -48,7 +48,7 @@
               <ion-text>
                 Bạn không có tài khoản?
               </ion-text>
-              <ion-text (click)="goSignUpPage()" class="font-weight-bold" color="primary">
+              <ion-text (click)="goSignUpPage()" color="primary">
                 <u>Đăng ký</u>
               </ion-text>
               <br>

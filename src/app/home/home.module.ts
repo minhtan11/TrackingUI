@@ -13,6 +13,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { ApiserviceComponent } from '../apiservice/apiservice.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { NotificationServiceComponent } from '../notification-service/notificati
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   declarations: [HomePage,SignUpComponent,ApiserviceComponent,NotificationServiceComponent],
   providers: [
