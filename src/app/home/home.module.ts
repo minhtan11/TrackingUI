@@ -30,7 +30,7 @@ import {MatSelectModule} from '@angular/material/select';
     ReactiveFormsModule,
     MatSelectModule
   ],
-  declarations: [HomePage,SignUpComponent,ApiserviceComponent,NotificationServiceComponent],
+  declarations: [HomePage,SignUpComponent,NotificationServiceComponent],
   providers: [
     ApiserviceComponent,
     NotificationServiceComponent,

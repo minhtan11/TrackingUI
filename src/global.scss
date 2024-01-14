@@ -167,16 +167,28 @@ ul.timeline > li {
     padding-left: 3em;
 }
 
-ul.timeline > li:before {
+ul.timeline > .no-active:before {
     content: " ";
     background: white;
     display: inline-block;
     position: absolute;
     border-radius: 50%;
     border: 2px solid #ffb400;
-    left: 2em;
-    width: 2em;
-    height: 2em;
+    left: 2.3em;
+    width: 1.5em;
+    height: 1.5em;
+    z-index: 400;
+}
+ul.timeline > .active:before {
+    content: " ";
+    background: #ffb400;
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid #ffb400;
+    left: 2.3em;
+    width: 1.5em;
+    height: 1.5em;
     z-index: 400;
 }
 

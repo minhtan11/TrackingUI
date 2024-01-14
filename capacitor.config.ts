@@ -1,5 +1,6 @@
 import { CapacitorConfig } from '@capacitor/cli';
 import { KeyboardResize } from '@capacitor/keyboard';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 const config: CapacitorConfig = {
   appId: 'com.tracking.app',
@@ -12,6 +13,11 @@ const config: CapacitorConfig = {
     CapacitorHttp:{
       enabled:true
     },
+    SplashScreen:{
+      launchAutoHide:false,
+      splashFullScreen:true,
+      splashImmersive:true,
+    }
   },
   server: {
     androidScheme: 'https',

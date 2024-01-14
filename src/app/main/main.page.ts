@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonTabs, NavController } from '@ionic/angular';
+import { IonTabs, NavController, Platform } from '@ionic/angular';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-main',
@@ -13,13 +14,21 @@ export class MainPage implements OnInit,AfterViewInit {
     private router: Router,
     private navCtrl: NavController,
     private dt : ChangeDetectorRef,
-  ) { }
+    private platform : Platform,
+  ) {
+    
+   }
 
   ngOnInit() {
   }
 
-  ngAfterViewInit(): void {
-    
+   ngAfterViewInit() {
+    // this.platform.ready().then(() => {
+    //   setTimeout(() => {
+    //     SplashScreen.hide({fadeOutDuration:0});
+    //   }, 500);
+      
+    // });
   }
   
 

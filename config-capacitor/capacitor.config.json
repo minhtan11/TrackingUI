@@ -5,7 +5,11 @@
   "webDir": "dist",
   "plugins": {
     "SplashScreen": {
-      "launchShowDuration": 0
+      "launchShowDuration": 0,
+      "launchAutoHide": false,
+      "splashFullScreen": true,
+      "splashImmersive": true,
+      "launchFadeOutDuration":100
     },
     "CapacitorHttp": {
       "enabled": true

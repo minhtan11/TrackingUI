@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Keyboard } from '@capacitor/keyboard';
 import { NavController, Platform } from '@ionic/angular';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
 import { HttpParams } from '@angular/common/http';
 import { ApiserviceComponent } from '../apiservice/apiservice.component';
 import { StorageService } from '../storage-service/storage.service';
-import { Storage } from '@ionic/storage-angular';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class HomePage implements OnInit, AfterViewInit {
   messageError: any;
   formGroup!: FormGroup;
   isLogin: any = true;
-  isLoad:any = false;
+  isExec:any = false;
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -38,6 +38,7 @@ export class HomePage implements OnInit, AfterViewInit {
     private storage: StorageService,
     private rt: ActivatedRoute,
     private navCtrl: NavController,
+    private platform : Platform,
     
   ) {
     this.rt.queryParams.subscribe((params: any) => {
@@ -65,7 +66,9 @@ export class HomePage implements OnInit, AfterViewInit {
       this.isHideFooter = false;
       this.dt.detectChanges();
     });
-    this.checkLogin();
+    // this.platform.ready().then(() => {
+    //   SplashScreen.hide();
+    // });
   }
 
   ngOnDestroy(): void {
@@ -90,49 +93,25 @@ export class HomePage implements OnInit, AfterViewInit {
       this.elePassword.nativeElement.focus();
       return;
     }
+    this.isExec = true;
     let queryParams = new HttpParams();
     queryParams = queryParams.append("userName", this.formGroup.value?.userName);
     queryParams = queryParams.append("passWord", this.formGroup.value?.passWord);
-    this.api.execByParameter('Authencation', 'login', queryParams, true).subscribe(async (res: any) => {
+    this.api.execByParameter('Authencation', 'login', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res && !res?.isError) {
-        await this.storage.set('userName', this.formGroup.value.userName);
-        await this.storage.set('passWord', this.formGroup.value.passWord);
-        setTimeout(() => {
-          this.router.navigate(['main/home'], { queryParams: { oUser: JSON.stringify(res.data) } });
-        }, 100);
+        this.navCtrl.navigateForward('main',{queryParams:{oUser: JSON.stringify(res.data)}});
+        this.storage.set('oUser', JSON.stringify(res.data));
+        this.onDestroy();
       } else {
+        this.isExec = false;
         this.notification.showNotiError('', res?.message);
       }
     })
   }
 
   goSignUpPage() {
-    this.router.navigate(['home/signup']);
-  }
-
-  async checkLogin() {
-    if (this.isLogin) {
-      let userName = await this.storage.get('userName');
-      let passWord = await this.storage.get('passWord');
-      if (userName && passWord) {
-        let queryParams = new HttpParams();
-        queryParams = queryParams.append("userName", userName);
-        queryParams = queryParams.append("passWord", passWord);
-        this.api.execByParameter('Authencation', 'login', queryParams, true).subscribe((res: any) => {
-          if (res && !res?.isError) {
-            this.router.navigate(['main/home'], { queryParams: { oUser: JSON.stringify(res.data) } });
-          }else{
-            this.isLoad = true;
-          }
-        })
-      }else{
-        this.formGroup.patchValue({userName:userName,passWord : passWord})
-        this.isLoad = true;
-        this.dt.detectChanges();
-      }
-    }else{
-
-    }
+    this.onDestroy();
+    this.navCtrl.navigateForward('home/signup');
   }
 
   //#endregion

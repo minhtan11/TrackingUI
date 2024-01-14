@@ -19,11 +19,11 @@ ngOnInit() {}
 showNotiError(title:string,text:string) {
   Swal.mixin({
     toast:true,
-    position:'bottom',
+    position:'top',
     buttonsStyling: false,
     showConfirmButton:false,
     timer: 1500,
-    timerProgressBar: true,
+    timerProgressBar: false,
   }).fire({
     icon: "error",
     title: title,
@@ -34,11 +34,11 @@ showNotiError(title:string,text:string) {
 showNotiSuccess(title:string,text:string) {
   Swal.mixin({
     toast:true,
-    position:'bottom',
+    position:'top',
     buttonsStyling: false,
     showConfirmButton:false,
     timer: 1500,
-    timerProgressBar: true,
+    timerProgressBar: false,
   }).fire({
     icon: "success",
     title: title,

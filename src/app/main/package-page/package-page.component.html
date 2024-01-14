@@ -1,68 +1,388 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar style="--background:white;">
-    <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button>
-    <ion-title mode="ios">Danh sách kiện ký gửi</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-  <div style="padding: 1em;">
-    <ion-segment [scrollable]="true" value="1">
-      <ion-segment-button value="1">
-        <ion-text class="text-segment">
-          Tất cả
-        </ion-text>
-      </ion-segment-button>
-      <ion-segment-button value="2">
-        <ion-text class="text-segment">
-          Chưa xác nhận
-        </ion-text>
-      </ion-segment-button>
-      <ion-segment-button value="3">
-        <ion-text class="text-segment">
-          Hàng về kho TQ
-        </ion-text>
-      </ion-segment-button>
-      <ion-segment-button value="4">
-        <ion-text class="text-segment">
-          Đang trên đường về HCM
-        </ion-text>
-      </ion-segment-button>
-      <ion-segment-button value="5">
-        <ion-text class="text-segment">
-          Hàng về tới HCM
-        </ion-text>
-      </ion-segment-button>
-      <ion-segment-button value="6">
-        <ion-text class="text-segment">
-          Đã nhận hàng
-        </ion-text>
-      </ion-segment-button>
-      <ion-segment-button value="7">
-        <ion-text class="text-segment">
-          Đã hủy
-        </ion-text>
-      </ion-segment-button>
-      <ion-segment-button value="8">
-        <ion-text class="text-segment">
-          Thất lạc
-        </ion-text>
-      </ion-segment-button>
-      <ion-segment-button value="9">
-        <ion-text class="text-segment">
-          Không nhận được hàng
-        </ion-text>
-      </ion-segment-button>
-    </ion-segment>
-  </div>
-</ion-content>
-<ion-footer class="ion-no-border">
-  <ion-toolbar style="--background:white">
-    <div style="padding-left: 1em;padding-right: 1em;">
-      <button type="button" class="btn btn-primary btn-lg btn-block" style="border-radius: 1em;background-color: #ffb400;border: none;">
-        <ion-text style="font-size: 0.9em;">
-          TẠO MÃ VẬN ĐƠN
-        </ion-text>
-      </button>
+  <ng-container *ngIf="isExec">
+    <div id="loader" style="position: absolute;z-index: 1000;background: rgb(255 255 255 / 50%);left: 0em;" class="container w-100 h-100 d-flex align-items-center justify-content-center">
+      <img width="8%" src="../../../assets/image/loader.gif" alt="">
     </div>
-  </ion-toolbar>
-</ion-footer>
+  </ng-container>
+  <ion-header class="ion-no-border">
+    <ion-toolbar style="--background:white;">
+      <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button>
+        <ion-title mode="ios">Danh sách kiện ký gửi</ion-title>
+    </ion-toolbar>
+    <ion-toolbar style="--background:white;">
+      <div>
+        <ion-segment [scrollable]="true" value="0" mode="ios">
+          <ion-segment-button (click)=" sortData(0)" value="0">
+            <ion-text class="text-segment">
+              <span style="font-size: 1em;">Tất cả</span>
+            </ion-text>
+          </ion-segment-button>
+          <ion-segment-button (click)=" sortData(1)" value="1">
+            <ion-text class="text-segment">
+              Chưa xác nhận
+            </ion-text>
+          </ion-segment-button>
+          <ion-segment-button (click)=" sortData(2)" value="2">
+            <ion-text class="text-segment">
+              Hàng về kho TQ
+            </ion-text>
+          </ion-segment-button>
+          <ion-segment-button (click)=" sortData(3)" value="3">
+            <ion-text class="text-segment">
+              Đang trên đường về HCM
+            </ion-text>
+          </ion-segment-button>
+          <ion-segment-button (click)=" sortData(4)" value="4">
+            <ion-text class="text-segment">
+              Hàng về tới HCM
+            </ion-text>
+          </ion-segment-button>
+          <ion-segment-button (click)=" sortData(5)" value="5">
+            <ion-text class="text-segment">
+              Đã nhận hàng
+            </ion-text>
+          </ion-segment-button>
+          <ion-segment-button (click)=" sortData(9)" value="9">
+            <ion-text class="text-segment">
+              Đã hủy
+            </ion-text>
+          </ion-segment-button>
+          <ion-segment-button (click)=" sortData(10)" value="10">
+            <ion-text class="text-segment">
+              Thất lạc
+            </ion-text>
+          </ion-segment-button>
+          <ion-segment-button (click)=" sortData(11)" value="11">
+            <ion-text class="text-segment">
+              Không nhận được hàng
+            </ion-text>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content [scrollEvents]="true" (ionScroll)="loadPage($event)">
+    <ng-container *ngIf="isEmpty">
+      <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
+        <img style="width: 40%;" src="../../../assets/image/no-order.png" alt="">
+        <ion-text>
+          Không có kiện hàng
+        </ion-text>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="lstData && lstData.length">
+      <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
+        <ion-card mode="ios">
+          <ion-card-header style="padding-bottom: 0em;">
+            <div style="justify-content: space-between;" class="d-flex align-items-center">
+              <div>
+                <ion-text style="font-size: 1.2em;" class="font-weight-bold">
+                  Mã Kiện
+                </ion-text>
+              </div>
+              <div class="d-flex align-items-center">
+                <ion-text style="font-size: 1.2em;">
+                  {{item.packageCode}}
+                </ion-text>
+                &nbsp;&nbsp;
+                <ion-icon style="font-size: 1.5em;" name="copy-outline"></ion-icon>
+              </div>
+            </div>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="w-100" style="border: 1px solid #ececec;border-radius: 1em;margin-top: 1em;">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6 offset-md-3">
+                    <ul class="timeline">
+                      <ng-container>
+                        <li *ngIf="item.exportedCNWH == null" class="no-active d-flex align-items-center">
+                          <ion-text class="font-weight-bold">
+                            XUẤT KHO TRUNG QUỐC
+                          </ion-text>
+                        </li>
+                        <li *ngIf="item.exportedCNWH != null" class="active">
+                          <ion-text class="font-weight-bold">
+                            XUẤT KHO TRUNG QUỐC
+                          </ion-text>
+                          <br>
+                          <ion-text color="medium">
+                            Ngày {{item.exportedCNWH | date : 'dd/MM/yyyy hh:mm a'}}
+                          </ion-text>
+                        </li>
+                      </ng-container>
+                      <ng-container>
+                        <li *ngIf="item.dateExpectation == null" class="no-active d-flex align-items-center">
+                          <ion-text class="font-weight-bold">
+                            ĐANG TRÊN ĐƯỜNG VỀ HCM
+                          </ion-text>
+                        </li>
+                        <li *ngIf="item.dateExpectation != null" class="active">
+                          <ion-text class="font-weight-bold">
+                            ĐANG TRÊN ĐƯỜNG VỀ HCM
+                          </ion-text>
+                          <br>
+                          <ion-text color="medium">
+                            Ngày {{item.dateExpectation | date : 'dd/MM/yyyy hh:mm a'}}
+                          </ion-text>
+                        </li>
+                      </ng-container>
+                      <ng-container>
+                        <li *ngIf="item.importedSGWH == null" class="no-active d-flex align-items-center">
+                          <ion-text class="font-weight-bold">
+                            ĐÃ VỀ KHO HCM
+                          </ion-text>
+                        </li>
+                        <li *ngIf="item.importedSGWH != null" class="active">
+                          <ion-text class="font-weight-bold">
+                            ĐÃ VỀ KHO HCM
+                          </ion-text>
+                          <br>
+                          <ion-text color="medium">
+                            Ngày {{item.importedSGWH | date : 'dd/MM/yyyy hh:mm a'}}
+                          </ion-text>
+                        </li>
+                      </ng-container>
+                      <ng-container>
+                        <li *ngIf="item.receivedDate == null" class="no-active d-flex align-items-center">
+                          <ion-text class="font-weight-bold">
+                            ĐÃ NHẬN HÀNG
+                          </ion-text>
+                        </li>
+                        <li *ngIf="item.receivedDate != null" class="active">
+                          <ion-text class="font-weight-bold">
+                            ĐÃ NHẬN HÀNG
+                          </ion-text>
+                          <br>
+                          <ion-text color="medium">
+                            Ngày {{item.receivedDate | date : 'dd/MM/yyyy hh:mm a'}}
+                          </ion-text>
+                        </li>
+                      </ng-container>                
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <ion-grid fixed>
+                <ion-row>
+                  <ion-col>
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text>
+                          Trạng thái đơn
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ng-container [ngSwitch]="item.status">
+                          <ion-text *ngSwitchCase="2">
+                            Hàng về kho TQ
+                          </ion-text>
+                          <ion-text *ngSwitchCase="3">
+                            Đang về HCM
+                          </ion-text>
+                          <ion-text *ngSwitchCase="4">
+                            Hàng về tới HCM
+                          </ion-text>
+                          <ion-text *ngSwitchCase="5">
+                            Đã nhận hàng
+                          </ion-text>
+                          <ion-text *ngSwitchCase="9">
+                            Đã hủy
+                          </ion-text>
+                          <ion-text *ngSwitchCase="10">
+                            Thất lạc
+                          </ion-text>
+                          <ion-text *ngSwitchCase="11">
+                            Không nhận được hàng
+                          </ion-text>
+                          <ion-text *ngSwitchDefault>
+                            Chưa xác nhận
+                          </ion-text>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text>
+                          Kho nhận
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ng-container [ngSwitch]="item.wareHouse">
+                          <ion-text *ngSwitchCase="'1'">
+                            Đông quản
+                          </ion-text>
+                          <ion-text *ngSwitchCase="'2'">
+                            Phật sơn
+                          </ion-text>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text>
+                          Loại vận chuyển
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ng-container [ngSwitch]="item.movingMethod">
+                          <ion-text *ngSwitchCase="2">
+                            Chậm
+                          </ion-text>
+                          <ion-text *ngSwitchCase="3">
+                            Bộ
+                          </ion-text>
+                          <ion-text *ngSwitchCase="4">
+                            Bộ lô
+                          </ion-text>
+                          <ion-text *ngSwitchCase="5">
+                            Biển
+                          </ion-text>
+                          <ion-text *ngSwitchDefault>
+                            Nhanh
+                          </ion-text>
+                        </ng-container>
+                        
+                      </div>
+                    </div>
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text>
+                          Ngày lên đơn
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ion-text>
+                          {{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}
+                        </ion-text>
+                      </div>
+                    </div>
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text>
+                          Khách hàng
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ion-text>
+                          {{item.username}}
+                        </ion-text>
+                      </div>
+                    </div> 
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text>
+                          Vận chuyển
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ion-text>
+                          {{(item.weight ? item.weight : '0')+'kg - '+ ((item.weightPrice ? item.weightPrice : 0)  | number)+'đ'}}
+                        </ion-text>
+                      </div>
+                    </div> 
+                    <div *ngIf="item.isWoodPackage || item.isAirPackage || item.isInsurance" style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text color="primary">
+                          Dịch vụ phụ
+                        </ion-text>
+                      </div>
+                    </div>
+                    <ng-container *ngIf="item.isWoodPackage">
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text>
+                            Đóng gỗ
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <i class="bi bi-check2-circle"></i>
+                        </div>
+                      </div> 
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text>
+                            Phí đóng gỗ
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text>
+                            {{(item.woodPackagePrice | number)+'đ'}}
+                          </ion-text>
+                        </div>
+                      </div> 
+                    </ng-container>
+                    <ng-container *ngIf="item.isAirPackage">
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text>
+                            Bọt khí
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <i class="bi bi-check2-circle"></i>
+                        </div>
+                      </div> 
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text>
+                            Phí bọt khí
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text>
+                            {{(item.airPackagePrice | number)+'đ'}}
+                          </ion-text>
+                        </div>
+                      </div> 
+                    </ng-container>
+                    <ng-container *ngIf="item.isInsurance">
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text>
+                            Bảo hiểm
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <i class="bi bi-check2-circle"></i>
+                        </div>
+                      </div> 
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text>
+                            Phí bảo hiểm
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text>
+                            {{(item.isInsurancePrice | number)+'đ'}}
+                          </ion-text>
+                        </div>
+                      </div> 
+                    </ng-container>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+            <div *ngIf="item.status < 2" class="d-flex align-items-center justify-content-center mt-3">
+              <button (click)="checkStatus()" style="border-radius: 1em;" class="btn text-white" mat-flat-button color="primary">
+                <ion-text>
+                  Kiểm tra hàng
+                </ion-text>
+              </button> 
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+    </ng-container>
+  </ion-content>
+  <ion-footer class="ion-no-border">
+    <ion-toolbar style="--background:white">
+      <div style="padding-left: 1em;padding-right: 1em;">
+        <button type="button" class="btn btn-primary btn-lg btn-block" style="border-radius: 1em;background-color: #ffb400;border: none;">
+          <ion-text style="font-size: 0.9em;">
+            TẠO MÃ VẬN ĐƠN
+          </ion-text>
+        </button>
+      </div>
+    </ion-toolbar>
+  </ion-footer>

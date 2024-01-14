@@ -26,50 +26,35 @@ export class ApiserviceComponent implements OnInit {
   //#endregion Init
 
   //#region Function
-  execByParameter(controller: any, router: any, queryParams: any, showLoading: any = false) {
-    if (showLoading) this.isLoad(true);
-    this.http.get<Config>(environment.apiUrl + controller + '/' + router, { params: queryParams }).pipe(catchError(this.handleError), takeUntil(this.destroy$)).subscribe((res) => {
-      setTimeout(() => {
-        if (showLoading) this.isLoad(false);
-        this.subject.next(res);
-      }, 500);
-    })
-    return this.subject.asObservable();
+  execByParameter(controller: any, router: any, queryParams: any) {
+    return this.http.get<Config>(environment.apiUrl + controller + '/' + router, { params: queryParams }).pipe(catchError(this.handleError), takeUntil(this.destroy$))
   }
 
-  execByBody(controller: any, router: any, data: any, showLoading: any = false) {
-    if (showLoading) this.isLoad(true);
-    this.http.post(environment.apiUrl + controller + '/' + router, data).pipe(catchError(this.handleError), takeUntil(this.destroy$)).subscribe((res) => {
-      setTimeout(() => {
-        if (showLoading) this.isLoad(false);
-        this.subject.next(res);
-      }, 500);
-
-    })
-    return this.subject.asObservable();
+  execByBody(controller: any, router: any, data: any) {
+    return this.http.post(environment.apiUrl + controller + '/' + router, data).pipe(catchError(this.handleError), takeUntil(this.destroy$))
   }
 
-  isLoad(type: any = false) {
-    let loader = document.getElementById('loader');
-    if (loader) {
-      if (type) {
-        loader.style.visibility = 'visible';
-      } else {
-        loader.style.visibility = 'hidden';
-      }
-    }
-  }
+  // isLoad(type: any = false) {
+  //   let loader = document.getElementById('loader');
+  //   if (loader) {
+  //     if (type) {
+  //       loader.style.visibility = 'visible';
+  //     } else {
+  //       loader.style.visibility = 'hidden';
+  //     }
+  //   }
+  // }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
       Swal.mixin({
         toast: true,
-        position: 'bottom',
+        position: 'top',
         buttonsStyling: false,
         showConfirmButton: false,
-        timer: 1000,
-        timerProgressBar: true,
+        timer: 5000,
+        timerProgressBar: false,
       }).fire({
         icon: "error",
         title: '',
@@ -83,11 +68,11 @@ export class ApiserviceComponent implements OnInit {
       //   `Backend returned code ${error.status}, body was: `, error.error);
       Swal.mixin({
         toast: true,
-        position: 'bottom',
+        position: 'top',
         buttonsStyling: false,
         showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
+        timer: 5000,
+        timerProgressBar: false,
       }).fire({
         icon: "error",
         title: '',

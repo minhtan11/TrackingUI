@@ -1,25 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { NavController, Platform } from '@ionic/angular';
+import { StorageService } from './storage-service/storage.service';
+import { HttpParams } from '@angular/common/http';
+import { ApiserviceComponent } from './apiservice/apiservice.component';
+import { Subject, takeUntil } from 'rxjs';
+import { SplashScreen } from '@capacitor/splash-screen';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
+  private destroy$ = new Subject<void>();
   constructor(
-    private platform : Platform
+    private platform : Platform,
+    private storage: StorageService,
+    private api: ApiserviceComponent,
+    private navCtrl: NavController,
+    private dt : ChangeDetectorRef,
   ) {}
 
   async ngOnInit() {
     await this.platform.ready();
-    this.platform.ready().then(() => {
+    this.platform.ready().then(async () => {
       this.platform.backButton.subscribeWithPriority(9999, () => {
         document.addEventListener('backbutton', function (event) {
           event.preventDefault();
           event.stopPropagation();
         }, false);
       });
+      await SplashScreen.hide({fadeOutDuration:0});
     });
   }
 }
