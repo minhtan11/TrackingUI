@@ -5,6 +5,7 @@ import { HttpParams } from '@angular/common/http';
 import { ApiserviceComponent } from './apiservice/apiservice.component';
 import { Subject, takeUntil } from 'rxjs';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -21,10 +22,10 @@ export class AppComponent implements OnInit {
     private api: ApiserviceComponent,
     private navCtrl: NavController,
     private dt : ChangeDetectorRef,
+    private router:Router
   ) {}
 
   async ngOnInit() {
-    await this.platform.ready();
     this.platform.ready().then(async () => {
       this.platform.backButton.subscribeWithPriority(9999, () => {
         document.addEventListener('backbutton', function (event) {
@@ -32,7 +33,6 @@ export class AppComponent implements OnInit {
           event.stopPropagation();
         }, false);
       });
-      await SplashScreen.hide({fadeOutDuration:0});
     });
   }
 }

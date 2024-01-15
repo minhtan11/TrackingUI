@@ -1,0 +1,46 @@
+<ng-container *ngIf="isExec">
+  <div id="loader" style="position: absolute;z-index: 1000;background: rgb(255 255 255 / 50%);left: 0em;" class="container w-100 h-100 d-flex align-items-center justify-content-center">
+    <img width="8%" src="../../../assets/image/loader.gif" alt="">
+  </div>
+</ng-container>
+<ion-header class="ion-no-border">
+  <ion-toolbar style="--background:white;">
+    <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button>
+    <ion-title mode="ios">Tìm kiếm kiện ký gửi</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-card class="p-0">
+    <ion-card-content [formGroup]="formGroup">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Nhập mã đơn hàng</mat-label>
+        <input formControlName="id" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Từ ngày - đến ngày</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input formControlName="fromDate" matStartDate placeholder="Từ ngày">
+          <input formControlName="toDate" matEndDate placeholder="đến ngày">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker disabled="false"></mat-date-range-picker>
+      </mat-form-field>
+      <div class="d-flex align-items-center justify-content-end">
+        <button (click)="find()" style="border-radius: 1em;" class="btn text-white" mat-flat-button color="primary">
+          <ion-text>
+            Tìm
+          </ion-text>
+        </button>
+      </div>
+       
+    </ion-card-content>
+  </ion-card>
+  <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
+    <img style="width: 20%;" src="../../../../assets/image/find.png" alt="">
+    <div class="text-center mt-2">
+      <ion-text color="medium">
+        Bạn có thể tìm kiếm theo ID kiện hàng, từ ngày - đến ngày
+      </ion-text>
+    </div>
+  </div>
+</ion-content>

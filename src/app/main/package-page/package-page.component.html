@@ -6,9 +6,11 @@
   <ion-header class="ion-no-border">
     <ion-toolbar style="--background:white;">
       <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button>
-        <ion-title mode="ios">Danh sách kiện ký gửi</ion-title>
+      <ion-title mode="ios">Danh sách kiện ký gửi</ion-title>
+      <i (click)="createPackage()" style="font-size: 1.5em;color: #ffc107;" slot="end" class="bi bi-file-earmark-plus me-3"></i>
+      <i (click)="findPackage()"  style="font-size: 1.5em;color: #ffc107;" slot="end" class="bi bi-search me-3"></i>
     </ion-toolbar>
-    <ion-toolbar style="--background:white;">
+    <ion-toolbar style="--background:white;" class="pr-3 pl-3">
       <div>
         <ion-segment [scrollable]="true" value="0" mode="ios">
           <ion-segment-button (click)=" sortData(0)" value="0">
@@ -375,7 +377,7 @@
       </ng-container>
     </ng-container>
   </ion-content>
-  <ion-footer class="ion-no-border">
+  <!-- <ion-footer class="ion-no-border">
     <ion-toolbar style="--background:white">
       <div style="padding-left: 1em;padding-right: 1em;">
         <button type="button" class="btn btn-primary btn-lg btn-block" style="border-radius: 1em;background-color: #ffb400;border: none;">
@@ -385,4 +387,4 @@
         </button>
       </div>
     </ion-toolbar>
-  </ion-footer>
+  </ion-footer> -->

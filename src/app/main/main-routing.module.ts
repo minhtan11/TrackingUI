@@ -11,6 +11,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { HistoryPageComponent } from './history-page/history-page.component';
 import { NotificationPageComponent } from './notification-page/notification-page.component';
 import { SettingPageComponent } from './setting-page/setting-page.component';
+import { FindPageComponent } from './package-page/find-page/find-page.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path: 'package',
     component: PackagePageComponent,
+  },
+  {
+    path: 'package/find',
+    component: FindPageComponent,
   },
   {
     path: 'recharge',

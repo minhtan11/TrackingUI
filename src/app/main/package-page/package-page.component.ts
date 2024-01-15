@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
@@ -31,6 +31,7 @@ export class PackagePageComponent  implements OnInit {
     private dt : ChangeDetectorRef,
     private api : ApiserviceComponent,
     private rt : ActivatedRoute,
+    private router:Router
   ) { 
     this.username = this.rt.snapshot.queryParams['username'];
     this.loadData();
@@ -93,7 +94,7 @@ export class PackagePageComponent  implements OnInit {
 
   async loadPage(event:any){
     let scrollElement = await this.content.getScrollElement();
-    if (scrollElement.scrollTop === scrollElement.scrollHeight - scrollElement.clientHeight) {
+    if ((scrollElement.scrollTop === scrollElement.scrollHeight - scrollElement.clientHeight) && scrollElement.scrollTop != 0) {
       if(this.isload){
         this.pageNum += 1;
         this.loadData();
@@ -103,6 +104,15 @@ export class PackagePageComponent  implements OnInit {
 
   checkStatus(){
 
+  }
+
+  createPackage(){
+
+  }
+
+  findPackage(){
+    this.onDestroy();
+    this.router.navigate(['main/package/find',{queryParams:{username:this.username}}]);
   }
 
   //#endregion

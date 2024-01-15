@@ -1,6 +1,6 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -19,6 +19,12 @@ import { NotificationPageComponent } from './notification-page/notification-page
 import { SettingPageComponent } from './setting-page/setting-page.component';
 import { MatButtonModule } from '@angular/material/button';
 import { DecodeVNPipe } from '../pipe/decode-VN/decode-vn.pipe';
+import {MatStepperModule} from '@angular/material/stepper';
+import { FindPageComponent } from './package-page/find-page/find-page.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   imports: [
@@ -28,8 +34,14 @@ import { DecodeVNPipe } from '../pipe/decode-VN/decode-vn.pipe';
     MainPageRoutingModule,
     MatTabsModule,
     MatButtonModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
-  ,DecodeVNPipe]
+  ,DecodeVNPipe,FindPageComponent]
 })
 export class MainPageModule { }

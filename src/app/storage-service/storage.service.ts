@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
@@ -6,7 +7,7 @@ import { Storage } from '@ionic/storage-angular';
 })
 export class StorageService {
   private _storage: Storage | null = null;
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage,private router : Router) {
     this.init();
   }
 

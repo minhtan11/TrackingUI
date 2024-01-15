@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import { RouteReuseStrategy, Router } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -8,14 +8,21 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { IonicStorageModule } from '@ionic/storage-angular';
+import { IonicStorageModule, Storage } from '@ionic/storage-angular';
 import { ApiserviceComponent } from './apiservice/apiservice.component';
 import { AuthguardGuard } from './authguardservice/authguard.guard';
+import { StorageService } from './storage-service/storage.service';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule,HttpClientModule,IonicStorageModule.forRoot()],
-  providers: [ApiserviceComponent,AuthguardGuard,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule,HttpClientModule,IonicStorageModule,IonicStorageModule.forRoot()],
+  providers: [
+    ApiserviceComponent,
+    AuthguardGuard,
+    StorageService,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}
