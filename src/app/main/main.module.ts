@@ -25,6 +25,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { CreatePageComponent } from './package-page/create-page/create-page.component';
+import { NotificationServiceComponent } from '../notification-service/notification-service.component';
 
 @NgModule({
   imports: [
@@ -42,6 +44,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     ReactiveFormsModule,
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
-  ,DecodeVNPipe,FindPageComponent]
+  ,DecodeVNPipe,FindPageComponent,CreatePageComponent],
+  providers:[]
 })
 export class MainPageModule { }

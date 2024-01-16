@@ -12,6 +12,16 @@ import { IonicStorageModule, Storage } from '@ionic/storage-angular';
 import { ApiserviceComponent } from './apiservice/apiservice.component';
 import { AuthguardGuard } from './authguardservice/authguard.guard';
 import { StorageService } from './storage-service/storage.service';
+import { CheckTenantService } from './check-tenant/check-tenant.service';
+
+function appInitializer(checkService: CheckTenantService) {
+  return () => {
+    return new Promise((resolve) => {
+      checkService.init();
+      resolve(true);
+    });
+  };
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +30,13 @@ import { StorageService } from './storage-service/storage.service';
     ApiserviceComponent,
     AuthguardGuard,
     StorageService,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializer,
+      multi: true,
+      deps: [CheckTenantService],
+    },
   ],
   bootstrap: [AppComponent],
 })

@@ -12,6 +12,7 @@ import { HistoryPageComponent } from './history-page/history-page.component';
 import { NotificationPageComponent } from './notification-page/notification-page.component';
 import { SettingPageComponent } from './setting-page/setting-page.component';
 import { FindPageComponent } from './package-page/find-page/find-page.component';
+import { CreatePageComponent } from './package-page/create-page/create-page.component';
 
 const routes: Routes = [
   {
@@ -56,6 +57,10 @@ const routes: Routes = [
   {
     path: 'package/find',
     component: FindPageComponent,
+  },
+  {
+    path: 'package/create',
+    component: CreatePageComponent,
   },
   {
     path: 'recharge',

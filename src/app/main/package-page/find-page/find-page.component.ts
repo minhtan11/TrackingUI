@@ -1,9 +1,11 @@
 import { HttpParams } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IonContent } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
+import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
 
 @Component({
   selector: 'app-find-page',
@@ -12,6 +14,7 @@ import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FindPageComponent  implements OnInit {
+  @ViewChild(IonContent) content: IonContent;
   formGroup!: FormGroup;
   status:any = 0;
   lstData:any = [];
@@ -27,6 +30,7 @@ export class FindPageComponent  implements OnInit {
     private api: ApiserviceComponent,
     private rt : ActivatedRoute,
     private dt : ChangeDetectorRef,
+    private notification: NotificationServiceComponent,
   ) { 
     this.username = this.rt.snapshot.queryParams['username'];
   }
@@ -45,6 +49,15 @@ export class FindPageComponent  implements OnInit {
   }
 
   find(){
+    this.isExec = true;
+    this.lstData = [];
+    this.dt.detectChanges();
+    setTimeout(() => {
+      this.loadData();
+    }, 100);
+  }
+
+  loadData(){
     let queryParams = new HttpParams();
       queryParams = queryParams.append("status", this.status);
       queryParams = queryParams.append("id", this.formGroup.value.id);
@@ -67,5 +80,24 @@ export class FindPageComponent  implements OnInit {
         this.onDestroy();
       })
   }
+
+  async loadPage(event:any){
+    let scrollElement = await this.content.getScrollElement();
+    if ((scrollElement.scrollTop === scrollElement.scrollHeight - scrollElement.clientHeight) && scrollElement.scrollTop != 0) {
+      if(this.isload){
+        this.pageNum += 1;
+        this.loadData();
+      }
+    }
+  }
+
+  trackByFn(index:any, item:any) { 
+    return index; 
+  }
+
+  checkStatus(){
+
+  }
+
 
 }
