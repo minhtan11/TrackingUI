@@ -27,6 +27,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CreatePageComponent } from './package-page/create-page/create-page.component';
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { NotificationServiceComponent } from '../notification-service/notificati
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    MatSelectModule
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
   ,DecodeVNPipe,FindPageComponent,CreatePageComponent],

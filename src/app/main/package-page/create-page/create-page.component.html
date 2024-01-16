@@ -5,5 +5,45 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  
+  <ion-grid class="text-center" [fixed]="true" style="margin: auto">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Mã vận đơn</mat-label>
+      <input matInput>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Phương thức vận chuyển</mat-label>
+      <mat-select #eleGender>
+        <mat-option [value]="true">Nhanh</mat-option>
+        <mat-option [value]="false">Chậm</mat-option>
+        <mat-option [value]="false">Bộ</mat-option>
+        <mat-option [value]="false">Bộ lô</mat-option>
+        <mat-option [value]="false">Biển</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Kho</mat-label>
+      <mat-select #eleGender>
+        <mat-option [value]="true">Đông quản</mat-option>
+        <mat-option [value]="false">Phật sơn</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Dịch vụ</mat-label>
+      <mat-select #eleGender>
+        <mat-option [value]="true">Đóng gỗ</mat-option>
+        <mat-option [value]="false">Túi khí</mat-option>
+        <mat-option [value]="false">Bảo hiểm</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button style="border-radius: 1em;" class="btn btn-block text-white" mat-flat-button color="primary">
+      <ion-text>
+        Lưu
+      </ion-text>
+    </button>    
+    <button style="border-radius: 1em;" class="btn btn-block text-white" mat-flat-button color="primary">
+      <ion-text>
+        Nhập lại
+      </ion-text>
+    </button>    
+  </ion-grid>
 </ion-content>

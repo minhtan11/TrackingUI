@@ -30,7 +30,6 @@ export class FindPageComponent  implements OnInit {
     private api: ApiserviceComponent,
     private rt : ActivatedRoute,
     private dt : ChangeDetectorRef,
-    private notification: NotificationServiceComponent,
   ) { 
     this.username = this.rt.snapshot.queryParams['username'];
   }
