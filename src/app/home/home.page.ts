@@ -66,9 +66,6 @@ export class HomePage implements OnInit, AfterViewInit {
       this.isHideFooter = false;
       this.dt.detectChanges();
     });
-    // this.platform.ready().then(() => {
-    //   SplashScreen.hide();
-    // });
   }
 
   ngOnDestroy(): void {
@@ -99,7 +96,7 @@ export class HomePage implements OnInit, AfterViewInit {
     queryParams = queryParams.append("passWord", this.formGroup.value?.passWord);
     this.api.execByParameter('Authencation', 'login', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res && !res?.isError) {
-        this.navCtrl.navigateForward('main',{queryParams:{oUser: JSON.stringify(res.data)}});
+        this.navCtrl.navigateForward('main/home',{queryParams:{oUser: JSON.stringify(res.data)}});
         this.storage.set('oUser', JSON.stringify(res.data));
         this.onDestroy();
       } else {

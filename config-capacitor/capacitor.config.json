@@ -7,7 +7,8 @@
     "SplashScreen": {
       "launchAutoHide": true,
       "splashFullScreen": true,
-      "splashImmersive": true
+      "splashImmersive": true,
+      "launchShowDuration":500
     },
     "CapacitorHttp": {
       "enabled": true

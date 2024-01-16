@@ -28,6 +28,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { CreatePageComponent } from './package-page/create-page/create-page.component';
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
 import { MatSelectModule } from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
@@ -43,10 +44,11 @@ import { MatSelectModule } from '@angular/material/select';
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
   ,DecodeVNPipe,FindPageComponent,CreatePageComponent],
-  providers:[]
+  providers:[NotificationServiceComponent]
 })
 export class MainPageModule { }

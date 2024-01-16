@@ -96,7 +96,7 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
     }
     if (this.formGroup.controls['gender'].invalid) {
       this.notification.showNotiError('', 'Giới tính không được bỏ trống');
-      this.eleFullName.nativeElement.focus();
+      this.eleGender.nativeElement.focus();
       return;
     }
     if (this.formGroup.controls['phone'].invalid) {

@@ -22,7 +22,7 @@ showNotiError(title:string,text:string) {
     position:'top',
     buttonsStyling: false,
     showConfirmButton:false,
-    timer: 1500,
+    timer: 3000,
     timerProgressBar: false,
   }).fire({
     icon: "error",
@@ -37,7 +37,7 @@ showNotiSuccess(title:string,text:string) {
     position:'top',
     buttonsStyling: false,
     showConfirmButton:false,
-    timer: 1500,
+    timer: 3000,
     timerProgressBar: false,
   }).fire({
     icon: "success",

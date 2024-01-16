@@ -22,7 +22,7 @@ export class FindPageComponent  implements OnInit {
   pageNum:any = 1;
   pageSize:any = 10;
   username:any;
-  isEmpty:any = false;
+  isEmpty:any = true;
   isload:any=true;
   private destroy$ = new Subject<void>();
   constructor(
@@ -70,7 +70,7 @@ export class FindPageComponent  implements OnInit {
           res[0].forEach((data:any) => {
             this.lstData.push(data);
           });
-          console.log(res);
+          this.isEmpty = false;
           this.isExec = false;
           if(this.lstData.length == 0) this.isEmpty = true;
           if(this.lstData.length == res[1]) this.isload = false;

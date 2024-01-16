@@ -13,6 +13,7 @@ import { NotificationPageComponent } from './notification-page/notification-page
 import { SettingPageComponent } from './setting-page/setting-page.component';
 import { FindPageComponent } from './package-page/find-page/find-page.component';
 import { CreatePageComponent } from './package-page/create-page/create-page.component';
+import { AuthGuard } from '../authguardservice/authguard.guard';
 
 const routes: Routes = [
   {

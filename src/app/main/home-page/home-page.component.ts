@@ -48,9 +48,11 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   //#region Init
   ngOnInit() {
     this.getTime();
+    
   }
 
   ngAfterViewInit(){
+    
   }
 
   ngOnDestroy(): void {

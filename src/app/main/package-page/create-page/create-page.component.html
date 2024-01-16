@@ -5,42 +5,56 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <ion-grid class="text-center" [fixed]="true" style="margin: auto">
+  <ion-grid class="text-center" [fixed]="true" style="margin: auto" [formGroup]="formGroup">
     <mat-form-field appearance="outline" class="w-100">
       <mat-label>Mã vận đơn</mat-label>
-      <input matInput>
+      <input #elePackageCode formControlName="packageCode" matInput>
     </mat-form-field>
     <mat-form-field appearance="outline" class="w-100">
       <mat-label>Phương thức vận chuyển</mat-label>
-      <mat-select #eleGender>
-        <mat-option [value]="true">Nhanh</mat-option>
-        <mat-option [value]="false">Chậm</mat-option>
-        <mat-option [value]="false">Bộ</mat-option>
-        <mat-option [value]="false">Bộ lô</mat-option>
-        <mat-option [value]="false">Biển</mat-option>
+      <mat-select #eleMovingMethod formControlName="movingMethod">
+        <mat-option [value]="1">Nhanh</mat-option>
+        <mat-option [value]="2">Chậm</mat-option>
+        <mat-option [value]="3">Bộ</mat-option>
+        <mat-option [value]="4">Bộ lô</mat-option>
+        <mat-option [value]="5">Biển</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="outline" class="w-100">
       <mat-label>Kho</mat-label>
-      <mat-select #eleGender>
+      <mat-select #eleWareHouse formControlName="wareHouse">
         <mat-option [value]="true">Đông quản</mat-option>
         <mat-option [value]="false">Phật sơn</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field appearance="outline" class="w-100">
-      <mat-label>Dịch vụ</mat-label>
-      <mat-select #eleGender>
-        <mat-option [value]="true">Đóng gỗ</mat-option>
-        <mat-option [value]="false">Túi khí</mat-option>
-        <mat-option [value]="false">Bảo hiểm</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button style="border-radius: 1em;" class="btn btn-block text-white" mat-flat-button color="primary">
+    <ion-text color="primary">
+      <h3>Dịch vụ</h3>
+    </ion-text>
+    <div class="d-flex align-items-center justify-content-between">
+      <mat-checkbox formControlName="isWoodPackage">Đóng gỗ</mat-checkbox>
+      <mat-checkbox formControlName = "isAirPackage">Túi khí</mat-checkbox>
+      <mat-checkbox (change)="change($event)" formControlName="isInsurance">Bảo hiểm</mat-checkbox>
+    </div>
+    <ng-container *ngIf="formGroup.value.isInsurance">
+      <ion-text color="primary">
+        <h3>Kê khai</h3>
+      </ion-text>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Tên sản phẩm</mat-label>
+        <input #eleDeclaration formControlName="declaration" matInput>
+      </mat-form-field>  
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Giá</mat-label>
+        <input #eleDeclarePrice type="number" formControlName="declarePrice" matInput>
+      </mat-form-field>  
+    </ng-container>
+    
+    <button (click)="save()" style="border-radius: 1em;" class="btn btn-block text-white" mat-flat-button color="primary">
       <ion-text>
         Lưu
       </ion-text>
     </button>    
-    <button style="border-radius: 1em;" class="btn btn-block text-white" mat-flat-button color="primary">
+    <button (click)="reset()" style="border-radius: 1em;background-color: var(--ion-color-primary);" class="btn btn-block text-white" mat-flat-button color="primary">
       <ion-text>
         Nhập lại
       </ion-text>

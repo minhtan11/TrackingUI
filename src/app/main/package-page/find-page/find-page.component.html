@@ -10,13 +10,13 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <ion-card class="p-0">
+  <ion-card class="p-0" mode="ios">
     <ion-card-content [formGroup]="formGroup">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Nhập mã đơn hàng</mat-label>
         <input formControlName="id" matInput>
       </mat-form-field>
-      <mat-form-field appearance="outline" class="w-100">
+      <mat-form-field class="d-flex align-items-center justify-content-center"  appearance="outline" class="w-100">
         <mat-label>Từ ngày - đến ngày</mat-label>
         <mat-date-range-input [rangePicker]="picker">
           <input formControlName="fromDate" matStartDate placeholder="Từ ngày">
