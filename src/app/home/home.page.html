@@ -9,23 +9,23 @@
     <ion-content class="ion-padding">
       <ng-container>
         <div class="d-flex align-items-center justify-content-center h-100">
-          <ion-grid class="text-center" [fixed]="true" style="margin: auto">
+          <ion-grid class="text-center pr-0 pl-0" [fixed]="true" style="margin: auto">
             <ion-row [formGroup]="formGroup">
-              <ion-col size="12">
-                <img style="border-radius: 1em;display: block;
+              <ion-col size="12" class="pr-0 pl-0">
+                <img style="border-radius: 5rem;display: block;
                 margin-left: auto;
-                margin-right: auto;width: 4em;height: 4em;;" src="../../assets/image/logo2.webp" alt="">
+                margin-right: auto;width: 5em;height: 5em;;" src="../../assets/image/logo2.webp" alt="">
               </ion-col>
-              <ion-col size="12">
-                <ion-text style="font-size: 0.8em;" class="ion-text-wrap font-weight-bold">
+              <ion-col size="12" class="pr-0 pl-0">
+                <ion-text style="font-size: 0.8rem;" class="ion-text-wrap font-weight-bold">
                   NHẬN SHIP HÀNG - MỘT CHỮ TÍN VẠN NIỀM TIN
                 </ion-text>
                 <br>
-                <ion-text style="font-size: 0.8em;" color="medium" class="ion-text-wrap">
+                <ion-text style="font-size: 0.8rem;" color="medium" class="ion-text-wrap">
                   Nhận ship hàng luôn đặt lợi ích khách hàng lên hàng đầu
                 </ion-text>
               </ion-col>
-              <ion-col size="12">
+              <ion-col size="12" class="pr-0 pl-0">
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Tên đăng nhập</mat-label>
                   <input #eleUserName formControlName="userName"  matInput>
@@ -45,12 +45,12 @@
                   </ion-text>
                 </button>    
               </ion-col>
-              <ion-col size="12">
+              <ion-col size="12" class="pr-0 pl-0">
                 <ion-text class="font-weight-bold">
                   <u>Quên mật khẩu?</u>
                 </ion-text>
               </ion-col>
-              <ion-col size="12">
+              <ion-col size="12" class="pr-0 pl-0">
                 <ion-text>
                   Bạn không có tài khoản?
                 </ion-text>
@@ -59,7 +59,7 @@
                 </ion-text>
                 <br>
               </ion-col>
-              <ion-col>
+              <ion-col size="12" class="pr-0 pl-0">
                 <img style="width: 60%;height: auto;object-fit: contain;display: block;margin-left: auto;margin-right: auto;" src="../../assets/image/delivery-service.png" alt="">
               </ion-col>
             </ion-row>

@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
+  isload:any=true;
   private destroy$ = new Subject<void>();
   constructor(
     private platform : Platform,
@@ -34,5 +35,23 @@ export class AppComponent implements OnInit {
         }, false);
       });
     });
+    this.checkLogin();
+  }
+
+  async checkLogin(){
+    let oUser = await this.storage.get('oUser');
+    if (oUser) {
+      this.navCtrl.navigateForward('main', { queryParams: { oUser: oUser}});
+      setTimeout(() => {
+        this.isload = false;
+        this.dt.detectChanges();
+      }, 2000);
+    }else{
+      this.navCtrl.navigateForward('home');
+      setTimeout(() => {
+        this.isload = false;
+        this.dt.detectChanges();
+      }, 2000);
+    }
   }
 }

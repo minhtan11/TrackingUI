@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent, NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
+import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
 
 @Component({
   selector: 'app-package-page',
@@ -32,6 +33,7 @@ export class PackagePageComponent  implements OnInit {
     private api : ApiserviceComponent,
     private rt : ActivatedRoute,
     private navCtrl: NavController,
+    private notification: NotificationServiceComponent,
   ) { 
     this.username = this.rt.snapshot.queryParams['username'];
     this.loadData();
@@ -82,7 +84,6 @@ export class PackagePageComponent  implements OnInit {
           res[0].forEach((data:any) => {
             this.lstData.push(data);
           });
-          console.log(res);
           this.isExec = false;
           if(this.lstData.length == 0) this.isEmpty = true;
           if(this.lstData.length == res[1]) this.isload = false;
@@ -114,6 +115,10 @@ export class PackagePageComponent  implements OnInit {
   findPackage(){
     this.onDestroy();
     this.navCtrl.navigateForward('main/package/find',{queryParams:{username:this.username}});
+  }
+
+  onCopy(){
+    this.notification.showNotiSuccess('','Đã Sao chép');
   }
 
   //#endregion

@@ -29,6 +29,7 @@ import { CreatePageComponent } from './package-page/create-page/create-page.comp
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
 import { MatSelectModule } from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatNativeDateModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ClipboardModule
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
   ,DecodeVNPipe,FindPageComponent,CreatePageComponent],

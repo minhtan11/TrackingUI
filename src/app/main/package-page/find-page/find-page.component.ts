@@ -18,12 +18,13 @@ export class FindPageComponent  implements OnInit {
   formGroup!: FormGroup;
   status:any = 0;
   lstData:any = [];
-  isExec:any=false;
   pageNum:any = 1;
   pageSize:any = 10;
   username:any;
   isEmpty:any = true;
   isload:any=true;
+
+  id:any='';
   private destroy$ = new Subject<void>();
   constructor(
     private formBuilder: FormBuilder,
@@ -35,11 +36,11 @@ export class FindPageComponent  implements OnInit {
   }
 
   ngOnInit() {
-    this.formGroup = this.formBuilder.group({
-      fromDate: new FormControl({value: null, disabled: true}),
-      toDate: new FormControl({value: null, disabled: true}),
-      id: [null],
-    });
+    // this.formGroup = this.formBuilder.group({
+    //   fromDate: new FormControl({value: null, disabled: true}),
+    //   toDate: new FormControl({value: null, disabled: true}),
+    //   id: [null],
+    // });
   }
 
   onDestroy(){
@@ -47,21 +48,21 @@ export class FindPageComponent  implements OnInit {
     this.destroy$.complete();
   }
 
-  find(){
-    this.isExec = true;
-    this.lstData = [];
-    this.dt.detectChanges();
-    setTimeout(() => {
-      this.loadData();
-    }, 100);
-  }
+  // find(){
+  //   this.isExec = true;
+  //   this.lstData = [];
+  //   this.dt.detectChanges();
+  //   setTimeout(() => {
+  //     this.loadData();
+  //   }, 100);
+  // }
 
   loadData(){
     let queryParams = new HttpParams();
       queryParams = queryParams.append("status", this.status);
-      queryParams = queryParams.append("id", this.formGroup.value.id);
-      queryParams = queryParams.append("fromDate", this.formGroup.value.fromDate);
-      queryParams = queryParams.append("toDate", this.formGroup.value.toDate);
+      queryParams = queryParams.append("id", this.id);
+      queryParams = queryParams.append("fromDate", '');
+      queryParams = queryParams.append("toDate", '');
       queryParams = queryParams.append("pageNum", this.pageNum);
       queryParams = queryParams.append("pageSize", this.pageSize);
       queryParams = queryParams.append("userName", this.username);
@@ -71,7 +72,6 @@ export class FindPageComponent  implements OnInit {
             this.lstData.push(data);
           });
           this.isEmpty = false;
-          this.isExec = false;
           if(this.lstData.length == 0) this.isEmpty = true;
           if(this.lstData.length == res[1]) this.isload = false;
           this.dt.detectChanges();
@@ -98,5 +98,14 @@ export class FindPageComponent  implements OnInit {
 
   }
 
-
+  ionChange(event:any){
+    this.id = event?.detail?.value || event?.detail;
+    if(this.id == null || this.id == ''){
+      this.lstData = [];
+      this.dt.detectChanges();
+    }else{
+      this.lstData = [];
+      this.loadData();
+    }
+  }
 }
