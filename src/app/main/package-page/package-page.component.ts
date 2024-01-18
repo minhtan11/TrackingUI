@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent, NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
@@ -12,7 +12,7 @@ import { NotificationServiceComponent } from 'src/app/notification-service/notif
   styleUrls: ['./package-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PackagePageComponent  implements OnInit {
+export class PackagePageComponent  implements OnInit,AfterViewInit,OnChanges {
   //#region Contrucstor
   @ViewChild(IonContent) content: IonContent;
   pageNum:any = 1;
@@ -32,16 +32,28 @@ export class PackagePageComponent  implements OnInit {
     private dt : ChangeDetectorRef,
     private api : ApiserviceComponent,
     private rt : ActivatedRoute,
-    private navCtrl: NavController,
+    private router:Router,
     private notification: NotificationServiceComponent,
   ) { 
-    this.username = this.rt.snapshot.queryParams['username'];
-    this.loadData();
+    this.username = this.rt.snapshot.params['username'];
+    this.rt.params.subscribe((res:any)=>{
+      this.lstData = [];
+      this.loadData();
+    })
   }
   //#endregion
 
   //#region Init
-  ngOnInit() {}
+  ngOnInit() {
+  }
+
+  ngAfterViewInit(): void {
+    
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    
+  }
   //#endregion 
 
   //#region Function
@@ -109,16 +121,16 @@ export class PackagePageComponent  implements OnInit {
 
   createPackage(){
     this.onDestroy();
-    this.navCtrl.navigateForward('main/package/create',{queryParams:{username:this.username}});
+    this.router.navigate(['main/package/create/'+this.username]);
   }
 
   findPackage(){
     this.onDestroy();
-    this.navCtrl.navigateForward('main/package/find',{queryParams:{username:this.username}});
+    this.router.navigate(['main/package/find/'+this.username]);
   }
 
   onCopy(){
-    this.notification.showNotiSuccess('','Đã Sao chép');
+    this.notification.showNotiSuccess('','Đã Sao chép',1000);
   }
 
   //#endregion

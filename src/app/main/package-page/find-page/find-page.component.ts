@@ -32,7 +32,7 @@ export class FindPageComponent  implements OnInit {
     private rt : ActivatedRoute,
     private dt : ChangeDetectorRef,
   ) { 
-    this.username = this.rt.snapshot.queryParams['username'];
+    this.username = this.rt.snapshot.params['username'];
   }
 
   ngOnInit() {

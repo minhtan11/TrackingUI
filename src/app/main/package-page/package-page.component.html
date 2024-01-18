@@ -72,6 +72,139 @@
       </div>
     </ng-container>
     <ng-container *ngIf="lstData && lstData.length">
+      <ion-list>
+        <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
+          <ion-item lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;">
+            <ion-card class="w-100" style="margin: 0em;box-shadow: none" mode="ios">
+              <ion-card-header style="padding: 0.2em;">
+                <div style="justify-content: space-between;" class="d-flex align-items-center">
+                  <div>
+                    <ion-text style="font-size: 1.2em;" class="font-weight-bold me-2">
+                      Mã kiện hàng
+                    </ion-text>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <ion-text class="me-2" style="font-size: 1.2em;">
+                      {{item.packageCode}}
+                    </ion-text>
+                    <ion-icon [cdkCopyToClipboard]="item.packageCode" (click)="onCopy()" style="font-size: 1.5rem;" name="copy-outline"></ion-icon>
+                  </div>
+                </div>
+              </ion-card-header>
+              <ion-card-content style="padding: 0.2em;">
+                <div class="d-flex align-items-center">
+                  <ng-container *ngIf="item.status == 0 || item.status == 1">
+                    <img  style="width: 4em;height: 4em;
+                    margin-right: 1rem;" src="../../../assets/image/package-wait.png" alt="">
+                  </ng-container>
+                  <ng-container *ngIf="item.status == 2 || item.status == 3 || item.status == 4">
+                    <img  style="width: 4em;height: 4em;
+                    margin-right: 1rem;" src="../../../assets/image/package-delivery.png" alt="">
+                  </ng-container>
+                  <ng-container *ngIf="item.status == 5">
+                    <img  style="width: 4em;height: 4em;
+                    margin-right: 1rem;" src="../../../assets/image/package.png" alt="">
+                  </ng-container>
+                  <ng-container *ngIf="item.status == 9 || item.status == 10 || item.status == 11">
+                    <img  style="width: 4em;height: 4em;
+                    margin-right: 1rem;" src="../../../assets/image/package-cancelled.png" alt="">
+                  </ng-container>
+                  <div>
+                    <ion-text mode="ios">
+                      <span> Loại vận chuyển:</span>
+                      <ng-container [ngSwitch]="item.movingMethod">
+                        <span *ngSwitchCase="2">
+                          Chậm
+                        </span>
+                        <span *ngSwitchCase="3">
+                          Bộ
+                        </span>
+                        <span *ngSwitchCase="4">
+                          Bộ lô
+                        </span>
+                        <span *ngSwitchCase="5">
+                          Biển
+                        </span>
+                        <span *ngSwitchDefault>
+                          Nhanh
+                        </span>
+                      </ng-container>
+                    </ion-text>
+                    <br>
+                    <ion-text>
+                      <span>Kho nhận:</span>
+                      <ng-container [ngSwitch]="item.wareHouse">
+                        <span *ngSwitchCase="'1'">
+                          Đông quản
+                        </span>
+                        <span *ngSwitchCase="'2'">
+                          Phật sơn
+                        </span>
+                      </ng-container>
+                      </ion-text>
+                    <br>
+                    <ion-text>
+                      <span>Ngày tạo: </span>
+                      <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                    </ion-text>
+                    <br>
+                    <ion-text>
+                      Người tạo: Trần minh tân
+                    </ion-text>
+                    <ion-text>
+                    </ion-text>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <!-- <ion-text class="font-weight-bold">
+                    Tổng tiền:
+                  </ion-text>
+                  &nbsp;
+                  <ion-text class="font-weight-bold">
+                    2,000,000,000
+                  </ion-text> -->
+                  <span class="badge badge-pill badge-dark">
+                    <ng-container [ngSwitch]="item.status">
+                      <span *ngSwitchCase="2">
+                        Hàng về kho TQ
+                      </span>
+                      <span *ngSwitchCase="3">
+                        Đang về HCM
+                      </span>
+                      <span *ngSwitchCase="4">
+                        Hàng về tới HCM
+                      </span>
+                      <span *ngSwitchCase="5">
+                        Đã nhận hàng
+                      </span>
+                      <span *ngSwitchCase="9">
+                        Đã hủy
+                      </span>
+                      <span *ngSwitchCase="10">
+                        Thất lạc
+                      </span>
+                      <span *ngSwitchCase="11">
+                        Không nhận được hàng
+                      </span>
+                      <span *ngSwitchDefault>
+                        Chưa xác nhận
+                      </span>
+                    </ng-container>
+                  </span>
+                </div>
+                <div class="text-center" style="padding-bottom: 1em;">
+                  <ion-text style="color: #ffb400;">
+                    <u>Xem chi tiết</u>
+                  </ion-text>
+                </div> 
+              </ion-card-content>
+            </ion-card>
+          </ion-item>
+        </ng-container>
+        
+      </ion-list>
+    </ng-container>
+    <!-- <ng-container *ngIf="lstData && lstData.length">
       <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
         <ion-card mode="ios">
           <ion-card-header style="padding-bottom: 0em;">
@@ -398,7 +531,7 @@
           </ion-card-content>
         </ion-card>
       </ng-container>
-    </ng-container>
+    </ng-container> -->
   </ion-content>
   <!-- <ion-footer class="ion-no-border">
     <ion-toolbar style="--background:white">

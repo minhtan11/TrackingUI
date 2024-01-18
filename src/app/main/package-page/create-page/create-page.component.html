@@ -1,3 +1,8 @@
+<ng-container *ngIf="isExec">
+  <div id="loader" style="position: absolute;z-index: 1000;background: rgb(255 255 255 / 50%);left: 0em;" class="container w-100 h-100 d-flex align-items-center justify-content-center">
+    <img width="8%" src="../../../assets/image/loader.gif" alt="">
+  </div>
+</ng-container>
 <ion-header class="ion-no-border">
   <ion-toolbar style="--background:white;">
     <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button>
@@ -25,8 +30,8 @@
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Kho</mat-label>
           <mat-select #eleWareHouse formControlName="wareHouse">
-            <mat-option [value]="1">Đông quản</mat-option>
-            <mat-option [value]="2">Phật sơn</mat-option>
+            <mat-option [value]="'1'">Đông quản</mat-option>
+            <mat-option [value]="'2'">Phật sơn</mat-option>
           </mat-select>
         </mat-form-field>
         <ion-text color="primary">
@@ -37,7 +42,7 @@
           <mat-checkbox formControlName = "isAirPackage">Túi khí</mat-checkbox>
           <mat-checkbox (change)="change($event)" formControlName="isInsurance">Bảo hiểm</mat-checkbox>
         </div>
-        <!-- <ng-container *ngIf="formGroup.value.isInsurance">
+        <ng-container *ngIf="formGroup.value.isInsurance">
           <ion-text color="primary" class="mb-3">
             <span class="font-weight-bold">Kê khai</span>
           </ion-text>
@@ -49,7 +54,7 @@
             <mat-label>Giá</mat-label>
             <input #eleDeclarePrice type="number" formControlName="declarePrice" matInput>
           </mat-form-field>  
-        </ng-container> -->
+        </ng-container>
       </ion-col>
     </ion-row>
     

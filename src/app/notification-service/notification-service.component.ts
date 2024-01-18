@@ -16,13 +16,13 @@ ngOnInit() {}
 //#endregion Init
 
 //#region Function
-showNotiError(title:string,text:string) {
+showNotiError(title:string,text:string,timer:number = 3000) {
   Swal.mixin({
     toast:true,
     position:'top',
     buttonsStyling: false,
     showConfirmButton:false,
-    timer: 3000,
+    timer: timer,
     timerProgressBar: false,
   }).fire({
     icon: "error",
@@ -31,19 +31,18 @@ showNotiError(title:string,text:string) {
   });
 }
 
-showNotiSuccess(title:string,text:string) {
+showNotiSuccess(title:string,text:string,timer:number = 3000) {
   Swal.mixin({
     toast:true,
     position:'top',
     buttonsStyling: false,
     showConfirmButton:false,
-    timer: 3000,
+    timer: timer,
     timerProgressBar: false,
   }).fire({
     icon: "success",
     title: title,
     text: text,
-    heightAuto: false
   });
 }
 

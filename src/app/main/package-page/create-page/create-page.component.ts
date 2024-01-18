@@ -1,7 +1,8 @@
 import { HttpParams } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
@@ -19,6 +20,7 @@ export class CreatePageComponent  implements OnInit {
   @ViewChild('eleDeclaration') eleDeclaration: any;
   @ViewChild('eleDeclarePrice') eleDeclarePrice: any;
   username:any='';
+  isExec:any=false;
   private destroy$ = new Subject<void>();
   formGroup!: FormGroup;
   constructor(
@@ -26,8 +28,10 @@ export class CreatePageComponent  implements OnInit {
     private notification: NotificationServiceComponent,
     private api: ApiserviceComponent,
     private rt : ActivatedRoute,
+    private dt : ChangeDetectorRef,
+    private navCtrl: NavController,
   ) {
-    this.username = this.rt.snapshot.queryParams['username'];
+    this.username = this.rt.snapshot.params['username'];
    }
 
   ngOnInit() {
@@ -38,8 +42,9 @@ export class CreatePageComponent  implements OnInit {
       isWoodPackage: [false],
       isAirPackage: [false],
       isInsurance: [false],
-      // declaration: ['',Validators.required],
-      // declarePrice: [0,Validators.required],
+      declaration: ['',Validators.required],
+      declarePrice: [0,Validators.required],
+      username:[this.username]
     });
   }
 
@@ -64,37 +69,36 @@ export class CreatePageComponent  implements OnInit {
       this.eleWareHouse.focus();
       return;
     }
-    // if(this.formGroup.value.isInsurance){
-    //   if (this.formGroup.controls['declaration'].invalid) {
-    //     this.notification.showNotiError('', 'Vui lòng kê khai thông tin để tính phí bảo hiểm!');
-    //     this.eleDeclaration.nativeElement.focus();
-    //     return;
-    //   }
-    //   if (this.formGroup.controls['declarePrice'].invalid || this.formGroup.value.declarePrice == 0) {
-    //     this.notification.showNotiError('', 'Vui lòng kê khai thông tin để tính phí bảo hiểm!');
-    //     this.eleDeclarePrice.nativeElement.focus();
-    //     return;
-    //   }
-    // }
-    // let queryParams = new HttpParams();
-    // queryParams = queryParams.append("data", this.formGroup.value);
-    // queryParams = queryParams.append("userName", this.username);
-    // this.api.execByParameter('Authencation', 'createpackage', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-    //   // if (res) {
-    //   //   res[0].forEach((data:any) => {
-    //   //     this.lstData.push(data);
-    //   //   });
-    //   //   this.isEmpty = false;
-    //   //   if(this.lstData.length == 0) this.isEmpty = true;
-    //   //   if(this.lstData.length == res[1]) this.isload = false;
-    //   //   this.dt.detectChanges();
-    //   // }
-    //   console.log(res);
-    //   this.onDestroy();
-    // })
-    this.api.execByBody('Authencation','createpackage',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
-      
-    })
+    if(this.formGroup.value.isInsurance){
+      if (this.formGroup.controls['declaration'].invalid) {
+        this.notification.showNotiError('', 'Vui lòng kê khai thông tin để tính phí bảo hiểm!');
+        this.eleDeclaration.nativeElement.focus();
+        return;
+      }
+      if (this.formGroup.controls['declarePrice'].invalid || this.formGroup.value.declarePrice == 0) {
+        this.notification.showNotiError('', 'Vui lòng kê khai thông tin để tính phí bảo hiểm!');
+        this.eleDeclarePrice.nativeElement.focus();
+        return;
+      }
+    }
+    this.isExec = true;
+    this.dt.detectChanges();
+    setTimeout(() => {
+      this.api.execByBody('Authencation','createpackage',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+        if (res && !res?.isError) {
+          this.isExec = false;
+          this.notification.showNotiSuccess('', res?.message);
+          this.navCtrl.navigateForward('main/package/'+this.username);
+          this.onDestroy();
+          this.dt.detectChanges();
+          
+        }else{
+          this.isExec = false;
+          this.notification.showNotiError('',res?.message);
+          this.dt.detectChanges();
+        }
+      })
+    }, 100);
   }
 
   reset(){

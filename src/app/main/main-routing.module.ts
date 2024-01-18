@@ -52,15 +52,15 @@ const routes: Routes = [
     component: OrderPageDetailComponent,
   },
   {
-    path: 'package',
+    path: 'package/:username',
     component: PackagePageComponent,
   },
   {
-    path: 'package/find',
+    path: 'package/find/:username',
     component: FindPageComponent,
   },
   {
-    path: 'package/create',
+    path: 'package/create/:username',
     component: CreatePageComponent,
   },
   {
