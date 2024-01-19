@@ -3,6 +3,37 @@
     <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button>
     <ion-title mode="ios">Danh sách ký gửi</ion-title>
   </ion-toolbar>
+  <ion-toolbar style="--background:white;" class="pr-3 pl-3">
+    <div style="overflow-x: scroll;">
+      <ion-segment [scrollable]="true" value="0" mode="ios">
+        <ion-segment-button (click)=" sortData(0)" value="0">
+          <ion-text class="text-segment">
+            <span style="font-size: 1em;">Tất cả</span>
+          </ion-text>
+        </ion-segment-button>
+        <ion-segment-button (click)=" sortData(1)" value="1">
+          <ion-text class="text-segment">
+            Đã thanh toán
+          </ion-text>
+        </ion-segment-button>
+        <ion-segment-button (click)=" sortData(2)" value="2">
+          <ion-text class="text-segment">
+           Đã hủy
+          </ion-text>
+        </ion-segment-button>
+        <ion-segment-button (click)=" sortData(3)" value="3">
+          <ion-text class="text-segment">
+            Thất lạ<canvas></canvas>
+          </ion-text>
+        </ion-segment-button>
+        <ion-segment-button (click)=" sortData(4)" value="4">
+          <ion-text class="text-segment">
+           Không nhận hàng
+          </ion-text>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
   <ion-list>

@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IonContent } from '@ionic/angular';
+import { IonContent, NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
@@ -31,6 +31,7 @@ export class FindPageComponent  implements OnInit {
     private api: ApiserviceComponent,
     private rt : ActivatedRoute,
     private dt : ChangeDetectorRef,
+    private navCtrl: NavController,
   ) { 
     this.username = this.rt.snapshot.params['username'];
   }
@@ -107,5 +108,10 @@ export class FindPageComponent  implements OnInit {
       this.lstData = [];
       this.loadData();
     }
+  }
+
+  viewDetail(data:any){
+    this.onDestroy();
+    this.navCtrl.navigateForward('main/package/detail/'+this.username,{queryParams:{data:JSON.stringify(data)}});
   }
 }

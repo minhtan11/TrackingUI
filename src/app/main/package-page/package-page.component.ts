@@ -32,8 +32,8 @@ export class PackagePageComponent  implements OnInit,AfterViewInit,OnChanges {
     private dt : ChangeDetectorRef,
     private api : ApiserviceComponent,
     private rt : ActivatedRoute,
-    private router:Router,
     private notification: NotificationServiceComponent,
+    private navCtrl: NavController,
   ) { 
     this.username = this.rt.snapshot.params['username'];
     this.rt.params.subscribe((res:any)=>{
@@ -121,16 +121,21 @@ export class PackagePageComponent  implements OnInit,AfterViewInit,OnChanges {
 
   createPackage(){
     this.onDestroy();
-    this.router.navigate(['main/package/create/'+this.username]);
+    this.navCtrl.navigateForward('main/package/create/'+this.username);
   }
 
   findPackage(){
     this.onDestroy();
-    this.router.navigate(['main/package/find/'+this.username]);
+    this.navCtrl.navigateForward('main/package/find/'+this.username);
   }
 
   onCopy(){
     this.notification.showNotiSuccess('','Đã Sao chép',1000);
+  }
+
+  viewDetail(data:any){
+    this.onDestroy();
+    this.navCtrl.navigateForward('main/package/detail/'+this.username,{queryParams:{data:JSON.stringify(data)}});
   }
 
   //#endregion

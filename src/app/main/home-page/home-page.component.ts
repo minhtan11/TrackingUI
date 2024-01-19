@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { HttpParams } from '@angular/common/http';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
+import { Network } from '@capacitor/network';
 
 @Component({
   selector: 'app-home-page',
@@ -48,11 +49,12 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   //#region Init
   ngOnInit() {
     this.getTime();
-    
   }
 
   ngAfterViewInit(){
-    
+    Network.addListener('networkStatusChange', status => {
+      console.log('Network status changed', status);
+    });
   }
 
   ngOnDestroy(): void {
@@ -67,7 +69,8 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
 
   //#region Function
   goOrderPage(){
-    this.navCtrl.navigateForward('main/order',{queryParams:{username:this.oUser.username}});
+    this.onDestroy();
+    this.navCtrl.navigateForward('main/order/'+this.oUser.username);
   }
 
   goPackagePage(){

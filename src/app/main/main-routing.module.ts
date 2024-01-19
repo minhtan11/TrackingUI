@@ -14,6 +14,7 @@ import { SettingPageComponent } from './setting-page/setting-page.component';
 import { FindPageComponent } from './package-page/find-page/find-page.component';
 import { CreatePageComponent } from './package-page/create-page/create-page.component';
 import { AuthGuard } from '../authguardservice/authguard.guard';
+import { DetailComponent } from './package-page/detail/detail.component';
 
 const routes: Routes = [
   {
@@ -44,7 +45,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'order',
+    path: 'order/:username',
     component: OrderPageComponent,
   },
   {
@@ -62,6 +63,10 @@ const routes: Routes = [
   {
     path: 'package/create/:username',
     component: CreatePageComponent,
+  },
+  {
+    path: 'package/detail/:username',
+    component: DetailComponent,
   },
   {
     path: 'recharge',

@@ -8,30 +8,6 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <!-- <ion-card class="p-0" mode="ios">
-    <ion-card-content [formGroup]="formGroup">
-      <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Nhập mã đơn hàng</mat-label>
-        <input formControlName="id" matInput>
-      </mat-form-field>
-      <mat-form-field class="d-flex align-items-center justify-content-center"  appearance="outline" class="w-100">
-        <mat-label>Từ ngày - đến ngày</mat-label>
-        <mat-date-range-input [rangePicker]="picker">
-          <input formControlName="fromDate" matStartDate placeholder="Từ ngày">
-          <input formControlName="toDate" matEndDate placeholder="đến ngày">
-        </mat-date-range-input>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker disabled="false"></mat-date-range-picker>
-      </mat-form-field>
-      <div class="d-flex align-items-center justify-content-end">
-        <button (click)="find()" style="border-radius: 1em;" class="btn text-white" mat-flat-button color="primary">
-          <ion-text>
-            Tìm
-          </ion-text>
-        </button>
-      </div>
-    </ion-card-content>
-  </ion-card> -->
   <div *ngIf="isEmpty" style="flex-direction: column;" class="d-flex align-items-center h-100 justify-content-center">
     <img style="width: 20%;" src="../../../../assets/image/find.png" alt="">
     <div class="text-center mt-2">
@@ -41,308 +17,130 @@
     </div>
   </div>
   <ng-container *ngIf="lstData && lstData.length">
-    <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
-      <ion-card mode="ios">
-        <ion-card-header style="padding-bottom: 0em;">
-          <div style="justify-content: space-between;" class="d-flex align-items-center">
-            <div>
-              <ion-text style="font-size: 1.2em;" class="font-weight-bold">
-                Mã Kiện
-              </ion-text>
-            </div>
-            <div class="d-flex align-items-center">
-              <ion-text style="font-size: 1.2em;">
-                {{item.packageCode}}
-              </ion-text>
-              &nbsp;&nbsp;
-              <ion-icon style="font-size: 1.5em;" name="copy-outline"></ion-icon>
-            </div>
-          </div>
-        </ion-card-header>
-        <ion-card-content>
-          <div class="w-100" style="border: 1px solid #ececec;border-radius: 1em;margin-top: 1em;">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-6 offset-md-3">
-                  <ul class="timeline">
-                    <ng-container>
-                      <li *ngIf="item.exportedCNWH == null" class="no-active d-flex align-items-center">
-                        <ion-text class="font-weight-bold">
-                          XUẤT KHO TRUNG QUỐC
-                        </ion-text>
-                      </li>
-                      <li *ngIf="item.exportedCNWH != null" class="active">
-                        <ion-text class="font-weight-bold">
-                          XUẤT KHO TRUNG QUỐC
-                        </ion-text>
-                        <br>
-                        <ion-text color="medium">
-                          Ngày {{item.exportedCNWH | date : 'dd/MM/yyyy hh:mm a'}}
-                        </ion-text>
-                      </li>
-                    </ng-container>
-                    <ng-container>
-                      <li *ngIf="item.dateExpectation == null" class="no-active d-flex align-items-center">
-                        <ion-text class="font-weight-bold">
-                          ĐANG TRÊN ĐƯỜNG VỀ HCM
-                        </ion-text>
-                      </li>
-                      <li *ngIf="item.dateExpectation != null" class="active">
-                        <ion-text class="font-weight-bold">
-                          ĐANG TRÊN ĐƯỜNG VỀ HCM
-                        </ion-text>
-                        <br>
-                        <ion-text color="medium">
-                          Ngày {{item.dateExpectation | date : 'dd/MM/yyyy hh:mm a'}}
-                        </ion-text>
-                      </li>
-                    </ng-container>
-                    <ng-container>
-                      <li *ngIf="item.importedSGWH == null" class="no-active d-flex align-items-center">
-                        <ion-text class="font-weight-bold">
-                          ĐÃ VỀ KHO HCM
-                        </ion-text>
-                      </li>
-                      <li *ngIf="item.importedSGWH != null" class="active">
-                        <ion-text class="font-weight-bold">
-                          ĐÃ VỀ KHO HCM
-                        </ion-text>
-                        <br>
-                        <ion-text color="medium">
-                          Ngày {{item.importedSGWH | date : 'dd/MM/yyyy hh:mm a'}}
-                        </ion-text>
-                      </li>
-                    </ng-container>
-                    <ng-container>
-                      <li *ngIf="item.receivedDate == null" class="no-active d-flex align-items-center">
-                        <ion-text class="font-weight-bold">
-                          ĐÃ NHẬN HÀNG
-                        </ion-text>
-                      </li>
-                      <li *ngIf="item.receivedDate != null" class="active">
-                        <ion-text class="font-weight-bold">
-                          ĐÃ NHẬN HÀNG
-                        </ion-text>
-                        <br>
-                        <ion-text color="medium">
-                          Ngày {{item.receivedDate | date : 'dd/MM/yyyy hh:mm a'}}
-                        </ion-text>
-                      </li>
-                    </ng-container>                
-                  </ul>
+    <ion-list>
+      <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
+        <ion-item lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;">
+          <ion-card class="w-100" style="margin: 0em;box-shadow: none" mode="ios">
+            <ion-card-header style="padding: 0.2em;">
+              <div style="justify-content: space-between;" class="d-flex align-items-center">
+                <div>
+                  <ion-text style="font-size: 1.2em;" class="font-weight-bold me-2">
+                    Mã kiện hàng
+                  </ion-text>
+                </div>
+                <div class="d-flex align-items-center">
+                  <ion-text class="me-2" style="font-size: 1.2em;">
+                    {{item.packageCode}}
+                  </ion-text>
+                  <ion-icon [cdkCopyToClipboard]="item.packageCode" style="font-size: 1.5rem;" name="copy-outline"></ion-icon>
                 </div>
               </div>
-            </div>
-            <ion-grid fixed>
-              <ion-row>
-                <ion-col>
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                    <div>
-                      <ion-text>
-                        Trạng thái đơn
-                      </ion-text>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <ng-container [ngSwitch]="item.status">
-                        <ion-text *ngSwitchCase="2">
-                          Hàng về kho TQ
-                        </ion-text>
-                        <ion-text *ngSwitchCase="3">
-                          Đang về HCM
-                        </ion-text>
-                        <ion-text *ngSwitchCase="4">
-                          Hàng về tới HCM
-                        </ion-text>
-                        <ion-text *ngSwitchCase="5">
-                          Đã nhận hàng
-                        </ion-text>
-                        <ion-text *ngSwitchCase="9">
-                          Đã hủy
-                        </ion-text>
-                        <ion-text *ngSwitchCase="10">
-                          Thất lạc
-                        </ion-text>
-                        <ion-text *ngSwitchCase="11">
-                          Không nhận được hàng
-                        </ion-text>
-                        <ion-text *ngSwitchDefault>
-                          Chưa xác nhận
-                        </ion-text>
-                      </ng-container>
-                    </div>
-                  </div>
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                    <div>
-                      <ion-text>
-                        Kho nhận
-                      </ion-text>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <ng-container [ngSwitch]="item.wareHouse">
-                        <ion-text *ngSwitchCase="'1'">
-                          Đông quản
-                        </ion-text>
-                        <ion-text *ngSwitchCase="'2'">
-                          Phật sơn
-                        </ion-text>
-                      </ng-container>
-                    </div>
-                  </div>
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                    <div>
-                      <ion-text>
-                        Loại vận chuyển
-                      </ion-text>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <ng-container [ngSwitch]="item.movingMethod">
-                        <ion-text *ngSwitchCase="2">
-                          Chậm
-                        </ion-text>
-                        <ion-text *ngSwitchCase="3">
-                          Bộ
-                        </ion-text>
-                        <ion-text *ngSwitchCase="4">
-                          Bộ lô
-                        </ion-text>
-                        <ion-text *ngSwitchCase="5">
-                          Biển
-                        </ion-text>
-                        <ion-text *ngSwitchDefault>
-                          Nhanh
-                        </ion-text>
-                      </ng-container>
-                      
-                    </div>
-                  </div>
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                    <div>
-                      <ion-text>
-                        Ngày lên đơn
-                      </ion-text>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <ion-text>
-                        {{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}
-                      </ion-text>
-                    </div>
-                  </div>
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                    <div>
-                      <ion-text>
-                        Khách hàng
-                      </ion-text>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <ion-text>
-                        {{item.username}}
-                      </ion-text>
-                    </div>
-                  </div> 
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                    <div>
-                      <ion-text>
-                        Vận chuyển
-                      </ion-text>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <ion-text>
-                        {{(item.weight ? item.weight : '0')+'kg - '+ ((item.weightPrice ? item.weightPrice : 0)  | number)+'đ'}}
-                      </ion-text>
-                    </div>
-                  </div> 
-                  <div *ngIf="item.isWoodPackage || item.isAirPackage || item.isInsurance" style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                    <div>
-                      <ion-text color="primary">
-                        Dịch vụ phụ
-                      </ion-text>
-                    </div>
-                  </div>
-                  <ng-container *ngIf="item.isWoodPackage">
-                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                      <div>
-                        <ion-text>
-                          Đóng gỗ
-                        </ion-text>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <i class="bi bi-check2-circle"></i>
-                      </div>
-                    </div> 
-                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                      <div>
-                        <ion-text>
-                          Phí đóng gỗ
-                        </ion-text>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <ion-text>
-                          {{(item.woodPackagePrice | number)+'đ'}}
-                        </ion-text>
-                      </div>
-                    </div> 
+            </ion-card-header>
+            <ion-card-content style="padding: 0.2em;">
+              <div class="d-flex align-items-center">
+                <ng-container *ngIf="item.status == 0 || item.status == 1">
+                  <img  style="width: 4em;height: 4em;
+                  margin-right: 1rem;" src="../../../assets/image/package-wait.png" alt="">
+                </ng-container>
+                <ng-container *ngIf="item.status == 2 || item.status == 3 || item.status == 4">
+                  <img  style="width: 4em;height: 4em;
+                  margin-right: 1rem;" src="../../../assets/image/package-delivery.png" alt="">
+                </ng-container>
+                <ng-container *ngIf="item.status == 5">
+                  <img  style="width: 4em;height: 4em;
+                  margin-right: 1rem;" src="../../../assets/image/package.png" alt="">
+                </ng-container>
+                <ng-container *ngIf="item.status == 9 || item.status == 10 || item.status == 11">
+                  <img  style="width: 4em;height: 4em;
+                  margin-right: 1rem;" src="../../../assets/image/package-cancelled.png" alt="">
+                </ng-container>
+                <div>
+                  <ion-text mode="ios">
+                    <span> Loại vận chuyển:</span>
+                    <ng-container [ngSwitch]="item.movingMethod">
+                      <span *ngSwitchCase="2">
+                        Chậm
+                      </span>
+                      <span *ngSwitchCase="3">
+                        Bộ
+                      </span>
+                      <span *ngSwitchCase="4">
+                        Bộ lô
+                      </span>
+                      <span *ngSwitchCase="5">
+                        Biển
+                      </span>
+                      <span *ngSwitchDefault>
+                        Nhanh
+                      </span>
+                    </ng-container>
+                  </ion-text>
+                  <br>
+                  <ion-text>
+                    <span>Kho nhận:</span>
+                    <ng-container [ngSwitch]="item.wareHouse">
+                      <span *ngSwitchCase="'1'">
+                        Đông quản
+                      </span>
+                      <span *ngSwitchCase="'2'">
+                        Phật sơn
+                      </span>
+                    </ng-container>
+                    </ion-text>
+                  <br>
+                  <ion-text>
+                    <span>Ngày tạo: </span>
+                    <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                  </ion-text>
+                  <br>
+                  <ion-text>
+                    <span>Dịch vụ phụ: </span>
+                    <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
+                    <span *ngIf="item.isAirPackage">;Bọt khí</span>
+                    <span *ngIf="item.isInsurance">;Bảo hiểm</span>
+                    <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
+                  </ion-text>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end">
+                <span class="badge badge-pill badge-dark">
+                  <ng-container [ngSwitch]="item.status">
+                    <span *ngSwitchCase="2">
+                      Hàng về kho TQ
+                    </span>
+                    <span *ngSwitchCase="3">
+                      Đang về HCM
+                    </span>
+                    <span *ngSwitchCase="4">
+                      Hàng về tới HCM
+                    </span>
+                    <span *ngSwitchCase="5">
+                      Đã nhận hàng
+                    </span>
+                    <span *ngSwitchCase="9">
+                      Đã hủy
+                    </span>
+                    <span *ngSwitchCase="10">
+                      Thất lạc
+                    </span>
+                    <span *ngSwitchCase="11">
+                      Không nhận được hàng
+                    </span>
+                    <span *ngSwitchDefault>
+                      Chưa xác nhận
+                    </span>
                   </ng-container>
-                  <ng-container *ngIf="item.isAirPackage">
-                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                      <div>
-                        <ion-text>
-                          Bọt khí
-                        </ion-text>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <i class="bi bi-check2-circle"></i>
-                      </div>
-                    </div> 
-                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                      <div>
-                        <ion-text>
-                          Phí bọt khí
-                        </ion-text>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <ion-text>
-                          {{(item.airPackagePrice | number)+'đ'}}
-                        </ion-text>
-                      </div>
-                    </div> 
-                  </ng-container>
-                  <ng-container *ngIf="item.isInsurance">
-                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                      <div>
-                        <ion-text>
-                          Bảo hiểm
-                        </ion-text>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <i class="bi bi-check2-circle"></i>
-                      </div>
-                    </div> 
-                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                      <div>
-                        <ion-text>
-                          Phí bảo hiểm
-                        </ion-text>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <ion-text>
-                          {{(item.isInsurancePrice | number)+'đ'}}
-                        </ion-text>
-                      </div>
-                    </div> 
-                  </ng-container>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-          <div *ngIf="item.status < 2" class="d-flex align-items-center justify-content-center mt-3">
-            <button (click)="checkStatus()" style="border-radius: 1em;" class="btn text-white" mat-flat-button color="primary">
-              <ion-text>
-                Kiểm tra hàng
-              </ion-text>
-            </button> 
-          </div>
-        </ion-card-content>
-      </ion-card>
-    </ng-container>
+                </span>
+              </div>
+              <div class="text-center" style="padding-bottom: 1em;">
+                <ion-text (click)="viewDetail(item)" style="color: #ffb400;">
+                  <u>Xem chi tiết</u>
+                </ion-text>
+              </div> 
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+      </ng-container>
+    </ion-list>
   </ng-container>
 </ion-content>
