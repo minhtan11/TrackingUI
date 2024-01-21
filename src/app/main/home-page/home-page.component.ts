@@ -75,8 +75,7 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
 
   goPackagePage(){
     this.onDestroy();
-    //this.navCtrl.navigateForward('main/package',{queryParams:{username:this.oUser.username}});
-    this.navCtrl.navigateForward('main/package/'+this.oUser.username);
+    this.navCtrl.navigateForward('main/package',{queryParams:{isnew:true}});
   }
 
   goRechargePage(){

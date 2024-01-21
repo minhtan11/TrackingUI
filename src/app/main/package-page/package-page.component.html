@@ -1,8 +1,9 @@
-  <ng-container *ngIf="isExec">
-    <div id="loader" style="position: absolute;z-index: 1000;background: rgb(255 255 255 / 50%);left: 0em;" class="container w-100 h-100 d-flex align-items-center justify-content-center">
-      <img width="8%" src="../../../assets/image/loader.gif" alt="">
-    </div>
-  </ng-container>
+<ng-container *ngIf="isExec">
+  <div id="loader" style="position: absolute;z-index: 1000;background: rgb(255 255 255 / 50%);left: 0em;" class="container w-100 h-100 d-flex align-items-center justify-content-center">
+    <!-- <img width="8%" src="../../../assets/image/loader.gif" alt=""> -->
+    <ion-spinner mode="ios" name="dots"></ion-spinner>
+  </div>
+</ng-container>
   <ion-header class="ion-no-border">
     <ion-toolbar style="--background:white;">
       <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button>
@@ -62,7 +63,12 @@
       </div>
     </ion-toolbar>
   </ion-header>
-  <ion-content [scrollEvents]="true" (ionScroll)="loadPage($event)">
+  <ion-content>
+    <ng-container *ngIf="isloadpage">
+      <div class="d-flex align-items-center justify-content-center h-100 w-100">
+        <ion-spinner mode="ios" name="dots"></ion-spinner>
+      </div>
+    </ng-container>
     <ng-container *ngIf="isEmpty">
       <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
         <img style="width: 40%;" src="../../../assets/image/no-order.png" alt="">
@@ -187,16 +193,39 @@
                     </ng-container>
                   </span>
                 </div>
-                <div class="text-center" style="padding-bottom: 1em;">
-                  <ion-text (click)="viewDetail(item)" style="color: #ffb400;">
+                <div class="text-center d-flex justify-content-end pt-3 pb-3">
+                  <!-- <ion-text (click)="viewDetail(item)" style="color: #ffb400;">
                     <u>Xem chi tiết</u>
-                  </ion-text>
+                  </ion-text> -->
+                  <button (click)="viewDetail(item)" style="background-color: #ffc107;border: none !important;border-radius: 1em;" type="button" class="btn btn-primary btn-sm text-white">
+                    <div class="d-flex align-items-center justify-content-center">
+                      <i class="bi bi-eye me-2"></i>
+                      <span>Xem chi tiết</span>
+                    </div>
+                  </button>
+                  <ng-container *ngIf="item.status < 2">
+                    <button style="border-radius: 1em;" (click)="checkStatus(item)" type="button" class="btn btn-secondary btn-sm text-white ml-3">
+                      <div class="d-flex align-items-center justify-content-center">
+                        <i class="bi bi-check2-circle me-2"></i>
+                        <span>Kiểm tra hàng</span>
+                      </div>
+                    </button>
+                    <button style="border-radius: 1em;" (click)="cancelPackage(item)" type="button" class="btn btn-danger btn-sm text-white ml-3">
+                      <div class="d-flex align-items-center justify-content-center">
+                        <i class="bi bi-x-octagon me-2"></i>
+                        <span>Hủy đơn</span>
+                      </div>
+                    </button>
+                  </ng-container>
                 </div> 
               </ion-card-content>
             </ion-card>
           </ion-item>
         </ng-container>
       </ion-list>
+      <ion-infinite-scroll [disabled]="!isload" (ionInfinite)="onIonInfinite($event)">
+        <ion-infinite-scroll-content loadingSpinner="dots"></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
     </ng-container>
   </ion-content>
   <!-- <ion-footer class="ion-no-border">

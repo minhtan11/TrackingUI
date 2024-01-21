@@ -1,0 +1,76 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar style="--background:white;">
+    <ion-back-button slot="start" style="color: #ffc107;" text="" icon="chevron-back-outline"></ion-back-button>
+    <ion-title mode="ios">Trạng thái vận chuyển</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ng-container *ngIf="oData">
+    <ion-card mode="ios">
+      <ion-card-header class="text-center">
+        <ion-text>
+          <span class="font-weight-bold">THÔNG TIN VẬN CHUYỂN</span>
+        </ion-text>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <div *ngIf="oData.key" style="justify-content: space-between;" class="d-flex align-items-center">
+          <div>
+            <ion-text>
+              Mã đơn
+            </ion-text>
+          </div>
+          <div>
+            <ion-text class="me-2">
+              {{oData.key}}
+            </ion-text>
+          </div>
+        </div>
+        <div style="justify-content: space-between;" class="d-flex align-items-center">
+          <div>
+            <ion-text>
+              Kết quả truy vấn
+            </ion-text>
+          </div>
+          <div>
+            <ion-text color="success">
+              Thành công
+            </ion-text>
+          </div>
+        </div>
+        <div *ngIf="oData.data != null" style="justify-content: space-between;" class="d-flex align-items-center">
+          <div>
+            <ion-text>
+              Công ty vận chuyển
+            </ion-text>
+          </div>
+          <div>
+            <ion-text *ngIf="oData.data.exname != null && oData.data.company != null" color="primary">
+              <a [href]="oData.data.url">{{oData.data.exname +' ('+oData.data.company+')'}}</a>
+            </ion-text>
+          </div>
+        </div>
+        <div *ngIf="oData.data.ico" class="d-flex align-items-center justify-content-center mt-3 mb-3">
+          <img [src]="oData.data.ico" alt="">
+        </div>
+        <!-- <ng-container *ngIf="oData.data.length">
+          <div>
+            <ion-text>
+              Hành trình đơn hàng
+            </ion-text>
+          </div>
+          <div>
+            <ul>
+              <ng-container *ngFor="let item of oData.data; trackBy: trackByFn">
+                <li>
+                  <span class="d-block">{{item.context}}</span>
+                  <i>{{item.time | date : 'dd/MM/yyyy hh:mm a'}}</i>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+        </ng-container> -->
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+</ion-content>

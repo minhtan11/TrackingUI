@@ -93,12 +93,12 @@ ion-segment{
 }
 
 ion-segment-button {
-    --color-checked: #ffb400;
+    --color-checked: #ffc107;
 }
 
 .tab-selected{
-    color: #ffb400 !important;
-    border-top: 1px solid #ffb400 !important;
+    color: #ffc107 !important;
+    border-top: 1px solid #ffc107 !important;
 }
 
 .fade {
@@ -121,14 +121,18 @@ ion-segment-button {
     box-shadow: none !important;
 }
 
-
-
 .btn-app-home{
     border-radius: 0.8em;
     background-color: #ffb400;
     border: none;
     width: 4rem;
     height: 4rem;
+}
+
+.btn-accent{
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: #ffc107;
 }
 
 .btn-app-home:active,

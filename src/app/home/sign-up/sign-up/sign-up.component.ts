@@ -129,8 +129,8 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
     setTimeout(() => {
       this.api.execByBody('Authencation','register',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
         if (res && !res?.isError) {
-          this.storage.set('userName', this.formGroup.value.username);
-          this.storage.set('passWord', this.formGroup.value.password);
+          this.storage.set('username', this.formGroup.value.username);
+          this.storage.set('password', this.formGroup.value.password);
           this.isExec = false;
           this.router.navigate(['main/home'], { queryParams: { oUser: JSON.stringify(res.data) } });
           this.notification.showNotiSuccess('', 'Tạo tài khoản thành công!');

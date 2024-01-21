@@ -6,6 +6,8 @@ import { IonContent, NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
+import { StorageService } from 'src/app/storage-service/storage.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-find-page',
@@ -14,6 +16,7 @@ import { NotificationServiceComponent } from 'src/app/notification-service/notif
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FindPageComponent  implements OnInit {
+  //#region Constructor
   @ViewChild(IonContent) content: IonContent;
   formGroup!: FormGroup;
   status:any = 0;
@@ -23,41 +26,44 @@ export class FindPageComponent  implements OnInit {
   username:any;
   isEmpty:any = true;
   isload:any=true;
-
+  isExec:any=false;
   id:any='';
+  isnew:any = false;
   private destroy$ = new Subject<void>();
   constructor(
-    private formBuilder: FormBuilder,
     private api: ApiserviceComponent,
     private rt : ActivatedRoute,
     private dt : ChangeDetectorRef,
     private navCtrl: NavController,
+    private notification: NotificationServiceComponent,
+    private storage: StorageService,
   ) { 
     this.username = this.rt.snapshot.params['username'];
   }
+  //#endregion
 
-  ngOnInit() {
-    // this.formGroup = this.formBuilder.group({
-    //   fromDate: new FormControl({value: null, disabled: true}),
-    //   toDate: new FormControl({value: null, disabled: true}),
-    //   id: [null],
-    // });
+  //#region Init
+
+  async ngOnInit() {
+    this.username = await this.storage.get('username');
   }
 
   onDestroy(){
     this.destroy$.next();
     this.destroy$.complete();
   }
+  
+  ionViewWillEnter(){
+    this.isnew = false;
+  }
 
-  // find(){
-  //   this.isExec = true;
-  //   this.lstData = [];
-  //   this.dt.detectChanges();
-  //   setTimeout(() => {
-  //     this.loadData();
-  //   }, 100);
-  // }
+  ionViewWillLeave(){
+    this.onDestroy();
+  }
 
+  //#endregion
+
+  //#region Functione
   loadData(){
     let queryParams = new HttpParams();
       queryParams = queryParams.append("status", this.status);
@@ -77,7 +83,6 @@ export class FindPageComponent  implements OnInit {
           if(this.lstData.length == res[1]) this.isload = false;
           this.dt.detectChanges();
         }
-        this.onDestroy();
       })
   }
 
@@ -95,8 +100,90 @@ export class FindPageComponent  implements OnInit {
     return index; 
   }
 
-  checkStatus(){
+  checkStatus(data: any) {
+    if (!data.searchBaiduTimes) {
+      Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-accent me-2 text-white",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+      }).fire({
+        title: "Chú ý",
+        text: "Sử dụng chức năng này sẽ tốn phí 500đ/kiện (Chỉ tốn phí lần đầu). Bạn có chắc muốn sử dụng?",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Đồng ý",
+        cancelButtonText: "Từ chối",
+        heightAuto: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.isExec = true;
+          this.dt.detectChanges();
+          setTimeout(() => {
+            let queryParams = new HttpParams();
+          queryParams = queryParams.append("id", data.packageCode);
+          queryParams = queryParams.append("id", this.username);
+          this.api.execByParameter('Authencation', 'checkstatus', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+            if (res && !res[0].isError) {
+              this.isExec = false;
+              this.isnew = true;
+              let index = this.lstData.findIndex((x:any) => x.packageCode == data.packageCode);
+              if(index > -1) this.lstData[index] = res[1];
+              this.dt.detectChanges();
+              this.navCtrl.navigateForward('main/package/orderstatus/'+this.username,{queryParams:{data:JSON.stringify(res[0])}});
+            }else{
+              this.isExec = false;
+              this.notification.showNotiError('',res.message);
+            }
+          })
+          }, 100);
+        }
+      });
+    } else {
+      this.isExec = true;
+      this.dt.detectChanges();
+      setTimeout(() => {
+        let queryParams = new HttpParams();
+      queryParams = queryParams.append("id", data.packageCode);
+      queryParams = queryParams.append("id", this.username);
+      this.api.execByParameter('Authencation', 'checkstatus', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+        if (res && !res[0].isError) {
+          this.isExec = false;
+          this.isnew = true;
+          this.dt.detectChanges();
+          let index = this.lstData.findIndex((x:any) => x.packageCode == data.packageCode);
+          if(index > -1) this.lstData[index] = res[1];
+          this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { data: JSON.stringify(res[0]) } });
+        }else{
+          this.notification.showNotiError('',res.message);
+        }
+      })
+      }, 100);
+      
+    }
+  }
 
+  cancelPackage(data:any){
+    this.isExec = true;
+    this.dt.detectChanges();
+    setTimeout(() => {
+      let queryParams = new HttpParams();
+    queryParams = queryParams.append("id", data.id);
+    queryParams = queryParams.append("id", this.username);
+    this.api.execByParameter('Authencation', 'cancel', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res && !res.isError) {
+        this.isnew = true;
+        this.notification.showNotiError('', res.message);
+        let index = this.lstData.findIndex((x: any) => x.packageCode == data.packageCode);
+        if (index > -1) this.lstData[index].status = 9;
+        this.dt.detectChanges();
+      } else {
+        this.notification.showNotiError('', res.message);
+      }
+    })
+    }, 100);
   }
 
   ionChange(event:any){
@@ -111,7 +198,11 @@ export class FindPageComponent  implements OnInit {
   }
 
   viewDetail(data:any){
-    this.onDestroy();
     this.navCtrl.navigateForward('main/package/detail/'+this.username,{queryParams:{data:JSON.stringify(data)}});
   }
+
+  onback(){
+    this.navCtrl.navigateForward('main/package',{queryParams:{isnew:this.isnew}});
+  }
+  //#endregion
 }

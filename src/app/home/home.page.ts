@@ -96,8 +96,9 @@ export class HomePage implements OnInit, AfterViewInit {
     queryParams = queryParams.append("passWord", this.formGroup.value?.passWord);
     this.api.execByParameter('Authencation', 'login', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res && !res?.isError) {
+        this.storage.set('username', this.formGroup.value.userName);
+        this.storage.set('password', this.formGroup.value.passWord);
         this.navCtrl.navigateForward('main/home',{queryParams:{oUser: JSON.stringify(res.data)}});
-        this.storage.set('oUser', JSON.stringify(res.data));
         this.onDestroy();
       } else {
         this.isExec = false;

@@ -31,6 +31,7 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import { DetailComponent } from './package-page/detail/detail.component';
+import { OrderStatusComponent } from './package-page/order-status/order-status.component';
 
 @NgModule({
   imports: [
@@ -51,7 +52,7 @@ import { DetailComponent } from './package-page/detail/detail.component';
     ClipboardModule
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
-  ,DecodeVNPipe,FindPageComponent,CreatePageComponent,DetailComponent],
+  ,DecodeVNPipe,FindPageComponent,CreatePageComponent,DetailComponent,OrderStatusComponent],
   providers:[NotificationServiceComponent]
 })
 export class MainPageModule { }

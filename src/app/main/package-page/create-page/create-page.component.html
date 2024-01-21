@@ -1,11 +1,15 @@
 <ng-container *ngIf="isExec">
   <div id="loader" style="position: absolute;z-index: 1000;background: rgb(255 255 255 / 50%);left: 0em;" class="container w-100 h-100 d-flex align-items-center justify-content-center">
-    <img width="8%" src="../../../assets/image/loader.gif" alt="">
+    <!-- <img width="8%" src="../../../assets/image/loader.gif" alt=""> -->
+    <ion-spinner mode="ios" name="dots"></ion-spinner>
   </div>
 </ng-container>
 <ion-header class="ion-no-border">
   <ion-toolbar style="--background:white;">
-    <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button>
+    <!-- <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button> -->
+    <ion-button (click)="onback()" mode="ios" fill="clear">
+      <ion-icon style="color: #ffb400;" name="chevron-back-outline"></ion-icon>
+    </ion-button>
     <ion-title mode="ios">Tạo kiện ký gửi</ion-title>
   </ion-toolbar>
 </ion-header>

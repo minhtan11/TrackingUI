@@ -6,6 +6,7 @@ import { NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
+import { StorageService } from 'src/app/storage-service/storage.service';
 
 @Component({
   selector: 'app-create-page',
@@ -14,6 +15,7 @@ import { NotificationServiceComponent } from 'src/app/notification-service/notif
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreatePageComponent  implements OnInit {
+  //#region Constructor
   @ViewChild('elePackageCode') elePackageCode: any;
   @ViewChild('eleMovingMethod') eleMovingMethod: any;
   @ViewChild('eleWareHouse') eleWareHouse: any;
@@ -21,6 +23,7 @@ export class CreatePageComponent  implements OnInit {
   @ViewChild('eleDeclarePrice') eleDeclarePrice: any;
   username:any='';
   isExec:any=false;
+  isnew:any=false;
   private destroy$ = new Subject<void>();
   formGroup!: FormGroup;
   constructor(
@@ -30,11 +33,15 @@ export class CreatePageComponent  implements OnInit {
     private rt : ActivatedRoute,
     private dt : ChangeDetectorRef,
     private navCtrl: NavController,
+    private storage: StorageService,
+    private router:Router
   ) {
-    this.username = this.rt.snapshot.params['username'];
    }
+  //#endregion
 
-  ngOnInit() {
+  //#region Init
+
+  async ngOnInit() {
     this.formGroup = this.formBuilder.group({
       packageCode: ['',Validators.required],
       movingMethod: ['',Validators.required],
@@ -46,6 +53,16 @@ export class CreatePageComponent  implements OnInit {
       declarePrice: [0,Validators.required],
       username:[this.username]
     });
+    this.username = await this.storage.get('username');
+    this.formGroup.patchValue({username:this.username});
+  }
+
+  ionViewWillEnter(){
+    this.isnew = false;
+  }
+
+  ionViewWillLeave(){
+    this.onDestroy();
   }
 
   onDestroy(){
@@ -53,6 +70,9 @@ export class CreatePageComponent  implements OnInit {
     this.destroy$.complete();
   }
 
+  //#endregion
+
+  //#region Functione
   save(){
     if (this.formGroup.controls['packageCode'].invalid) {
       this.notification.showNotiError('', 'Vui lòng nhập mã kiện!');
@@ -87,11 +107,11 @@ export class CreatePageComponent  implements OnInit {
       this.api.execByBody('Authencation','createpackage',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
         if (res && !res?.isError) {
           this.isExec = false;
+          this.isnew = true;
           this.notification.showNotiSuccess('', res?.message);
-          this.navCtrl.navigateForward('main/package/'+this.username);
           this.onDestroy();
           this.dt.detectChanges();
-          
+          this.navCtrl.navigateForward('main/package',{queryParams:{isnew:this.isnew}});
         }else{
           this.isExec = false;
           this.notification.showNotiError('',res?.message);
@@ -108,4 +128,9 @@ export class CreatePageComponent  implements OnInit {
   change(event:any){
     this.formGroup.patchValue({declaration:'',declarePrice:0});
   }
+
+  onback(){
+    this.navCtrl.navigateForward('main/package',{queryParams:{isnew:this.isnew}});
+  }
+  //#endregion
 }

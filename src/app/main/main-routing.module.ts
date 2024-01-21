@@ -15,6 +15,7 @@ import { FindPageComponent } from './package-page/find-page/find-page.component'
 import { CreatePageComponent } from './package-page/create-page/create-page.component';
 import { AuthGuard } from '../authguardservice/authguard.guard';
 import { DetailComponent } from './package-page/detail/detail.component';
+import { OrderStatusComponent } from './package-page/order-status/order-status.component';
 
 const routes: Routes = [
   {
@@ -38,10 +39,27 @@ const routes: Routes = [
         component: SettingPageComponent,
       },
       {
+        path: 'package',
+        component: PackagePageComponent,
+      },
+      {
+        path: 'package/create',
+        component: CreatePageComponent,
+      },
+      {
+        path: 'package/find',
+        component: FindPageComponent,
+      },
+      {
+        path: 'package/detail',
+        component: DetailComponent,
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'
       },
+
     ]
   },
   {
@@ -53,20 +71,8 @@ const routes: Routes = [
     component: OrderPageDetailComponent,
   },
   {
-    path: 'package/:username',
-    component: PackagePageComponent,
-  },
-  {
-    path: 'package/find/:username',
-    component: FindPageComponent,
-  },
-  {
-    path: 'package/create/:username',
-    component: CreatePageComponent,
-  },
-  {
-    path: 'package/detail/:username',
-    component: DetailComponent,
+    path: 'package/orderstatus/:username',
+    component: OrderStatusComponent,
   },
   {
     path: 'recharge',

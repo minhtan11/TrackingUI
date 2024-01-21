@@ -1,6 +1,16 @@
+
+<ng-container *ngIf="isExec">
+  <div id="loader" style="position: absolute;z-index: 1000;background: rgb(255 255 255 / 50%);left: 0em;" class="container w-100 h-100 d-flex align-items-center justify-content-center">
+    <!-- <img width="8%" src="../../../assets/image/loader.gif" alt=""> -->
+    <ion-spinner mode="ios" name="dots"></ion-spinner>
+  </div>
+</ng-container>
 <ion-header class="ion-no-border">
   <ion-toolbar style="--background:white;">
-    <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button>
+    <!-- <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button> -->
+    <ion-button (click)="onback()" mode="ios" fill="clear">
+      <ion-icon style="color: #ffb400;" name="chevron-back-outline"></ion-icon>
+    </ion-button>
     <ion-title mode="ios">Chi tiết kiện ký gửi</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -8,17 +18,17 @@
   <ng-container *ngIf="oData">
     <ion-card mode="ios">
       <ion-card-header style="padding-bottom: 0em;">
-        <div style="justify-content: space-between;" class="d-flex align-oDatas-center">
+        <div style="justify-content: space-between;" class="d-flex align-items-center">
           <div>
             <ion-text style="font-size: 1.2em;" class="font-weight-bold">
               Mã Kiện
             </ion-text>
           </div>
-          <div class="d-flex align-oDatas-center">
-            <ion-text class="me-2" style="font-size: 1.2em;">
+          <div class="d-flex align-items-center">
+            <ion-text style="font-size: 1.2em;">
               {{oData.packageCode}}
             </ion-text>
-            <ion-icon style="font-size: 1.5rem;" name="copy-outline"></ion-icon>
+            <!-- <ion-icon style="font-size: 1.5rem;" name="copy-outline"></ion-icon> -->
           </div>
         </div>
       </ion-card-header>
@@ -29,7 +39,7 @@
               <div class="col-md-6 offset-md-3">
                 <ul class="timeline">
                   <ng-container>
-                    <li *ngIf="oData.exportedCNWH == null" class="no-active d-flex align-oDatas-center">
+                    <li *ngIf="oData.exportedCNWH == null" class="no-active d-flex align-items-center">
                       <ion-text>
                         <span class="font-weight-bold" style="font-size: 0.8rem;">
                           XUẤT KHO TRUNG QUỐC
@@ -51,7 +61,7 @@
                     </li>
                   </ng-container>
                   <ng-container>
-                    <li *ngIf="oData.dateExpectation == null" class="no-active d-flex align-oDatas-center">
+                    <li *ngIf="oData.dateExpectation == null" class="no-active d-flex align-items-center">
                       <ion-text>
                         <span class="font-weight-bold" style="font-size: 0.8rem;">
                           ĐANG TRÊN ĐƯỜNG VỀ HCM
@@ -73,7 +83,7 @@
                     </li>
                   </ng-container>
                   <ng-container>
-                    <li *ngIf="oData.importedSGWH == null" class="no-active d-flex align-oDatas-center">
+                    <li *ngIf="oData.importedSGWH == null" class="no-active d-flex align-items-center">
                       <ion-text>
                         <span class="font-weight-bold" style="font-size: 0.8rem;">
                           ĐÃ VỀ KHO HCM
@@ -95,7 +105,7 @@
                     </li>
                   </ng-container>
                   <ng-container>
-                    <li *ngIf="oData.receivedDate == null" class="no-active d-flex align-oDatas-center">
+                    <li *ngIf="oData.receivedDate == null" class="no-active d-flex align-items-center">
                       <ion-text>
                         <span class="font-weight-bold" style="font-size: 0.8rem;">
                           ĐÃ NHẬN HÀNG
@@ -123,13 +133,13 @@
           <ion-grid fixed>
             <ion-row>
               <ion-col>
-                <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-oDatas-center">
+                <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                   <div>
                     <ion-text>
                       Trạng thái đơn
                     </ion-text>
                   </div>
-                  <div class="d-flex align-oDatas-center">
+                  <div class="d-flex align-items-center">
                     <ng-container [ngSwitch]="oData.status">
                       <ion-text *ngSwitchCase="2">
                         Hàng về kho TQ
@@ -158,13 +168,13 @@
                     </ng-container>
                   </div>
                 </div>
-                <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-oDatas-center">
+                <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                   <div>
                     <ion-text>
                       Kho nhận
                     </ion-text>
                   </div>
-                  <div class="d-flex align-oDatas-center">
+                  <div class="d-flex align-items-center">
                     <ng-container [ngSwitch]="oData.wareHouse">
                       <ion-text *ngSwitchCase="'1'">
                         Đông quản
@@ -175,13 +185,13 @@
                     </ng-container>
                   </div>
                 </div>
-                <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-oDatas-center">
+                <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                   <div>
                     <ion-text>
                       Loại vận chuyển
                     </ion-text>
                   </div>
-                  <div class="d-flex align-oDatas-center">
+                  <div class="d-flex align-items-center">
                     <ng-container [ngSwitch]="oData.movingMethod">
                       <ion-text *ngSwitchCase="2">
                         Chậm
@@ -202,31 +212,31 @@
                     
                   </div>
                 </div>
-                <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-oDatas-center">
+                <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                   <div>
                     <ion-text>
                       Ngày lên đơn
                     </ion-text>
                   </div>
-                  <div class="d-flex align-oDatas-center">
+                  <div class="d-flex align-items-center">
                     <ion-text>
                       {{oData.createdDate | date : 'dd/MM/yyyy hh:mm a'}}
                     </ion-text>
                   </div>
                 </div>
-                <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-oDatas-center">
+                <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                   <div>
                     <ion-text>
                       Vận chuyển
                     </ion-text>
                   </div>
-                  <div class="d-flex align-oDatas-center">
+                  <div class="d-flex align-items-center">
                     <ion-text>
                       {{(oData.weight ? oData.weight : '0')+'kg - '+ ((oData.weightPrice ? oData.weightPrice : 0)  | number)+'đ'}}
                     </ion-text>
                   </div>
                 </div> 
-                <div *ngIf="oData.isWoodPackage || oData.isAirPackage || oData.isInsurance" style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-oDatas-center">
+                <div *ngIf="oData.isWoodPackage || oData.isAirPackage || oData.isInsurance" style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                   <div>
                     <ion-text color="primary">
                       Dịch vụ phụ
@@ -234,23 +244,23 @@
                   </div>
                 </div>
                 <ng-container *ngIf="oData.isWoodPackage">
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-oDatas-center">
+                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                     <div>
                       <ion-text>
                         Đóng gỗ
                       </ion-text>
                     </div>
-                    <div class="d-flex align-oDatas-center">
+                    <div class="d-flex align-items-center">
                       <i class="bi bi-check2-circle"></i>
                     </div>
                   </div> 
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-oDatas-center">
+                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                     <div>
                       <ion-text>
                         Phí đóng gỗ
                       </ion-text>
                     </div>
-                    <div class="d-flex align-oDatas-center">
+                    <div class="d-flex align-items-center">
                       <ion-text>
                         {{((oData.woodPackagePrice != null ? oData.woodPackagePrice : 0 ) | number)+'đ'}}
                       </ion-text>
@@ -258,23 +268,23 @@
                   </div> 
                 </ng-container>
                 <ng-container *ngIf="oData.isAirPackage">
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-oDatas-center">
+                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                     <div>
                       <ion-text>
                         Bọt khí
                       </ion-text>
                     </div>
-                    <div class="d-flex align-oDatas-center">
+                    <div class="d-flex align-items-center">
                       <i class="bi bi-check2-circle"></i>
                     </div>
                   </div> 
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-oDatas-center">
+                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                     <div>
                       <ion-text>
                         Phí bọt khí
                       </ion-text>
                     </div>
-                    <div class="d-flex align-oDatas-center">
+                    <div class="d-flex align-items-center">
                       <ion-text>
                         {{((oData.airPackagePrice != null ? oData.airPackagePrice : 0) | number)+'đ'}}
                       </ion-text>
@@ -282,23 +292,23 @@
                   </div> 
                 </ng-container>
                 <ng-container *ngIf="oData.isInsurance">
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-oDatas-center">
+                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                     <div>
                       <ion-text>
                         Bảo hiểm
                       </ion-text>
                     </div>
-                    <div class="d-flex align-oDatas-center">
+                    <div class="d-flex align-items-center">
                       <i class="bi bi-check2-circle"></i>
                     </div>
                   </div> 
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-oDatas-center">
+                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                     <div>
                       <ion-text>
                         Phí bảo hiểm
                       </ion-text>
                     </div>
-                    <div class="d-flex align-oDatas-center">
+                    <div class="d-flex align-items-center">
                       <ion-text>
                         {{((oData.isInsurancePrice != null ? oData.isInsurancePrice : 0) | number)+'đ'}}
                       </ion-text>
@@ -309,11 +319,24 @@
             </ion-row>
           </ion-grid>
         </div>
-        <div *ngIf="oData.status < 2" class="d-flex align-oDatas-center justify-content-center mt-3">
-          <button (click)="checkStatus()" style="border-radius: 1em;" class="btn text-white" mat-flat-button color="primary">
-            <ion-text>
+        <div *ngIf="oData.status < 2" class="d-flex align-items-center justify-content-center mt-3">
+          <button (click)="checkStatus(oData)" style="border-radius: 1em;" class="btn text-white me-3" mat-flat-button color="primary">
+            <!-- <ion-text>
               Kiểm tra hàng
-            </ion-text>
+            </ion-text> -->
+            <div class="d-flex align-items-center justify-content-center">
+              <i class="bi bi-check2-circle me-2"></i>
+              <span>Kiểm tra hàng</span>
+            </div>
+          </button> 
+          <button (click)="cancelPackage(oData)" style="border-radius: 1em;" class="btn text-white" mat-flat-button color="warn">
+            <!-- <ion-text>
+              Hủy đơn
+            </ion-text> -->
+            <div class="d-flex align-items-center justify-content-center">
+              <i class="bi bi-x-octagon me-2"></i>
+              <span>Hủy đơn</span>
+            </div>
           </button> 
         </div>
       </ion-card-content>
