@@ -39,28 +39,28 @@ const routes: Routes = [
         component: SettingPageComponent,
       },
       {
-        path: 'package',
-        component: PackagePageComponent,
-      },
-      {
-        path: 'package/create',
-        component: CreatePageComponent,
-      },
-      {
-        path: 'package/find',
-        component: FindPageComponent,
-      },
-      {
-        path: 'package/detail',
-        component: DetailComponent,
-      },
-      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'
       },
 
     ]
+  },
+  {
+    path: 'package',
+    component: PackagePageComponent,
+  },
+  {
+    path: 'package/create',
+    component: CreatePageComponent,
+  },
+  {
+    path: 'package/find',
+    component: FindPageComponent,
+  },
+  {
+    path: 'package/detail',
+    component: DetailComponent,
   },
   {
     path: 'order/:username',

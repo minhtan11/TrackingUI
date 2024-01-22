@@ -19,7 +19,7 @@ ngOnInit() {}
 showNotiError(title:string,text:string,timer:number = 3000) {
   Swal.mixin({
     toast:true,
-    position:'top',
+    position:'bottom',
     buttonsStyling: false,
     showConfirmButton:false,
     timer: timer,
@@ -34,7 +34,7 @@ showNotiError(title:string,text:string,timer:number = 3000) {
 showNotiSuccess(title:string,text:string,timer:number = 3000) {
   Swal.mixin({
     toast:true,
-    position:'top',
+    position:'bottom',
     buttonsStyling: false,
     showConfirmButton:false,
     timer: timer,

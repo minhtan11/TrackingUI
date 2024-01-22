@@ -27,7 +27,6 @@ export class HomePage implements OnInit, AfterViewInit {
   messageError: any;
   formGroup!: FormGroup;
   isLogin: any = true;
-  isExec:any = false;
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -68,7 +67,7 @@ export class HomePage implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnDestroy(): void {
+  ionViewWillLeave(){
     this.onDestroy();
   }
 
@@ -90,7 +89,6 @@ export class HomePage implements OnInit, AfterViewInit {
       this.elePassword.nativeElement.focus();
       return;
     }
-    this.isExec = true;
     let queryParams = new HttpParams();
     queryParams = queryParams.append("userName", this.formGroup.value?.userName);
     queryParams = queryParams.append("passWord", this.formGroup.value?.passWord);
@@ -98,17 +96,14 @@ export class HomePage implements OnInit, AfterViewInit {
       if (res && !res?.isError) {
         this.storage.set('username', this.formGroup.value.userName);
         this.storage.set('password', this.formGroup.value.passWord);
-        this.navCtrl.navigateForward('main/home',{queryParams:{oUser: JSON.stringify(res.data)}});
-        this.onDestroy();
+        this.navCtrl.navigateForward('main');
       } else {
-        this.isExec = false;
         this.notification.showNotiError('', res?.message);
       }
     })
   }
 
   goSignUpPage() {
-    this.onDestroy();
     this.navCtrl.navigateForward('home/signup');
   }
 

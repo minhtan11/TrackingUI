@@ -20,6 +20,9 @@
     </ion-content>
   </ng-container>
   <div [style]="!isload ? '' : 'display: none;'" class="w-100 h-100">
+    <div id="loader-icon" style="z-index: 1000;background: rgb(255 255 255 / 50%);position: absolute;visibility: hidden;" class="d-flex align-items-center justify-content-center w-100 h-100">
+      <ion-spinner mode="ios" name="dots"></ion-spinner>
+    </div>
     <ion-router-outlet></ion-router-outlet>
   </div>
 </ion-app>

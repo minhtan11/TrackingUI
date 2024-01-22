@@ -22,35 +22,37 @@
         </div>
     </ion-card-content>
   </ion-card> 
-  <div class="d-flex justify-content-center align-items-center">
-    <ion-card style="border-radius: 1em;margin-top: -2.5rem;margin-bottom: 1rem;width: 80%;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;" mode="ios">
-      <ion-card-header class="p-3">
-        <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
-          <img  style="width: 4em;
-          border-radius: 2em;
-          margin-right: 1rem;" [src]="oUser.img ? oUser.img : '../../../assets/image/logo-user.png'" alt="" class="mb-2">
-          <ion-text color="medium" class="ion-text-wrap">
-            {{titleTime}}
-          </ion-text>
-          <ion-text class="ion-text-uppercase font-weight-bold">
-            {{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN}}
-          </ion-text>
-          <div class="d-flex align-items-center justify-content-center w-100">
-            <div style="white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;">
+  <ng-container *ngIf="oUser">
+    <div class="d-flex justify-content-center align-items-center">
+      <ion-card style="border-radius: 1em;margin-top: -2.5rem;margin-bottom: 1rem;width: 80%;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;" mode="ios">
+        <ion-card-header class="p-3">
+          <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
+            <img  style="width: 4em;
+            border-radius: 2em;
+            margin-right: 1rem;" [src]="oUser.img ? oUser.img : '../../../assets/image/logo-user.png'" alt="" class="mb-2">
+            <ion-text color="medium" class="ion-text-wrap">
+              {{titleTime}}
+            </ion-text>
+            <ion-text class="ion-text-uppercase font-weight-bold">
+              {{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN}}
+            </ion-text>
+            <div class="d-flex align-items-center justify-content-center w-100">
+              <div style="white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;">
+                <ion-text class="font-weight-bold">
+                  <span style="font-size: 1.5em;">{{oUser.wallet | number}}</span>
+                </ion-text>
+              </div>
               <ion-text class="font-weight-bold">
-                <span style="font-size: 1.5em;">{{oUser.wallet | number}}</span>
+                <span>đ</span>
               </ion-text>
             </div>
-            <ion-text class="font-weight-bold">
-              <span>đ</span>
-            </ion-text>
           </div>
-        </div>
-      </ion-card-header>
-    </ion-card>
-  </div>
+        </ion-card-header>
+      </ion-card>
+    </div>
+  </ng-container>
   <div class="row p-3">
     <div class="col-3">
       <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">

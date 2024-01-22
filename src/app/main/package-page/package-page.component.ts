@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InfiniteScrollCustomEvent, IonContent, NavController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, IonContent, IonSegment, IonSegmentButton, NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
@@ -30,7 +30,6 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   isloadpage:any=false;
   total:any = 0;
   isload:any=true;
-  isnew:any;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -44,7 +43,13 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   //#endregion
 
   //#region Init
-  ngOnInit() {
+  async ngOnInit() {
+    this.username = await this.storage.get('username');
+    this.isloadpage = true;
+    this.dt.detectChanges();
+      setTimeout(() => {
+        this.loadData();
+      }, 500);
   }
 
   ngAfterViewInit(): void {
@@ -52,19 +57,26 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   }
 
   async ionViewWillEnter(){
-    this.isnew = this.rt.snapshot.queryParams['isnew'];
-    if (this.isnew) {
-      this.username = await this.storage.get('username');
-      this.lstData = [];
-      this.pageNum = 1;
-      this.isload = true;
-      this.isEmpty = false;
-      this.isloadpage = true;
-      this.dt.detectChanges();
-      setTimeout(() => {
+    let type = this.rt.snapshot.queryParams['type'];
+    switch(type){
+      case 'addnew':
+        this.pageNum = 1;
+        this.status = 0;
+        this.isload = true;
+        this.isEmpty = false;
+        this.isloadpage = false;
+        this.lstData = [];
+        this.content.scrollToTop();
         this.loadData();
-      }, 500);
-      this.content.scrollToTop(); 
+        break;
+      case 'change':
+        let array = JSON.parse(this.rt.snapshot.queryParams['lstdata']);
+        array.forEach((item:any) => {
+          let index = this.lstData.findIndex((x:any) => x.packageCode == item.packageCode);
+          if(index > -1) this.lstData[index] = item;
+        });
+        this.dt.detectChanges();
+        break
     }
   }
 
@@ -153,7 +165,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
               if(index > -1) this.lstData[index] = res[1];
               this.isExec = false;
               this.dt.detectChanges();
-              this.navCtrl.navigateForward('main/package/orderstatus/'+this.username,{queryParams:{data:JSON.stringify(res[0])}});
+              this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[0]),data:JSON.stringify(res[1])}});
             }else{
               this.notification.showNotiError('',res.message);
             }
@@ -174,7 +186,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
           if(index > -1) this.lstData[index] = res[1];
           this.isExec = false;
           this.dt.detectChanges();
-          this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { data: JSON.stringify(res[0]) } });
+          this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[0]),data:JSON.stringify(res[1])}});
         }else{
           this.notification.showNotiError('',res.message);
         }
@@ -201,16 +213,14 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
       queryParams = queryParams.append("id", data.id);
       queryParams = queryParams.append("id", this.username);
       this.api.execByParameter('Authencation', 'cancel', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res && !res.isError) {
+        if (res && !res[0].isError) {
           this.isExec = false;
-          this.notification.showNotiError('',res.message);
+          this.notification.showNotiSuccess('',res[0].message);
           let index = this.lstData.findIndex((x:any) => x.packageCode == data.packageCode);
-          if(index > -1) this.lstData[index].status = 9;
+          if(index > -1) this.lstData[index] = res[1];
           this.dt.detectChanges();
-          this.onDestroy();
         }else{
-          this.notification.showNotiError('',res.message);
-          this.onDestroy();
+          this.notification.showNotiError('',res[0].message);
         }
       })
     }, 100);
@@ -249,6 +259,10 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
         }, 500);
       })
     }
+  }
+
+  onback(){
+    this.navCtrl.navigateForward('main');
   }
   //#endregion
 }

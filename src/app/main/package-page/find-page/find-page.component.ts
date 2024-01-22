@@ -28,7 +28,7 @@ export class FindPageComponent  implements OnInit {
   isload:any=true;
   isExec:any=false;
   id:any='';
-  isnew:any = false;
+  arrayChange:any=[];
   private destroy$ = new Subject<void>();
   constructor(
     private api: ApiserviceComponent,
@@ -54,10 +54,11 @@ export class FindPageComponent  implements OnInit {
   }
   
   ionViewWillEnter(){
-    this.isnew = false;
+    this.arrayChange = [];
   }
 
   ionViewWillLeave(){
+    this.arrayChange = [];
     this.onDestroy();
   }
 
@@ -123,21 +124,18 @@ export class FindPageComponent  implements OnInit {
           this.dt.detectChanges();
           setTimeout(() => {
             let queryParams = new HttpParams();
-          queryParams = queryParams.append("id", data.packageCode);
-          queryParams = queryParams.append("id", this.username);
-          this.api.execByParameter('Authencation', 'checkstatus', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-            if (res && !res[0].isError) {
-              this.isExec = false;
-              this.isnew = true;
-              let index = this.lstData.findIndex((x:any) => x.packageCode == data.packageCode);
-              if(index > -1) this.lstData[index] = res[1];
-              this.dt.detectChanges();
-              this.navCtrl.navigateForward('main/package/orderstatus/'+this.username,{queryParams:{data:JSON.stringify(res[0])}});
-            }else{
-              this.isExec = false;
-              this.notification.showNotiError('',res.message);
-            }
-          })
+            queryParams = queryParams.append("id", data.packageCode);
+            queryParams = queryParams.append("id", this.username);
+            this.api.execByParameter('Authencation', 'checkstatus', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+              if (res && !res[0].isError) {
+                this.isExec = false;
+                this.dt.detectChanges();
+                this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[0]),data:JSON.stringify(res[1])}});
+              } else {
+                this.isExec = false;
+                this.notification.showNotiError('', res.message);
+              }
+            })
           }, 100);
         }
       });
@@ -146,20 +144,17 @@ export class FindPageComponent  implements OnInit {
       this.dt.detectChanges();
       setTimeout(() => {
         let queryParams = new HttpParams();
-      queryParams = queryParams.append("id", data.packageCode);
-      queryParams = queryParams.append("id", this.username);
-      this.api.execByParameter('Authencation', 'checkstatus', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res && !res[0].isError) {
-          this.isExec = false;
-          this.isnew = true;
-          this.dt.detectChanges();
-          let index = this.lstData.findIndex((x:any) => x.packageCode == data.packageCode);
-          if(index > -1) this.lstData[index] = res[1];
-          this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { data: JSON.stringify(res[0]) } });
-        }else{
-          this.notification.showNotiError('',res.message);
-        }
-      })
+        queryParams = queryParams.append("id", data.packageCode);
+        queryParams = queryParams.append("id", this.username);
+        this.api.execByParameter('Authencation', 'checkstatus', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+          if (res && !res[0].isError) {
+            this.isExec = false;
+            this.dt.detectChanges();
+            this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[0]),data:JSON.stringify(res[1])}});
+          } else {
+            this.notification.showNotiError('', res.message);
+          }
+        })
       }, 100);
       
     }
@@ -170,19 +165,21 @@ export class FindPageComponent  implements OnInit {
     this.dt.detectChanges();
     setTimeout(() => {
       let queryParams = new HttpParams();
-    queryParams = queryParams.append("id", data.id);
-    queryParams = queryParams.append("id", this.username);
-    this.api.execByParameter('Authencation', 'cancel', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res && !res.isError) {
-        this.isnew = true;
-        this.notification.showNotiError('', res.message);
-        let index = this.lstData.findIndex((x: any) => x.packageCode == data.packageCode);
-        if (index > -1) this.lstData[index].status = 9;
-        this.dt.detectChanges();
-      } else {
-        this.notification.showNotiError('', res.message);
-      }
-    })
+      queryParams = queryParams.append("id", data.id);
+      queryParams = queryParams.append("id", this.username);
+      this.api.execByParameter('Authencation', 'cancel', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+        if (res && !res[0].isError) {
+          this.isExec = false;
+          this.notification.showNotiSuccess('', res[0].message);
+          let index = this.lstData.findIndex((x: any) => x.packageCode == data.packageCode);
+          if (index > -1) this.lstData[index] = res[1];
+          //push data array change
+          this.arrayChange.push(res[1]);
+          this.dt.detectChanges();
+        } else {
+          this.notification.showNotiError('', res[0].message);
+        }
+      })
     }, 100);
   }
 
@@ -198,11 +195,15 @@ export class FindPageComponent  implements OnInit {
   }
 
   viewDetail(data:any){
-    this.navCtrl.navigateForward('main/package/detail/'+this.username,{queryParams:{data:JSON.stringify(data)}});
+    this.navCtrl.navigateForward('main/package/detail',{queryParams:{data:JSON.stringify(data)}});
   }
 
   onback(){
-    this.navCtrl.navigateForward('main/package',{queryParams:{isnew:this.isnew}});
+    if (this.arrayChange.length) {
+      this.navCtrl.navigateForward('main/package',{queryParams:{type:'change',lstdata:JSON.stringify(this.arrayChange)}});
+    }else{
+      this.navCtrl.navigateForward('main/package');
+    }
   }
   //#endregion
 }

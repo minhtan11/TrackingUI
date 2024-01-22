@@ -47,25 +47,30 @@ export class AppComponent implements OnInit {
     let username = await this.storage.get('username');
     let password = await this.storage.get('password');
     if (username && password) {
-      let queryParams = new HttpParams();
-      queryParams = queryParams.append("userName", username);
-      queryParams = queryParams.append("passWord", password);
-      this.api.execByParameter('Authencation', 'login', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res && !res?.isError) {
-          this.navCtrl.navigateForward('main', {queryParams:{oUser: JSON.stringify(res.data)}});
-          this.onDestroy();
-          setTimeout(() => {
-            this.isload = false;
-            this.dt.detectChanges();
-          }, 2000);
-        } else {
-          this.navCtrl.navigateForward('home');
-          setTimeout(() => {
-            this.isload = false;
-            this.dt.detectChanges();
-          }, 2000);
-        }
-      })
+      this.navCtrl.navigateForward('main');
+      setTimeout(() => {
+        this.isload = false;
+        this.dt.detectChanges();
+      }, 2000);
+      // let queryParams = new HttpParams();
+      // queryParams = queryParams.append("userName", username);
+      // queryParams = queryParams.append("passWord", password);
+      // this.api.execByParameter('Authencation', 'login', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      //   if (res && !res?.isError) {
+      //     this.navCtrl.navigateForward('main', {queryParams:{oUser: JSON.stringify(res.data)}});
+      //     this.onDestroy();
+      //     setTimeout(() => {
+      //       this.isload = false;
+      //       this.dt.detectChanges();
+      //     }, 2000);
+      //   } else {
+      //     this.navCtrl.navigateForward('home');
+      //     setTimeout(() => {
+      //       this.isload = false;
+      //       this.dt.detectChanges();
+      //     }, 2000);
+      //   }
+      // })
     }else{
       this.navCtrl.navigateForward('home');
       setTimeout(() => {

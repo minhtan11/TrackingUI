@@ -6,55 +6,57 @@
 </ng-container>
   <ion-header class="ion-no-border">
     <ion-toolbar style="--background:white;">
-      <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button>
+      <ion-button (click)="onback()" mode="ios" fill="clear">
+        <ion-icon style="color: #ffb400;" name="chevron-back-outline"></ion-icon>
+      </ion-button>
       <ion-title mode="ios">Danh sách kiện ký gửi</ion-title>
       <i (click)="createPackage()" style="font-size: 1.5em;color: #ffc107;" slot="end" class="bi bi-file-earmark-plus me-3"></i>
       <i (click)="findPackage()"  style="font-size: 1.5em;color: #ffc107;" slot="end" class="bi bi-search me-3"></i>
     </ion-toolbar>
     <ion-toolbar style="--background:white;" class="pr-3 pl-3">
       <div style="overflow-x: scroll;">
-        <ion-segment [scrollable]="true" value="0" mode="ios">
-          <ion-segment-button (click)=" sortData(0)" value="0">
+        <ion-segment [scrollable]="true" [value]="status" mode="ios">
+          <ion-segment-button (click)=" sortData(0)" [value]="0">
             <ion-text class="text-segment">
               <span style="font-size: 1em;">Tất cả</span>
             </ion-text>
           </ion-segment-button>
-          <ion-segment-button (click)=" sortData(1)" value="1">
+          <ion-segment-button (click)=" sortData(1)" [value]="1">
             <ion-text class="text-segment">
               Chưa xác nhận
             </ion-text>
           </ion-segment-button>
-          <ion-segment-button (click)=" sortData(2)" value="2">
+          <ion-segment-button (click)=" sortData(2)" [value]="2">
             <ion-text class="text-segment">
               Hàng về kho TQ
             </ion-text>
           </ion-segment-button>
-          <ion-segment-button (click)=" sortData(3)" value="3">
+          <ion-segment-button (click)=" sortData(3)" [value]="3">
             <ion-text class="text-segment">
               Đang trên đường về HCM
             </ion-text>
           </ion-segment-button>
-          <ion-segment-button (click)=" sortData(4)" value="4">
+          <ion-segment-button (click)=" sortData(4)" [value]="4">
             <ion-text class="text-segment">
               Hàng về tới HCM
             </ion-text>
           </ion-segment-button>
-          <ion-segment-button (click)=" sortData(5)" value="5">
+          <ion-segment-button (click)=" sortData(5)" [value]="5">
             <ion-text class="text-segment">
               Đã nhận hàng
             </ion-text>
           </ion-segment-button>
-          <ion-segment-button (click)=" sortData(9)" value="9">
+          <ion-segment-button (click)=" sortData(9)" [value]="9">
             <ion-text class="text-segment">
               Đã hủy
             </ion-text>
           </ion-segment-button>
-          <ion-segment-button (click)=" sortData(10)" value="10">
+          <ion-segment-button (click)=" sortData(10)" [value]="10">
             <ion-text class="text-segment">
               Thất lạc
             </ion-text>
           </ion-segment-button>
-          <ion-segment-button (click)=" sortData(11)" value="11">
+          <ion-segment-button (click)=" sortData(11)" [value]="11">
             <ion-text class="text-segment">
               Không nhận được hàng
             </ion-text>
@@ -223,7 +225,7 @@
           </ion-item>
         </ng-container>
       </ion-list>
-      <ion-infinite-scroll [disabled]="!isload" (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll *ngIf="isload" (ionInfinite)="onIonInfinite($event)">
         <ion-infinite-scroll-content loadingSpinner="dots"></ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </ng-container>

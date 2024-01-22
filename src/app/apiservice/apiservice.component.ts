@@ -22,7 +22,7 @@ export class ApiserviceComponent implements OnInit {
   //#region Init
   ngOnInit() {
 
-  }
+    }
   //#endregion Init
 
   //#region Function
@@ -35,13 +35,13 @@ export class ApiserviceComponent implements OnInit {
   }
 
   // isLoad(type: any = false) {
-  //   let loader = document.getElementById('loader');
-  //   if (loader) {
-  //     if (type) {
-  //       loader.style.visibility = 'visible';
-  //     } else {
-  //       loader.style.visibility = 'hidden';
-  //     }
+    //   let loader = document.getElementById('loader');
+    //   if (loader) {
+      //     if (type) {
+        //       loader.style.visibility = 'visible';
+      //     } else {
+        //       loader.style.visibility = 'hidden';
+      //     }
   //   }
   // }
 

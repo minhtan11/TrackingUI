@@ -28,7 +28,6 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
   isHideFooter:any=false;
   formGroup!: FormGroup;
   image:any;
-  isExec:any = false;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -75,6 +74,10 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
   onDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+  
+  ionViewWillLeave(){
+    this.onDestroy();
   }
   //#endregion
 
@@ -124,30 +127,22 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
       this.elePassword.nativeElement.focus();
       return;
     }
-    this.isExec = true;
-    this.dt.detectChanges();
-    setTimeout(() => {
-      this.api.execByBody('Authencation','register',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
-        if (res && !res?.isError) {
-          this.storage.set('username', this.formGroup.value.username);
-          this.storage.set('password', this.formGroup.value.password);
-          this.isExec = false;
-          this.router.navigate(['main/home'], { queryParams: { oUser: JSON.stringify(res.data) } });
-          this.notification.showNotiSuccess('', 'Tạo tài khoản thành công!');
-          this.onDestroy();
-          this.dt.detectChanges();
-        }else{
-          this.isExec = false;
-          this.notification.showNotiError('',res?.message);
-          this.dt.detectChanges();
-        }
-      })
-    }, 500);
+    this.api.execByBody('Authencation','register',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      if (res && !res?.isError) {
+        this.storage.set('username', this.formGroup.value.username);
+        this.storage.set('password', this.formGroup.value.password);
+        this.navCtrl.navigateForward('main');
+        this.notification.showNotiSuccess('', 'Tạo tài khoản thành công!');
+        this.dt.detectChanges();
+      }else{
+        this.notification.showNotiError('',res?.message);
+        this.dt.detectChanges();
+      }
+    })
     
   }
 
   goSignInPage(){
-    this.onDestroy();
     this.router.navigate(['home']);
   }
 

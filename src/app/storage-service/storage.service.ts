@@ -29,4 +29,8 @@ export class StorageService {
     return value;
   }
 
+  public async remove(key: string) {
+    await this.storage.remove(key);
+  }
+
 }
