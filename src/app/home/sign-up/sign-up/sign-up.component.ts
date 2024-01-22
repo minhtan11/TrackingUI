@@ -127,7 +127,7 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
       this.elePassword.nativeElement.focus();
       return;
     }
-    this.api.execByBody('Authencation','register',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+    this.api.execByBody('Authencation','register',this.formGroup.value,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
       if (res && !res?.isError) {
         this.storage.set('username', this.formGroup.value.username);
         this.storage.set('password', this.formGroup.value.password);

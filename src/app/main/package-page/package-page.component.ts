@@ -26,7 +26,6 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   id:any='';
   lstData:any = [];
   isEmpty:any = false;
-  isExec:any=false;
   isloadpage:any=false;
   total:any = 0;
   isload:any=true;
@@ -103,7 +102,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     this.pageNum = 1;
     this.lstData = [];
     this.isEmpty = false;
-    this.isExec = true;
+    this.isloadpage = true;
     this.dt.detectChanges();
     setTimeout(() => {
       this.loadData();
@@ -124,7 +123,6 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
           res[0].forEach((data:any) => {
             this.lstData.push(data);
           });
-          this.isExec = false;
           this.isloadpage = false;
           if(this.lstData.length == 0) this.isEmpty = true;
           if(this.lstData.length == res[1]) this.isload = false;
@@ -153,45 +151,35 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
         heightAuto: false
       }).then((result) => {
         if (result.isConfirmed) {
-          this.isExec = true;
-          this.dt.detectChanges();
-          setTimeout(() => {
           let queryParams = new HttpParams();
           queryParams = queryParams.append("id", data.packageCode);
           queryParams = queryParams.append("id", this.username);
-          this.api.execByParameter('Authencation', 'checkstatus', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+          this.api.execByParameter('Authencation', 'checkstatus', queryParams,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
             if (res && !res[0].isError) {
               let index = this.lstData.findIndex((x:any) => x.packageCode == data.packageCode);
               if(index > -1) this.lstData[index] = res[1];
-              this.isExec = false;
               this.dt.detectChanges();
               this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[0]),data:JSON.stringify(res[1])}});
             }else{
               this.notification.showNotiError('',res.message);
             }
           })
-          }, 100);
         }
       });
     } else {
-      this.isExec = true;
-      this.dt.detectChanges();
-      setTimeout(() => {
-        let queryParams = new HttpParams();
+      let queryParams = new HttpParams();
       queryParams = queryParams.append("id", data.packageCode);
       queryParams = queryParams.append("id", this.username);
-      this.api.execByParameter('Authencation', 'checkstatus', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      this.api.execByParameter('Authencation', 'checkstatus', queryParams,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
         if (res && !res[0].isError) {
           let index = this.lstData.findIndex((x:any) => x.packageCode == data.packageCode);
           if(index > -1) this.lstData[index] = res[1];
-          this.isExec = false;
           this.dt.detectChanges();
           this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[0]),data:JSON.stringify(res[1])}});
         }else{
           this.notification.showNotiError('',res.message);
         }
       })
-      }, 100);  
     }
   }
 
@@ -206,24 +194,19 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   }
 
   cancelPackage(data:any){
-    this.isExec = true;
-    this.dt.detectChanges();
-    setTimeout(() => {
-      let queryParams = new HttpParams();
-      queryParams = queryParams.append("id", data.id);
-      queryParams = queryParams.append("id", this.username);
-      this.api.execByParameter('Authencation', 'cancel', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res && !res[0].isError) {
-          this.isExec = false;
-          this.notification.showNotiSuccess('',res[0].message);
-          let index = this.lstData.findIndex((x:any) => x.packageCode == data.packageCode);
-          if(index > -1) this.lstData[index] = res[1];
-          this.dt.detectChanges();
-        }else{
-          this.notification.showNotiError('',res[0].message);
-        }
-      })
-    }, 100);
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("id", data.id);
+    queryParams = queryParams.append("id", this.username);
+    this.api.execByParameter('Authencation', 'cancel', queryParams,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res && !res[0].isError) {
+        this.notification.showNotiSuccess('', res[0].message);
+        let index = this.lstData.findIndex((x: any) => x.packageCode == data.packageCode);
+        if (index > -1) this.lstData[index] = res[1];
+        this.dt.detectChanges();
+      } else {
+        this.notification.showNotiError('', res[0].message);
+      }
+    })
   }
 
   onCopy(){

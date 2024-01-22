@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController, Platform } from '@ionic/angular';
+import { NavController, Platform, ViewDidEnter, ViewWillEnter } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { HttpParams } from '@angular/common/http';
@@ -41,6 +41,8 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   //#region Init
   ngOnInit() {
     this.getTime();
+    this.getUser();
+    this.getDashBoard();
   }
 
   ngAfterViewInit(){
@@ -53,25 +55,14 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
-  ionViewWillEnter(){
-    this.getUser();
-    this.getDashBoard();
-  }
-
-  ionViewWillLeave(){
-    this.onDestroy();
-  }
   //#endregion
 
   //#region Function
   goOrderPage(){
-    this.onDestroy();
     this.navCtrl.navigateForward('main/order/'+this.oUser.username);
   }
 
   goPackagePage(){
-    this.onDestroy();
     this.navCtrl.navigateForward('main/package');
   }
 
@@ -82,6 +73,7 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   goServicechargePage(){
     this.router.navigate(['main/service-charge']);
   }
+
   getTime(){
     let today = new Date()
     let curHr = today.getHours()
@@ -104,12 +96,11 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
       let queryParams = new HttpParams();
       queryParams = queryParams.append("userName", username);
       queryParams = queryParams.append("passWord", password);
-      this.api.execByParameter('Authencation', 'login', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      this.api.execByParameter('Authencation', 'login', queryParams,false).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
         if (res && !res?.isError) {
           this.storage.remove('oUser');
           this.storage.set('oUser',JSON.stringify(res.data));
           this.oUser = res.data;
-          console.log(res.data);
           this.dt.detectChanges();
         } else {
           this.notification.showNotiError('','Tài khoản đã bị xóa hoặc không hợp lệ');
@@ -119,19 +110,18 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   }
 
   async getDashBoard(){
-    // let username = await this.storage.get('username');
-    // let queryParams = new HttpParams();
-    // queryParams = queryParams.append("userName", username);
-    // this.api.execByParameter('Authencation', 'dashboard', queryParams,false).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-    //   if (res) {
-    //     console.log(res);
-    //     this.pack3 = res[0][0];
-    //     this.pack5 = res[0][2];
-    //     this.ship1 = res[1][0];
-    //     this.ship2 = res[1][1];
-    //     this.dt.detectChanges();
-    //   }
-    // })
+    let username = await this.storage.get('username');
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("userName", username);
+    this.api.execByParameter('Authencation', 'dashboard', queryParams,false).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res) {
+        this.pack3 = res[0][0];
+        this.pack5 = res[0][2];
+        this.ship1 = res[1][0];
+        this.ship2 = res[1][1];
+        this.dt.detectChanges();
+      }
+    })
   }
   //#endregion
 

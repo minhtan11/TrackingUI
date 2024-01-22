@@ -92,7 +92,7 @@ export class HomePage implements OnInit, AfterViewInit {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("userName", this.formGroup.value?.userName);
     queryParams = queryParams.append("passWord", this.formGroup.value?.passWord);
-    this.api.execByParameter('Authencation', 'login', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+    this.api.execByParameter('Authencation', 'login', queryParams,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res && !res?.isError) {
         this.storage.set('username', this.formGroup.value.userName);
         this.storage.set('password', this.formGroup.value.passWord);

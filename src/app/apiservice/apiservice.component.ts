@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Config } from '@ionic/angular';
-import { Subject, catchError, takeUntil, throwError } from 'rxjs';
+import { Observable, Subject, catchError, debounceTime, map, of, switchMap, takeUntil, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2'
 
@@ -26,24 +26,32 @@ export class ApiserviceComponent implements OnInit {
   //#endregion Init
 
   //#region Function
-  execByParameter(controller: any, router: any, queryParams: any) {
-    return this.http.get<Config>(environment.apiUrl + controller + '/' + router, { params: queryParams }).pipe(catchError(this.handleError), takeUntil(this.destroy$))
+  execByParameter(controller: any, router: any, queryParams: any,showLoading:any = false){
+    if(showLoading) this.isLoad(true);
+    return this.http.get<Config>(environment.apiUrl + controller + '/' + router, { params: queryParams }).pipe(catchError(this.handleError),switchMap((response)=>{
+      if(showLoading) this.isLoad(false);
+      return of(response);
+    }))
   }
 
-  execByBody(controller: any, router: any, data: any) {
-    return this.http.post(environment.apiUrl + controller + '/' + router, data).pipe(catchError(this.handleError), takeUntil(this.destroy$))
+  execByBody(controller: any, router: any, data: any,showLoading:any = false) {
+    if(showLoading) this.isLoad(true);
+    return this.http.post(environment.apiUrl + controller + '/' + router, data).pipe(catchError(this.handleError), takeUntil(this.destroy$),switchMap((response)=>{
+      if(showLoading) this.isLoad(false);
+      return of(response);
+    }))
   }
 
-  // isLoad(type: any = false) {
-    //   let loader = document.getElementById('loader');
-    //   if (loader) {
-      //     if (type) {
-        //       loader.style.visibility = 'visible';
-      //     } else {
-        //       loader.style.visibility = 'hidden';
-      //     }
-  //   }
-  // }
+  isLoad(type: any = false) {
+    let loader = document.getElementById('loader-icon');
+    if (loader) {
+      if (type) {
+        loader.style.visibility = 'visible';
+      } else {
+        loader.style.visibility = 'hidden';
+      }
+    }
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
