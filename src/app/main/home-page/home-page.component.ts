@@ -96,7 +96,6 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   }
 
   async getUser(){
-    console.log('eeeee');
     let username = await this.storage.get('username');
     let password = await this.storage.get('password');
     if (username && password) {

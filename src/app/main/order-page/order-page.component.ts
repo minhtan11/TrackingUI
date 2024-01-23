@@ -111,8 +111,8 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     })
   }
 
-  viewDetail(){
-    this.navCtrl.navigateForward('main/order/detail',{queryParams:{orderID:'123456'}});
+  viewDetail(data:any){
+    this.navCtrl.navigateForward('main/order/detail',{queryParams:{data:JSON.stringify(data)}});
   }
 
   onback(){
@@ -121,6 +121,10 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
 
   onCopy(){
     
+  }
+
+  onPayment(data:any){
+
   }
 
   //#endregion

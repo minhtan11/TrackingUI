@@ -73,7 +73,7 @@ export class DetailComponent  implements OnInit {
           setTimeout(() => {
             let queryParams = new HttpParams();
           queryParams = queryParams.append("id", data.packageCode);
-          queryParams = queryParams.append("id", this.username);
+          queryParams = queryParams.append("userName", this.username);
           this.api.execByParameter('Authencation', 'checkstatus', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
             if (res && !res[0].isError) {
               this.isExec = false;
@@ -92,7 +92,7 @@ export class DetailComponent  implements OnInit {
       setTimeout(() => {
         let queryParams = new HttpParams();
       queryParams = queryParams.append("id", data.packageCode);
-      queryParams = queryParams.append("id", this.username);
+      queryParams = queryParams.append("userName", this.username);
       this.api.execByParameter('Authencation', 'checkstatus', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
         if (res && !res[0].isError) {
           this.isExec = false;
@@ -112,7 +112,7 @@ export class DetailComponent  implements OnInit {
     setTimeout(() => {
       let queryParams = new HttpParams();
       queryParams = queryParams.append("id", data.id);
-      queryParams = queryParams.append("id", this.username);
+      queryParams = queryParams.append("userName", this.username);
       this.api.execByParameter('Authencation', 'cancel', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
         if (res && !res[0].isError) {
           this.isExec = false;

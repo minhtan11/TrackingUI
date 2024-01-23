@@ -15,22 +15,22 @@
         </ion-segment-button>
         <ion-segment-button (click)=" sortData(1)" [value]="1">
           <ion-text class="text-segment">
-            <span style="font-size: 1em;">Đã thanh toán</span>
+            <span style="font-size: 1em;">Chờ thanh toán</span>
           </ion-text>
         </ion-segment-button>
         <ion-segment-button (click)=" sortData(2)" [value]="2">
           <ion-text class="text-segment">
-            <span style="font-size: 1em;">Đã hủy</span>
+            <span style="font-size: 1em;">Đã thanh toán</span>
           </ion-text>
         </ion-segment-button>
         <ion-segment-button (click)=" sortData(3)" [value]="3">
           <ion-text class="text-segment">
-            <span style="font-size: 1em;">Thất lạc</span>
+            <span style="font-size: 1em;">Đã hủy</span>
           </ion-text>
         </ion-segment-button>
         <ion-segment-button (click)=" sortData(4)" [value]="4">
           <ion-text class="text-segment">
-            <span style="font-size: 1em;">Không nhận hàng</span>
+            <span style="font-size: 1em;">Khác</span>
           </ion-text>
         </ion-segment-button>
       </ion-segment>
@@ -60,40 +60,71 @@
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
                   <ion-text style="font-size: 1.2em;" class="font-weight-bold me-2">
-                    Mã kiện hàng
+                    Mã đơn hàng
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
                   <ion-text class="me-2" style="font-size: 1.2em;">
-                    {{item.packageCode}}
+                    {{item.shippingOrderCode}}
                   </ion-text>
-                  <ion-icon [cdkCopyToClipboard]="item.packageCode" (click)="onCopy()" style="font-size: 1.5rem;" name="copy-outline"></ion-icon>
+                  <ion-icon [cdkCopyToClipboard]="item.shippingOrderCode" (click)="onCopy()" style="font-size: 1.5rem;" name="copy-outline"></ion-icon>
                 </div>
               </div>
             </ion-card-header>
             <ion-card-content style="padding: 0.2em;">
               <div class="d-flex align-items-center">
-                <img  style="width: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/wait-order.png" alt="">
+                <ng-container *ngIf="item.status == 1">
+                  <img  style="width: 4em;height: 4em;
+                  margin-right: 1rem;" src="../../../assets/image/wait-order.png" alt="">
+                </ng-container>
+                <ng-container *ngIf="item.status == 2">
+                  <img  style="width: 4em;height: 4em;
+                  margin-right: 1rem;" src="../../../assets/image/done-order.png" alt="">
+                </ng-container>
+                <ng-container *ngIf="item.status == 3">
+                  <img  style="width: 4em;height: 4em;
+                  margin-right: 1rem;" src="../../../assets/image/ship-cancel.png" alt="">
+                </ng-container>
+                <ng-container *ngIf="item.status == 4">
+                  <img  style="width: 4em;height: 4em;
+                  margin-right: 1rem;" src="../../../assets/image/ship-other.png" alt="">
+                </ng-container>
                 <div>
-                  <ion-text>
-                    Vận chuyển: Nhanh
+                  <ion-text mode="ios">
+                    <span> Vận chuyển:</span>
+                    <span>{{item.shippingMethodName}}</span>
                   </ion-text>
                   <br>
                   <ion-text>
-                    Dịch vụ: Nhanh
+                    <span>Ngày tạo: </span>
+                    <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
                   </ion-text>
                   <br>
                   <ion-text>
-                    Ngày: 1/2/2024 10:05:33 PM
+                    <span>Người tạo: </span>
+                    <span>{{item.lastName}}</span>
                   </ion-text>
                   <br>
                   <ion-text>
-                    Người tạo: Trần minh tân
+                    <span>Dịch vụ phụ: </span>
+                    <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
+                    <span *ngIf="item.isWoodPackage && item.isAirPackage">-</span>
+                    <span *ngIf="item.isAirPackage">Bọt khí</span>
+                    <span *ngIf="item.isAirPackage && item.isInsurance">-</span>
+                    <span *ngIf="item.isInsurance">Bảo hiểm</span>
+                    <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
                   </ion-text>
                   <ion-text>
                   </ion-text>
                 </div>
+              </div>
+              <div class="d-flex justify-content-end mb-2">
+                <ng-container [ngSwitch]="item.status">
+                  <span *ngSwitchCase="1" class="badge badge-pill badge-grey">Chờ thanh toán</span>
+                  <span *ngSwitchCase="2" class="badge badge-pill badge-success">Đã thanh toán</span>
+                  <span *ngSwitchCase="3" class="badge badge-pill badge-cancel">Đã hủy</span>
+                  <span *ngSwitchCase="4" class="badge badge-pill badge-grey">Khác</span>    
+                </ng-container>
               </div>
               <div class="d-flex justify-content-end">
                 <ion-text class="font-weight-bold">
@@ -101,136 +132,29 @@
                 </ion-text>
                 &nbsp;
                 <ion-text class="font-weight-bold">
-                  2,000,000,000
+                  {{item.totalPrice | number}}
                 </ion-text>
               </div>
-              <div class="text-center" style="padding-bottom: 1em;">
-                <ion-text (click)="viewDetail()" style="color: #ffb400;">
-                  <u>Xem chi tiết</u>
-                </ion-text>
+              <div class="text-center d-flex justify-content-end pt-3 pb-3">
+                <button (click)="viewDetail(item)" style="background-color: #ffc107;border: none !important;border-radius: 1em;" type="button" class="btn btn-primary btn-sm text-white">
+                  <div class="d-flex align-items-center justify-content-center">
+                    <i class="bi bi-eye me-2"></i>
+                    <span>Xem chi tiết</span>
+                  </div>
+                </button>
+                <ng-container *ngIf="item.status == 1">
+                  <button style="border-radius: 1em;background-color: var(--ion-color-success);border: none;" (click)="onPayment(item)" type="button" class="btn btn-secondary btn-sm text-white ml-3">
+                    <div class="d-flex align-items-center justify-content-center">
+                      <i class="bi bi-credit-card me-2"></i>
+                      <span>Thanh toán</span>
+                    </div>
+                  </button>
+                </ng-container>
               </div> 
             </ion-card-content>
           </ion-card>
         </ion-item>
       </ng-container>
-      <!-- <ion-item lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;">
-        <ion-card class="w-100" style="margin: 0em;box-shadow: none" mode="ios">
-          <ion-card-header style="padding: 0.2em;">
-            <div style="justify-content: space-between;" class="d-flex align-items-center">
-              <div>
-                <ion-text style="font-size: 1.2em;" class="font-weight-bold">
-                  Mã vận đơn
-                </ion-text>
-              </div>
-              <div class="d-flex align-items-center">
-                <ion-text style="font-size: 1.2em;">
-                  12345679999
-                </ion-text>
-                &nbsp;&nbsp;
-                <ion-icon style="font-size: 1.5em;" name="copy-outline"></ion-icon>
-              </div>
-            </div>
-          </ion-card-header>
-          <ion-card-content style="padding: 0.2em;">
-            <div class="d-flex align-items-center">
-              <img  style="width: 4em;
-                  margin-right: 1rem;" src="../../../assets/image/wait-order.png" alt="">
-              <div>
-                <ion-text>
-                  Vận chuyển: Nhanh
-                </ion-text>
-                <br>
-                <ion-text>
-                  Dịch vụ: Nhanh
-                </ion-text>
-                <br>
-                <ion-text>
-                  Ngày: 1/2/2024 10:05:33 PM
-                </ion-text>
-                <br>
-                <ion-text>
-                  Người tạo: Trần minh tân
-                </ion-text>
-                <ion-text>
-                </ion-text>
-              </div>
-            </div>
-            <div class="d-flex justify-content-end">
-              <ion-text class="font-weight-bold">
-                Tổng tiền:
-              </ion-text>
-              &nbsp;
-              <ion-text class="font-weight-bold">
-                2,000,000,000
-              </ion-text>
-            </div>
-            <div class="text-center" style="padding-bottom: 1em;">
-              <ion-text (click)="viewDetail()" style="color: #ffb400;">
-                <u>Xem chi tiết</u>
-              </ion-text>
-            </div> 
-          </ion-card-content>
-        </ion-card>
-      </ion-item>
-      <ion-item lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;">
-        <ion-card class="w-100" style="margin: 0em;box-shadow: none" mode="ios">
-          <ion-card-header style="padding: 0.2em;">
-            <div style="justify-content: space-between;" class="d-flex align-items-center">
-              <div>
-                <ion-text style="font-size: 1.2em;" class="font-weight-bold">
-                  Mã vận đơn
-                </ion-text>
-              </div>
-              <div class="d-flex align-items-center">
-                <ion-text style="font-size: 1.2em;">
-                  12345679999
-                </ion-text>
-                &nbsp;&nbsp;
-                <ion-icon style="font-size: 1.5em;" name="copy-outline"></ion-icon>
-              </div>
-            </div>
-          </ion-card-header>
-          <ion-card-content style="padding: 0.2em;">
-            <div class="d-flex align-items-center">
-              <img  style="width: 4em;
-                  margin-right: 1rem;" src="../../../assets/image/done-order.png" alt="">
-              <div>
-                <ion-text>
-                  Vận chuyển: Nhanh
-                </ion-text>
-                <br>
-                <ion-text>
-                  Dịch vụ: Nhanh
-                </ion-text>
-                <br>
-                <ion-text>
-                  Ngày: 1/2/2024 10:05:33 PM
-                </ion-text>
-                <br>
-                <ion-text>
-                  Người tạo: Trần minh tân
-                </ion-text>
-                <ion-text>
-                </ion-text>
-              </div>
-            </div>
-            <div class="d-flex justify-content-end">
-              <ion-text class="font-weight-bold">
-                Tổng tiền:
-              </ion-text>
-              &nbsp;
-              <ion-text class="font-weight-bold">
-                2,000,000,000
-              </ion-text>
-            </div>
-            <div class="text-center" style="padding-bottom: 1em;">
-              <ion-text (click)="viewDetail()" style="color: #ffb400;">
-                <u>Xem chi tiết</u>
-              </ion-text>
-            </div> 
-          </ion-card-content>
-        </ion-card>
-      </ion-item> -->
     </ion-list>
   </ng-container>
 </ion-content>

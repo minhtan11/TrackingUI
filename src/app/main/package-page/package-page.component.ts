@@ -152,7 +152,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
         if (result.isConfirmed) {
           let queryParams = new HttpParams();
           queryParams = queryParams.append("id", data.packageCode);
-          queryParams = queryParams.append("id", this.username);
+          queryParams = queryParams.append("userName", this.username);
           this.api.execByParameter('Authencation', 'checkstatus', queryParams,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
             if (res && !res[0].isError) {
               let index = this.lstData.findIndex((x:any) => x.packageCode == data.packageCode);
@@ -168,7 +168,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     } else {
       let queryParams = new HttpParams();
       queryParams = queryParams.append("id", data.packageCode);
-      queryParams = queryParams.append("id", this.username);
+      queryParams = queryParams.append("userName", this.username);
       this.api.execByParameter('Authencation', 'checkstatus', queryParams,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
         if (res && !res[0].isError) {
           let index = this.lstData.findIndex((x:any) => x.packageCode == data.packageCode);
@@ -195,7 +195,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   cancelPackage(data:any){
     let queryParams = new HttpParams();
     queryParams = queryParams.append("id", data.id);
-    queryParams = queryParams.append("id", this.username);
+    queryParams = queryParams.append("userName", this.username);
     this.api.execByParameter('Authencation', 'cancel', queryParams,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res && !res[0].isError) {
         this.notification.showNotiSuccess('', res[0].message);
