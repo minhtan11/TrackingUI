@@ -5,6 +5,7 @@ import { IonContent, NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
+import { StorageService } from 'src/app/storage-service/storage.service';
 
 @Component({
   selector: 'app-order-page',
@@ -12,7 +13,7 @@ import { NotificationServiceComponent } from 'src/app/notification-service/notif
   styleUrls: ['./order-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderPageComponent  implements OnInit,AfterViewInit,OnDestroy {
+export class OrderPageComponent  implements OnInit,AfterViewInit {
   //#region Contrucstor
   @ViewChild(IonContent) content: IonContent;
   pageNum:any = 1;
@@ -27,6 +28,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit,OnDestroy {
   isExec:any=false;
   total:any = 0;
   isload:any=true;
+  isloadpage:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -34,18 +36,20 @@ export class OrderPageComponent  implements OnInit,AfterViewInit,OnDestroy {
     private rt : ActivatedRoute,
     private notification: NotificationServiceComponent,
     private navCtrl: NavController,
+    private storage: StorageService,
   ) { 
-    this.username = this.rt.snapshot.params['username'];
-    this.rt.params.subscribe((res:any)=>{
-      this.lstData = [];
-      this.loadData();
-    })
   }
   //#endregion
 
   //#region Init
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.username = await this.storage.get('username');
+    this.isloadpage = true;
+    this.dt.detectChanges();
+      setTimeout(() => {
+        this.loadData();
+      }, 500);
   }
 
   ngAfterViewInit() {
@@ -57,10 +61,9 @@ export class OrderPageComponent  implements OnInit,AfterViewInit,OnDestroy {
     this.destroy$.complete();
   }
 
-  ngOnDestroy() {
-    
+  ionViewWillLeave(){
+    this.onDestroy();
   }
-
   //#endregion
 
   //#region Function
@@ -69,34 +72,55 @@ export class OrderPageComponent  implements OnInit,AfterViewInit,OnDestroy {
     return index; 
   }
 
-  sortData(status:any){}
+  sortData(status:any){
+    if(this.status == status) return;
+    this.status = status;
+    this.isload = true;
+    this.pageNum = 1;
+    this.lstData = [];
+    this.isEmpty = false;
+    this.isloadpage = true;
+    this.dt.detectChanges();
+    setTimeout(() => {
+      this.loadData();
+    }, 500); 
+  }
 
 
   loadData(){
     let queryParams = new HttpParams();
-      queryParams = queryParams.append("status", this.status);
-      queryParams = queryParams.append("id", this.id);
-      queryParams = queryParams.append("fromDate", this.fromDate);
-      queryParams = queryParams.append("toDate", this.toDate);
-      queryParams = queryParams.append("pageNum", this.pageNum);
-      queryParams = queryParams.append("pageSize", this.pageSize);
-      queryParams = queryParams.append("userName", this.username);
-      this.api.execByParameter('Authencation', 'order', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res) {
-          res[0].forEach((data:any) => {
-            this.lstData.push(data);
-          });
-          this.isExec = false;
-          if(this.lstData.length == 0) this.isEmpty = true;
-          if(this.lstData.length == res[1]) this.isload = false;
-          this.dt.detectChanges();
-        }
-        this.onDestroy();
-      })
+    queryParams = queryParams.append("status", this.status);
+    queryParams = queryParams.append("id", this.id);
+    queryParams = queryParams.append("fromDate", this.fromDate);
+    queryParams = queryParams.append("toDate", this.toDate);
+    queryParams = queryParams.append("pageNum", this.pageNum);
+    queryParams = queryParams.append("pageSize", this.pageSize);
+    queryParams = queryParams.append("userName", this.username);
+    this.api.execByParameter('Authencation', 'order', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res) {
+        res[0].forEach((data: any) => {
+          this.lstData.push(data);
+        });
+        this.isloadpage = false;
+        if (this.lstData.length == 0) this.isEmpty = true;
+        if (this.lstData.length == res[1]) this.isload = false;
+        this.dt.detectChanges();
+        console.log(this.lstData);
+      }
+      this.onDestroy();
+    })
   }
 
   viewDetail(){
     this.navCtrl.navigateForward('main/order/detail',{queryParams:{orderID:'123456'}});
+  }
+
+  onback(){
+    this.navCtrl.navigateForward('main');
+  }
+
+  onCopy(){
+    
   }
 
   //#endregion

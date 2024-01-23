@@ -128,7 +128,6 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
           if(this.lstData.length == res[1]) this.isload = false;
           this.dt.detectChanges();
         }
-        this.onDestroy();
       })
   }
 

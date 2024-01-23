@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavController, Platform, ViewDidEnter, ViewWillEnter } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
@@ -35,14 +35,16 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
     private storage: StorageService,
     private notification: NotificationServiceComponent,
   ) { 
+    this.rt.params.subscribe((res:any)=>{
+      this.getTime();
+      this.getUser();
+      this.getDashBoard();
+    })
   }
   //#endregion
 
   //#region Init
   ngOnInit() {
-    this.getTime();
-    this.getUser();
-    this.getDashBoard();
   }
 
   ngAfterViewInit(){
@@ -59,18 +61,22 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
 
   //#region Function
   goOrderPage(){
-    this.navCtrl.navigateForward('main/order/'+this.oUser.username);
+    this.onDestroy();
+    this.navCtrl.navigateForward('main/order');
   }
 
   goPackagePage(){
+    this.onDestroy();
     this.navCtrl.navigateForward('main/package');
   }
 
   goRechargePage(){
+    this.onDestroy();
     this.router.navigate(['main/recharge']);
   }
 
   goServicechargePage(){
+    this.onDestroy();
     this.router.navigate(['main/service-charge']);
   }
 
@@ -90,6 +96,7 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   }
 
   async getUser(){
+    console.log('eeeee');
     let username = await this.storage.get('username');
     let password = await this.storage.get('password');
     if (username && password) {
@@ -98,8 +105,6 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
       queryParams = queryParams.append("passWord", password);
       this.api.execByParameter('Authencation', 'login', queryParams,false).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
         if (res && !res?.isError) {
-          this.storage.remove('oUser');
-          this.storage.set('oUser',JSON.stringify(res.data));
           this.oUser = res.data;
           this.dt.detectChanges();
         } else {

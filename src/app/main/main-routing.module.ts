@@ -62,7 +62,7 @@ const routes: Routes = [
     component: DetailComponent,
   },
   {
-    path: 'order/:username',
+    path: 'order',
     component: OrderPageComponent,
   },
   {
