@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonTabs, NavController, Platform } from '@ionic/angular';
+import { IonRouterOutlet, IonTabs, NavController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
@@ -23,28 +23,22 @@ export class MainPage implements OnInit,AfterViewInit {
   }
 
    ngAfterViewInit() {
-    // this.platform.ready().then(() => {
-    //   setTimeout(() => {
-    //     SplashScreen.hide({fadeOutDuration:0});
-    //   }, 500);
-      
-    // });
   }
   
 
   goHomePage(){
-    this.router.navigate(['main/home']);
+    this.navCtrl.navigateForward(['main/home']);
   }
 
   goHistoryPage(){
-    this.router.navigate(['main/history']);
+    this.navCtrl.navigateForward(['main/history']);
   }
 
   goNofiticationPage(){
-    this.router.navigate(['main/notification']);
+    this.navCtrl.navigateForward(['main/notification']);
   }
 
   goSettingPage(){
-    this.router.navigate(['main/setting']);
+    this.navCtrl.navigateForward(['main/setting']);
   }
 }

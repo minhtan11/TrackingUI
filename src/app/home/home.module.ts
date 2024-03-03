@@ -28,7 +28,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatIconModule,
     MatButtonModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    HttpClientModule 
   ],
   declarations: [HomePage,SignUpComponent],
   providers: [

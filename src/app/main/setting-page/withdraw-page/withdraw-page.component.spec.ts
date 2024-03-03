@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { FindPageComponent } from './find-page.component';
+import { WithdrawPageComponent } from './withdraw-page.component';
 
-describe('FindPageComponent', () => {
-  let component: FindPageComponent;
-  let fixture: ComponentFixture<FindPageComponent>;
+describe('WithdrawPageComponent', () => {
+  let component: WithdrawPageComponent;
+  let fixture: ComponentFixture<WithdrawPageComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FindPageComponent ],
+      declarations: [ WithdrawPageComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FindPageComponent);
+    fixture = TestBed.createComponent(WithdrawPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

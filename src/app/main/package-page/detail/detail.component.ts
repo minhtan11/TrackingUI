@@ -116,7 +116,7 @@ export class DetailComponent  implements OnInit {
       this.api.execByParameter('Authencation', 'cancel', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
         if (res && !res[0].isError) {
           this.isExec = false;
-          this.notification.showNotiError('', res[0].message);
+          this.notification.showNotiSuccess('', res[0].message);
           this.oData = res[1];
           //push data array change
           this.arrayChange.push(res[1]);
@@ -130,9 +130,9 @@ export class DetailComponent  implements OnInit {
 
   onback(){
     if (this.arrayChange.length) {
-      this.navCtrl.navigateForward('main/package',{queryParams:{type:'change',lstdata:JSON.stringify(this.arrayChange)}});
+      this.navCtrl.navigateBack('main/package',{queryParams:{type:'change',lstdata:JSON.stringify(this.arrayChange)}});
     }else{
-      this.navCtrl.navigateForward('main/package');
+      this.navCtrl.navigateBack('main/package',{queryParams:{type:'default'}});
     }
   }
 }

@@ -40,10 +40,6 @@ export class HomePage implements OnInit, AfterViewInit {
     private platform : Platform,
     
   ) {
-    this.rt.queryParams.subscribe((params: any) => {
-      if (Object.keys(params).length != 0) {
-      }
-    })
   }
   //#endregion
 
@@ -53,6 +49,8 @@ export class HomePage implements OnInit, AfterViewInit {
       userName: ['', Validators.required],
       passWord: ['', Validators.required]
     });
+    let username = await this.storage.get('username');
+    if(username) this.formGroup.patchValue({userName:username});
   }
 
   async ngAfterViewInit() {
@@ -67,7 +65,13 @@ export class HomePage implements OnInit, AfterViewInit {
     });
   }
 
+  async ionViewWillEnter(){
+    let username = await this.storage.get('username');
+    if(username) this.formGroup.patchValue({userName:username});
+  }
+
   ionViewWillLeave(){
+    this.formGroup.reset();
     this.onDestroy();
   }
 
@@ -94,9 +98,9 @@ export class HomePage implements OnInit, AfterViewInit {
     queryParams = queryParams.append("passWord", this.formGroup.value?.passWord);
     this.api.execByParameter('Authencation', 'login', queryParams,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res && !res?.isError) {
+        this.navCtrl.navigateForward('main');
         this.storage.set('username', this.formGroup.value.userName);
         this.storage.set('password', this.formGroup.value.passWord);
-        this.navCtrl.navigateForward('main');
       } else {
         this.notification.showNotiError('', res?.message);
       }

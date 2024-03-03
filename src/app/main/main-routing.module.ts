@@ -11,11 +11,13 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { HistoryPageComponent } from './history-page/history-page.component';
 import { NotificationPageComponent } from './notification-page/notification-page.component';
 import { SettingPageComponent } from './setting-page/setting-page.component';
-import { FindPageComponent } from './package-page/find-page/find-page.component';
 import { CreatePageComponent } from './package-page/create-page/create-page.component';
 import { AuthGuard } from '../authguardservice/authguard.guard';
 import { DetailComponent } from './package-page/detail/detail.component';
 import { OrderStatusComponent } from './package-page/order-status/order-status.component';
+import { InfomationPageComponent } from './setting-page/infomation-page/infomation-page.component';
+import { WithdrawPageComponent } from './setting-page/withdraw-page/withdraw-page.component';
+import { ChangepasswordPageComponent } from './setting-page/changepassword-page/changepassword-page.component';
 
 const routes: Routes = [
   {
@@ -54,12 +56,12 @@ const routes: Routes = [
     component: CreatePageComponent,
   },
   {
-    path: 'package/find',
-    component: FindPageComponent,
-  },
-  {
     path: 'package/detail',
     component: DetailComponent,
+  },
+  {
+    path: 'package/orderstatus/:username',
+    component: OrderStatusComponent,
   },
   {
     path: 'order',
@@ -70,16 +72,24 @@ const routes: Routes = [
     component: OrderPageDetailComponent,
   },
   {
-    path: 'package/orderstatus/:username',
-    component: OrderStatusComponent,
-  },
-  {
     path: 'recharge',
     component: RechargePageComponent,
   },
   {
     path: 'service-charge',
     component: ServicechargePageComponent,
+  },
+  {
+    path: 'setting/information',
+    component: InfomationPageComponent,
+  },
+  {
+    path: 'setting/withdraw',
+    component: WithdrawPageComponent,
+  },
+  {
+    path: 'setting/changepassword',
+    component: ChangepasswordPageComponent,
   },
   // {
   //   path: 'home',

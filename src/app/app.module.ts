@@ -12,6 +12,8 @@ import { IonicStorageModule, Storage } from '@ionic/storage-angular';
 import { ApiserviceComponent } from './apiservice/apiservice.component';
 import { AuthguardGuard } from './authguardservice/authguard.guard';
 import { StorageService } from './storage-service/storage.service';
+import { NotificationServiceComponent } from './notification-service/notification-service.component';
+import { FcmService } from './services-fcm/fcm.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +22,8 @@ import { StorageService } from './storage-service/storage.service';
     ApiserviceComponent,
     AuthguardGuard,
     StorageService,
+    NotificationServiceComponent,
+    FcmService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],

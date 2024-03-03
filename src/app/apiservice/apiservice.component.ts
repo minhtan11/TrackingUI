@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Config } from '@ionic/angular';
 import { Observable, Subject, catchError, debounceTime, map, of, switchMap, takeUntil, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import { Network } from '@capacitor/network';
 
 @Component({
   selector: 'app-apiservice',
@@ -66,7 +67,7 @@ export class ApiserviceComponent implements OnInit {
       }).fire({
         icon: "error",
         title: '',
-        text: 'Mất kết nối!',
+        text: 'Tracking hiện đang gặp lỗi.Vui lòng thử lại!',
         heightAuto: false
       });
     } else {

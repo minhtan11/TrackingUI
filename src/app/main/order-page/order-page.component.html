@@ -1,9 +1,11 @@
 <ion-header class="ion-no-border">
   <ion-toolbar style="--background:white;">
-    <ion-button (click)="onback()" mode="ios" fill="clear">
-      <ion-icon style="color: #ffb400;" name="chevron-back-outline"></ion-icon>
-    </ion-button>
-    <ion-title mode="ios">Danh sách ký gửi</ion-title>
+    <div class="d-flex align-items-center h-100 justify-content-center w-100">
+      <ion-button (click)="onback()" mode="ios" fill="clear" mode="ios">
+        <ion-icon mode="ios" style="color: #ffb400;" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+      <ion-searchbar placeholder="Tìm kiếm đơn hàng" (ionChange)="ionChange($event)" enterkeyhint="search" mode="ios" class="p-3" show-clear-button="always"></ion-searchbar>
+    </div>
   </ion-toolbar>
   <ion-toolbar style="--background:white;" class="pr-3 pl-3">
     <div style="overflow-x: scroll;">
@@ -45,9 +47,17 @@
   </ng-container>
   <ng-container *ngIf="isEmpty">
     <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
-      <img style="width: 40%;" src="../../../assets/image/no-order.png" alt="">
+      <img style="width: 40%;" src="../../../assets/image/empty-box.png" alt="">
       <ion-text>
         Không có kiện hàng
+      </ion-text>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!isconnected">
+    <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
+      <img style="width: 40%;" src="../../../assets/image/connection.png" alt="">
+      <ion-text>
+        Mất kết nối internet
       </ion-text>
     </div>
   </ng-container>
@@ -156,5 +166,8 @@
         </ion-item>
       </ng-container>
     </ion-list>
+    <ion-infinite-scroll *ngIf="isload" (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content loadingSpinner="dots"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ng-container>
 </ion-content>

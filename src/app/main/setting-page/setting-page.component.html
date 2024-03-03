@@ -1,14 +1,24 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar style="--background:white;">
-    <ion-title mode="ios">Cài đặt</ion-title>
-  </ion-toolbar>
-</ion-header>
 <ion-content>
   <ion-card mode="ios">
     <ion-card-header>
       <div style="flex-direction: column;" class="d-flex align-items-center justify-content">
-        <div>
+        <ng-container *ngIf="oUser == undefined">
+          <ion-skeleton-text style="width: 5em;height: 5em;
+          border-radius: 3em;
+          " [animated]="true" class="mb-2"></ion-skeleton-text>
+          <ion-skeleton-text style="width: 30%;" [animated]="true"></ion-skeleton-text>
+        </ng-container>
+        <ng-container *ngIf="oUser != undefined">
+          <img class="mb-2" style="width: 5em;height: 5em;
+          border-radius: 3em;
+          " [src]="oUser.img ? oUser.img : '../../../assets/image/logo-user.png'" alt="" class="mb-2">
+          <ion-text class="ion-text-uppercase font-weight-bold">
+            {{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN}}
+          </ion-text>
+        </ng-container>
+        <!-- <div>
           <img  style="width: 5em;
+          height: 5em;
           border-radius: 2em;
           margin-right: 1rem;"src="../../../assets/image/logo-user.png" alt="">
         </div>
@@ -16,29 +26,29 @@
           <ion-text class="font-weight-bold">
             TRAN MINH TAN
           </ion-text>
-        </div>
+        </div> -->
       </div>
     </ion-card-header>
   </ion-card>
   <ion-card mode="ios">
     <ion-card-content class="p-0">
       <ion-list [inset]="true" class="m-0">
-        <ion-item lines="none" [button]="true" detail="false">
+        <ion-item (click)="goInformation()" lines="none" [button]="true" detail="false">
           <img style="width: 5%;" slot="start" src="../../../assets/image/file.png" alt="">
           <ion-text mode="ios" class="font-weight-normal">Thông tin tài khoản</ion-text>
           <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
         </ion-item>
-        <ion-item lines="none" [button]="true" detail="false">
+        <ion-item (click)="goWithdraw(1)" lines="none" [button]="true" detail="false">
           <img style="width: 5%;" slot="start" src="../../../assets/image/coin.png" alt="">
           <ion-text mode="ios" class="font-weight-normal">Nạp tiền</ion-text>
           <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
         </ion-item>
-        <ion-item lines="none" [button]="true" detail="false">
+        <ion-item (click)="goWithdraw(2)" lines="none" [button]="true" detail="false">
           <img style="width: 5%;" slot="start" src="../../../assets/image/withdraw.png" alt="">
           <ion-text mode="ios" class="font-weight-normal">Rút tiền</ion-text>
           <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
         </ion-item>
-        <ion-item lines="none" [button]="true" detail="false">
+        <ion-item (click)="goChangePassword()" lines="none" [button]="true" detail="false">
           <img style="width: 5%;" slot="start" src="../../../assets/image/key.png" alt="">
           <ion-text mode="ios" class="font-weight-normal">Đổi mật khẩu</ion-text>
           <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
@@ -47,72 +57,13 @@
     </ion-card-content>
   </ion-card>
   <div class="p-4">
-    <button style="border-radius: 1em;" class="btn btn-block text-white" mat-flat-button color="primary">
+    <button (click)="goSignIn()" style="border-radius: 1em;" class="btn btn-block text-white" mat-flat-button color="primary">
       <div class="d-flex justify-content-center justify-content-center">
         <i class="bi bi-box-arrow-left me-2"></i>
         <ion-text>
           Đăng xuất
         </ion-text>
       </div>
-      
     </button>   
   </div>
-  <!-- <ion-list [inset]="true">
-    <ion-item [button]="true" detail="false">
-      <div class="unread-indicator-wrapper" slot="start">
-        <div class="unread-indicator"></div>
-      </div>
-      <ion-label>
-        <strong>Rick Astley</strong>
-        <ion-text>Never Gonna Give You Up</ion-text><br />
-        <ion-note color="medium" class="ion-text-wrap">
-          Never gonna give you up Never gonna let you down Never gonna run...
-        </ion-note>
-      </ion-label>
-      <div class="metadata-end-wrapper" slot="end">
-        <ion-note color="medium">06:11</ion-note>
-        <ion-icon color="medium" name="chevron-forward"></ion-icon>
-      </div>
-    </ion-item>
-    <ion-item [button]="true" detail="false">
-      <div class="unread-indicator-wrapper" slot="start"></div>
-      <ion-label>
-        <strong>Ionitron</strong>
-        <ion-text>I have become sentient</ion-text><br />
-        <ion-note color="medium" class="ion-text-wrap">That is all.</ion-note>
-      </ion-label>
-      <div class="metadata-end-wrapper" slot="end">
-        <ion-note color="medium">03:44</ion-note>
-        <ion-icon color="medium" name="chevron-forward"></ion-icon>
-      </div>
-    </ion-item>
-    <ion-item [button]="true" detail="false">
-      <div class="unread-indicator-wrapper" slot="start">
-        <div class="unread-indicator"></div>
-      </div>
-      <ion-label>
-        <strong>Steam</strong>
-        <ion-text>Game Store Sale</ion-text><br />
-        <ion-note color="medium" class="ion-text-wrap">
-          That game you added to your wish list 2 years ago is now on sale!
-        </ion-note>
-      </ion-label>
-      <div class="metadata-end-wrapper" slot="end">
-        <ion-note color="medium">Yesterday</ion-note>
-        <ion-icon color="medium" name="chevron-forward"></ion-icon>
-      </div>
-    </ion-item>
-    <ion-item [button]="true" detail="false">
-      <div class="unread-indicator-wrapper" slot="start"></div>
-      <ion-label>
-        <strong>Ionic</strong>
-        <ion-text>Announcing Ionic 7.0</ion-text><br />
-        <ion-note color="medium" class="ion-text-wrap">This version is one more than Ionic 6!</ion-note>
-      </ion-label>
-      <div class="metadata-end-wrapper" slot="end">
-        <ion-note color="medium">Yesterday</ion-note>
-        <ion-icon color="medium" name="chevron-forward"></ion-icon>
-      </div>
-    </ion-item>
-  </ion-list> -->
 </ion-content>

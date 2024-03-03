@@ -1,13 +1,14 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController, Platform, ViewDidEnter, ViewWillEnter } from '@ionic/angular';
-import { Subject, takeUntil } from 'rxjs';
+import { IonRouterOutlet, NavController, Platform, ViewDidEnter, ViewWillEnter } from '@ionic/angular';
+import { Subject, connect, takeUntil } from 'rxjs';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { HttpParams } from '@angular/common/http';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { Network } from '@capacitor/network';
 import { StorageService } from 'src/app/storage-service/storage.service';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-home-page',
@@ -34,23 +35,42 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
     private api : ApiserviceComponent,
     private storage: StorageService,
     private notification: NotificationServiceComponent,
+    private routerOutlet: IonRouterOutlet
   ) { 
-    this.rt.params.subscribe((res:any)=>{
-      this.getTime();
-      this.getUser();
-      this.getDashBoard();
-    })
   }
   //#endregion
 
   //#region Init
-  ngOnInit() {
+  async ngOnInit() {
   }
 
   ngAfterViewInit(){
-    // Network.addListener('networkStatusChange', status => {
-    //   console.log('Network status changed', status);
-    // });
+    Network.addListener('networkStatusChange', status => {
+      if (status.connected && status.connectionType != 'none') {
+        this.getTime();
+        this.getUser();
+        this.getDashBoard();
+      }
+      if (!status.connected && status.connectionType == 'none') {}
+    });
+  }
+
+  async ionViewWillEnter(){
+    let status: any = await Network.getStatus();
+    if (status.connected && status.connectionType != 'none') {
+      this.getTime();
+      this.getUser();
+      this.getDashBoard();
+    }
+  }
+
+  ionViewDidEnter() {
+    this.routerOutlet.swipeGesture = false;
+  }
+
+  ionViewWillLeave(){
+    this.routerOutlet.swipeGesture = true;
+    this.onDestroy();
   }
 
   onDestroy(){
@@ -72,12 +92,12 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
 
   goRechargePage(){
     this.onDestroy();
-    this.router.navigate(['main/recharge']);
+    this.navCtrl.navigateForward('main/recharge');
   }
 
   goServicechargePage(){
     this.onDestroy();
-    this.router.navigate(['main/service-charge']);
+    this.navCtrl.navigateForward('main/service-charge');
   }
 
   getTime(){
@@ -97,17 +117,13 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
 
   async getUser(){
     let username = await this.storage.get('username');
-    let password = await this.storage.get('password');
-    if (username && password) {
+    if (username) {
       let queryParams = new HttpParams();
       queryParams = queryParams.append("userName", username);
-      queryParams = queryParams.append("passWord", password);
-      this.api.execByParameter('Authencation', 'login', queryParams,false).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res && !res?.isError) {
-          this.oUser = res.data;
+      this.api.execByParameter('Authencation', 'getuser', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+        if (res) {
+          this.oUser = res;
           this.dt.detectChanges();
-        } else {
-          this.notification.showNotiError('','Tài khoản đã bị xóa hoặc không hợp lệ');
         }
       })
     }

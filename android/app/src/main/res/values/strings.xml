@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Tracking_UI</string>
-    <string name="title_activity_main">Tracking_UI</string>
+    <string name="app_name">Trakuaidi</string>
+    <string name="title_activity_main">Trakuaidi</string>
     <string name="package_name">com.tracking.app</string>
     <string name="custom_url_scheme">com.tracking.app</string>
 </resources>

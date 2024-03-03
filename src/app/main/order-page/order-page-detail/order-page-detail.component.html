@@ -320,9 +320,29 @@
             </div>
           </ng-container>
         </ng-container>
+        <div style="padding-top: 1em;">
+          <ion-text color="primary">
+            CHI TIẾT ĐƠN
+          </ion-text>
+        </div>
         <ion-grid fixed>
           <ion-row>
             <ion-col>
+              <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                <div>
+                  <ion-text>
+                    Trạng thái
+                  </ion-text>
+                </div>
+                <div class="d-flex align-items-center">
+                  <ng-container [ngSwitch]="oData.status">
+                    <span *ngSwitchCase="1" class="badge badge-pill badge-grey">Chờ thanh toán</span>
+                    <span *ngSwitchCase="2" class="badge badge-pill badge-success">Đã thanh toán</span>
+                    <span *ngSwitchCase="3" class="badge badge-pill badge-cancel">Đã hủy</span>
+                    <span *ngSwitchCase="4" class="badge badge-pill badge-grey">Khác</span>    
+                  </ng-container>
+                </div>
+              </div>
               <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                 <div>
                   <ion-text>
@@ -331,19 +351,73 @@
                 </div>
                 <div class="d-flex align-items-center">
                   <ion-text>
-                    2kg
+                    {{oData.weight | number}}
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                 <div>
                   <ion-text>
-                    Trạng thái
+                    Phí vận chuyển
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
                   <ion-text>
-                    <span class="badge rounded-pill bg-warning text-white">Chờ thanh toán</span>
+                    {{((oData.weightPrice  != null ? oData.weightPrice : 0 ) | number)+'đ'}}
+                  </ion-text>
+                </div>
+              </div>
+              <ng-container *ngIf="oData.isWoodPackage">
+                <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                  <div>
+                    <ion-text>
+                      Phí đóng gỗ
+                    </ion-text>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <ion-text>
+                      {{((oData.woodPackagePrice != null ? oData.woodPackagePrice : 0 ) | number)+'đ'}}
+                    </ion-text>
+                  </div>
+                </div> 
+              </ng-container>
+              <ng-container *ngIf="oData.isAirPackage">
+                <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                  <div>
+                    <ion-text>
+                      Phí bọt khí
+                    </ion-text>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <ion-text>
+                      {{((oData.airPackagePrice != null ? oData.airPackagePrice : 0) | number)+'đ'}}
+                    </ion-text>
+                  </div>
+                </div> 
+              </ng-container>
+              <ng-container *ngIf="oData.isInsurance">
+                <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                  <div>
+                    <ion-text>
+                      Phí bảo hiểm
+                    </ion-text>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <ion-text>
+                      {{((oData.isInsurancePrice != null ? oData.isInsurancePrice : 0) | number)+'đ'}}
+                    </ion-text>
+                  </div>
+                </div> 
+              </ng-container>
+              <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                <div>
+                  <ion-text>
+                    Phụ phí
+                  </ion-text>
+                </div>
+                <div class="d-flex align-items-center">
+                  <ion-text>
+                    {{((oData.surCharge  != null ? oData.surCharge : 0 ) | number)+'đ'}}
                   </ion-text>
                 </div>
               </div>
@@ -355,7 +429,7 @@
                 </div>
                 <div class="d-flex align-items-center">
                   <ion-text class="font-weight-bold">
-                    0d
+                    {{(oData.totalPrice | number)+'đ'}}
                   </ion-text>
                 </div>
               </div>
@@ -366,10 +440,14 @@
     </ion-card>
   </ng-container>
 </ion-content>
-<!-- <ion-footer class="ion-no-border">
+<ion-footer *ngIf="oData.status == 1" class="ion-no-border">
   <ion-toolbar style="--background:white">
     <div style="padding-left: 1em;padding-right: 1em;">
-      <button type="button" class="btn btn-primary btn-lg btn-block" style="border-radius: 1em;background-color: #ffb400;border: none;">THANH TOÁN</button>
+      <button (click)="onPayment()" style="border-radius: 1em;" class="btn btn-block text-white" mat-flat-button color="primary">
+        <ion-text>
+          THANH TOÁN
+        </ion-text>
+      </button> 
     </div>
   </ion-toolbar>
-</ion-footer> -->
+</ion-footer>

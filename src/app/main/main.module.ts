@@ -20,7 +20,6 @@ import { SettingPageComponent } from './setting-page/setting-page.component';
 import { MatButtonModule } from '@angular/material/button';
 import { DecodeVNPipe } from '../pipe/decode-VN/decode-vn.pipe';
 import {MatStepperModule} from '@angular/material/stepper';
-import { FindPageComponent } from './package-page/find-page/find-page.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -32,6 +31,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import { DetailComponent } from './package-page/detail/detail.component';
 import { OrderStatusComponent } from './package-page/order-status/order-status.component';
+import { InfomationPageComponent } from './setting-page/infomation-page/infomation-page.component';
+import { WithdrawPageComponent } from './setting-page/withdraw-page/withdraw-page.component';
+import { ChangepasswordPageComponent } from './setting-page/changepassword-page/changepassword-page.component';
 
 @NgModule({
   imports: [
@@ -52,7 +54,7 @@ import { OrderStatusComponent } from './package-page/order-status/order-status.c
     ClipboardModule
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
-  ,DecodeVNPipe,FindPageComponent,CreatePageComponent,DetailComponent,OrderStatusComponent],
+  ,DecodeVNPipe,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent],
   providers:[NotificationServiceComponent]
 })
 export class MainPageModule { }

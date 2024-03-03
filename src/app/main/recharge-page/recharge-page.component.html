@@ -1,6 +1,8 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar class="text-center" style="--background:white;">
-    <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button>
+  <ion-toolbar style="--background:white;">
+    <ion-button (click)="onback()" mode="ios" fill="clear">
+      <ion-icon style="color: #ffb400;" name="chevron-back-outline"></ion-icon>
+    </ion-button>
     <ion-title mode="ios">Nạp tiền</ion-title>
   </ion-toolbar>
 </ion-header>

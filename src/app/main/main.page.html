@@ -19,40 +19,48 @@
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs> -->
-<ion-content>
+<ion-content [forceOverscroll]="true">
   <ion-router-outlet></ion-router-outlet>
 </ion-content>
 <ion-footer class="ion-no-border">
   <mat-tab-group headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
     <mat-tab>
       <ng-template mat-tab-label>
-        <div (click)="goHomePage()" style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
-          <i style="font-size: 1.2rem;padding-bottom: 0.2em;" class="bi bi-house"></i>
-          <span>Trang chủ</span>
+        <div (click)="goHomePage()" class="p-3">
+          <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
+            <ion-icon style="font-size: 20px" name="home-outline"></ion-icon>
+            <span class="mt-1" style="font-size: 6px">Trang chủ</span>
+          </div>
         </div>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <div (click)="goHistoryPage()" style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
-          <i style="font-size: 1.2rem;padding-bottom: 0.2em;" class="bi bi-clock-history"></i>
-          <span>Lịch sử GD</span>
+        <div (click)="goHistoryPage()"  class="p-3">
+          <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
+            <ion-icon style="font-size: 20px" name="time-outline"></ion-icon>
+            <span class="mt-1" style="font-size: 6px">Lịch sử GD</span>
+          </div>
         </div>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <div (click)="goNofiticationPage()" style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
-          <i style="font-size: 1.2rem;padding-bottom: 0.2em;" class="bi bi-bell"></i>
-          <span>Thông báo</span>
+        <div (click)="goNofiticationPage()" class="p-3">
+          <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
+            <ion-icon style="font-size: 20px" name="notifications-outline"></ion-icon>
+            <span class="mt-1" style="font-size: 6px">Thông báo</span>
+          </div>
         </div>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <div (click)="goSettingPage()" style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
-          <i style="font-size: 1.2rem;padding-bottom: 0.2em;" class="bi bi-gear"></i>
-          <span>Cài đặt</span>
+        <div (click)="goSettingPage()"  class="p-3">
+          <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
+            <ion-icon style="font-size: 20px" name="person-outline"></ion-icon>
+            <span class="mt-1" style="font-size: 6px">Cá nhân</span>
+          </div>
         </div>
       </ng-template>
     </mat-tab>

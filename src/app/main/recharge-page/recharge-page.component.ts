@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-recharge-page',
@@ -7,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RechargePageComponent  implements OnInit {
 
-  constructor() { }
+  constructor(private navCtrl: NavController,) { }
 
   ngOnInit() {}
-
+  onback(){
+    this.navCtrl.navigateBack('main');
+  }
 }

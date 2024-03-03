@@ -6,18 +6,14 @@
         <ion-grid class="text-center pr-0 pl-0" [fixed]="true" style="margin: auto">
           <ion-row [formGroup]="formGroup">
             <ion-col size="12" class="pr-0 pl-0">
-              <img style="border-radius: 5rem;display: block;
+              <img style="border-radius: 50%;display: block;
               margin-left: auto;
-              margin-right: auto;width: 5em;height: 5em;" src="../../assets/image/logo2.webp" alt="">
+              margin-right: auto;width: 25%;" src="../../assets/image/logo2.webp" alt="">
             </ion-col>
             <ion-col size="12" class="pr-0 pl-0">
-              <ion-text style="font-size: 0.8rem;" class="ion-text-wrap font-weight-bold">
-                NHẬN SHIP HÀNG - MỘT CHỮ TÍN VẠN NIỀM TIN
-              </ion-text>
+              <span style="font-size: 90%;" class="font-weight-bold">NHẬN SHIP HÀNG - MỘT CHỮ TÍN VẠN NIỀM TIN</span>
               <br>
-              <ion-text style="font-size: 0.8rem;" color="medium" class="ion-text-wrap">
-                Nhận ship hàng luôn đặt lợi ích khách hàng lên hàng đầu
-              </ion-text>
+              <span style="font-size: 80%;color: var(--ion-color-medium-tint);">Nhận ship hàng luôn đặt lợi ích khách hàng lên hàng đầu</span>
             </ion-col>
             <ion-col size="12" class="pr-0 pl-0">
               <mat-form-field appearance="outline" class="w-100">
@@ -33,24 +29,18 @@
                   </button>
                 </mat-form-field>
               </div> 
-              <button (click)="onSignIn()" style="border-radius: 1em;" class="btn btn-block text-white" mat-flat-button color="primary">
-                <ion-text>
-                  ĐĂNG NHẬP
-                </ion-text>
+              <button (click)="onSignIn()" style="border-radius: 10px;" class="btn btn-block text-white" mat-flat-button color="primary">
+                <span>ĐĂNG NHẬP</span>
               </button>    
             </ion-col>
             <ion-col size="12" class="pr-0 pl-0">
-              <ion-text class="font-weight-bold">
+              <span class="font-weight-bold">
                 <u>Quên mật khẩu?</u>
-              </ion-text>
+              </span>
             </ion-col>
             <ion-col size="12" class="pr-0 pl-0">
-              <ion-text>
-                Bạn không có tài khoản?
-              </ion-text>
-              <ion-text (click)="goSignUpPage()" style="color: #ffb400;">
-                <u>Đăng ký</u>
-              </ion-text>
+              <span>Bạn không có tài khoản? </span>
+              <span (click)="goSignUpPage()" style="color: #ffb400;"><u>Đăng ký</u></span>
               <br>
             </ion-col>
             <ion-col size="12" class="pr-0 pl-0">

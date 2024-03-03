@@ -4,7 +4,7 @@ import { SplashScreen } from '@capacitor/splash-screen';
 
 const config: CapacitorConfig = {
   appId: 'com.tracking.app',
-  appName: 'Tracking_UI',
+  appName: 'Trakuaidi',
   webDir: 'www',
   plugins: {
     PushNotifications: {

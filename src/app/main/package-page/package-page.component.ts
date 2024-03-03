@@ -6,7 +6,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
 import { StorageService } from 'src/app/storage-service/storage.service';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import { Network } from '@capacitor/network';
 
 @Component({
   selector: 'app-package-page',
@@ -18,7 +19,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   //#region Contrucstor
   @ViewChild(IonContent) content: IonContent;
   pageNum:any = 1;
-  pageSize:any = 10;
+  pageSize:any = 20;
   fromDate:any = null;
   toDate:any = null;
   username:any;
@@ -29,6 +30,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   isloadpage:any=false;
   total:any = 0;
   isload:any=true;
+  isconnected:any;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -42,41 +44,37 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   //#endregion
 
   //#region Init
-  async ngOnInit() {
-    this.username = await this.storage.get('username');
-    this.isloadpage = true;
-    this.dt.detectChanges();
-      setTimeout(() => {
-        this.loadData();
-      }, 500);
-  }
-
-  ngAfterViewInit(): void {
+  ngOnInit() {
     
   }
 
-  async ionViewWillEnter(){
-    let type = this.rt.snapshot.queryParams['type'];
-    switch(type){
-      case 'addnew':
-        this.pageNum = 1;
-        this.status = 0;
-        this.isload = true;
-        this.isEmpty = false;
-        this.isloadpage = false;
-        this.lstData = [];
-        this.content.scrollToTop();
-        this.loadData();
-        break;
-      case 'change':
-        let array = JSON.parse(this.rt.snapshot.queryParams['lstdata']);
-        array.forEach((item:any) => {
-          let index = this.lstData.findIndex((x:any) => x.packageCode == item.packageCode);
-          if(index > -1) this.lstData[index] = item;
-        });
+  ngAfterViewInit(){
+    Network.addListener('networkStatusChange', status => {
+      this.isconnected = status.connected;
+      if (status.connected && status.connectionType != 'none') {
+        this.isloadpage = true;
         this.dt.detectChanges();
-        break
+        setTimeout(() => {
+          this.loadData();
+        }, 500);  
+      }
+      if (!status.connected && status.connectionType == 'none') {
+        this.lstData = [];
+        this.isload = true;
+        this.pageNum = 1;
+        this.isEmpty = false;
+        this.dt.detectChanges();
+      }
+    });
+  }
+
+  async ionViewWillEnter(){
+    let status: any = await Network.getStatus();
+    this.isconnected = status.connected;
+    if (status.connected && status.connectionType != 'none') {
+      this.init();
     }
+    this.dt.detectChanges();
   }
 
   ionViewWillLeave(){
@@ -98,6 +96,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   sortData(status:any){
     if(this.status == status) return;
     this.status = status;
+    if(!this.isconnected) return;
     this.isload = true;
     this.pageNum = 1;
     this.lstData = [];
@@ -120,9 +119,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
       queryParams = queryParams.append("userName", this.username);
       this.api.execByParameter('Authencation', 'package', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
         if (res) {
-          res[0].forEach((data:any) => {
-            this.lstData.push(data);
-          });
+          this.lstData = res[0];
           this.isloadpage = false;
           if(this.lstData.length == 0) this.isEmpty = true;
           if(this.lstData.length == res[1]) this.isload = false;
@@ -244,7 +241,55 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   }
 
   onback(){
-    this.navCtrl.navigateForward('main');
+    this.navCtrl.navigateBack('main');
+  }
+
+  ionChange(event:any){
+    this.id = event?.detail?.value;
+    if(this.id == null || this.id == '') this.id = '';
+    this.lstData = [];
+    this.pageNum = 1;
+    this.isload = true;
+    this.isEmpty = false;
+    this.isloadpage = false;
+    this.lstData = [];
+    this.content.scrollToTop();
+    this.loadData();
+  }
+
+  async init(){
+    if(!this.username) this.username = await this.storage.get('username');
+    let type = this.rt.snapshot.queryParams['type'];
+    switch(type){
+      case 'addnew':
+        this.pageNum = 1;
+        this.status = 0;
+        this.isload = true;
+        this.isEmpty = false;
+        this.isloadpage = false;
+        this.lstData = [];
+        this.content.scrollToTop();
+        this.loadData();
+        break;
+      case 'change':
+        let array = JSON.parse(this.rt.snapshot.queryParams['lstdata']);
+        array.forEach((item:any) => {
+          let index = this.lstData.findIndex((x:any) => x.packageCode == item.packageCode);
+          if(index > -1) this.lstData[index] = item;
+        });
+        this.dt.detectChanges();
+        break;
+      case 'default':
+        break;
+      default:
+        this.lstData = [];
+        this.isloadpage = true;
+        this.dt.detectChanges();
+        setTimeout(() => {
+          this.loadData();
+        }, 500);
+        break;
+    }
   }
   //#endregion
 }
