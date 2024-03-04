@@ -149,8 +149,9 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
   async uploadImage(){
     this.image = await Camera.getPhoto({
       quality: 100,
-      allowEditing: true,
+      allowEditing: false,
       resultType: CameraResultType.Base64,
+      saveToGallery:false
     });
     this.dt.detectChanges();
   }

@@ -11,7 +11,7 @@
         <ng-container *ngIf="oUser != undefined">
           <img class="mb-2" style="width: 5em;height: 5em;
           border-radius: 3em;
-          " [src]="oUser.img ? oUser.img : '../../../assets/image/logo-user.png'" alt="" class="mb-2">
+          " [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="" class="mb-2">
           <ion-text class="ion-text-uppercase font-weight-bold">
             {{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN}}
           </ion-text>
