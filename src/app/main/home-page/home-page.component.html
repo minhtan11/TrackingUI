@@ -23,13 +23,13 @@
     </ion-card-content>
   </ion-card> 
   <div class="d-flex justify-content-center align-items-center">
-    <div class="d-flex justify-content-center align-items-center" style="width: 11em;height: 11em;
+    <div class="d-flex justify-content-center align-items-center" style="width: 10.5em;height: 10.5em;
     border-radius: 70%;position: absolute;background-color: white;z-index: 1000;margin-top: -2rem;
     ">
-    <img *ngIf="oUser != undefined" style="width: 10.5em;height: 10.5em;
+    <img *ngIf="oUser != undefined" style="width: 8.5em;height: 8.5em;
     border-radius: 70%;
     " [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="">
-    <ion-skeleton-text *ngIf="oUser == undefined" style="width: 10.5em;height: 10.5em;
+    <ion-skeleton-text *ngIf="oUser == undefined" style="width: 8.5em;height: 8.5em;
     border-radius: 70%;
     " [animated]="true" class="mb-2"></ion-skeleton-text>
     </div>
@@ -37,7 +37,7 @@
   <div class="d-flex justify-content-center align-items-center">
     <ion-card style="border-radius: 1em;margin-top: -1.5rem;margin-bottom: 1rem;width: 80%;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;" mode="ios">
       <ion-card-header style="padding-top: 3rem;">
-        <div style="flex-direction: column;margin-top: 4rem;" class="d-flex align-items-center justify-content-center">
+        <div style="flex-direction: column;margin-top: 3rem;" class="d-flex align-items-center justify-content-center">
           <ng-container *ngIf="oUser == undefined">
             <ion-skeleton-text style="width: 30%;" [animated]="true"></ion-skeleton-text>
             <ion-skeleton-text style="width: 40%;" [animated]="true"></ion-skeleton-text>
