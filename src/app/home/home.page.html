@@ -1,56 +1,53 @@
-
-<ion-app>
-  <ion-content class="ion-padding">
-    <ng-container>
-      <div class="d-flex align-items-center justify-content-center h-100">
-        <ion-grid class="text-center pr-0 pl-0" [fixed]="true" style="margin: auto">
-          <ion-row [formGroup]="formGroup">
-            <ion-col size="12" class="pr-0 pl-0">
-              <img style="border-radius: 50%;display: block;
-              margin-left: auto;
-              margin-right: auto;width: 23%;max-width: 80px;" src="../../assets/image/logo2.webp" alt="">
-            </ion-col>
-            <ion-col size="12" class="pr-0 pl-0">
-              <span style="font-size: 90%;" class="font-weight-bold">NHẬN SHIP HÀNG - MỘT CHỮ TÍN VẠN NIỀM TIN</span>
-              <br>
-              <span style="font-size: 80%;color: var(--ion-color-medium-tint);">Nhận ship hàng luôn đặt lợi ích khách hàng lên hàng đầu</span>
-            </ion-col>
-            <ion-col size="12" class="pr-0 pl-0">
-              <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Tên đăng nhập</mat-label>
-                <input #eleUserName formControlName="userName"  matInput>
+<ion-content class="ion-padding">
+  <ng-container>
+    <div class="d-flex align-items-center justify-content-center h-100">
+      <ion-grid class="text-center pr-0 pl-0" [fixed]="true" style="margin: auto">
+        <ion-row [formGroup]="formGroup">
+          <ion-col size="12" class="pr-0 pl-0">
+            <img style="border-radius: 50%;display: block;
+            margin-left: auto;
+            margin-right: auto;width: 23%;max-width: 80px;" src="../../assets/image/logo2.webp" alt="">
+          </ion-col>
+          <ion-col size="12" class="pr-0 pl-0">
+            <span style="font-size: 90%;" class="font-weight-bold">NHẬN SHIP HÀNG - MỘT CHỮ TÍN VẠN NIỀM TIN</span>
+            <br>
+            <span style="font-size: 80%;color: var(--ion-color-medium-tint);">Nhận ship hàng luôn đặt lợi ích khách hàng lên hàng đầu</span>
+          </ion-col>
+          <ion-col size="12" class="pr-0 pl-0">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Tên đăng nhập</mat-label>
+              <input #eleUserName formControlName="userName"  matInput>
+            </mat-form-field>
+            <div class="w-100">
+              <mat-form-field class="w-100">
+                <mat-label>Mật khẩu</mat-label>
+                <input #elePassword formControlName="passWord" matInput [type]="!showPass ? 'password' : 'text'">
+                <button class="d-flex align-items-center justify-content-center" mat-icon-button matSuffix (click)="showPass = !showPass">
+                  <ion-icon [name]="!showPass ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+                </button>
               </mat-form-field>
-              <div class="w-100">
-                <mat-form-field class="w-100">
-                  <mat-label>Mật khẩu</mat-label>
-                  <input #elePassword formControlName="passWord" matInput [type]="!showPass ? 'password' : 'text'">
-                  <button class="d-flex align-items-center justify-content-center" mat-icon-button matSuffix (click)="showPass = !showPass">
-                    <ion-icon [name]="!showPass ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
-                  </button>
-                </mat-form-field>
-              </div> 
-              <button (click)="onSignIn()" style="border-radius: 10px;" class="btn btn-block text-white" mat-flat-button color="primary">
-                <span>ĐĂNG NHẬP</span>
-              </button>    
-            </ion-col>
-            <ion-col size="12" class="pr-0 pl-0">
-              <span class="font-weight-bold">
-                <u>Quên mật khẩu?</u>
-              </span>
-            </ion-col>
-            <ion-col size="12" class="pr-0 pl-0">
-              <span>Bạn không có tài khoản? </span>
-              <span (click)="goSignUpPage()" style="color: #ffb400;"><u>Đăng ký</u></span>
-              <br>
-            </ion-col>
-            <ion-col size="12" class="pr-0 pl-0">
-              <img style="width: 60%;height: auto;object-fit: contain;display: block;margin-left: auto;margin-right: auto;" src="../../assets/image/delivery-service.png" alt="">
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-    </ng-container>
-  </ion-content>
-</ion-app>
+            </div> 
+            <button (click)="onSignIn()" style="border-radius: 10px;" class="btn btn-block text-white" mat-flat-button color="primary">
+              <span>ĐĂNG NHẬP</span>
+            </button>    
+          </ion-col>
+          <ion-col size="12" class="pr-0 pl-0">
+            <span class="font-weight-bold">
+              <u>Quên mật khẩu?</u>
+            </span>
+          </ion-col>
+          <ion-col size="12" class="pr-0 pl-0">
+            <span>Bạn không có tài khoản? </span>
+            <span (click)="goSignUpPage()" style="color: #ffb400;"><u>Đăng ký</u></span>
+            <br>
+          </ion-col>
+          <ion-col size="12" class="pr-0 pl-0">
+            <img style="width: 60%;height: auto;object-fit: contain;display: block;margin-left: auto;margin-right: auto;" src="../../assets/image/delivery-service.png" alt="">
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ng-container>
+</ion-content>
 
 
