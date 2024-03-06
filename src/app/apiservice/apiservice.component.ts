@@ -59,7 +59,7 @@ export class ApiserviceComponent implements OnInit {
       // A client-side or network error occurred. Handle it accordingly.
       Swal.mixin({
         toast: true,
-        position: 'top',
+        position: 'bottom',
         buttonsStyling: false,
         showConfirmButton: false,
         timer: 5000,
@@ -77,7 +77,7 @@ export class ApiserviceComponent implements OnInit {
       //   `Backend returned code ${error.status}, body was: `, error.error);
       Swal.mixin({
         toast: true,
-        position: 'top',
+        position: 'bottom',
         buttonsStyling: false,
         showConfirmButton: false,
         timer: 5000,
