@@ -1,9 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
-import { KeyboardResize } from '@capacitor/keyboard';
-import { SplashScreen } from '@capacitor/splash-screen';
 
 const config: CapacitorConfig = {
-  appId: 'com.tracking.app',
+  appId: 'com.trakuaidi.app',
   appName: 'Trakuaidi',
   webDir: 'www',
   plugins: {

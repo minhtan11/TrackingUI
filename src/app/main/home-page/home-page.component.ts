@@ -41,7 +41,8 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   //#endregion
 
   //#region Init
-  async ngOnInit() {
+  ngOnInit() {
+     
   }
 
   ngAfterViewInit(){
@@ -56,12 +57,9 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   }
 
   async ionViewWillEnter(){
-    let status: any = await Network.getStatus();
-    if (status.connected && status.connectionType != 'none') {
-      this.getTime();
-      this.getUser();
-      this.getDashBoard();
-    }
+    this.getTime();
+    this.getUser();
+    this.getDashBoard();
   }
 
   ionViewDidEnter() {
@@ -117,23 +115,29 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
 
   async getUser(){
     let username = await this.storage.get('username');
-    if (username) {
-      let queryParams = new HttpParams();
-      queryParams = queryParams.append("userName", username);
-      this.api.execByParameter('Authencation', 'getuser', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res) {
-          this.oUser = res;
-          this.dt.detectChanges();
-        }
-      })
+    let data = {
+      userName:username,
     }
+    let messageBody = {
+      dataRequest:JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res) {
+        this.oUser = res;
+        this.dt.detectChanges();
+      }
+    })
   }
 
   async getDashBoard(){
     let username = await this.storage.get('username');
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("userName", username);
-    this.api.execByParameter('Authencation', 'dashboard', queryParams,false).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+    let data = {
+      userName:username,
+    }
+    let messageBody = {
+      dataRequest:JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'dashboard', messageBody,false).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res) {
         this.pack3 = res[0][0];
         this.pack5 = res[0][2];

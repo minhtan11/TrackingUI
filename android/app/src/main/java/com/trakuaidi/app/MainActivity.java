@@ -1,4 +1,4 @@
-package com.tracking.app;
+package com.trakuaidi.app;
 
 import com.getcapacitor.BridgeActivity;
 

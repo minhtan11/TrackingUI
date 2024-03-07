@@ -5,10 +5,11 @@ import { Keyboard } from '@capacitor/keyboard';
 import { NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiserviceComponent } from '../apiservice/apiservice.component';
 import { StorageService } from '../storage-service/storage.service';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -38,6 +39,7 @@ export class HomePage implements OnInit, AfterViewInit {
     private rt: ActivatedRoute,
     private navCtrl: NavController,
     private platform : Platform,
+    private http: HttpClient,
     
   ) {
   }
@@ -93,10 +95,15 @@ export class HomePage implements OnInit, AfterViewInit {
       this.elePassword.nativeElement.focus();
       return;
     }
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("userName", this.formGroup.value?.userName);
-    queryParams = queryParams.append("passWord", this.formGroup.value?.passWord);
-    this.api.execByParameter('Authencation', 'login', queryParams,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+
+    let data = {
+      userName:this.formGroup.value?.userName,
+      passWord:this.formGroup.value?.passWord
+    }
+    let messageBody = {
+      dataRequest:JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'login', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res && !res?.isError) {
         this.navCtrl.navigateForward('main');
         this.storage.set('username', this.formGroup.value.userName);

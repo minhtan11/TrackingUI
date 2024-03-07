@@ -20,8 +20,8 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   @ViewChild(IonContent) content: IonContent;
   pageNum:any = 1;
   pageSize:any = 20;
-  fromDate:any = null;
-  toDate:any = null;
+  fromDate:any = '';
+  toDate:any = '';
   username:any;
   status:any = 0;
   id:any='';
@@ -30,7 +30,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   isloadpage:any=false;
   total:any = 0;
   isload:any=true;
-  isconnected:any;
+  isconnected:any = true;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -69,11 +69,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   }
 
   async ionViewWillEnter(){
-    let status: any = await Network.getStatus();
-    this.isconnected = status.connected;
-    if (status.connected && status.connectionType != 'none') {
-      this.init();
-    }
+    this.init();
     this.dt.detectChanges();
   }
 
@@ -109,23 +105,27 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   }
 
   loadData(){
-    let queryParams = new HttpParams();
-      queryParams = queryParams.append("status", this.status);
-      queryParams = queryParams.append("id", this.id);
-      queryParams = queryParams.append("fromDate", this.fromDate);
-      queryParams = queryParams.append("toDate", this.toDate);
-      queryParams = queryParams.append("pageNum", this.pageNum);
-      queryParams = queryParams.append("pageSize", this.pageSize);
-      queryParams = queryParams.append("userName", this.username);
-      this.api.execByParameter('Authencation', 'package', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res) {
-          this.lstData = res[0];
-          this.isloadpage = false;
-          if(this.lstData.length == 0) this.isEmpty = true;
-          if(this.lstData.length == res[1]) this.isload = false;
-          this.dt.detectChanges();
-        }
-      })
+    let data = {
+      status: this.status,
+      id: this.id,
+      //fromDate: this.fromDate,
+      //toDate: this.toDate,
+      pageNum: this.pageNum,
+      pageSize: this.pageSize,
+      userName: this.username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'package', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res) {
+        this.lstData = res[0];
+        this.isloadpage = false;
+        if (this.lstData.length == 0) this.isEmpty = true;
+        if (this.lstData.length == res[1]) this.isload = false;
+        this.dt.detectChanges();
+      }
+    })
   }
 
   checkStatus(data: any) {
