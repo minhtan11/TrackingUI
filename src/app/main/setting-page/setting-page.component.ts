@@ -57,8 +57,10 @@ export class SettingPageComponent  implements OnInit {
       dataRequest:JSON.stringify(data)
     };
     this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res) {
-        this.oUser = res;
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        this.oUser = res[1];
         this.dt.detectChanges();
       }
     })
