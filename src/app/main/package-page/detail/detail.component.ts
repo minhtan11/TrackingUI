@@ -49,8 +49,8 @@ export class DetailComponent  implements OnInit {
     this.onDestroy();
   }
 
-  checkStatus(data: any) {
-    if (!data.searchBaiduTimes) {
+  checkStatus(item: any) {
+    if (!item.searchBaiduTimes) {
       Swal.mixin({
         customClass: {
           confirmButton: "btn btn-accent me-2 text-white",
@@ -71,18 +71,26 @@ export class DetailComponent  implements OnInit {
           this.isExec = true;
           this.dt.detectChanges();
           setTimeout(() => {
-            let queryParams = new HttpParams();
-          queryParams = queryParams.append("id", data.packageCode);
-          queryParams = queryParams.append("userName", this.username);
-          this.api.execByParameter('Authencation', 'checkstatus', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-            if (res && !res[0].isError) {
-              this.isExec = false;
-              this.dt.detectChanges();
-              this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[0]),data:JSON.stringify(res[1])}});
-            }else{
-              this.notification.showNotiError('',res[0].message);
+            let data = {
+              id: item.packageCode,
+              userName: this.username
             }
-          })
+            let messageBody = {
+              dataRequest: JSON.stringify(data)
+            };
+            this.api.execByBody('Authencation', 'checkstatus', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+              if (res[0]) {
+                this.notification.showNotiError('', res[1].message);
+              }else{
+                if (!res[1].isError) {
+                  this.isExec = false;
+                  this.dt.detectChanges();
+                  this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[1]), data: JSON.stringify(res[2]) } });
+                } else {
+                  this.notification.showNotiError('', res[1].message);
+                }
+              }
+            })
           }, 100);
         }
       });
@@ -90,39 +98,55 @@ export class DetailComponent  implements OnInit {
       this.isExec = true;
       this.dt.detectChanges();
       setTimeout(() => {
-        let queryParams = new HttpParams();
-      queryParams = queryParams.append("id", data.packageCode);
-      queryParams = queryParams.append("userName", this.username);
-      this.api.execByParameter('Authencation', 'checkstatus', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res && !res[0].isError) {
-          this.isExec = false;
-          this.dt.detectChanges();
-          this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[0]),data:JSON.stringify(res[1])}});
-        }else{
-          this.notification.showNotiError('',res[0].message);
+        let data = {
+          id: item.packageCode,
+          userName: this.username
         }
-      })
+        let messageBody = {
+          dataRequest: JSON.stringify(data)
+        };
+        this.api.execByBody('Authencation', 'checkstatus', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+          if (res[0]) {
+            this.notification.showNotiError('', res[1].message);
+          }else{
+            if (!res[1].isError) {
+              this.isExec = false;
+              this.dt.detectChanges();
+              this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[1]), data: JSON.stringify(res[2]) } });
+            } else {
+              this.notification.showNotiError('', res[1].message);
+            }
+          }
+        })
       }, 100);  
     }
   }
 
-  cancelPackage(data:any){
+  cancelPackage(item:any){
     this.isExec = true;
     this.dt.detectChanges();
     setTimeout(() => {
-      let queryParams = new HttpParams();
-      queryParams = queryParams.append("id", data.id);
-      queryParams = queryParams.append("userName", this.username);
-      this.api.execByParameter('Authencation', 'cancel', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res && !res[0].isError) {
-          this.isExec = false;
-          this.notification.showNotiSuccess('', res[0].message);
-          this.oData = res[1];
-          //push data array change
-          this.arrayChange.push(res[1]);
-          this.dt.detectChanges();
-        } else {
-          this.notification.showNotiError('', res[0].message);
+      let data = {
+        id: item.id,
+        userName: this.username
+      }
+      let messageBody = {
+        dataRequest: JSON.stringify(data)
+      };
+      this.api.execByBody('Authencation', 'cancel', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+        if (res[0]) {
+          this.notification.showNotiError('', res[1].message);
+        }else{
+          if (!res[1].isError) {
+            this.isExec = false;
+            this.notification.showNotiSuccess('', res[1].message);
+            this.oData = res[2];
+            //push data array change
+            this.arrayChange.push(res[2]);
+            this.dt.detectChanges();
+          } else {
+            this.notification.showNotiError('', res[1].message);
+          }
         }
       })
     }, 100);

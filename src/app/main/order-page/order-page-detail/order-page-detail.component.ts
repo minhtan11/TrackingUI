@@ -52,10 +52,14 @@ export class OrderPageDetailComponent  implements OnInit {
   }
 
   onPayment(){
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("id", this.oData.id);
-    queryParams = queryParams.append("username", this.username);
-    this.api.execByParameter('Authencation', 'payment', queryParams,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+    let data = {
+      id: this.oData.id,
+      userName: this.username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res && !res.isError) {
         this.oData = res.data;
         this.arrayChange.push(res.data);
@@ -77,11 +81,17 @@ export class OrderPageDetailComponent  implements OnInit {
   }
 
   getDetailPackage(){
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("id", this.oData.id);
-    this.api.execByParameter('Authencation', 'getlistpackage', queryParams,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res) {
-        this.lstPackage = res;
+    let data = {
+      id: this.oData.id,
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'getlistpackage', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        this.lstPackage = res[1];
         this.onDestroy();
         this.dt.detectChanges();
       }

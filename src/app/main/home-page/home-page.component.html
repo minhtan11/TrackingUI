@@ -23,13 +23,13 @@
     </ion-card-content>
   </ion-card> 
   <div class="d-flex justify-content-center align-items-center">
-    <div class="d-flex justify-content-center align-items-center" style="width: 10.5em;height: 10.5em;
+    <div class="d-flex justify-content-center align-items-center" style="width: 10em;height: 10em;
     border-radius: 70%;position: absolute;background-color: white;z-index: 1000;margin-top: -2rem;
     ">
-    <img *ngIf="oUser != undefined" style="width: 8.5em;height: 8.5em;
+    <img *ngIf="oUser != undefined" style="width: 9em;height: 9em;
     border-radius: 70%;
     " [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="">
-    <ion-skeleton-text *ngIf="oUser == undefined" style="width: 8.5em;height: 8.5em;
+    <ion-skeleton-text *ngIf="oUser == undefined" style="width: 9em;height: 9em;
     border-radius: 70%;
     " [animated]="true" class="mb-2"></ion-skeleton-text>
     </div>

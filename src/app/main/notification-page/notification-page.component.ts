@@ -16,7 +16,7 @@ import { StorageService } from 'src/app/storage-service/storage.service';
 })
 export class NotificationPageComponent implements OnInit {
   pageNum: any = 1;
-  pageSize: any = 20;
+  pageSize: any = 50;
   fromDate: any = null;
   toDate: any = null;
   username: any;
@@ -26,7 +26,7 @@ export class NotificationPageComponent implements OnInit {
   isEmpty: any = false;
   isload: any = true;
   isloadpage: any = false;
-  isconnected: any;
+  isconnected: any = true;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -62,11 +62,7 @@ export class NotificationPageComponent implements OnInit {
   }
 
   async ionViewWillEnter() {
-    let status: any = await Network.getStatus();
-    this.isconnected = status.connected;
-    if (status.connected && status.connectionType != 'none') {
-      this.init();
-    }
+    this.init();
     this.dt.detectChanges();
   }
 
@@ -103,49 +99,61 @@ export class NotificationPageComponent implements OnInit {
   }
 
   loadData() {
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("status", this.status);
-    queryParams = queryParams.append("id", this.id);
-    queryParams = queryParams.append("fromDate", this.fromDate);
-    queryParams = queryParams.append("toDate", this.toDate);
-    queryParams = queryParams.append("pageNum", this.pageNum);
-    queryParams = queryParams.append("pageSize", this.pageSize);
-    queryParams = queryParams.append("userName", this.username);
-    this.api.execByParameter('Authencation', 'notification', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res) {
-        this.lstData = res[0];
+    let data = {
+      status: this.status,
+      //fromDate: this.fromDate,
+      //toDate: this.toDate,
+      pageNum: this.pageNum,
+      pageSize: this.pageSize,
+      userName: this.username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'notification', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        let oData = res[1];
+        this.lstData = oData[0];
+        this.isloadpage = false;
         if (this.lstData.length == 0) this.isEmpty = true;
-        if (this.lstData.length == res[1]) this.isload = false;
+        if (this.lstData.length == oData[1]) this.isload = false;
+        this.dt.detectChanges();
       }
-      this.isloadpage = false;
-      this.onDestroy();
-      this.dt.detectChanges();
     })
   }
 
   onIonInfinite(event: any) {
     if (this.isload) {
       this.pageNum += 1;
-      let queryParams = new HttpParams();
-      queryParams = queryParams.append("status", this.status);
-      queryParams = queryParams.append("id", this.id);
-      queryParams = queryParams.append("fromDate", this.fromDate);
-      queryParams = queryParams.append("toDate", this.toDate);
-      queryParams = queryParams.append("pageNum", this.pageNum);
-      queryParams = queryParams.append("pageSize", this.pageSize);
-      queryParams = queryParams.append("userName", this.username);
-      this.api.execByParameter('Authencation', 'notification', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res) {
-          res[0].forEach((data: any) => {
+      let data = {
+        status: this.status,
+        id: this.id,
+        //fromDate: this.fromDate,
+        //toDate: this.toDate,
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
+        userName: this.username
+      }
+      let messageBody = {
+        dataRequest: JSON.stringify(data)
+      };
+      this.api.execByBody('Authencation', 'notification', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+        if (res[0]) {
+          this.notification.showNotiError('', res[1].message);
+        }else{
+          let oData = res[1];
+          oData[0].forEach((data:any) => {
             this.lstData.push(data);
           });
-          if (this.lstData.length == res[1]) this.isload = false;
+          if(this.lstData.length == oData[1]) this.isload = false;
+          this.onDestroy();
+          setTimeout(() => {
+            (event as InfiniteScrollCustomEvent).target.complete();
+            this.dt.detectChanges();
+          }, 500);
         }
-        this.onDestroy();
-        setTimeout(() => {
-          (event as InfiniteScrollCustomEvent).target.complete();
-          this.dt.detectChanges();
-        }, 500);
       })
     }
   }

@@ -103,15 +103,19 @@ export class CreatePageComponent  implements OnInit {
     this.dt.detectChanges();
     setTimeout(() => {
       this.api.execByBody('Authencation','createpackage',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
-        if (res && !res[0].isError) {
-          this.isExec = false;
-          this.notification.showNotiSuccess('', res[0].message);
-          this.dt.detectChanges();
-          this.navCtrl.navigateForward('main/package',{queryParams:{type:'addnew',data:JSON.stringify(res[1])}});
+        if (res[0]) {
+          this.notification.showNotiError('', res[1].message);
         }else{
-          this.isExec = false;
-          this.notification.showNotiError('',res[0].message);
-          this.dt.detectChanges();
+          if (!res[1].isError) {
+            this.isExec = false;
+            this.notification.showNotiSuccess('', res[1].message);
+            this.dt.detectChanges();
+            this.navCtrl.navigateForward('main/package',{queryParams:{type:'addnew',data:JSON.stringify(res[2])}});
+          }else{
+            this.isExec = false;
+            this.notification.showNotiError('',res[1].message);
+            this.dt.detectChanges();
+          }
         }
       })
     }, 100);

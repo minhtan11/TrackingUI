@@ -64,7 +64,7 @@
   <ng-container *ngIf="lstData && lstData.length">
     <ion-list>
       <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
-        <ion-item lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;">
+        <ion-item (click)="viewDetail(item)" lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;">
           <ion-card class="w-100" style="margin: 0em;box-shadow: none" mode="ios">
             <ion-card-header style="padding: 0.2em;">
               <div style="justify-content: space-between;" class="d-flex align-items-center">
@@ -145,7 +145,7 @@
                   {{item.totalPrice | number}}
                 </ion-text>
               </div>
-              <div class="text-center d-flex justify-content-end pt-3 pb-3">
+              <!-- <div class="text-center d-flex justify-content-end pt-3 pb-3">
                 <button (click)="viewDetail(item)" style="background-color: #ffc107;border: none !important;border-radius: 1em;" type="button" class="btn btn-primary btn-sm text-white">
                   <div class="d-flex align-items-center justify-content-center">
                     <i class="bi bi-eye me-2"></i>
@@ -160,7 +160,7 @@
                     </div>
                   </button>
                 </ng-container>
-              </div> 
+              </div>  -->
             </ion-card-content>
           </ion-card>
         </ion-item>

@@ -122,8 +122,10 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
       dataRequest:JSON.stringify(data)
     };
     this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res) {
-        this.oUser = res;
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        this.oUser = res[1];
         this.dt.detectChanges();
       }
     })
@@ -138,11 +140,13 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
       dataRequest:JSON.stringify(data)
     };
     this.api.execByBody('Authencation', 'dashboard', messageBody,false).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res) {
-        this.pack3 = res[0][0];
-        this.pack5 = res[0][2];
-        this.ship1 = res[1][0];
-        this.ship2 = res[1][1];
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        this.pack3 = res[1][0];
+        this.pack5 = res[1][2];
+        this.ship1 = res[2][0];
+        this.ship2 = res[2][1];
         this.dt.detectChanges();
       }
     })

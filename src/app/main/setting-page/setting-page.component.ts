@@ -15,7 +15,6 @@ import Swal from 'sweetalert2'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingPageComponent  implements OnInit {
-  username:any;
   oUser:any;
   private destroy$ = new Subject<void>();
   constructor(
@@ -37,7 +36,6 @@ export class SettingPageComponent  implements OnInit {
   }
 
   async ionViewWillEnter(){
-    this.username = await this.storage.get('username');
     this.getUser();
   }
 
@@ -50,10 +48,15 @@ export class SettingPageComponent  implements OnInit {
     this.onDestroy();
   }
 
-  getUser(){
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("userName", this.username);
-    this.api.execByParameter('Authencation', 'getuser', queryParams).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+  async getUser(){
+    let username = await this.storage.get('username');
+    let data = {
+      userName:username,
+    }
+    let messageBody = {
+      dataRequest:JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res) {
         this.oUser = res;
         this.dt.detectChanges();
