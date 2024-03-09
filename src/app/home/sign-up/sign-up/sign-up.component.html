@@ -1,6 +1,9 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar>
-    <ion-title>Đăng ký tài khoản</ion-title>
+  <ion-toolbar style="--background:white;">
+    <ion-button (click)="onback()" mode="ios" fill="clear">
+      <ion-icon style="color: var(--ion-color-mat-primary);" name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-title mode="ios">Đăng ký tài khoản</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
@@ -58,10 +61,10 @@
             </mat-form-field>
           </div> 
         </ion-col>
-        <ion-col size="12">
+        <!-- <ion-col size="12">
           <span>Bạn đã có tài khoản? </span>
           <span (click)="goSignInPage()" style="color: #ffb400;"><u>Đăng nhập</u></span>
-        </ion-col>
+        </ion-col> -->
       </ion-row>
     </ion-grid>
   </div>

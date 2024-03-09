@@ -142,10 +142,6 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
     
   }
 
-  goSignInPage(){
-    this.router.navigate(['home']);
-  }
-
   async uploadImage(){
     this.image = await Camera.getPhoto({
       quality: 100,
@@ -154,6 +150,10 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
       saveToGallery:false
     });
     this.dt.detectChanges();
+  }
+
+  onback(){
+    this.navCtrl.navigateBack('home');
   }
   //#endregion
 

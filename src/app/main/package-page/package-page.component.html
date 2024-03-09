@@ -2,10 +2,10 @@
     <ion-toolbar style="--background:white;">
       <div class="d-flex align-items-center h-100 justify-content-center w-100">
         <ion-button (click)="onback()" mode="ios" fill="clear" mode="ios">
-          <ion-icon mode="ios" style="color: #ffb400;" name="chevron-back-outline"></ion-icon>
+          <ion-icon mode="ios" style="color: var(--ion-color-mat-primary)" name="chevron-back-outline"></ion-icon>
         </ion-button>
         <ion-searchbar placeholder="Tìm kiếm kiện hàng" (ionChange)="ionChange($event)" enterkeyhint="search" mode="ios" class="p-3" show-clear-button="always"></ion-searchbar>
-        <i (click)="createPackage()" style="font-size: 1.5em;color: #ffc107;" slot="end" class="bi bi-file-earmark-plus me-3"></i>
+        <i (click)="createPackage()" style="font-size: 1.5em;color: var(--ion-color-mat-primary);" slot="end" class="bi bi-file-earmark-plus me-3"></i>
       </div>
     </ion-toolbar>
     <ion-toolbar style="--background:white;" class="pr-3 pl-3">
