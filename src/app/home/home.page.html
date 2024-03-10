@@ -1,18 +1,22 @@
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" style="--background:white">
   <div class="d-flex align-items-center justify-content-center h-100">
     <ion-grid class="text-center pr-0 pl-0" [fixed]="true" style="margin: auto;max-width: 850px;">
       <ion-row [formGroup]="formGroup">
         <ion-col size="12" class="pr-0 pl-0">
           <img style="border-radius: 50%;display: block;
           margin-left: auto;
-          margin-right: auto;width: 25%;max-width: 100px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;" src="../../assets/image/logo-icon.png" alt="">
+          margin-right: auto;width: 25%;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;" src="../../assets/image/logo-icon.png" alt="">
         </ion-col>
         <ion-col size="12" class="pr-0 pl-0">
-          <span style="font-size: 90%;" class="font-weight-bold">NHẬN SHIP HÀNG - MỘT CHỮ TÍN VẠN NIỀM TIN</span>
+          <ion-text>
+            <span style="font-size: var(--ion-dynamic-font) !important;color:black !important" class="font-weight-bold">NHẬN SHIP HÀNG - MỘT CHỮ TÍN VẠN NIỀM TIN</span>
+          </ion-text>
           <br>
-          <span style="font-size: 80%;color: var(--ion-color-medium-tint);">Nhận ship hàng luôn đặt lợi ích khách hàng lên hàng đầu</span>
+          <ion-text>
+            <span style="font-size: var(--ion-dynamic-font) !important;color: var(--ion-color-medium-tint);">Nhận ship hàng luôn đặt lợi ích khách hàng lên hàng đầu</span>
+          </ion-text>
         </ion-col>
-        <ion-col size="12" class="pr-0 pl-0">
+        <ion-col size="12" class="pr-0 pl-0" style="font-size: var(--ion-dynamic-font) !important;">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Tên đăng nhập</mat-label>
             <input #eleUserName formControlName="userName"  matInput>
@@ -36,8 +40,8 @@
           </span>
         </ion-col> -->
         <ion-col size="12" class="pr-0 pl-0">
-          <span>Bạn không có tài khoản? </span>
-          <span (click)="goSignUpPage()" style="color: var(--ion-color-mat-primary)"><u>Đăng ký</u></span>
+          <span style="color: black !important;">Bạn không có tài khoản? </span>
+          <span (click)="goSignUpPage()" style="color: var(--ion-color-mat-primary) !important"><u>Đăng ký</u></span>
           <br>
         </ion-col>
         <ion-col size="12" class="pr-0 pl-0">
