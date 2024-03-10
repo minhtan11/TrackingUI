@@ -206,10 +206,6 @@ ul.timeline>.active:before {
     --mdc-outlined-text-field-container-shape: 1em !important;
 }
 
-.text-segment {
-    //font-size: 0.8em;
-}
-
 #tab-main {
     .mdc-tab {
         min-width: unset !important;
@@ -234,6 +230,8 @@ ul.timeline>.active:before {
 .mat-mdc-tab-label-container .mat-mdc-tab-list{
     max-width: 850px;
 }
-.toolbar-container{
-    padding-top: 0px !important;
+
+.mobile-toolbar ion-toolbar{
+    --padding-top:0 !important;
+    --padding-bottom:0 !important
 }
