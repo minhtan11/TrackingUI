@@ -6,11 +6,14 @@
 </ng-container>
 <ion-header class="ion-no-border">
   <ion-toolbar style="--background:white;">
-    <!-- <ion-back-button slot="start" style="color: #ffb400;" text="" icon="chevron-back-outline"></ion-back-button> -->
-    <ion-button (click)="onback()" mode="ios" fill="clear">
-      <ion-icon style="color: var(--ion-color-mat-primary)" name="chevron-back-outline"></ion-icon>
-    </ion-button>
-    <ion-title mode="ios">Tạo kiện ký gửi</ion-title>
+    <div class="d-flex align-items-center h-100 justify-content-center w-100">
+      <div class="w-100" style="margin: auto;max-width: 1000px;">
+        <ion-button (click)="onback()" mode="ios" fill="clear">
+          <ion-icon style="color: var(--ion-color-mat-primary)" name="chevron-back-outline"></ion-icon>
+        </ion-button>
+        <ion-title mode="ios">Tạo kiện ký gửi</ion-title>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">

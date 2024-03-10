@@ -93,12 +93,12 @@ ion-segment {
 }
 
 ion-segment-button {
-    --color-checked: #ffc107;
+    --color-checked: var(--ion-color-mat-primary);
 }
 
 .tab-selected {
-    color: #ffc107 !important;
-    border-top: 1px solid #ffc107 !important;
+    color: var(--ion-color-mat-primary) !important;
+    border-top: 1px solid var(--ion-color-mat-primary) !important;
 }
 
 .fade {
@@ -207,7 +207,7 @@ ul.timeline>.active:before {
 }
 
 .text-segment {
-    font-size: 0.8em;
+    //font-size: 0.8em;
 }
 
 #tab-main {
