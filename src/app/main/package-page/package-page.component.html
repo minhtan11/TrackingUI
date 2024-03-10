@@ -4,59 +4,61 @@
         <ion-button (click)="onback()" mode="ios" fill="clear" mode="ios">
           <ion-icon mode="ios" style="color: var(--ion-color-mat-primary)" name="chevron-back-outline"></ion-icon>
         </ion-button>
-        <ion-searchbar placeholder="Tìm kiếm kiện hàng" (ionChange)="ionChange($event)" enterkeyhint="search" mode="ios" class="p-3" show-clear-button="always"></ion-searchbar>
+        <ion-searchbar style="max-width: 850px;" placeholder="Tìm kiếm kiện hàng" (ionChange)="ionChange($event)" enterkeyhint="search" mode="ios" class="p-3" show-clear-button="always"></ion-searchbar>
         <i (click)="createPackage()" style="font-size: 1.5em;color: var(--ion-color-mat-primary);" slot="end" class="bi bi-file-earmark-plus me-3"></i>
       </div>
     </ion-toolbar>
     <ion-toolbar style="--background:white;" class="pr-3 pl-3">
-      <div style="overflow-x: scroll;">
-        <ion-segment [scrollable]="true" [value]="status" mode="ios">
-          <ion-segment-button (click)=" sortData(0)" [value]="0">
-            <ion-text class="text-segment">
-              <span style="font-size: 1em;">Tất cả</span>
-            </ion-text>
-          </ion-segment-button>
-          <ion-segment-button (click)=" sortData(1)" [value]="1">
-            <ion-text class="text-segment">
-              Chưa xác nhận
-            </ion-text>
-          </ion-segment-button>
-          <ion-segment-button (click)=" sortData(2)" [value]="2">
-            <ion-text class="text-segment">
-              Hàng về kho TQ
-            </ion-text>
-          </ion-segment-button>
-          <ion-segment-button (click)=" sortData(3)" [value]="3">
-            <ion-text class="text-segment">
-              Đang trên đường về HCM
-            </ion-text>
-          </ion-segment-button>
-          <ion-segment-button (click)=" sortData(4)" [value]="4">
-            <ion-text class="text-segment">
-              Hàng về tới HCM
-            </ion-text>
-          </ion-segment-button>
-          <ion-segment-button (click)=" sortData(5)" [value]="5">
-            <ion-text class="text-segment">
-              Đã nhận hàng
-            </ion-text>
-          </ion-segment-button>
-          <ion-segment-button (click)=" sortData(9)" [value]="9">
-            <ion-text class="text-segment">
-              Đã hủy
-            </ion-text>
-          </ion-segment-button>
-          <ion-segment-button (click)=" sortData(10)" [value]="10">
-            <ion-text class="text-segment">
-              Thất lạc
-            </ion-text>
-          </ion-segment-button>
-          <ion-segment-button (click)=" sortData(11)" [value]="11">
-            <ion-text class="text-segment">
-              Không nhận được hàng
-            </ion-text>
-          </ion-segment-button>
-        </ion-segment>
+      <div class="d-flex align-items-center h-100 justify-content-center w-100">
+        <div class="w-100"style="overflow-x: scroll;margin: auto;max-width: 1000px;">
+          <ion-segment [scrollable]="true" [value]="status" mode="ios">
+            <ion-segment-button (click)=" sortData(0)" [value]="0">
+              <ion-text class="text-segment">
+                <span style="font-size: 1em;">Tất cả</span>
+              </ion-text>
+            </ion-segment-button>
+            <ion-segment-button (click)=" sortData(1)" [value]="1">
+              <ion-text class="text-segment">
+                Chưa xác nhận
+              </ion-text>
+            </ion-segment-button>
+            <ion-segment-button (click)=" sortData(2)" [value]="2">
+              <ion-text class="text-segment">
+                Hàng về kho TQ
+              </ion-text>
+            </ion-segment-button>
+            <ion-segment-button (click)=" sortData(3)" [value]="3">
+              <ion-text class="text-segment">
+                Đang trên đường về HCM
+              </ion-text>
+            </ion-segment-button>
+            <ion-segment-button (click)=" sortData(4)" [value]="4">
+              <ion-text class="text-segment">
+                Hàng về tới HCM
+              </ion-text>
+            </ion-segment-button>
+            <ion-segment-button (click)=" sortData(5)" [value]="5">
+              <ion-text class="text-segment">
+                Đã nhận hàng
+              </ion-text>
+            </ion-segment-button>
+            <ion-segment-button (click)=" sortData(9)" [value]="9">
+              <ion-text class="text-segment">
+                Đã hủy
+              </ion-text>
+            </ion-segment-button>
+            <ion-segment-button (click)=" sortData(10)" [value]="10">
+              <ion-text class="text-segment">
+                Thất lạc
+              </ion-text>
+            </ion-segment-button>
+            <ion-segment-button (click)=" sortData(11)" [value]="11">
+              <ion-text class="text-segment">
+                Không nhận được hàng
+              </ion-text>
+            </ion-segment-button>
+          </ion-segment>
+        </div>
       </div>
     </ion-toolbar>
   </ion-header>
@@ -83,110 +85,115 @@
       </div>
     </ng-container>
     <ng-container *ngIf="lstData && lstData.length">
-      <ion-list>
-        <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
-          <ion-item (click)="viewDetail(item)" lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;">
-            <ion-card class="w-100" style="margin: 0em;box-shadow: none" mode="ios">
-              <ion-card-header style="padding: 0.2em;">
-                <div style="justify-content: space-between;" class="d-flex align-items-center">
-                  <div>
-                    <ion-text style="font-size: 1.2em;" class="font-weight-bold me-2">
-                      Mã kiện hàng
-                    </ion-text>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <ion-text class="me-2" style="font-size: 1.2em;">
-                      {{item.packageCode}}
-                    </ion-text>
-                    <ion-icon [cdkCopyToClipboard]="item.packageCode" (click)="onCopy()" style="font-size: 1.5rem;" name="copy-outline"></ion-icon>
-                  </div>
-                </div>
-              </ion-card-header>
-              <ion-card-content style="padding: 0.2em;">
-                <div class="d-flex align-items-center">
-                  <ng-container *ngIf="item.status == 0 || item.status == 1">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/package-wait.png" alt="">
-                  </ng-container>
-                  <ng-container *ngIf="item.status == 2 || item.status == 3 || item.status == 4">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/package-delivery.png" alt="">
-                  </ng-container>
-                  <ng-container *ngIf="item.status == 5">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/package.png" alt="">
-                  </ng-container>
-                  <ng-container *ngIf="item.status == 9 || item.status == 10 || item.status == 11">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/package-cancelled.png" alt="">
-                  </ng-container>
-                  <div>
-                    <ion-text mode="ios">
-                      <span> Loại vận chuyển:</span>
-                      <ng-container [ngSwitch]="item.movingMethod">
-                        <span *ngSwitchCase="2">
-                          Chậm
-                        </span>
-                        <span *ngSwitchCase="3">
-                          Bộ
-                        </span>
-                        <span *ngSwitchCase="4">
-                          Bộ lô
-                        </span>
-                        <span *ngSwitchCase="5">
-                          Biển
-                        </span>
-                        <span *ngSwitchDefault>
-                          Nhanh
-                        </span>
+      <div class="d-flex align-items-center justify-content-center h-100 w-100">
+        <div class="w-100" style="margin: auto;max-width: 1000px;">
+          <ion-list>
+            <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
+              <ion-item (click)="viewDetail(item)" lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;">
+                <ion-card class="w-100" style="margin: 0em;box-shadow: none" mode="ios">
+                  <ion-card-header style="padding: 0.2em;">
+                    <div style="justify-content: space-between;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text style="font-size: 1.2em;" class="font-weight-bold me-2">
+                          Mã kiện hàng
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ion-text class="me-2" style="font-size: 1.2em;">
+                          {{item.packageCode}}
+                        </ion-text>
+                        <ion-icon [cdkCopyToClipboard]="item.packageCode" (click)="onCopy()" style="font-size: 1.5rem;" name="copy-outline"></ion-icon>
+                      </div>
+                    </div>
+                  </ion-card-header>
+                  <ion-card-content style="padding: 0.2em;">
+                    <div class="d-flex align-items-center">
+                      <ng-container *ngIf="item.status == 0 || item.status == 1">
+                        <img  style="width: 4em;height: 4em;
+                        margin-right: 1rem;" src="../../../assets/image/package-wait.png" alt="">
                       </ng-container>
-                    </ion-text>
-                    <br>
-                    <ion-text>
-                      <span>Kho nhận:</span>
-                      <ng-container [ngSwitch]="item.wareHouse">
-                        <span *ngSwitchCase="'1'">
-                          Đông quản
-                        </span>
-                        <span *ngSwitchCase="'2'">
-                          Phật sơn
-                        </span>
+                      <ng-container *ngIf="item.status == 2 || item.status == 3 || item.status == 4">
+                        <img  style="width: 4em;height: 4em;
+                        margin-right: 1rem;" src="../../../assets/image/package-delivery.png" alt="">
                       </ng-container>
-                      </ion-text>
-                    <br>
-                    <ion-text>
-                      <span>Ngày tạo: </span>
-                      <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
-                    </ion-text>
-                    <br>
-                    <ion-text>
-                      <span>Dịch vụ phụ: </span>
-                      <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
-                      <span *ngIf="item.isWoodPackage && item.isAirPackage">-</span>
-                      <span *ngIf="item.isAirPackage">Bọt khí</span>
-                      <span *ngIf="item.isAirPackage && item.isInsurance">-</span>
-                      <span *ngIf="item.isInsurance">Bảo hiểm</span>
-                      <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
-                    </ion-text>
-                  </div>
-                </div>
-                <div class="d-flex justify-content-end mb-2">
-                  <ng-container [ngSwitch]="item.status">
-                    <span style="border-radius: 10px;" *ngSwitchDefault class="badge badge-pill badge-secondary">Chưa xác nhận</span>
-                    <span style="border-radius: 10px;" *ngSwitchCase="2" class="badge badge-pill badge-info">Hàng về kho TQ</span>
-                    <span style="border-radius: 10px;" *ngSwitchCase="3" class="badge badge-pill badge-info">Đang về HCM</span>
-                    <span style="border-radius: 10px;" *ngSwitchCase="4" class="badge badge-pill badge-info">Hàng về tới HCM</span>
-                    <span style="border-radius: 10px;" *ngSwitchCase="5" class="badge badge-pill badge-success">Đã nhận hàng</span>
-                    <span style="border-radius: 10px;" *ngSwitchCase="9" class="badge badge-pill badge-danger">Đã hủy</span>
-                    <span style="border-radius: 10px;" *ngSwitchCase="10" class="badge badge-pill badge-danger">Thất lạc</span>
-                    <span style="border-radius: 10px;" *ngSwitchCase="11" class="badge badge-pill badge-danger">Không nhận được hàng</span>
-                  </ng-container>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </ion-item>
-        </ng-container>
-      </ion-list>
+                      <ng-container *ngIf="item.status == 5">
+                        <img  style="width: 4em;height: 4em;
+                        margin-right: 1rem;" src="../../../assets/image/package.png" alt="">
+                      </ng-container>
+                      <ng-container *ngIf="item.status == 9 || item.status == 10 || item.status == 11">
+                        <img  style="width: 4em;height: 4em;
+                        margin-right: 1rem;" src="../../../assets/image/package-cancelled.png" alt="">
+                      </ng-container>
+                      <div>
+                        <ion-text mode="ios">
+                          <span> Loại vận chuyển:</span>
+                          <ng-container [ngSwitch]="item.movingMethod">
+                            <span *ngSwitchCase="2">
+                              Chậm
+                            </span>
+                            <span *ngSwitchCase="3">
+                              Bộ
+                            </span>
+                            <span *ngSwitchCase="4">
+                              Bộ lô
+                            </span>
+                            <span *ngSwitchCase="5">
+                              Biển
+                            </span>
+                            <span *ngSwitchDefault>
+                              Nhanh
+                            </span>
+                          </ng-container>
+                        </ion-text>
+                        <br>
+                        <ion-text>
+                          <span>Kho nhận:</span>
+                          <ng-container [ngSwitch]="item.wareHouse">
+                            <span *ngSwitchCase="'1'">
+                              Đông quản
+                            </span>
+                            <span *ngSwitchCase="'2'">
+                              Phật sơn
+                            </span>
+                          </ng-container>
+                          </ion-text>
+                        <br>
+                        <ion-text>
+                          <span>Ngày tạo: </span>
+                          <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                        </ion-text>
+                        <br>
+                        <ion-text>
+                          <span>Dịch vụ phụ: </span>
+                          <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
+                          <span *ngIf="item.isWoodPackage && item.isAirPackage">-</span>
+                          <span *ngIf="item.isAirPackage">Bọt khí</span>
+                          <span *ngIf="item.isAirPackage && item.isInsurance">-</span>
+                          <span *ngIf="item.isInsurance">Bảo hiểm</span>
+                          <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
+                        </ion-text>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-end mb-2">
+                      <ng-container [ngSwitch]="item.status">
+                        <span style="border-radius: 10px;" *ngSwitchDefault class="badge badge-pill badge-secondary">Chưa xác nhận</span>
+                        <span style="border-radius: 10px;" *ngSwitchCase="2" class="badge badge-pill badge-info">Hàng về kho TQ</span>
+                        <span style="border-radius: 10px;" *ngSwitchCase="3" class="badge badge-pill badge-info">Đang về HCM</span>
+                        <span style="border-radius: 10px;" *ngSwitchCase="4" class="badge badge-pill badge-info">Hàng về tới HCM</span>
+                        <span style="border-radius: 10px;" *ngSwitchCase="5" class="badge badge-pill badge-success">Đã nhận hàng</span>
+                        <span style="border-radius: 10px;" *ngSwitchCase="9" class="badge badge-pill badge-danger">Đã hủy</span>
+                        <span style="border-radius: 10px;" *ngSwitchCase="10" class="badge badge-pill badge-danger">Thất lạc</span>
+                        <span style="border-radius: 10px;" *ngSwitchCase="11" class="badge badge-pill badge-danger">Không nhận được hàng</span>
+                      </ng-container>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
+              </ion-item>
+            </ng-container>
+          </ion-list>
+        </div>
+      </div>
+      
       <ion-infinite-scroll *ngIf="isload" (ionInfinite)="onIonInfinite($event)">
         <ion-infinite-scroll-content loadingSpinner="dots"></ion-infinite-scroll-content>
       </ion-infinite-scroll>
