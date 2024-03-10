@@ -224,3 +224,13 @@ ul.timeline>.active:before {
 .no-border {
     border: none !important;
 }
+
+.mat-mdc-tab-label-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mat-mdc-tab-label-container .mat-mdc-tab-list{
+    max-width: 850px;
+}
