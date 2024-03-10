@@ -74,13 +74,13 @@ export class AppComponent implements OnInit {
       setTimeout(() => {
         this.isload = false;
         this.dt.detectChanges();
-      }, 2000);
+      }, 3000);
     } else {
       this.navCtrl.navigateForward('home');
       setTimeout(() => {
         this.isload = false;
         this.dt.detectChanges();
-      }, 2000);
+      }, 3000);
     }
   }
 }
