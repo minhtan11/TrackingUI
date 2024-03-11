@@ -235,3 +235,7 @@ ul.timeline>.active:before {
     --padding-top:0 !important;
     --padding-bottom:0 !important
 }
+
+.dynamic-font{
+    font-size: var(--ion-dynamic-font) !important
+}

@@ -1,9 +1,9 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar style="--background:white;">
-    <ion-title mode="ios">Trang chủ</ion-title>
+<ion-header class="ion-no-border" style="--background:white !important;">
+  <ion-toolbar style="--background:white !important;">
+    <ion-title class="dynamic-font" style="color:black" mode="ios">Trang chủ</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content [forceOverscroll]="true" style="--background:white !important">
+<ion-content style="--background:white !important">
   <div class="d-flex align-items-center justify-content-center h-100 w-100">
     <div class="w-100" style="margin: auto;max-width: 850px;">
       <ion-card class="mx-0 my-0" style="border-radius: 0em;box-shadow: none;--background:white !important">
@@ -78,7 +78,7 @@
         <div class="col-3">
           <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
             <img (click)="goRechargePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/wallet-icon.png" alt="">
-            <ion-text>
+            <ion-text class="dynamic-font" style="color: black !important;">
               Nạp tiền
             </ion-text>
           </div>
@@ -86,7 +86,7 @@
         <div class="col-3">
           <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
             <img (click)="goPackagePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/package-icon.png" alt="">
-            <ion-text>
+            <ion-text class="dynamic-font" style="color: black !important;">
               Kiện hàng
             </ion-text>
           </div>
@@ -94,7 +94,7 @@
         <div class="col-3">
           <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
             <img (click)="goOrderPage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/checklist-icon.png" alt="">
-            <ion-text>
+            <ion-text class="dynamic-font" style="color: black !important;">
               Đơn hàng
             </ion-text>
           </div>
@@ -102,7 +102,7 @@
         <div class="col-3">
           <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
             <img (click)="goServicechargePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/shipping-cost-icon.png" alt="">
-            <ion-text>
+            <ion-text class="dynamic-font" style="color: black !important;">
               Phí vận chuyển
             </ion-text>
           </div>

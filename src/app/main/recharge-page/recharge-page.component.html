@@ -1,16 +1,16 @@
-<ion-header class="ion-no-border">
+<ion-header class="ion-no-border" style="--background:white !important;">
   <ion-toolbar style="--background:white !important;">
     <div class="d-flex align-items-center h-100 justify-content-center w-100">
       <div class="w-100" style="margin: auto;max-width: 1000px;">
         <ion-button (click)="onback()" mode="ios" fill="clear">
           <ion-icon style="color: var(--ion-color-mat-primary);" name="chevron-back-outline"></ion-icon>
         </ion-button>
-        <ion-title style="z-index: -1;" mode="ios">Nạp tiền</ion-title>
+        <ion-title style="z-index: -1;color:black !important" mode="ios">Nạp tiền</ion-title>
       </div>
     </div>
   </ion-toolbar>
 </ion-header>
-<ion-content [forceOverscroll]="true" style="--background:white !important">
+<ion-content style="--background:white !important">
   <div class="d-flex align-items-center justify-content-center h-100 w-100">
     <div style="margin: auto;max-width: 850px;">
       <ion-card mode="ios" style="--background:white !important">
@@ -22,15 +22,15 @@
           <div class="alert alert-warning d-flex" role="alert">
             <i class="bi bi-exclamation-triangle-fill icon-16 mr-2"></i>
             <div>
-                <ion-text class="mb-0">
+                <ion-text class="mb-0 dynamic-font">
                   <b>Lưu ý:</b>
                 </ion-text>
                 <br>
-                <ion-text class="mb-0">
+                <ion-text class="mb-0 dynamic-font">
                   - Nội dung chuyển khoản VND chỉ ghi tên zalo hoặc tên chủ tài khoản.
                 </ion-text>
                 <br>
-                <ion-text class="mb-0">
+                <ion-text class="mb-0 dynamic-font">
                   - KHÔNG ghi tệ, RMB, alipay, taobao, wechat, thanh toán hộ, mua hàng, tiền phí bảo hiểm,…
                 </ion-text>
             </div>
@@ -46,28 +46,28 @@
           <div class="alert alert-warning d-flex" role="alert">
             <i class="bi bi-exclamation-triangle-fill icon-16 mr-2"></i>
             <div>
-                <ion-text class="mb-0">
+                <ion-text class="mb-0 dynamic-font">
                   <b>Lưu ý:</b>
                 </ion-text>
                 <br>
-                <ion-text class="mb-0">
+                <ion-text class="mb-0 dynamic-font">
                   - Nội dung chuyển khoản VND chỉ ghi tên zalo hoặc tên chủ tài khoản.
                 </ion-text>
                 <br>
-                <ion-text class="mb-0">
+                <ion-text class="mb-0 dynamic-font">
                   - KHÔNG ghi tệ, RMB, alipay, taobao, wechat, thanh toán hộ, mua hàng, tiền phí bảo hiểm,…
                 </ion-text>
             </div>
         </div>
         </ion-card-content>
       </ion-card>
-      <ion-grid fixed>
+      <ion-grid fixed class="mb-3">
         <ion-row>
           <ion-col>
             <div>
-              <ion-text class="text-danger">(*)</ion-text>&nbsp;<ion-text class="font-weight-bold">Quý khách vui lòng chuyển đúng cú pháp để hệ thống duyệt tiền tự động.</ion-text>
+              <ion-text class="text-danger dynamic-font">(*)</ion-text>&nbsp;<ion-text style="color:black !important" class="font-weight-bold dynamic-font">Quý khách vui lòng chuyển đúng cú pháp để hệ thống duyệt tiền tự động.</ion-text>
               <br>
-              <ion-text class="text-danger">(*)</ion-text>&nbsp;<ion-text class="font-weight-bold">Với những giao dịch nạp tiền chuyển khoản ngoài giờ hành chính. Thời gian hệ thống xử lý có thể chậm hơn bình thường. Mong quý khách hàng thông cảm!</ion-text>
+              <ion-text class="text-danger dynamic-font">(*)</ion-text>&nbsp;<ion-text style="color:black !important" class="font-weight-bold dynamic-font">Với những giao dịch nạp tiền chuyển khoản ngoài giờ hành chính. Thời gian hệ thống xử lý có thể chậm hơn bình thường. Mong quý khách hàng thông cảm!</ion-text>
             </div>
           </ion-col>
         </ion-row>
@@ -75,12 +75,12 @@
     </div>
   </div>
 </ion-content>
-<ion-footer *ngIf="platform == 'ios'" class="ion-no-border">
+<!-- <ion-footer *ngIf="platform == 'ios'" class="ion-no-border" style="--background:white;">
   <ion-toolbar style="--background:white;">
-    <!-- <div>
+    <div>
       <ion-text class="text-danger">(*)</ion-text>&nbsp;<ion-text class="font-weight-bold">Quý khách vui lòng chuyển đúng cú pháp để hệ thống duyệt tiền tự động.</ion-text>
       <br>
       <ion-text class="text-danger">(*)</ion-text>&nbsp;<ion-text class="font-weight-bold">Với những giao dịch nạp tiền chuyển khoản ngoài giờ hành chính. Thời gian hệ thống xử lý có thể chậm hơn bình thường. Mong quý khách hàng thông cảm!</ion-text>
-    </div> -->
+    </div>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->
