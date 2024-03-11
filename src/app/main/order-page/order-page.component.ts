@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Capacitor } from '@capacitor/core';
 import { Network } from '@capacitor/network';
 import { InfiniteScrollCustomEvent, IonContent, NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
@@ -29,6 +30,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   isload:any=true;
   isloadpage:any=false;
   isconnected:any = true;
+  platform:any = "";
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -38,6 +40,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     private navCtrl: NavController,
     private storage: StorageService,
   ) { 
+    this.platform = Capacitor.getPlatform();
   }
   //#endregion
 

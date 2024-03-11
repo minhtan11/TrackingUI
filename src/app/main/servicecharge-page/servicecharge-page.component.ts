@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -7,8 +8,10 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./servicecharge-page.component.scss'],
 })
 export class ServicechargePageComponent  implements OnInit {
-
-  constructor(private navCtrl: NavController) { }
+  platform:any = "";
+  constructor(private navCtrl: NavController) { 
+    this.platform = Capacitor.getPlatform();
+  }
 
   ngOnInit() {}
 

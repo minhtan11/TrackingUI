@@ -196,7 +196,7 @@
       </ion-infinite-scroll>
     </ng-container>
   </ion-content>
-  <ion-footer class="ion-no-border">
+  <ion-footer *ngIf="platform == 'ios'" class="ion-no-border">
     <ion-toolbar style="--background:white;">
     </ion-toolbar>
   </ion-footer>

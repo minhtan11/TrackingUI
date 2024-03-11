@@ -1,29 +1,8 @@
-
-<!-- <ion-tabs>
-  <ion-tab-bar style="border: none;" slot="bottom">
-    <ion-tab-button style="--background:white;border-top: 1px solid white;font-size: 0.8rem;" tab="home">
-      <i style="font-size: 1.2rem;" class="bi bi-house"></i>
-      Trang chủ
-    </ion-tab-button>
-    <ion-tab-button style="--background:white;border-top: 1px solid white;font-size: 0.8rem;" tab="history">
-      <i style="font-size: 1.2rem;" class="bi bi-clock-history"></i>
-      Lịch sử GD
-    </ion-tab-button>
-    <ion-tab-button style="--background:white;;border-top: 1px solid white;font-size: 0.8rem;" tab="notification">
-      <i style="font-size: 1.2rem;" class="bi bi-bell"></i>
-      Thông báo
-    </ion-tab-button>
-    <ion-tab-button style="--background:white;;border-top: 1px solid white;font-size: 0.8rem;" tab="setting">
-      <i style="font-size: 1.2rem;" class="bi bi-gear"></i>
-      Cài đặt
-    </ion-tab-button>
-  </ion-tab-bar>
-</ion-tabs> -->
-<ion-content [forceOverscroll]="true">
+<ion-content [forceOverscroll]="true" style="--background:white !important;">
   <ion-router-outlet></ion-router-outlet>
 </ion-content>
 <ion-footer class="ion-no-border mobile-toolbar">
-  <ion-toolbar style="--background:white;">
+  <ion-toolbar style="--background:white !important;">
     <mat-tab-group headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
       <mat-tab>
         <ng-template mat-tab-label>

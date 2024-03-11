@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar style="--background:white;">
+  <ion-toolbar style="--background:white !important;">
     <div class="d-flex align-items-center h-100 justify-content-center w-100">
       <div class="w-100" style="margin: auto;max-width: 1000px;">
         <ion-button (click)="onback()" mode="ios" fill="clear">
@@ -10,9 +10,9 @@
     </div>
   </ion-toolbar>
 </ion-header>
-<ion-content [forceOverscroll]="true">
+<ion-content [forceOverscroll]="true" style="--background:white !important">
   <div class="w-100" style="margin: auto;max-width: 1000px;">
-    <ion-card mode="ios">
+    <ion-card mode="ios" style="--background:white !important">
       <ion-card-header class="text-center">
         <ion-card-title style="font-size: 1.5em;">TUYẾN BAY NHANH</ion-card-title>
       </ion-card-header>
@@ -121,7 +121,7 @@
         
       </ion-card-content>
     </ion-card>
-    <ion-card mode="ios">
+    <ion-card mode="ios" style="--background:white !important">
       <ion-card-header class="text-center">
         <ion-card-title style="font-size: 1.5em;">TUYẾN BAY THƯỜNG</ion-card-title>
       </ion-card-header>
@@ -250,7 +250,7 @@
         
       </ion-card-content>
     </ion-card>
-    <ion-card mode="ios">
+    <ion-card mode="ios" style="--background:white !important">
       <ion-card-header class="text-center">
         <ion-card-title style="font-size: 1.5em;">TUYẾN BỘ</ion-card-title>
       </ion-card-header>
@@ -364,7 +364,7 @@
         
       </ion-card-content>
     </ion-card>
-    <ion-card mode="ios">
+    <ion-card mode="ios" style="--background:white !important">
       <ion-card-header class="text-center">
         <ion-card-title style="font-size: 1.5em;">TUYẾN LÔ</ion-card-title>
       </ion-card-header>
@@ -478,7 +478,7 @@
         
       </ion-card-content>
     </ion-card>
-    <ion-card mode="ios">
+    <ion-card mode="ios" style="--background:white !important">
       <ion-card-header class="text-center">
         <ion-card-title style="font-size: 1.5em;">TUYẾN BIỂN</ion-card-title>
       </ion-card-header>
@@ -594,3 +594,7 @@
     </ion-card>
   </div>
 </ion-content>
+<ion-footer *ngIf="platform == 'ios'" class="ion-no-border">
+  <ion-toolbar style="--background:white;">
+  </ion-toolbar>
+</ion-footer>

@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar style="--background:white;">
+  <ion-toolbar style="--background:white !important;">
     <div class="d-flex align-items-center h-100 justify-content-center w-100">
       <div class="w-100" style="margin: auto;max-width: 1000px;">
         <ion-button (click)="onback()" mode="ios" fill="clear">
@@ -10,10 +10,10 @@
     </div>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content [forceOverscroll]="true" style="--background:white !important">
   <div class="d-flex align-items-center justify-content-center h-100 w-100">
     <div style="margin: auto;max-width: 850px;">
-      <ion-card mode="ios">
+      <ion-card mode="ios" style="--background:white !important">
         <ion-card-header>
           <img src="../../../assets/image/bank-vietcombank.jpg" alt="">
         </ion-card-header>
@@ -37,7 +37,7 @@
         </div>
         </ion-card-content>
       </ion-card>
-      <ion-card mode="ios">
+      <ion-card mode="ios" style="--background:white !important">
         <ion-card-header>
           <img src="../../../assets/image/bank-ACB.jpg" alt="">
         </ion-card-header>
@@ -75,7 +75,7 @@
     </div>
   </div>
 </ion-content>
-<ion-footer class="ion-no-border">
+<ion-footer *ngIf="platform == 'ios'" class="ion-no-border">
   <ion-toolbar style="--background:white;">
     <!-- <div>
       <ion-text class="text-danger">(*)</ion-text>&nbsp;<ion-text class="font-weight-bold">Quý khách vui lòng chuyển đúng cú pháp để hệ thống duyệt tiền tự động.</ion-text>

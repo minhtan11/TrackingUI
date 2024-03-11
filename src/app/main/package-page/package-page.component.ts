@@ -8,6 +8,7 @@ import { NotificationServiceComponent } from 'src/app/notification-service/notif
 import { StorageService } from 'src/app/storage-service/storage.service';
 import Swal from 'sweetalert2';
 import { Network } from '@capacitor/network';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-package-page',
@@ -31,6 +32,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   total:any = 0;
   isload:any=true;
   isconnected:any = true;
+  platform:any = "";
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -40,6 +42,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     private navCtrl: NavController,
     private storage: StorageService,
   ) { 
+    this.platform = Capacitor.getPlatform();
   }
   //#endregion
 

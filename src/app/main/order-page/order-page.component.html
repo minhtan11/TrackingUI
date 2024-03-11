@@ -41,10 +41,10 @@
     </div>
   </ion-toolbar>
 </ion-header>
-<ion-content [forceOverscroll]="true">
+<ion-content [forceOverscroll]="true" style="--background:white !important">
   <ng-container *ngIf="isloadpage">
     <div class="d-flex align-items-center justify-content-center h-100 w-100">
-      <ion-spinner mode="ios" name="dots"></ion-spinner>
+      <ion-spinner style="color: black !important;" mode="ios" name="dots"></ion-spinner>
     </div>
   </ng-container>
   <ng-container *ngIf="isEmpty">
@@ -175,7 +175,7 @@
     </ion-infinite-scroll>
   </ng-container>
 </ion-content>
-<ion-footer class="ion-no-border">
+<ion-footer *ngIf="platform == 'ios'" class="ion-no-border">
   <ion-toolbar style="--background:white;">
   </ion-toolbar>
 </ion-footer>

@@ -23,7 +23,7 @@
             </ion-card-header>
           </ion-card>
         </ion-col>
-        <ion-col size="12">
+        <ion-col size="12" style="font-size: 1.1rem !important;">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Họ & tên</mat-label>
             <input #eleFullName formControlName="fullName" matInput>
@@ -72,7 +72,7 @@
 <ion-footer *ngIf="!isHideFooter" class="ion-no-border">
   <ion-toolbar style="--background:white">
     <div class="d-flex align-items-center justify-content-center h-100" style="padding-left: 1em;padding-right: 1em;">
-      <button (click)="onSignUp()" style="border-radius: 10PX;max-width: 850px;" class="btn btn-block text-white" mat-flat-button color="primary">
+      <button (click)="onSignUp()" style="border-radius: 10PX;max-width: 850px;font-size: var(--ion-dynamic-font) !important" class="btn btn-block text-white" mat-flat-button color="primary">
         <span>ĐĂNG KÝ</span>
       </button> 
     </div>

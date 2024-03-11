@@ -3,10 +3,10 @@
     <ion-title mode="ios">Trang chủ</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content [forceOverscroll]="true">
+<ion-content [forceOverscroll]="true" style="--background:white !important">
   <div class="d-flex align-items-center justify-content-center h-100 w-100">
     <div class="w-100" style="margin: auto;max-width: 850px;">
-      <ion-card class="mx-0 my-0" style="border-radius: 0em;box-shadow: none;">
+      <ion-card class="mx-0 my-0" style="border-radius: 0em;box-shadow: none;--background:white !important">
         <ion-card-content class="px-0 py-0">
           <div class="slideshow-container w-100">
             <div class="mySlides fade" style="display: block;">
@@ -26,7 +26,7 @@
       </ion-card> 
       <div class="d-flex justify-content-center align-items-center">
         <div class="d-flex justify-content-center align-items-center" style="width: 10em;height: 10em;
-        border-radius: 70%;position: absolute;background-color: white;z-index: 1000;margin-top: -2rem;
+        border-radius: 70%;position: absolute;background-color: white !important;z-index: 1000;margin-top: -2rem;
         ">
         <img *ngIf="oUser != undefined" style="width: 9em;height: 9em;
         border-radius: 70%;
@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="d-flex justify-content-center align-items-center">
-        <ion-card style="border-radius: 1em;margin-top: -1.5rem;margin-bottom: 1rem;width: 80%;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;" mode="ios">
+        <ion-card style="border-radius: 1em;margin-top: -1.5rem;margin-bottom: 1rem;width: 80%;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important" mode="ios">
           <ion-card-header style="padding-top: 3rem;">
             <div style="flex-direction: column;margin-top: 3rem;" class="d-flex align-items-center justify-content-center">
               <ng-container *ngIf="oUser == undefined">
@@ -110,7 +110,7 @@
       </div>
       <div class="row p-3">
         <div class="col-6">
-          <ion-card mode="ios" class="m-0">
+          <ion-card mode="ios" class="m-0" style="--background:white !important">
             <ion-card-header>
               <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;"
                 src="../../../assets/image/payment.jpg">
@@ -134,7 +134,7 @@
           </ion-card>
         </div>
         <div class="col-6">
-          <ion-card mode="ios" class="m-0">
+          <ion-card mode="ios" class="m-0" style="--background:white !important">
             <ion-card-header>
               <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;"
                 src="../../../assets/image/plan-delivery.jpg">
@@ -160,7 +160,7 @@
       </div>
       <div class="row p-3">
         <div class="col-6">
-          <ion-card mode="ios" class="m-0">
+          <ion-card mode="ios" class="m-0" style="--background:white !important">
             <ion-card-header>
               <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;"
                 src="../../../assets/image/payment-done.jpg">
@@ -184,7 +184,7 @@
           </ion-card>
         </div>
         <div class="col-6">
-          <ion-card mode="ios" class="m-0">
+          <ion-card mode="ios" class="m-0" style="--background:white !important">
             <ion-card-header>
               <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;"
                 src="../../../../assets/image/delivery-done.jpg">
