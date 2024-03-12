@@ -37,12 +37,22 @@ export class InfomationPageComponent  implements OnInit {
   }
 
   ngOnInit() {
+    // this.formGroup = this.formBuilder.group({
+    //   fullName: ['', Validators.required],
+    //   gender: [true, Validators.required],
+    //   phone: ['', Validators.required],
+    //   email: ['', Validators.required],
+    //   address: ['', Validators.required],
+    //   username: new FormControl({ value: '', disabled: true }),
+    //   base64String: [''],
+    //   fileName: ['']
+    // });
     this.formGroup = this.formBuilder.group({
-      fullName: ['', Validators.required],
-      gender: [true, Validators.required],
-      phone: ['', Validators.required],
-      email: ['', Validators.required],
-      address: ['', Validators.required],
+      fullName: new FormControl({ value: '', disabled: true }),
+      gender: new FormControl({ value: '', disabled: true }),
+      phone: new FormControl({ value: '', disabled: true }),
+      email: new FormControl({ value: '', disabled: true }),
+      address: new FormControl({ value: '', disabled: true }),
       username: new FormControl({ value: '', disabled: true }),
       base64String: [''],
       fileName: ['']

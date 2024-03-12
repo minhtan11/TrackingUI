@@ -83,6 +83,7 @@ input:focus {
 }
 
 ion-segment {
+    --background: var(--ion-color-mat-accent) !important;
     --offset-bottom: auto !important;
     --overflow: hidden;
     overflow: auto;
@@ -238,4 +239,13 @@ ul.timeline>.active:before {
 
 .dynamic-font{
     font-size: var(--ion-dynamic-font) !important
+}
+
+ion-searchbar {
+    --background: rgb(201, 198, 198) !important;
+    --color: #fff !important;
+    --placeholder-color: #fff !important;
+    --icon-color: white !important;
+    --clear-button-color: #fff !important;
+    font-size: var(--ion-dynamic-font) !important;
 }

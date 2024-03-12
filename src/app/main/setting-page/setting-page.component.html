@@ -1,11 +1,11 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar style="--background:white;">
-    <ion-title mode="ios">Trang cá nhân</ion-title>
+<ion-header class="ion-no-border" style="--background:white !important;">
+  <ion-toolbar style="--background:white !important;">
+    <ion-title class="dynamic-font" style="color: black !important;" mode="ios">Trang cá nhân</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content [forceOverscroll]="true">
+<ion-content style="--background:white !important">
   <div class="w-100" style="margin: auto;max-width: 1000px;">
-    <ion-card mode="ios">
+    <ion-card mode="ios" style="--background:white !important">
       <ion-card-header>
         <div style="flex-direction: column;" class="d-flex align-items-center justify-content">
           <ng-container *ngIf="oUser == undefined">
@@ -36,27 +36,27 @@
         </div>
       </ion-card-header>
     </ion-card>
-    <ion-card mode="ios">
+    <ion-card mode="ios" style="--background:white !important">
       <ion-card-content class="p-0">
-        <ion-list [inset]="true" class="m-0">
-          <ion-item (click)="goInformation()" lines="none" [button]="true" detail="false">
+        <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
+          <ion-item (click)="goInformation()" lines="none" [button]="true" detail="false" style="--background:white !important">
             <!-- <img style="width: 5%;" slot="start" src="../../../assets/image/file.png" alt=""> -->
-            <ion-text mode="ios" class="font-weight-normal">Thông tin tài khoản</ion-text>
+            <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Thông tin tài khoản</ion-text>
             <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
           </ion-item>
-          <ion-item (click)="goWithdraw(1)" lines="none" [button]="true" detail="false">
+          <ion-item (click)="goWithdraw(1)" lines="none" [button]="true" detail="false" style="--background:white !important">
             <!-- <img style="width: 5%;" slot="start" src="../../../assets/image/coin.png" alt=""> -->
-            <ion-text mode="ios" class="font-weight-normal">Nạp tiền</ion-text>
+            <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Nạp tiền</ion-text>
             <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
           </ion-item>
-          <ion-item (click)="goWithdraw(2)" lines="none" [button]="true" detail="false">
+          <ion-item (click)="goWithdraw(2)" lines="none" [button]="true" detail="false" style="--background:white !important">
             <!-- <img style="width: 5%;" slot="start" src="../../../assets/image/withdraw.png" alt=""> -->
-            <ion-text mode="ios" class="font-weight-normal">Rút tiền</ion-text>
+            <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Rút tiền</ion-text>
             <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
           </ion-item>
-          <ion-item (click)="goChangePassword()" lines="none" [button]="true" detail="false">
+          <ion-item (click)="goChangePassword()" lines="none" [button]="true" detail="false" style="--background:white !important">
             <!-- <img style="width: 5%;" slot="start" src="../../../assets/image/key.png" alt=""> -->
-            <ion-text mode="ios" class="font-weight-normal">Đổi mật khẩu</ion-text>
+            <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Đổi mật khẩu</ion-text>
             <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
           </ion-item>
         </ion-list>
@@ -66,7 +66,7 @@
       <button (click)="goSignIn()" style="border-radius: 1em;" class="btn btn-block text-white" mat-flat-button color="primary">
         <div class="d-flex justify-content-center justify-content-center">
           <i class="bi bi-box-arrow-left me-2"></i>
-          <ion-text>
+          <ion-text class="dynamic-font">
             Đăng xuất
           </ion-text>
         </div>

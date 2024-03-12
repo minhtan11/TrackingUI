@@ -1,26 +1,20 @@
 
-<ng-container *ngIf="isExec">
-  <div id="loader" style="position: absolute;z-index: 1000;background: rgb(255 255 255 / 50%);left: 0em;" class="container w-100 h-100 d-flex align-items-center justify-content-center">
-    <!-- <img width="8%" src="../../../assets/image/loader.gif" alt=""> -->
-    <ion-spinner mode="ios" name="dots"></ion-spinner>
-  </div>
-</ng-container>
-<ion-header class="ion-no-border">
-  <ion-toolbar style="--background:white;">
+<ion-header class="ion-no-border" style="--background:white !important;">
+  <ion-toolbar style="--background:white !important;">
     <div class="d-flex align-items-center h-100 justify-content-center w-100">
       <div class="w-100" style="margin: auto;max-width: 1000px;">
         <ion-button (click)="onback()" mode="ios" fill="clear">
-          <ion-icon style="color: var(--ion-color-mat-primary)" name="chevron-back-outline"></ion-icon>
+          <ion-icon style="color: var(--ion-color-mat-primary);" name="chevron-back-outline"></ion-icon>
         </ion-button>
-        <ion-title style="z-index: -1;" mode="ios">Chi tiết kiện ký gửi</ion-title>
+        <ion-title style="z-index: -1;color:black !important" mode="ios">Chi tiết kiện ký gửi</ion-title>
       </div>
     </div>
   </ion-toolbar>
 </ion-header>
-<ion-content [forceOverscroll]="true">
+<ion-content style="--background:white !important;">
   <div class="w-100" style="margin: auto;max-width: 1000px;">
     <ng-container *ngIf="oData">
-      <ion-card mode="ios">
+      <ion-card mode="ios" style="--background:white !important;">
         <ion-card-header style="padding-bottom: 0em;">
           <div style="justify-content: space-between;" class="d-flex align-items-center">
             <div>

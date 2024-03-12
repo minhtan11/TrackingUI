@@ -1,5 +1,5 @@
-  <ion-header class="ion-no-border">
-    <ion-toolbar style="--background:white;">
+  <ion-header class="ion-no-border" style="--background:white !important;">
+    <ion-toolbar style="--background:white !important;">
       <div class="d-flex align-items-center h-100 justify-content-center w-100">
         <ion-button (click)="onback()" mode="ios" fill="clear" mode="ios">
           <ion-icon mode="ios" style="color: var(--ion-color-mat-primary)" name="chevron-back-outline"></ion-icon>
@@ -62,16 +62,16 @@
       </div>
     </ion-toolbar>
   </ion-header>
-  <ion-content [forceOverscroll]="true">
+  <ion-content style="--background:white !important">
     <ng-container *ngIf="isloadpage">
       <div class="d-flex align-items-center justify-content-center h-100 w-100">
-        <ion-spinner mode="ios" name="dots"></ion-spinner>
+        <ion-spinner style="color: black !important;" mode="ios" name="dots"></ion-spinner>
       </div>
     </ng-container>
     <ng-container *ngIf="isEmpty">
       <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
         <img style="width: 40%;" src="../../../assets/image/empty-box.png" alt="">
-        <ion-text>
+        <ion-text class="dynamic-font" style="color:black !important">
           Không có kiện hàng
         </ion-text>
       </div>
@@ -79,26 +79,26 @@
     <ng-container *ngIf="!isconnected">
       <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
         <img style="width: 40%;" src="../../../assets/image/connection.png" alt="">
-        <ion-text>
+        <ion-text class="dynamic-font" style="color:black !important">
           Mất kết nối internet
         </ion-text>
       </div>
     </ng-container>
     <ng-container *ngIf="lstData && lstData.length">
-      <div class="w-100" style="margin: auto;max-width: 1000px;">
-        <ion-list>
+      <div class="w-100 mb-5" style="margin: auto;max-width: 1000px;background-color: white !important;">
+        <ion-list style="background-color:white !important;">
           <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
-            <ion-item (click)="viewDetail(item)" lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;">
-              <ion-card class="w-100" style="margin: 0em;box-shadow: none" mode="ios">
+            <ion-item (click)="viewDetail(item)" lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;--background:white !important;">
+              <ion-card class="w-100" style="margin: 0em;box-shadow: none;--background:white !important;" mode="ios">
                 <ion-card-header style="padding: 0.2em;">
                   <div style="justify-content: space-between;" class="d-flex align-items-center">
                     <div>
-                      <ion-text style="font-size: 1.2em;" class="font-weight-bold me-2">
+                      <ion-text style="font-size: 1.2rem;" class="font-weight-bold me-2">
                         Mã kiện hàng
                       </ion-text>
                     </div>
                     <div class="d-flex align-items-center">
-                      <ion-text class="me-2" style="font-size: 1.2em;">
+                      <ion-text class="me-2" style="font-size: 1.2rem;">
                         {{item.packageCode}}
                       </ion-text>
                       <ion-icon [cdkCopyToClipboard]="item.packageCode" (click)="onCopy()" style="font-size: 1.5rem;" name="copy-outline"></ion-icon>
@@ -192,11 +192,7 @@
         </ion-list>
       </div>
       <ion-infinite-scroll *ngIf="isload" (ionInfinite)="onIonInfinite($event)">
-        <ion-infinite-scroll-content loadingSpinner="dots"></ion-infinite-scroll-content>
+        <ion-infinite-scroll-content style="--color: black !important;" loadingSpinner="dots"></ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </ng-container>
   </ion-content>
-  <ion-footer *ngIf="platform == 'ios'" class="ion-no-border">
-    <ion-toolbar style="--background:white;">
-    </ion-toolbar>
-  </ion-footer>

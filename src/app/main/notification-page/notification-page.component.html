@@ -1,18 +1,18 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar style="--background:white;">
-    <ion-title mode="ios">Thông báo</ion-title>
+<ion-header class="ion-no-border" style="--background:white !important;">
+  <ion-toolbar style="--background:white !important;">
+    <ion-title class="dynamic-font" style="color: black !important;" mode="ios">Thông báo</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content style="--background:white !important">
   <ng-container *ngIf="isloadpage">
     <div class="d-flex align-items-center justify-content-center h-100 w-100">
-      <ion-spinner mode="ios" name="dots"></ion-spinner>
+      <ion-spinner style="color: black !important;" mode="ios" name="dots"></ion-spinner>
     </div>
   </ng-container>
   <ng-container *ngIf="isEmpty">
     <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
       <img style="width: 40%;" src="../../../assets/image/empty-box.png" alt="">
-      <ion-text>
+      <ion-text class="dynamic-font" style="color:black !important">
         Không có thông báo
       </ion-text>
     </div>
@@ -20,37 +20,42 @@
   <ng-container *ngIf="!isconnected">
     <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
       <img style="width: 40%;" src="../../../assets/image/connection.png" alt="">
-      <ion-text>
+      <ion-text class="dynamic-font" style="color:black !important">
         Mất kết nối internet
       </ion-text>
     </div>
   </ng-container>
   <ng-container *ngIf="lstData && lstData.length">
-    <ion-list>
-      <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
-        <ion-item lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;">
-          <ion-card class="w-100" style="margin: 0em;box-shadow: none">
-            <ion-card-content style="padding: 0.2em;">
-              <div class="d-flex align-items-center">
-                <div class="w-100">
-                  <ion-text class="font-weight-bold">
-                    Trakuaidi xin thông báo tới Quý khách
-                  </ion-text>
-                  <br>
-                  <ion-text>
-                    <span [innerHTML]="item.message"></span>
-                  </ion-text>
-                  <br>
-                  <ion-text>
-                    <span>Ngày: </span>
-                    <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
-                  </ion-text>
+    <div class="w-100 mb-5" style="margin: auto;max-width: 1000px;">
+      <ion-list style="background-color:white !important;">
+        <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
+          <ion-item lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;--background:white !important;">
+            <ion-card class="w-100" style="margin: 0em;box-shadow: none;--background:white !important;">
+              <ion-card-content style="padding: 0.2em;">
+                <div class="d-flex align-items-center">
+                  <div class="w-100">
+                    <ion-text class="font-weight-bold">
+                      Trakuaidi xin thông báo tới Quý khách
+                    </ion-text>
+                    <br>
+                    <ion-text>
+                      <span [innerHTML]="item.message"></span>
+                    </ion-text>
+                    <br>
+                    <ion-text>
+                      <span>Ngày: </span>
+                      <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                    </ion-text>
+                  </div>
                 </div>
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-item>
-      </ng-container>
-    </ion-list>
+              </ion-card-content>
+            </ion-card>
+          </ion-item>
+        </ng-container>
+      </ion-list>
+    </div>
+    <ion-infinite-scroll *ngIf="isload" (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content style="--color: black !important;" loadingSpinner="dots"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ng-container>
 </ion-content>

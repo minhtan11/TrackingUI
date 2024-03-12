@@ -1,20 +1,20 @@
-<ion-header class="ion-no-border">
+<ion-header class="ion-no-border" style="--background:white !important;">
   <ion-toolbar style="--background:white !important;">
     <div class="d-flex align-items-center h-100 justify-content-center w-100">
       <div class="w-100" style="margin: auto;max-width: 1000px;">
         <ion-button (click)="onback()" mode="ios" fill="clear">
           <ion-icon style="color: var(--ion-color-mat-primary);" name="chevron-back-outline"></ion-icon>
         </ion-button>
-        <ion-title style="z-index: -1;" mode="ios">Phí vận chuyển</ion-title>
+        <ion-title class="dynamic-font" style="z-index: -1;color:black !important" mode="ios">Phí vận chuyển</ion-title>
       </div>
     </div>
   </ion-toolbar>
 </ion-header>
 <ion-content [forceOverscroll]="true" style="--background:white !important">
-  <div class="w-100" style="margin: auto;max-width: 1000px;">
+  <div class="w-100 mb-5" style="margin: auto;max-width: 1000px;">
     <ion-card mode="ios" style="--background:white !important">
       <ion-card-header class="text-center">
-        <ion-card-title style="font-size: 1.5em;">TUYẾN BAY NHANH</ion-card-title>
+        <ion-card-title class="dynamic-font" style="font-size: 1.2rem;color:black !important">TUYẾN BAY NHANH</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-grid fixed>
@@ -22,95 +22,95 @@
             <ion-col>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary);" class="font-weight-bold">
+                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary) !important;" class="font-weight-bold dynamic-font">
                     Cân nặng
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary);" class="font-weight-bold">
+                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary) !important;" class="font-weight-bold dynamic-font">
                     Thành tiền
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 0-39kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     63.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 40-99kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     62.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 100-149kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     61.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 150-199kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     60.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 200-299kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     59.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="padding-top: 1em;">
-                <ion-text class="text-danger">(*)</ion-text>&nbsp;<ion-text>Thời gian hàng về từ 3-6 ngày về SG. Tính từ ngày xuất kho Trung, không tính thứ 7, chủ nhật và ngày lễ.</ion-text>
+                <ion-text class="text-danger dynamic-font">(*)</ion-text>&nbsp;<ion-text style="color:black !important" class="dynamic-font">Thời gian hàng về từ 3-6 ngày về SG. Tính từ ngày xuất kho Trung, không tính thứ 7, chủ nhật và ngày lễ.</ion-text>
                 <br>
-                <ion-text class="text-danger">(*)</ion-text>&nbsp;<ion-text>Hàng bay nhanh cấm hàng có pin, chất lỏng, bột trắng, từ tính và lốc lõi lạnh.</ion-text>
+                <ion-text class="text-danger dynamic-font">(*)</ion-text>&nbsp;<ion-text style="color:black !important" class="dynamic-font">Hàng bay nhanh cấm hàng có pin, chất lỏng, bột trắng, từ tính và lốc lõi lạnh.</ion-text>
                 <br>
-                <ion-text class="text-danger">(*)</ion-text>&nbsp;<ion-text>Nếu phát hiện bên trong hàng có những thứ trên sẽ bị phạt 100-200 tệ.</ion-text>
+                <ion-text class="text-danger dynamic-font">(*)</ion-text>&nbsp;<ion-text style="color:black !important" class="dynamic-font">Nếu phát hiện bên trong hàng có những thứ trên sẽ bị phạt 100-200 tệ.</ion-text>
               </div>
               <div class="alert alert-warning d-flex" role="alert" style="margin-top: 1em;">
                 <i class="bi bi-exclamation-triangle-fill icon-16 mr-2"></i>
                 <div>
-                    <ion-text class="mb-0">
+                    <ion-text class="mb-0 dynamic-font" style="color:black !important">
                       <b>Lưu ý:</b>
                     </ion-text>
                     <br>
-                    <ion-text class="mb-0">
+                    <ion-text class="mb-0 dynamic-font" style="color:black !important">
                       - Mặt hàng real/fake, mỹ phẩm giá riêng.
                     </ion-text>
                     <br>
-                    <ion-text class="mb-0">
+                    <ion-text class="mb-0 dynamic-font" style="color:black !important">
                       - Mua bảo hiểm 5% giá trị hàng đền 100% hàng mất, liên hệ để được tư vấn.
                     </ion-text>
                 </div>
@@ -123,7 +123,7 @@
     </ion-card>
     <ion-card mode="ios" style="--background:white !important">
       <ion-card-header class="text-center">
-        <ion-card-title style="font-size: 1.5em;">TUYẾN BAY THƯỜNG</ion-card-title>
+        <ion-card-title style="font-size: 1.2rem;color:black !important">TUYẾN BAY THƯỜNG</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-grid fixed>
@@ -131,115 +131,115 @@
             <ion-col>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary);" class="font-weight-bold">
+                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary) !important;" class="font-weight-bold dynamic-font">
                     Cân nặng
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary);" class="font-weight-bold">
+                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary) !important;" class="font-weight-bold dynamic-font">
                     Thành tiền
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 0-39kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     48.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 40-99kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     47.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 100-149kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     46.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 150-199kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     45.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 200-299kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     44.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 300-499kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     43.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 300-499kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     58.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="padding-top: 1em;">
-                <ion-text class="text-danger">(*)</ion-text>&nbsp;<ion-text>Thời gian hàng về từ 5-10 ngày về SG. Tính từ ngày xuất kho Trung, không tính thứ 7, chủ nhật và ngày lễ.</ion-text>
+                <ion-text class="text-danger dynamic-font">(*)</ion-text>&nbsp;<ion-text class="dynamic-font" style="color:black !important">Thời gian hàng về từ 5-10 ngày về SG. Tính từ ngày xuất kho Trung, không tính thứ 7, chủ nhật và ngày lễ.</ion-text>
               </div>
               <div class="alert alert-warning d-flex" role="alert" style="margin-top: 1em;">
                 <i class="bi bi-exclamation-triangle-fill icon-16 mr-2"></i>
                 <div>
-                    <ion-text class="mb-0">
+                    <ion-text style="color:black !important" class="mb-0 dynamic-font">
                       <b>Lưu ý:</b>
                     </ion-text>
                     <br>
-                    <ion-text class="mb-0">
+                    <ion-text style="color:black !important" class="mb-0">
                       - Mặt hàng real/fake, mỹ phẩm giá riêng.
                     </ion-text>
                     <br>
-                    <ion-text class="mb-0">
+                    <ion-text style="color:black !important" class="mb-0">
                       - Mua bảo hiểm 5% giá trị hàng đền 100% hàng mất, liên hệ để được tư vấn.
                     </ion-text>
                 </div>
@@ -247,12 +247,11 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-        
       </ion-card-content>
     </ion-card>
     <ion-card mode="ios" style="--background:white !important">
       <ion-card-header class="text-center">
-        <ion-card-title style="font-size: 1.5em;">TUYẾN BỘ</ion-card-title>
+        <ion-card-title class="dynamic-font" style="font-size: 1.2em;color:black !important">TUYẾN BỘ</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-grid fixed>
@@ -260,84 +259,84 @@
             <ion-col>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary);" class="font-weight-bold">
+                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary) !important;" class="font-weight-bold dynamic-font">
                     Cân nặng
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary);" class="font-weight-bold">
+                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary) !important;" class="font-weight-bold dynamic-font">
                     Thành tiền
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 0-39kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     33.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 40-99kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     32.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 100-149kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     31.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 150-199kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     30.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 200-299kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     29.000đ
                   </ion-text>
                 </div>
               </div>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     Từ 300-499kg
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text>
+                  <ion-text style="color:black !important" class="dynamic-font">
                     28.000đ
                   </ion-text>
                 </div>
@@ -345,15 +344,15 @@
               <div class="alert alert-warning d-flex" role="alert" style="margin-top: 1em;">
                 <i class="bi bi-exclamation-triangle-fill icon-16 mr-2"></i>
                 <div>
-                    <ion-text class="mb-0">
+                    <ion-text style="color:black !important" class="mb-0 dynamic-font">
                       <b>Lưu ý:</b>
                     </ion-text>
                     <br>
-                    <ion-text class="mb-0">
+                    <ion-text style="color:black !important" class="mb-0 dynamic-font">
                       - Mặt hàng real/fake, mỹ phẩm giá riêng.
                     </ion-text>
                     <br>
-                    <ion-text class="mb-0">
+                    <ion-text style="color:black !important" class="mb-0 dynamic-font">
                       - Mua bảo hiểm 5% giá trị hàng đền 100% hàng mất, liên hệ để được tư vấn.
                     </ion-text>
                 </div>
@@ -366,7 +365,7 @@
     </ion-card>
     <ion-card mode="ios" style="--background:white !important">
       <ion-card-header class="text-center">
-        <ion-card-title style="font-size: 1.5em;">TUYẾN LÔ</ion-card-title>
+        <ion-card-title class="dynamic-font" style="font-size: 1.2rem;color:black !important">TUYẾN LÔ</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-grid fixed>
@@ -374,126 +373,12 @@
             <ion-col>
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div>
-                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary);" class="font-weight-bold">
+                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary) !important;" class="font-weight-bold dynamic-font">
                     Cân nặng
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary);" class="font-weight-bold">
-                    Thành tiền
-                  </ion-text>
-                </div>
-              </div>
-              <!-- <div style="justify-content: space-between;" class="d-flex align-items-center">
-                <div>
-                  <ion-text>
-                    Từ 0-39kg
-                  </ion-text>
-                </div>
-                <div class="d-flex align-items-center">
-                  <ion-text>
-                    33.000đ
-                  </ion-text>
-                </div>
-              </div>
-              <div style="justify-content: space-between;" class="d-flex align-items-center">
-                <div>
-                  <ion-text>
-                    Từ 40-99kg
-                  </ion-text>
-                </div>
-                <div class="d-flex align-items-center">
-                  <ion-text>
-                    32.000đ
-                  </ion-text>
-                </div>
-              </div>
-              <div style="justify-content: space-between;" class="d-flex align-items-center">
-                <div>
-                  <ion-text>
-                    Từ 100-149kg
-                  </ion-text>
-                </div>
-                <div class="d-flex align-items-center">
-                  <ion-text>
-                    31.000đ
-                  </ion-text>
-                </div>
-              </div>
-              <div style="justify-content: space-between;" class="d-flex align-items-center">
-                <div>
-                  <ion-text>
-                    Từ 150-199kg
-                  </ion-text>
-                </div>
-                <div class="d-flex align-items-center">
-                  <ion-text>
-                    30.000đ
-                  </ion-text>
-                </div>
-              </div>
-              <div style="justify-content: space-between;" class="d-flex align-items-center">
-                <div>
-                  <ion-text>
-                    Từ 200-299kg
-                  </ion-text>
-                </div>
-                <div class="d-flex align-items-center">
-                  <ion-text>
-                    29.000đ
-                  </ion-text>
-                </div>
-              </div>
-              <div style="justify-content: space-between;" class="d-flex align-items-center">
-                <div>
-                  <ion-text>
-                    Từ 300-499kg
-                  </ion-text>
-                </div>
-                <div class="d-flex align-items-center">
-                  <ion-text>
-                    28.000đ
-                  </ion-text>
-                </div>
-              </div> -->
-              <div class="alert alert-warning d-flex" role="alert" style="margin-top: 1em;">
-                <i class="bi bi-exclamation-triangle-fill icon-16 mr-2"></i>
-                <div>
-                    <ion-text class="mb-0">
-                      <b>Lưu ý:</b>
-                    </ion-text>
-                    <br>
-                    <ion-text class="mb-0">
-                      - Mặt hàng real/fake, mỹ phẩm giá riêng.
-                    </ion-text>
-                    <br>
-                    <ion-text class="mb-0">
-                      - Mua bảo hiểm 5% giá trị hàng đền 100% hàng mất, liên hệ để được tư vấn.
-                    </ion-text>
-                </div>
-            </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-        
-      </ion-card-content>
-    </ion-card>
-    <ion-card mode="ios" style="--background:white !important">
-      <ion-card-header class="text-center">
-        <ion-card-title style="font-size: 1.5em;">TUYẾN BIỂN</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-grid fixed>
-          <ion-row>
-            <ion-col>
-              <div style="justify-content: space-between;" class="d-flex align-items-center">
-                <div>
-                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary);" class="font-weight-bold">
-                    Cân nặng
-                  </ion-text>
-                </div>
-                <div class="d-flex align-items-center">
-                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary);" class="font-weight-bold">
+                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary) !important;" class="font-weight-bold dynamic-font">
                     Thành tiền
                   </ion-text>
                 </div>
@@ -573,15 +458,15 @@
               <div class="alert alert-warning d-flex" role="alert" style="margin-top: 1em;">
                 <i class="bi bi-exclamation-triangle-fill icon-16 mr-2"></i>
                 <div>
-                    <ion-text class="mb-0">
+                    <ion-text style="color: black !important;" class="mb-0 dynamic-font">
                       <b>Lưu ý:</b>
                     </ion-text>
                     <br>
-                    <ion-text class="mb-0">
+                    <ion-text style="color: black !important;" class="mb-0 dynamic-font">
                       - Mặt hàng real/fake, mỹ phẩm giá riêng.
                     </ion-text>
                     <br>
-                    <ion-text class="mb-0">
+                    <ion-text style="color: black !important;" class="mb-0 dynamic-font">
                       - Mua bảo hiểm 5% giá trị hàng đền 100% hàng mất, liên hệ để được tư vấn.
                     </ion-text>
                 </div>
@@ -590,11 +475,124 @@
           </ion-row>
         </ion-grid>
         
+      </ion-card-content>
+    </ion-card>
+    <ion-card mode="ios" style="--background:white !important">
+      <ion-card-header class="text-center">
+        <ion-card-title class="dynamic-font" style="font-size: 1.2rem;color:black !important">TUYẾN BIỂN</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col>
+              <div style="justify-content: space-between;" class="d-flex align-items-center">
+                <div>
+                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary) !important;" class="font-weight-bold dynamic-font">
+                    Cân nặng
+                  </ion-text>
+                </div>
+                <div class="d-flex align-items-center">
+                  <ion-text style="font-size: 1.2em;color: var(--ion-color-mat-primary) !important;" class="font-weight-bold dynamic-font">
+                    Thành tiền
+                  </ion-text>
+                </div>
+              </div>
+              <!-- <div style="justify-content: space-between;" class="d-flex align-items-center">
+                <div>
+                  <ion-text>
+                    Từ 0-39kg
+                  </ion-text>
+                </div>
+                <div class="d-flex align-items-center">
+                  <ion-text>
+                    33.000đ
+                  </ion-text>
+                </div>
+              </div>
+              <div style="justify-content: space-between;" class="d-flex align-items-center">
+                <div>
+                  <ion-text>
+                    Từ 40-99kg
+                  </ion-text>
+                </div>
+                <div class="d-flex align-items-center">
+                  <ion-text>
+                    32.000đ
+                  </ion-text>
+                </div>
+              </div>
+              <div style="justify-content: space-between;" class="d-flex align-items-center">
+                <div>
+                  <ion-text>
+                    Từ 100-149kg
+                  </ion-text>
+                </div>
+                <div class="d-flex align-items-center">
+                  <ion-text>
+                    31.000đ
+                  </ion-text>
+                </div>
+              </div>
+              <div style="justify-content: space-between;" class="d-flex align-items-center">
+                <div>
+                  <ion-text>
+                    Từ 150-199kg
+                  </ion-text>
+                </div>
+                <div class="d-flex align-items-center">
+                  <ion-text>
+                    30.000đ
+                  </ion-text>
+                </div>
+              </div>
+              <div style="justify-content: space-between;" class="d-flex align-items-center">
+                <div>
+                  <ion-text>
+                    Từ 200-299kg
+                  </ion-text>
+                </div>
+                <div class="d-flex align-items-center">
+                  <ion-text>
+                    29.000đ
+                  </ion-text>
+                </div>
+              </div>
+              <div style="justify-content: space-between;" class="d-flex align-items-center">
+                <div>
+                  <ion-text>
+                    Từ 300-499kg
+                  </ion-text>
+                </div>
+                <div class="d-flex align-items-center">
+                  <ion-text>
+                    28.000đ
+                  </ion-text>
+                </div>
+              </div> -->
+              <div class="alert alert-warning d-flex" role="alert" style="margin-top: 1em;">
+                <i class="bi bi-exclamation-triangle-fill icon-16 mr-2"></i>
+                <div>
+                    <ion-text style="color:black !important" class="mb-0 dynamic-font">
+                      <b>Lưu ý:</b>
+                    </ion-text>
+                    <br>
+                    <ion-text style="color:black !important" class="mb-0 dynamic-font">
+                      - Mặt hàng real/fake, mỹ phẩm giá riêng.
+                    </ion-text>
+                    <br>
+                    <ion-text style="color:black !important" class="mb-0 dynamic-font">
+                      - Mua bảo hiểm 5% giá trị hàng đền 100% hàng mất, liên hệ để được tư vấn.
+                    </ion-text>
+                </div>
+            </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid> 
       </ion-card-content>
     </ion-card>
   </div>
 </ion-content>
-<ion-footer *ngIf="platform == 'ios'" class="ion-no-border">
+<!-- <ion-footer *ngIf="platform == 'ios'" class="ion-no-border">
   <ion-toolbar style="--background:white;">
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

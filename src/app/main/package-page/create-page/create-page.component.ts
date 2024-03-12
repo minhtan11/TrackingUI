@@ -130,7 +130,7 @@ export class CreatePageComponent  implements OnInit {
   }
 
   onback(){
-    this.navCtrl.navigateForward('main/package');
+    this.navCtrl.navigateBack('main/package');
   }
   //#endregion
 }
