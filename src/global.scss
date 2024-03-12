@@ -97,6 +97,10 @@ ion-segment-button {
     --color-checked: var(--ion-color-mat-primary);
 }
 
+ion-segment-button::part(indicator-background) {
+    background: white !important;
+  }
+
 .tab-selected {
     color: var(--ion-color-mat-primary) !important;
     border-top: 1px solid var(--ion-color-mat-primary) !important;
