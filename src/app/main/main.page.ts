@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { Router } from '@angular/router';
 import { IonRouterOutlet, IonTabs, NavController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { StorageService } from '../storage-service/storage.service';
 
 @Component({
   selector: 'app-main',
@@ -10,19 +11,26 @@ import { SplashScreen } from '@capacitor/splash-screen';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainPage implements OnInit,AfterViewInit {
+  isReview:any;
   constructor(
     private router: Router,
     private navCtrl: NavController,
     private dt : ChangeDetectorRef,
+    private storage: StorageService,
     private platform : Platform,
   ) {
     
    }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.isReview = await this.storage.get('isMobileReview');
   }
 
    ngAfterViewInit() {
+  }
+
+  async ionViewWillEnter(){
+    this.isReview = await this.storage.get('isMobileReview');
   }
   
 

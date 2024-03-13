@@ -25,6 +25,7 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   pack3:any;
   pack5:any;
   isload:any = true;
+  isReview:any;
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -57,6 +58,7 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   }
 
   async ionViewWillEnter(){
+    this.isReview = await this.storage.get('isMobileReview');
     this.getTime();
     this.getUser();
     this.getDashBoard();

@@ -16,6 +16,7 @@ import Swal from 'sweetalert2'
 })
 export class SettingPageComponent  implements OnInit {
   oUser:any;
+  isReview:any;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -36,6 +37,7 @@ export class SettingPageComponent  implements OnInit {
   }
 
   async ionViewWillEnter(){
+    this.isReview = await this.storage.get('isMobileReview');
     this.getUser();
   }
 
@@ -98,6 +100,30 @@ export class SettingPageComponent  implements OnInit {
       if (result.isConfirmed) {
         this.storage.remove('password');
         this.navCtrl.navigateBack('home');
+      }
+    })
+  }
+
+  deleteAccount(){
+    Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-accent me-2 text-white",
+        cancelButton: "btn btn-danger"
+      },
+      buttonsStyling: false
+    }).fire({
+      title: "",
+      text: "Bạn có muốn xóa tài khoản này?",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Đồng ý",
+      cancelButtonText: "Từ chối",
+      heightAuto: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // this.storage.remove('password');
+        // this.navCtrl.navigateBack('home');
       }
     })
   }
