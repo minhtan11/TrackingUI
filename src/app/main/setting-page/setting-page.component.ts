@@ -120,10 +120,25 @@ export class SettingPageComponent  implements OnInit {
       confirmButtonText: "Đồng ý",
       cancelButtonText: "Từ chối",
       heightAuto: false
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        // this.storage.remove('password');
-        // this.navCtrl.navigateBack('home');
+        let username = await this.storage.get('username');
+        let data = {
+          userName: username,
+        }
+        let messageBody = {
+          dataRequest: JSON.stringify(data)
+        };
+        this.api.execByBody('Authencation', 'deleteaccount', messageBody, true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => { 
+          if (res && !res?.isError) {
+            this.notification.showNotiSuccess('', res?.message);
+            this.storage.remove('username');
+            this.storage.remove('password');
+            this.navCtrl.navigateBack('home');
+          }else{
+            this.notification.showNotiError('', res?.message);
+          }
+        })
       }
     })
   }

@@ -126,6 +126,8 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
     this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res[0]) {
         this.notification.showNotiError('', res[1].message);
+        this.storage.remove('password');
+        this.navCtrl.navigateBack('home');
       }else{
         this.oUser = res[1];
         this.dt.detectChanges();
