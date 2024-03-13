@@ -15,27 +15,28 @@
             <ion-skeleton-text style="width: 30%;" [animated]="true"></ion-skeleton-text>
           </ng-container>
           <ng-container *ngIf="oUser != undefined">
-            <img class="mb-2" style="width: 5em;height: 5em;
-            border-radius: 3em;
+            <img class="mb-2" style="width: 9em;height: 9em;
+            border-radius: 70%;
             " [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="" class="mb-2">
             <ion-text class="ion-text-uppercase font-weight-bold">
               {{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN}}
             </ion-text>
           </ng-container>
-          <!-- <div>
-            <img  style="width: 5em;
-            height: 5em;
-            border-radius: 2em;
-            margin-right: 1rem;"src="../../../assets/image/logo-user.png" alt="">
-          </div>
-          <div class="mt-2">
-            <ion-text class="font-weight-bold">
-              TRAN MINH TAN
-            </ion-text>
-          </div> -->
         </div>
       </ion-card-header>
     </ion-card>
+    <ion-grid fixed class="mb-3">
+      <ion-row>
+        <ion-col>
+          <div>
+            <ion-text style="color: black !important;font-size: 1.2rem;" class="dynamic-font">
+              <span>Tiện ích</span>
+            </ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
     <ion-card mode="ios" style="--background:white !important">
       <ion-card-content class="p-0">
         <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
@@ -62,7 +63,19 @@
         </ion-list>
       </ion-card-content>
     </ion-card>
-    <div class="p-4">
+    <ion-grid fixed class="mb-3">
+      <ion-row>
+        <ion-col>
+          <div>
+            <ion-text style="color: black !important;font-size: 1.2rem;" class="dynamic-font">
+              <span>Tài khoản</span>
+            </ion-text>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+   
+    <!-- <div class="p-4">
       <button (click)="goSignIn()" style="border-radius: 1em;" class="btn btn-block text-white" mat-flat-button color="primary">
         <div class="d-flex justify-content-center justify-content-center">
           <i class="bi bi-box-arrow-left me-2"></i>
@@ -71,7 +84,7 @@
           </ion-text>
         </div>
       </button>   
-    </div>
+    </div> -->
   </div>
   
 </ion-content>
