@@ -16,6 +16,7 @@ import Swal from 'sweetalert2'
 })
 export class SettingPageComponent  implements OnInit {
   oUser:any;
+  isReview:any;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -36,6 +37,7 @@ export class SettingPageComponent  implements OnInit {
   }
 
   async ionViewWillEnter(){
+    this.isReview = await this.storage.get('isMobileReview');
     this.getUser();
   }
 
@@ -98,6 +100,45 @@ export class SettingPageComponent  implements OnInit {
       if (result.isConfirmed) {
         this.storage.remove('password');
         this.navCtrl.navigateBack('home');
+      }
+    })
+  }
+
+  deleteAccount(){
+    Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-accent me-2 text-white",
+        cancelButton: "btn btn-danger"
+      },
+      buttonsStyling: false
+    }).fire({
+      title: "",
+      text: "Bạn có muốn xóa tài khoản này?",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Đồng ý",
+      cancelButtonText: "Từ chối",
+      heightAuto: false
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let username = await this.storage.get('username');
+        let data = {
+          userName: username,
+        }
+        let messageBody = {
+          dataRequest: JSON.stringify(data)
+        };
+        this.api.execByBody('Authencation', 'deleteaccount', messageBody, true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => { 
+          if (res && !res?.isError) {
+            this.notification.showNotiSuccess('', res?.message);
+            this.storage.remove('username');
+            this.storage.remove('password');
+            this.navCtrl.navigateBack('home');
+          }else{
+            this.notification.showNotiError('', res?.message);
+          }
+        })
       }
     })
   }

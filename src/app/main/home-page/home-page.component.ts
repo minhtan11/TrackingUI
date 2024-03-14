@@ -25,6 +25,7 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   pack3:any;
   pack5:any;
   isload:any = true;
+  isReview:any;
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -57,6 +58,7 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   }
 
   async ionViewWillEnter(){
+    this.isReview = await this.storage.get('isMobileReview');
     this.getTime();
     this.getUser();
     this.getDashBoard();
@@ -124,6 +126,8 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
     this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res[0]) {
         this.notification.showNotiError('', res[1].message);
+        this.storage.remove('password');
+        this.navCtrl.navigateBack('home');
       }else{
         this.oUser = res[1];
         this.dt.detectChanges();
