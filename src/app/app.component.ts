@@ -68,21 +68,16 @@ export class AppComponent implements OnInit {
 
   async checkLogin() {
     this.api.execByBody('Authencation', 'getconfig', null).pipe(takeUntil(this.destroy$)).subscribe(async (res: any) => {
-      if (res) {
-        this.storage.set('isMobileReview', res?.isMobileReview);
-      }else{
-        this.storage.set('isMobileReview', true);
-      }
       let username = await this.storage.get('username');
       let password = await this.storage.get('password');
       if (username && password) {
-        this.navCtrl.navigateForward('main');
+        this.navCtrl.navigateForward('main',{queryParams:{isReview:res?.isMobileReview}});
         setTimeout(() => {
           this.isload = false;
           this.dt.detectChanges();
         }, 2000);
       } else {
-        this.navCtrl.navigateForward('home');
+        this.navCtrl.navigateForward('home',{queryParams:{isReview:res?.isMobileReview}});
         setTimeout(() => {
           this.isload = false;
           this.dt.detectChanges();

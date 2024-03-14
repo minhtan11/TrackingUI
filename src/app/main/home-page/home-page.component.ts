@@ -38,6 +38,7 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
     private notification: NotificationServiceComponent,
     private routerOutlet: IonRouterOutlet
   ) { 
+    this.isReview = this.rt.snapshot.queryParams["isReview"];
   }
   //#endregion
 
@@ -58,7 +59,6 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
   }
 
   async ionViewWillEnter(){
-    this.isReview = await this.storage.get('isMobileReview');
     this.getTime();
     this.getUser();
     this.getDashBoard();

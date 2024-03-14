@@ -17,6 +17,10 @@ import Swal from 'sweetalert2'
 export class SettingPageComponent  implements OnInit {
   oUser:any;
   isReview:any;
+  isOpen:any=false;
+  isOpen2:any=false;
+  isDismiss:any=false;
+  isDismiss2:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -26,7 +30,10 @@ export class SettingPageComponent  implements OnInit {
     private navCtrl: NavController,
     private storage: StorageService,
     private routerOutlet: IonRouterOutlet
-  ) { }
+  ) { 
+    this.isReview = this.rt.snapshot.queryParams["isReview"];
+    //this.dt.detectChanges();
+  }
 
   ngOnInit() {
   }
@@ -37,7 +44,6 @@ export class SettingPageComponent  implements OnInit {
   }
 
   async ionViewWillEnter(){
-    this.isReview = await this.storage.get('isMobileReview');
     this.getUser();
   }
 
@@ -81,65 +87,49 @@ export class SettingPageComponent  implements OnInit {
   }
 
   goSignIn(){
-    Swal.mixin({
-      customClass: {
-        confirmButton: "btn btn-accent me-2 text-white",
-        cancelButton: "btn btn-danger"
-      },
-      buttonsStyling: false
-    }).fire({
-      title: "",
-      text: "Bạn có muốn đăng xuất khỏi tài khoản này?",
-      icon: "warning",
-      showCancelButton: true,
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Đồng ý",
-      cancelButtonText: "Từ chối",
-      heightAuto: false
-    }).then((result) => {
-      if (result.isConfirmed) {
+    this.storage.remove('password');
+    this.navCtrl.navigateBack('home');
+  }
+
+  async onDelete() {
+    let username = await this.storage.get('username');
+    let data = {
+      userName: username,
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'deleteaccount', messageBody, true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res && !res?.isError) {
+        this.notification.showNotiSuccess('', res?.message);
+        this.storage.remove('username');
         this.storage.remove('password');
         this.navCtrl.navigateBack('home');
+      } else {
+        this.notification.showNotiError('', res?.message);
       }
     })
   }
+  onOpen(){
+    this.isOpen = true;
+    this.isDismiss = false;
+    this.dt.detectChanges();
+  }
 
-  deleteAccount(){
-    Swal.mixin({
-      customClass: {
-        confirmButton: "btn btn-accent me-2 text-white",
-        cancelButton: "btn btn-danger"
-      },
-      buttonsStyling: false
-    }).fire({
-      title: "",
-      text: "Bạn có muốn xóa tài khoản này?",
-      icon: "warning",
-      showCancelButton: true,
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Đồng ý",
-      cancelButtonText: "Từ chối",
-      heightAuto: false
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        let username = await this.storage.get('username');
-        let data = {
-          userName: username,
-        }
-        let messageBody = {
-          dataRequest: JSON.stringify(data)
-        };
-        this.api.execByBody('Authencation', 'deleteaccount', messageBody, true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => { 
-          if (res && !res?.isError) {
-            this.notification.showNotiSuccess('', res?.message);
-            this.storage.remove('username');
-            this.storage.remove('password');
-            this.navCtrl.navigateBack('home');
-          }else{
-            this.notification.showNotiError('', res?.message);
-          }
-        })
-      }
-    })
+  onOpen2(){
+    this.isOpen2 = true;
+    this.isDismiss2 = false;
+    this.dt.detectChanges();
+  }
+
+  onDismiss(){
+    this.isDismiss = true;
+    this.isOpen = false;
+    this.dt.detectChanges();
+  }
+  onDismiss2(){
+    this.isDismiss2 = true;
+    this.isOpen2 = false;
+    this.dt.detectChanges();
   }
 }

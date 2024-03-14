@@ -28,6 +28,7 @@ export class HomePage implements OnInit, AfterViewInit {
   messageError: any;
   formGroup!: FormGroup;
   isLogin: any = true;
+  isReview:any;
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -42,6 +43,7 @@ export class HomePage implements OnInit, AfterViewInit {
     private http: HttpClient,
     
   ) {
+    this.isReview = this.rt.snapshot.queryParams["isReview"];
   }
   //#endregion
 
@@ -105,7 +107,7 @@ export class HomePage implements OnInit, AfterViewInit {
     };
     this.api.execByBody('Authencation', 'login', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res && !res?.isError) {
-        this.navCtrl.navigateForward('main');
+        this.navCtrl.navigateForward('main',{queryParams:{isReview:this.isReview}});
         this.storage.set('username', this.formGroup.value.userName);
         this.storage.set('password', this.formGroup.value.passWord);
       } else {

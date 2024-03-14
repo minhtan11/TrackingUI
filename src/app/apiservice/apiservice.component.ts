@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Config } from '@ionic/angular';
+import { Config, ToastController } from '@ionic/angular';
 import { Observable, Subject, catchError, debounceTime, map, of, switchMap, takeUntil, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
@@ -16,6 +16,7 @@ export class ApiserviceComponent implements OnInit {
   private destroy$ = new Subject<void>();
   private subject = new Subject<any>();
   constructor(
+    private toastController: ToastController,
     private http: HttpClient,
   ) { }
   //#endregion Constructor
@@ -46,40 +47,58 @@ export class ApiserviceComponent implements OnInit {
     }
   }
 
-  private handleError(error: HttpErrorResponse) {
+  private async handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
-      // A client-side or network error occurred. Handle it accordingly.
-      Swal.mixin({
-        toast: true,
-        position: 'bottom',
-        buttonsStyling: false,
-        showConfirmButton: false,
-        timer: 5000,
-        timerProgressBar: false,
-      }).fire({
-        icon: "error",
-        title: '',
-        text: 'Tracking hiện đang gặp lỗi.Vui lòng thử lại!',
-        heightAuto: false
+      const toast = await this.toastController.create({
+        message: 'Trakuaidi hiện đang gặp lỗi.Vui lòng thử lại!',
+        duration: 3000,
+        position: 'top',
+        positionAnchor: 'header',
+        color: 'danger',
+        icon: 'alert-circle-outline',
       });
+      await toast.present();
+      // A client-side or network error occurred. Handle it accordingly.
+      // Swal.mixin({
+      //   toast: true,
+      //   position: 'bottom',
+      //   buttonsStyling: false,
+      //   showConfirmButton: false,
+      //   timer: 5000,
+      //   timerProgressBar: false,
+      // }).fire({
+      //   icon: "error",
+      //   title: '',
+      //   text: 'Tracking hiện đang gặp lỗi.Vui lòng thử lại!',
+      //   heightAuto: false
+      // });
     } else {
+      const toast = await this.toastController.create({
+        message: 'Đã có lỗi xảy ra trong quá trình thực thi hệ thống!',
+        duration: 3000,
+        position: 'top',
+        positionAnchor: 'header',
+        color: 'danger',
+        icon: 'alert-circle-outline',
+      });
+      await toast.present();
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
       // console.error(
       //   `Backend returned code ${error.status}, body was: `, error.error);
-      Swal.mixin({
-        toast: true,
-        position: 'bottom',
-        buttonsStyling: false,
-        showConfirmButton: false,
-        timer: 5000,
-        timerProgressBar: false,
-      }).fire({
-        icon: "error",
-        title: '',
-        text: 'Đã có lỗi xảy ra trong quá trình thực thi hệ thống!',
-        heightAuto: false
-      });
+      // Swal.mixin({
+      //   toast: true,
+      //   position: 'bottom',
+      //   buttonsStyling: false,
+      //   showConfirmButton: false,
+      //   timer: 5000,
+      //   timerProgressBar: false,
+      // }).fire({
+      //   icon: "error",
+      //   title: '',
+      //   text: 'Đã có lỗi xảy ra trong quá trình thực thi hệ thống!',
+      //   heightAuto: false
+      // });
     }
     let loader = document.getElementById('loader');
     if (loader) {

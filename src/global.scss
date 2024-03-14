@@ -253,3 +253,12 @@ ion-searchbar {
     --clear-button-color: #fff !important;
     font-size: var(--ion-dynamic-font) !important;
 }
+
+.block {
+    width: 100%;
+    height: 300px;
+  }
+  
+  ion-modal {
+    --height: auto;
+  }
