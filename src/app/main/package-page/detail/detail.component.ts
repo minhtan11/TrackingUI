@@ -17,6 +17,8 @@ import Swal from 'sweetalert2'
 export class DetailComponent  implements OnInit {
   oData:any;
   username:any;
+  isOpen:any=false;
+  isDismiss:any=false;
   private destroy$ = new Subject<void>();
   isExec:any=false;
   arrayChange:any=[];
@@ -50,76 +52,30 @@ export class DetailComponent  implements OnInit {
   }
 
   checkStatus(item: any) {
-    if (!item.searchBaiduTimes) {
-      Swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-accent me-2 text-white",
-          cancelButton: "btn btn-danger"
-        },
-        buttonsStyling: false
-      }).fire({
-        title: "Chú ý",
-        text: "Sử dụng chức năng này sẽ tốn phí 500đ/kiện (Chỉ tốn phí lần đầu). Bạn có chắc muốn sử dụng?",
-        icon: "warning",
-        showCancelButton: true,
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Đồng ý",
-        cancelButtonText: "Từ chối",
-        heightAuto: false
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.isExec = true;
-          this.dt.detectChanges();
-          setTimeout(() => {
-            let data = {
-              id: item.packageCode,
-              userName: this.username
-            }
-            let messageBody = {
-              dataRequest: JSON.stringify(data)
-            };
-            this.api.execByBody('Authencation', 'checkstatus', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-              if (res[0]) {
-                this.notification.showNotiError('', res[1].message);
-              }else{
-                if (!res[1].isError) {
-                  this.isExec = false;
-                  this.dt.detectChanges();
-                  this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[1]), data: JSON.stringify(res[2]) } });
-                } else {
-                  this.notification.showNotiError('', res[1].message);
-                }
-              }
-            })
-          }, 100);
-        }
-      });
-    } else {
-      this.isExec = true;
-      this.dt.detectChanges();
-      setTimeout(() => {
-        let data = {
-          id: item.packageCode,
-          userName: this.username
-        }
-        let messageBody = {
-          dataRequest: JSON.stringify(data)
-        };
-        this.api.execByBody('Authencation', 'checkstatus', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-          if (res[0]) {
+    this.isExec = true;
+    this.dt.detectChanges();
+    setTimeout(() => {
+      let data = {
+        id: item.packageCode,
+        userName: this.username
+      }
+      let messageBody = {
+        dataRequest: JSON.stringify(data)
+      };
+      this.api.execByBody('Authencation', 'checkstatus', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+        if (res[0]) {
+          this.notification.showNotiError('', res[1].message);
+        } else {
+          if (!res[1].isError) {
+            this.isExec = false;
+            this.dt.detectChanges();
+            this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[1]), data: JSON.stringify(res[2]) } });
+          } else {
             this.notification.showNotiError('', res[1].message);
-          }else{
-            if (!res[1].isError) {
-              this.isExec = false;
-              this.dt.detectChanges();
-              this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[1]), data: JSON.stringify(res[2]) } });
-            } else {
-              this.notification.showNotiError('', res[1].message);
-            }
           }
-        })
-      }, 100);  
-    }
+        }
+      })
+    }, 100);
   }
 
   cancelPackage(item:any){
@@ -158,5 +114,21 @@ export class DetailComponent  implements OnInit {
     }else{
       this.navCtrl.navigateBack('main/package',{queryParams:{type:'default'}});
     }
+  }
+
+  onOpen(item:any){
+    if (!item.searchBaiduTimes){
+      this.isOpen = true;
+      this.isDismiss = false;
+      this.dt.detectChanges();
+    }else{
+      this.checkStatus(item);
+    }
+  }
+
+  onDismiss(){
+    this.isDismiss = true;
+    this.isOpen = false;
+    this.dt.detectChanges();
   }
 }
