@@ -52,6 +52,7 @@ export class DetailComponent  implements OnInit {
   }
 
   checkStatus(item: any) {
+    this.onDismiss();
     this.isExec = true;
     this.dt.detectChanges();
     setTimeout(() => {

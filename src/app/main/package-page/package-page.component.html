@@ -1,11 +1,9 @@
   <ion-header class="ion-no-border" style="--background:white !important;">
     <ion-toolbar style="--background:white !important;">
       <div class="d-flex align-items-center h-100 justify-content-center w-100">
-        <ion-button (click)="onback()" mode="ios" fill="clear" mode="ios">
-          <ion-icon mode="ios" style="color: var(--ion-color-mat-primary)" name="chevron-back-outline"></ion-icon>
-        </ion-button>
-        <ion-searchbar style="max-width: 850px;" placeholder="Tìm kiếm kiện hàng" (ionChange)="ionChange($event)" enterkeyhint="search" mode="ios" class="p-3" show-clear-button="always"></ion-searchbar>
-        <i (click)="createPackage()" style="font-size: 1.5em;color: var(--ion-color-mat-primary);" slot="end" class="bi bi-file-earmark-plus me-3"></i>
+        <ion-icon (click)="onback()" class="pl-3" slot="start" mode="ios" style="color: var(--ion-color-mat-primary);font-size: 2rem;" name="chevron-back-outline"></ion-icon>
+        <ion-searchbar style="max-width: 850px;" placeholder="Tìm kiếm kiện hàng" (ionChange)="ionChange($event)" enterkeyhint="search" mode="ios" class="p-2" show-clear-button="always"></ion-searchbar>
+        <ion-icon (click)="createPackage()" slot="end" class="me-3" style="font-size: 2rem;color: var(--ion-color-mat-primary);" name="duplicate-outline"></ion-icon>
       </div>
     </ion-toolbar>
     <ion-toolbar style="--background:white;" class="pr-3 pl-3">

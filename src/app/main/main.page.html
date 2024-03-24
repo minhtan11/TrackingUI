@@ -4,23 +4,45 @@
 <ion-footer class="ion-no-border mobile-toolbar">
   <ng-container *ngIf="isReview">
     <ion-toolbar style="--background:white !important;">
-      <mat-tab-group headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
-        <mat-tab>
+      <mat-tab-group (selectedTabChange)="selectedTabChange($event)" headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
+        <mat-tab label="home">
           <ng-template mat-tab-label>
-            <div (click)="goHomePage()" class="p-3">
+            <!-- <div class="p-3">
               <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
                 <ion-icon style="font-size: 20px" name="home-outline"></ion-icon>
                 <span class="mt-1" style="font-size: 6px">Trang chủ</span>
               </div>
+            </div> -->
+            <div>
+              <ion-icon style="font-size: 20px" name="home-outline"></ion-icon>
+              <br>
+              <div class="pb-1" style="white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;">
+                <ion-text>
+                  <span>Trang chủ</span>
+                </ion-text>
+              </div>
             </div>
           </ng-template>
         </mat-tab>
-        <mat-tab>
+        <mat-tab label="setting">
           <ng-template mat-tab-label>
-            <div (click)="goSettingPage()"  class="p-3">
+            <!-- <div class="p-3">
               <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
                 <ion-icon style="font-size: 20px" name="person-outline"></ion-icon>
                 <span class="mt-1" style="font-size: 6px">Cá nhân</span>
+              </div>
+            </div> -->
+            <div>
+              <ion-icon style="font-size: 20px" name="person-outline"></ion-icon>
+              <br>
+              <div class="pb-1" style="white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;">
+                <ion-text>
+                  <span>Cá nhân</span>
+                </ion-text>
               </div>
             </div>
           </ng-template>
@@ -30,43 +52,87 @@
   </ng-container>
   <ng-container *ngIf="!isReview">
     <ion-toolbar style="--background:white !important;">
-      <mat-tab-group headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
-        <mat-tab>
+      <mat-tab-group (selectedTabChange)="selectedTabChange($event)" headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
+        <mat-tab label="home">
           <ng-template mat-tab-label>
-            <div (click)="goHomePage()" class="p-3">
+            <!-- <div class="p-3">
               <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
                 <ion-icon style="font-size: 20px" name="home-outline"></ion-icon>
                 <span class="mt-1" style="font-size: 6px">Trang chủ</span>
               </div>
+            </div> -->
+            <div>
+              <ion-icon style="font-size: 20px" name="home-outline"></ion-icon>
+              <br>
+              <div class="pb-1" style="white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;">
+                <ion-text>
+                  <span>Trang chủ</span>
+                </ion-text>
+              </div>
             </div>
           </ng-template>
         </mat-tab>
-        <mat-tab>
+        <mat-tab label="history">
           <ng-template mat-tab-label>
-            <div (click)="goHistoryPage()"  class="p-3">
+            <!-- <div class="p-3">
               <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
                 <ion-icon style="font-size: 20px" name="time-outline"></ion-icon>
                 <span class="mt-1" style="font-size: 6px">Lịch sử GD</span>
               </div>
-            </div>
-          </ng-template>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <div (click)="goNofiticationPage()" class="p-3">
-              <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
-                <ion-icon style="font-size: 20px" name="notifications-outline"></ion-icon>
-                <span class="mt-1" style="font-size: 6px">Thông báo</span>
+            </div> -->
+            <div>
+              <ion-icon style="font-size: 20px" name="time-outline"></ion-icon>
+              <br>
+              <div class="pb-1" style="white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;">
+                <ion-text>
+                  <span>Lịch sử GD</span>
+                </ion-text>
               </div>
             </div>
           </ng-template>
         </mat-tab>
-        <mat-tab>
+        <mat-tab label="notification">
           <ng-template mat-tab-label>
-            <div (click)="goSettingPage()"  class="p-3">
+            <!-- <div class="p-3">
+              <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
+                <ion-icon style="font-size: 20px" name="notifications-outline"></ion-icon>
+                <span class="mt-1" style="font-size: 6px">Thông báo</span>
+              </div>
+            </div> -->
+            <div>
+              <ion-icon style="font-size: 20px" name="notifications-outline"></ion-icon>
+              <br>
+              <div class="pb-1" style="white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;">
+                <ion-text>
+                  <span>Thông báo</span>
+                </ion-text>
+              </div>
+            </div>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="setting">
+          <ng-template mat-tab-label>
+            <!-- <div class="p-3">
               <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
                 <ion-icon style="font-size: 20px" name="person-outline"></ion-icon>
                 <span class="mt-1" style="font-size: 6px">Cá nhân</span>
+              </div>
+            </div> -->
+            <div>
+              <ion-icon style="font-size: 20px" name="person-outline"></ion-icon>
+              <br>
+              <div class="pb-1" style="white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;">
+                <ion-text>
+                  <span>Cá nhân</span>
+                </ion-text>
               </div>
             </div>
           </ng-template>

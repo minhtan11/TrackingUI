@@ -87,11 +87,13 @@ export class SettingPageComponent  implements OnInit {
   }
 
   goSignIn(){
+    this.onDismiss2();
     this.storage.remove('password');
     this.navCtrl.navigateBack('home');
   }
 
   async onDelete() {
+    this.onDismiss();
     let username = await this.storage.get('username');
     let data = {
       userName: username,

@@ -236,6 +236,10 @@ ul.timeline>.active:before {
     max-width: 850px;
 }
 
+.mat-mdc-tab .mdc-tab-indicator__content--underline {
+    border-color: white !important;
+}
+
 .mobile-toolbar ion-toolbar{
     --padding-top:0 !important;
     --padding-bottom:0 !important

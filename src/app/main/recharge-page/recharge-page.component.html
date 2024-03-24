@@ -2,9 +2,7 @@
   <ion-toolbar style="--background:white !important;">
     <div class="d-flex align-items-center h-100 justify-content-center w-100">
       <div class="w-100" style="margin: auto;max-width: 1000px;">
-        <ion-button (click)="onback()" mode="ios" fill="clear">
-          <ion-icon style="color: var(--ion-color-mat-primary);" name="chevron-back-outline"></ion-icon>
-        </ion-button>
+        <ion-icon (click)="onback()" class="pl-3" slot="start" mode="ios" style="color: var(--ion-color-mat-primary);font-size: 2rem;" name="chevron-back-outline"></ion-icon>
         <ion-title style="z-index: -1;color:black !important" mode="ios">Nạp tiền</ion-title>
       </div>
     </div>

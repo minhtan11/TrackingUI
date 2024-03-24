@@ -113,6 +113,7 @@ $app-theme: mat.define-light-theme((
   /** color default **/
   --ion-color-mat-primary: #64B5F6;
   --ion-color-mat-accent: #90CAF9;
+  --mdc-tab-indicator-active-indicator-color:#ffffff !important;
 }
 
 @media (prefers-color-scheme: dark) {

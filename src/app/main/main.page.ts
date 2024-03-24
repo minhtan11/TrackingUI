@@ -48,4 +48,25 @@ export class MainPage implements OnInit,AfterViewInit {
   goSettingPage(){
     this.navCtrl.navigateForward('main/setting',{queryParams:{isReview:this.isReview}});
   }
+
+  selectedTabChange(event:any){
+    let tab = event?.tab.textLabel;
+    if (tab) {
+      switch(tab){
+        case 'home':
+          this.navCtrl.navigateForward('main/home');
+          break;
+        case 'history':
+          this.navCtrl.navigateForward('main/history');
+          break;
+        case 'notification':
+          this.navCtrl.navigateForward('main/notification');
+          break;
+        case 'setting':
+          this.navCtrl.navigateForward('main/setting',{queryParams:{isReview:this.isReview}});
+          break;
+      }
+    }
+   
+  }
 }
