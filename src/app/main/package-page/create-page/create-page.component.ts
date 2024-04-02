@@ -43,13 +43,13 @@ export class CreatePageComponent  implements OnInit {
   async ngOnInit() {
     this.formGroup = this.formBuilder.group({
       packageCode: ['',Validators.required],
-      movingMethod: ['',Validators.required],
-      wareHouse: ['',Validators.required],
+      movingMethod: [Validators.required],
+      wareHouse: [Validators.required],
       isWoodPackage: [false],
       isAirPackage: [false],
       isInsurance: [false],
-      declaration: ['',Validators.required],
-      declarePrice: [0,Validators.required],
+      declaration: [Validators.required],
+      declarePrice: [Validators.required],
       username:[this.username]
     });
     this.username = await this.storage.get('username');
@@ -93,26 +93,22 @@ export class CreatePageComponent  implements OnInit {
         this.eleDeclaration.nativeElement.focus();
         return;
       }
-      if (this.formGroup.controls['declarePrice'].invalid || this.formGroup.value.declarePrice == 0) {
+      if (this.formGroup.controls['declarePrice'].invalid) {
         this.notification.showNotiError('', 'Vui lòng kê khai thông tin để tính phí bảo hiểm!');
         this.eleDeclarePrice.nativeElement.focus();
         return;
       }
     }
-    this.isExec = true;
-    this.dt.detectChanges();
     setTimeout(() => {
-      this.api.execByBody('Authencation','createpackage',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      this.api.execByBody('Authencation','createpackage',this.formGroup.value,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
         if (res[0]) {
           this.notification.showNotiError('', res[1].message);
         }else{
           if (!res[1].isError) {
-            this.isExec = false;
             this.notification.showNotiSuccess('', res[1].message);
             this.dt.detectChanges();
             this.navCtrl.navigateForward('main/package',{queryParams:{type:'addnew',data:JSON.stringify(res[2])}});
           }else{
-            this.isExec = false;
             this.notification.showNotiError('',res[1].message);
             this.dt.detectChanges();
           }
