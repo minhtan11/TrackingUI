@@ -51,7 +51,7 @@
                         <br>
                         <ion-text color="medium">
                           <span style="font-size: 0.8rem;">
-                            Ngày {{oData.exportedCNWH | date : 'dd/MM/yyyy hh:mm a'}}
+                            {{oData.exportedCNWH | formatdate : 'dd/MM/yyyy hh:mm a' || oData.exportedCNWH}}
                           </span>
                         </ion-text>
                       </li>
@@ -73,7 +73,7 @@
                         <br>
                         <ion-text color="medium">
                           <span style="font-size: 0.8rem;">
-                            Ngày {{oData.dateExpectation | date : 'dd/MM/yyyy hh:mm a'}}
+                            {{oData.dateExpectation | formatdate : 'dd/MM/yyyy hh:mm a' || oData.dateExpectation}}
                           </span>
                         </ion-text>
                       </li>
@@ -95,7 +95,7 @@
                         <br>
                         <ion-text color="medium">
                           <span style="font-size: 0.8rem;">
-                            Ngày {{oData.importedSGWH | date : 'dd/MM/yyyy hh:mm a'}}
+                            {{oData.importedSGWH | formatdate : 'dd/MM/yyyy hh:mm a' || oData.importedSGWH}}
                           </span>
                         </ion-text>
                       </li>
@@ -117,7 +117,7 @@
                         <br>
                         <ion-text color="medium">
                           <span style="font-size: 0.8rem;">
-                            Ngày {{oData.receivedDate | date : 'dd/MM/yyyy hh:mm a'}}
+                            {{oData.receivedDate | formatdate : 'dd/MM/yyyy hh:mm a' || oData.receivedDate}}
                           </span>
                         </ion-text>
                       </li>

@@ -18,12 +18,12 @@
                 height: 15em;
                 object-fit: cover;
                 border-radius: 50%;" [src]="image ? 'data:image/jpeg;base64,'+image?.base64String : '../../../../assets/image/logo-user.png'" alt="">
-                <span (click)="uploadImage()" class="font-weight-bold mt-2 text-primary"><u>Chọn ảnh</u></span>
+                <span (click)="onOpen()" class="font-weight-bold mt-2 text-primary"><u>Chọn ảnh</u></span>
               </div>
             </ion-card-header>
           </ion-card>
         </ion-col>
-        <ion-col size="12" style="font-size: 1.1rem !important;">
+        <ion-col size="12" style="font-size: 1.3rem !important;">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Họ & tên</mat-label>
             <input #eleFullName formControlName="fullName" matInput>
@@ -68,6 +68,29 @@
       </ion-row>
     </ion-grid>
   </div>
+  <ion-modal [isOpen]="isOpen" [canDismiss]="isDismiss" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <ion-text class="dynamic-fontr" style="color: var(--ion-color-mat-primary);">
+          <h3>Chọn ảnh</h3>
+        </ion-text>
+        <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
+          <ion-item (click)="uploadImage('1')" lines="none" [button]="true" detail="false" style="--background:white !important">
+            <ion-icon slot="start" mode="ios" name="camera-outline"></ion-icon>
+            <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Chụp ảnh</ion-text>
+          </ion-item>
+          <ion-item (click)="uploadImage('2')" lines="none" [button]="true" detail="false" style="--background:white !important">
+            <ion-icon slot="start" mode="ios" name="image-outline"></ion-icon>
+            <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Chọn từ thư viện</ion-text>
+          </ion-item>
+          <ion-item (click)="onDismiss()" lines="none" [button]="true" detail="false" style="--background:white !important">
+            <ion-icon slot="start" mode="ios"  name="close-outline"></ion-icon>
+            <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Hủy</ion-text>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ng-template>
+  </ion-modal>
 </ion-content>
 <ion-footer *ngIf="!isHideFooter" class="ion-no-border">
   <ion-toolbar style="--background:white">

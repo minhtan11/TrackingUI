@@ -8,12 +8,12 @@
   <div class="d-flex align-items-center justify-content-center">
     <ion-grid class="text-center" [fixed]="true" style="margin: auto">
       <ion-row [formGroup]="formGroup">
-        <ion-col size="12">
+        <ion-col size="12" style="font-size: 1.3rem !important;">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Hình thức thanh toán</mat-label>
             <mat-select #elepaymentMethod formControlName="paymentMethod">
-              <mat-option [value]="2">Chuyển khoản</mat-option>
               <mat-option [value]="1">Tiền mặt</mat-option>
+              <mat-option [value]="2">Chuyển khoản</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">

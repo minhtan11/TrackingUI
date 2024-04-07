@@ -37,7 +37,7 @@ export class WithdrawPageComponent  implements OnInit {
 
   async ngOnInit() {
     this.formGroup = this.formBuilder.group({
-      paymentMethod: [2, Validators.required],
+      paymentMethod: [Validators.required],
       bankName: ['', Validators.required],
       accountNumber: ['', Validators.required],
       accountName: ['', Validators.required],
@@ -90,15 +90,24 @@ export class WithdrawPageComponent  implements OnInit {
       this.eleNote.nativeElement.focus();
       return;
     }
-    this.api.execByBody('Authencation','createwithdraw',this.formGroup.value,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
-      if (res && !res?.isError) {
-        this.notification.showNotiSuccess('', res.message);
-        this.navCtrl.navigateBack('main/setting');
-        this.dt.detectChanges();
-      }else{
-        this.notification.showNotiError('',res?.message);
-        this.dt.detectChanges();
-      }
-    })
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation','createwithdraw',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res:any)=>{
+          if (res && !res?.isError) {
+            this.notification.showNotiSuccess('', res.message);
+            this.navCtrl.navigateBack('main/setting');
+            this.dt.detectChanges();
+          }else{
+            this.notification.showNotiError('',res?.message);
+            this.dt.detectChanges();
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+        }
+      })
+    }, 1000);
+    
   }
 }

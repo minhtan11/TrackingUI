@@ -142,7 +142,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   }
 
   onback(){
-    this.navCtrl.navigateBack('main');
+    this.navCtrl.navigateBack('main/home');
   }
 
   onCopy(){

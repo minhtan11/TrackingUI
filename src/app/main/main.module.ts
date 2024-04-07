@@ -1,5 +1,5 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
@@ -34,6 +34,7 @@ import { OrderStatusComponent } from './package-page/order-status/order-status.c
 import { InfomationPageComponent } from './setting-page/infomation-page/infomation-page.component';
 import { WithdrawPageComponent } from './setting-page/withdraw-page/withdraw-page.component';
 import { ChangepasswordPageComponent } from './setting-page/changepassword-page/changepassword-page.component';
+import { FormatdatePipe } from '../pipe/format-date/formatdate.pipe';
 
 @NgModule({
   imports: [
@@ -54,7 +55,7 @@ import { ChangepasswordPageComponent } from './setting-page/changepassword-page/
     ClipboardModule
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
-  ,DecodeVNPipe,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent],
-  providers:[NotificationServiceComponent]
+  ,DecodeVNPipe,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent,FormatdatePipe],
+  providers:[NotificationServiceComponent,DatePipe]
 })
 export class MainPageModule { }

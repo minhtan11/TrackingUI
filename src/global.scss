@@ -266,3 +266,6 @@ ion-searchbar {
   ion-modal {
     --height: auto;
   }
+ion-toast::part(icon) {
+   font-size: 2rem !important;
+}

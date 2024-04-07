@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { IonRouterOutlet, NavController, Platform, ViewDidEnter, ViewWillEnter } from '@ionic/angular';
 import { Subject, connect, takeUntil } from 'rxjs';
 import { SplashScreen } from '@capacitor/splash-screen';
@@ -16,7 +16,7 @@ import Swal from 'sweetalert2'
   styleUrls: ['./home-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePageComponent  implements OnInit,AfterViewInit {
+export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
   //#region Contrucstor
   oUser:any;
   titleTime:any = '';
@@ -38,19 +38,25 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
     private notification: NotificationServiceComponent,
     private routerOutlet: IonRouterOutlet
   ) { 
-    this.isReview = this.rt.snapshot.queryParams["isReview"];
+    router.events.subscribe((val: any) => {
+      if (val instanceof NavigationEnd && val?.type === 1 && val?.url === '/main/home') {
+        this.getTime();
+        this.getUser();
+        this.getDashBoard();
+      }
+    });
   }
   //#endregion
 
   //#region Init
-  ngOnInit() {
-     
+  async ngOnInit() {
+    this.isReview = await this.storage.get('isReview');
+    this.routerOutlet.swipeGesture = false;
   }
 
   ngAfterViewInit(){
     Network.addListener('networkStatusChange', status => {
       if (status.connected && status.connectionType != 'none') {
-        this.getTime();
         this.getUser();
         this.getDashBoard();
       }
@@ -58,18 +64,7 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
     });
   }
 
-  async ionViewWillEnter(){
-    this.getTime();
-    this.getUser();
-    this.getDashBoard();
-  }
-
-  ionViewDidEnter() {
-    this.routerOutlet.swipeGesture = false;
-  }
-
-  ionViewWillLeave(){
-    this.routerOutlet.swipeGesture = true;
+  ngOnDestroy(): void {
     this.onDestroy();
   }
 
@@ -143,7 +138,7 @@ export class HomePageComponent  implements OnInit,AfterViewInit {
     let messageBody = {
       dataRequest:JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'dashboard', messageBody,false).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+    this.api.execByBody('Authencation', 'dashboard', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res[0]) {
         this.notification.showNotiError('', res[1].message);
       }else{

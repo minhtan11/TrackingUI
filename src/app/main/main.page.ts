@@ -17,6 +17,7 @@ export class MainPage implements OnInit,AfterViewInit {
     private dt : ChangeDetectorRef,
     private storage: StorageService,
     private rt : ActivatedRoute,
+    private routerOutlet: IonRouterOutlet
   ) {
     this.isReview = this.rt.snapshot.queryParams["isReview"];
    }
@@ -29,24 +30,8 @@ export class MainPage implements OnInit,AfterViewInit {
   }
 
   async ionViewWillEnter(){
-    
-  }
-  
-
-  goHomePage(){
-    this.navCtrl.navigateForward('main/home');
-  }
-
-  goHistoryPage(){
-    this.navCtrl.navigateForward('main/history');
-  }
-
-  goNofiticationPage(){
-    this.navCtrl.navigateForward('main/notification');
-  }
-
-  goSettingPage(){
-    this.navCtrl.navigateForward('main/setting',{queryParams:{isReview:this.isReview}});
+    this.routerOutlet.swipeGesture = false; 
+    this.isReview = await this.storage.get('isReview');
   }
 
   selectedTabChange(event:any){
@@ -63,7 +48,7 @@ export class MainPage implements OnInit,AfterViewInit {
           this.navCtrl.navigateForward('main/notification');
           break;
         case 'setting':
-          this.navCtrl.navigateForward('main/setting',{queryParams:{isReview:this.isReview}});
+          this.navCtrl.navigateForward('main/setting');
           break;
       }
     }

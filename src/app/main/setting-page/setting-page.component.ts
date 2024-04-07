@@ -31,11 +31,10 @@ export class SettingPageComponent  implements OnInit {
     private storage: StorageService,
     private routerOutlet: IonRouterOutlet
   ) { 
-    this.isReview = this.rt.snapshot.queryParams["isReview"];
-    //this.dt.detectChanges();
   }
 
   ngOnInit() {
+    this.routerOutlet.swipeGesture = false;
   }
 
   onDestroy() {
@@ -44,15 +43,15 @@ export class SettingPageComponent  implements OnInit {
   }
 
   async ionViewWillEnter(){
+    this.isReview = await this.storage.get('isReview');
     this.getUser();
   }
 
   ionViewDidEnter() {
-    this.routerOutlet.swipeGesture = false;
+    
   }
 
   ionViewWillLeave(){
-    this.routerOutlet.swipeGesture = true;
     this.onDestroy();
   }
 

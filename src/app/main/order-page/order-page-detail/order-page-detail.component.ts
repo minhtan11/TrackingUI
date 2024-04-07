@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, OnInit } from '@angular/core';
 import {ActivatedRoute, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
@@ -13,7 +13,7 @@ import { StorageService } from 'src/app/storage-service/storage.service';
   styleUrls: ['./order-page-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderPageDetailComponent  implements OnInit {
+export class OrderPageDetailComponent  implements OnInit,DoCheck {
   oData:any;
   username:any;
   lstPackage:any;
@@ -34,6 +34,11 @@ export class OrderPageDetailComponent  implements OnInit {
     this.username = await this.storage.get('username');
   }
 
+  ngDoCheck(): void {
+    //this.dt.detectChanges();
+  }
+  
+
   ionViewWillEnter(){
     this.getDetailPackage();
   }
@@ -53,23 +58,31 @@ export class OrderPageDetailComponent  implements OnInit {
 
   onPayment(){
     let data = {
-      id: this.oData.id,
+      recID: this.oData.recID,
       userName: this.username
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res && !res.isError) {
-        this.oData = res.data;
-        this.arrayChange.push(res.data);
-        this.notification.showNotiSuccess('',res.message);
-        this.dt.detectChanges();
-      }else{
-        this.notification.showNotiError('',res.message);
-      }
-      this.onDestroy();
-    })
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res:any)=>{
+          if (res && !res.isError) {
+            this.oData = res.data;
+            this.arrayChange.push(res.data);
+            this.notification.showNotiSuccess('',res.message);
+            this.dt.detectChanges();
+          }else{
+            this.notification.showNotiError('',res.message);
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+          this.onDestroy();
+        }
+      })
+    }, 1000);
   }
 
   onback(){
@@ -82,18 +95,18 @@ export class OrderPageDetailComponent  implements OnInit {
 
   getDetailPackage(){
     let data = {
-      id: this.oData.id,
+      recID: this.oData.recID,
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'getlistpackage', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+    this.api.execByBody('Authencation', 'getlistpackage', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res[0]) {
         this.notification.showNotiError('', res[1].message);
       }else{
         this.lstPackage = res[1];
-        this.onDestroy();
         this.dt.detectChanges();
+        this.onDestroy();
       }
     })
   }

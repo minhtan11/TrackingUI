@@ -57,7 +57,7 @@
                             <br>
                             <ion-text color="medium">
                               <span style="font-size: 0.8rem;">
-                                Ngày {{item.exportedCNWH | date : 'dd/MM/yyyy hh:mm a'}}
+                                {{item.exportedCNWH | formatdate : 'dd/MM/yyyy hh:mm a' || item.exportedCNWH}}
                               </span>
                             </ion-text>
                           </li>
@@ -79,7 +79,7 @@
                             <br>
                             <ion-text color="medium">
                               <span style="font-size: 0.8rem;">
-                                Ngày {{item.dateExpectation | date : 'dd/MM/yyyy hh:mm a'}}
+                                {{item.dateExpectation | formatdate : 'dd/MM/yyyy hh:mm a' || item.dateExpectation}}
                               </span>
                             </ion-text>
                           </li>
@@ -101,7 +101,7 @@
                             <br>
                             <ion-text color="medium">
                               <span style="font-size: 0.8rem;">
-                                Ngày {{item.importedSGWH | date : 'dd/MM/yyyy hh:mm a'}}
+                                {{item.importedSGWH | formatdate : 'dd/MM/yyyy hh:mm a' || item.importedSGWH}}
                               </span>
                             </ion-text>
                           </li>
@@ -123,7 +123,7 @@
                             <br>
                             <ion-text color="medium">
                               <span style="font-size: 0.8rem;">
-                                Ngày {{item.receivedDate | date : 'dd/MM/yyyy hh:mm a'}}
+                                {{item.receivedDate | formatdate : 'dd/MM/yyyy hh:mm a' || item.receivedDate}}
                               </span>
                             </ion-text>
                           </li>
@@ -366,7 +366,7 @@
                   </div>
                   <div class="d-flex align-items-center">
                     <ion-text>
-                      {{((oData.weightPrice  != null ? oData.weightPrice : 0 ) | number)+'đ'}}
+                      {{((oData.weightPrice ? oData.weightPrice : 0 ) | number)+'đ'}}
                     </ion-text>
                   </div>
                 </div>
@@ -379,7 +379,7 @@
                     </div>
                     <div class="d-flex align-items-center">
                       <ion-text>
-                        {{((oData.woodPackagePrice != null ? oData.woodPackagePrice : 0 ) | number)+'đ'}}
+                        {{((oData.woodPackagePrice ? oData.woodPackagePrice : 0 ) | number)+'đ'}}
                       </ion-text>
                     </div>
                   </div> 
@@ -393,7 +393,7 @@
                     </div>
                     <div class="d-flex align-items-center">
                       <ion-text>
-                        {{((oData.airPackagePrice != null ? oData.airPackagePrice : 0) | number)+'đ'}}
+                        {{((oData.airPackagePrice ? oData.airPackagePrice : 0) | number)+'đ'}}
                       </ion-text>
                     </div>
                   </div> 
@@ -420,7 +420,7 @@
                   </div>
                   <div class="d-flex align-items-center">
                     <ion-text>
-                      {{((oData.surCharge  != null ? oData.surCharge : 0 ) | number)+'đ'}}
+                      {{((oData.surCharge ? oData.surCharge : 0 ) | number)+'đ'}}
                     </ion-text>
                   </div>
                 </div>

@@ -254,7 +254,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   }
 
   onback(){
-    this.navCtrl.navigateBack('main');
+    this.navCtrl.navigateBack('main/home');
   }
 
   ionChange(event:any){

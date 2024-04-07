@@ -3,7 +3,7 @@ import { NavController } from '@ionic/angular';
 import { Keyboard } from '@capacitor/keyboard';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Camera, CameraResultType } from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { Subject, takeUntil } from 'rxjs';
@@ -28,6 +28,8 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
   isHideFooter:any=false;
   formGroup!: FormGroup;
   image:any;
+  isOpen:any = false;
+  isDismiss:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -44,7 +46,7 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
       fullName: ['', Validators.required],
-      gender: [true, Validators.required],
+      gender: [Validators.required],
       phone: ['', Validators.required],
       email: ['', Validators.required],
       address: ['', Validators.required],
@@ -127,33 +129,63 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
       this.elePassword.nativeElement.focus();
       return;
     }
-    this.api.execByBody('Authencation','register',this.formGroup.value,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
-      if (res && !res?.isError) {
-        this.storage.set('username', this.formGroup.value.username);
-        this.storage.set('password', this.formGroup.value.password);
-        this.navCtrl.navigateForward('main');
-        this.notification.showNotiSuccess('', 'Tạo tài khoản thành công!');
-        this.dt.detectChanges();
-      }else{
-        this.notification.showNotiError('',res?.message);
-        this.dt.detectChanges();
-      }
-    })
-    
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation','register',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res:any)=>{
+          if (res && !res?.isError) {
+            this.storage.set('username', this.formGroup.value.username);
+            this.navCtrl.navigateForward('main/home');
+          }else{
+            this.notification.showNotiError('',res?.message);
+          }
+        },complete : ()=>{
+          this.api.isLoad(false);
+        }
+      })
+    }, 1000);
   }
 
-  async uploadImage(){
-    this.image = await Camera.getPhoto({
-      quality: 100,
-      allowEditing: false,
-      resultType: CameraResultType.Base64,
-      saveToGallery:false
-    });
-    this.dt.detectChanges();
+  async uploadImage(type:any){
+    this.onDismiss();
+    switch(type){
+      case '1':
+        this.image = await Camera.getPhoto({
+          quality: 100,
+          allowEditing: false,
+          resultType: CameraResultType.Base64,
+          saveToGallery:true,
+          source : CameraSource.Camera
+        });
+        this.dt.detectChanges();
+        break;
+      case '2':
+        this.image = await Camera.getPhoto({
+          quality: 100,
+          allowEditing: false,
+          resultType: CameraResultType.Base64,
+          saveToGallery:false,
+          source : CameraSource.Photos
+        });
+        this.dt.detectChanges();
+        break;
+    }
   }
 
   onback(){
     this.navCtrl.navigateBack('home');
+  }
+
+  onOpen(){
+    this.isOpen = true;
+    this.isDismiss = false;
+    this.dt.detectChanges();
+  }
+
+  onDismiss(){
+    this.isDismiss = true;
+    this.isOpen = false;
+    this.dt.detectChanges();
   }
   //#endregion
 

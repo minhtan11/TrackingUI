@@ -69,19 +69,23 @@ export class ChangepasswordPageComponent  implements OnInit {
       this.eleConfirmPassword.nativeElement.focus();
       return;
     }
-    this.api.execByBody('Authencation','changepassword',this.formGroup.value,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
-      console.log(res)
-      if (res && !res?.isError) {
-        this.notification.showNotiSuccess('', res.message);
-        this.storage.remove('password');
-        this.storage.set('password', this.formGroup.value.newPassword);
-        this.navCtrl.navigateBack('main/setting');
-        this.dt.detectChanges();
-      }else{
-        this.notification.showNotiError('',res?.message);
-        this.dt.detectChanges();
-      }
-    })
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation','changepassword',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res:any)=>{
+          if (res && !res?.isError) {
+            this.notification.showNotiSuccess('', res.message);
+            this.navCtrl.navigateBack('main/setting');
+          }else{
+            this.notification.showNotiError('',res?.message);
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+        }
+      })
+    }, 1000);
+    
   }
 
 }

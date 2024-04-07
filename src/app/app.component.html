@@ -16,7 +16,8 @@
     </ion-content>
   </ng-container>
   <div [style]="!isload ? '' : 'display: none;'" class="w-100 h-100" style="background-color:white !important;">
-    <div id="loader-icon" style="z-index: 1000;background: rgb(255 255 255 / 50%);position: absolute;visibility: hidden;" class="d-flex align-items-center justify-content-center w-100 h-100">
+    <div id="loader-icon" style="z-index: 1000;background: rgb(225 225 225 / 50%);position: absolute;visibility: hidden;flex-direction: column " class="d-flex align-items-center justify-content-center w-100 h-100">
+      <img style="width: 20%;" src="../assets/image/Animation - 1712382981536.gif" alt="">
       <ion-spinner mode="ios" name="dots"></ion-spinner>
     </div>
     <ion-router-outlet></ion-router-outlet>

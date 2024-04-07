@@ -40,11 +40,6 @@ const routes: Routes = [
         path: 'setting',
         component: SettingPageComponent,
       },
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
-      },
     ]
   },
   {

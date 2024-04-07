@@ -20,7 +20,6 @@ export class DetailComponent  implements OnInit {
   isOpen:any=false;
   isDismiss:any=false;
   private destroy$ = new Subject<void>();
-  isExec:any=false;
   arrayChange:any=[];
   constructor(
     private rt : ActivatedRoute,
@@ -53,8 +52,7 @@ export class DetailComponent  implements OnInit {
 
   checkStatus(item: any) {
     this.onDismiss();
-    this.isExec = true;
-    this.dt.detectChanges();
+    this.api.isLoad(true);
     setTimeout(() => {
       let data = {
         id: item.packageCode,
@@ -63,25 +61,27 @@ export class DetailComponent  implements OnInit {
       let messageBody = {
         dataRequest: JSON.stringify(data)
       };
-      this.api.execByBody('Authencation', 'checkstatus', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res[0]) {
-          this.notification.showNotiError('', res[1].message);
-        } else {
-          if (!res[1].isError) {
-            this.isExec = false;
-            this.dt.detectChanges();
-            this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[1]), data: JSON.stringify(res[2]) } });
-          } else {
+      this.api.execByBody('Authencation', 'checkstatus', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res:any)=>{
+          if (res[0]) {
             this.notification.showNotiError('', res[1].message);
+          } else {
+            if (!res[1].isError) {
+              this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[1]), data: JSON.stringify(res[2]) } });
+            } else {
+              this.notification.showNotiError('', res[1].message);
+            }
           }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
         }
       })
-    }, 100);
+    }, 1000);
   }
 
   cancelPackage(item:any){
-    this.isExec = true;
-    this.dt.detectChanges();
+    this.api.isLoad(true);
     setTimeout(() => {
       let data = {
         id: item.id,
@@ -90,23 +90,27 @@ export class DetailComponent  implements OnInit {
       let messageBody = {
         dataRequest: JSON.stringify(data)
       };
-      this.api.execByBody('Authencation', 'cancel', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res[0]) {
-          this.notification.showNotiError('', res[1].message);
-        }else{
-          if (!res[1].isError) {
-            this.isExec = false;
-            this.notification.showNotiSuccess('', res[1].message);
-            this.oData = res[2];
-            //push data array change
-            this.arrayChange.push(res[2]);
-            this.dt.detectChanges();
-          } else {
+      this.api.execByBody('Authencation', 'cancel', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res:any)=>{
+          if (res[0]) {
             this.notification.showNotiError('', res[1].message);
+          }else{
+            if (!res[1].isError) {
+              this.notification.showNotiSuccess('', res[1].message);
+              this.oData = res[2];
+              //push data array change
+              this.arrayChange.push(res[2]);
+              this.dt.detectChanges();
+            } else {
+              this.notification.showNotiError('', res[1].message);
+            }
           }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
         }
       })
-    }, 100);
+    }, 1000);
   }
 
   onback(){
@@ -118,7 +122,7 @@ export class DetailComponent  implements OnInit {
   }
 
   onOpen(item:any){
-    if (!item.searchBaiduTimes){
+    if (item.searchBaiduTimes && item.searchBaiduTimes > 0){
       this.isOpen = true;
       this.isDismiss = false;
       this.dt.detectChanges();

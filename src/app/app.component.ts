@@ -46,19 +46,14 @@ export class AppComponent implements OnInit {
         }, false);
       });
         //this.fcmService.initPush();
-        this.checkLogin();
+        //this.checkLogin();
+        this.loadFlashScreen();
+        this.getConfig();
     });
   }
 
-  async ngAfterViewInit() {
-    // Network.addListener('networkStatusChange', status => {
-    //   if (status.connected && status.connectionType != 'none') {
-    //     this.notification.showConnected();
-    //   }
-    //   if (!status.connected && status.connectionType == 'none') {
-    //     this.notification.showNoConnected();
-    //   }
-    // });
+  ngAfterViewInit() {
+    
   }
 
   onDestroy() {
@@ -66,23 +61,15 @@ export class AppComponent implements OnInit {
     this.destroy$.complete();
   }
 
-  async checkLogin() {
+  loadFlashScreen() {
+    setTimeout(() => {
+      this.isload = false;
+      this.dt.detectChanges();
+    }, 3000);
+  }
+  getConfig(){
     this.api.execByBody('Authencation', 'getconfig', null).pipe(takeUntil(this.destroy$)).subscribe(async (res: any) => {
-      let username = await this.storage.get('username');
-      let password = await this.storage.get('password');
-      if (username && password) {
-        this.navCtrl.navigateForward('main',{queryParams:{isReview:res?.isMobileReview}});
-        setTimeout(() => {
-          this.isload = false;
-          this.dt.detectChanges();
-        }, 2000);
-      } else {
-        this.navCtrl.navigateForward('home',{queryParams:{isReview:res?.isMobileReview}});
-        setTimeout(() => {
-          this.isload = false;
-          this.dt.detectChanges();
-        }, 2000);
-      }
+      this.storage.set('isReview', res?.isMobileReview);
     })
   }
 }
