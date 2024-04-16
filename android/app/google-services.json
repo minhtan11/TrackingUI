@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "443556297052",
+    "project_id": "trakuaidi-app",
+    "storage_bucket": "trakuaidi-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443556297052:android:f3d84ba33cc03c64c9a999",
+        "android_client_info": {
+          "package_name": "com.trakuaidi.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqrbxs-wnqJtnKyHEi0wR8Fb0AIs5u5wU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

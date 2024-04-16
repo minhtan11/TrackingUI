@@ -45,10 +45,9 @@ export class AppComponent implements OnInit {
           event.stopPropagation();
         }, false);
       });
-        //this.fcmService.initPush();
-        //this.checkLogin();
-        this.loadFlashScreen();
-        this.getConfig();
+      this.fcmService.initPush();
+      this.loadFlashScreen();
+      this.getConfig();
     });
   }
 
@@ -61,12 +60,19 @@ export class AppComponent implements OnInit {
     this.destroy$.complete();
   }
 
-  loadFlashScreen() {
+  async loadFlashScreen() {
+    let isLogin = await this.storage.get('isLogin');
+    if (isLogin) {
+      this.navCtrl.navigateForward('main/home');
+    }else{
+      this.navCtrl.navigateForward('home');
+    }
     setTimeout(() => {
       this.isload = false;
       this.dt.detectChanges();
     }, 3000);
   }
+
   getConfig(){
     this.api.execByBody('Authencation', 'getconfig', null).pipe(takeUntil(this.destroy$)).subscribe(async (res: any) => {
       this.storage.set('isReview', res?.isMobileReview);

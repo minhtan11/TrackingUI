@@ -17,15 +17,16 @@ export class FcmService {
     let platform = await Capacitor.getPlatform()
     if (platform !== 'web') {
       this.registerPush();
-      // await PushNotifications.createChannel({
-      //   id: "TrackingID", // (required)
-      //   name: "TrackingChannel", // (required)
-      //   description: "A channel to categorise your notifications", // (optional) default: undefined.
-      //   importance: 5, // (optional) default: 4. Int value of the Android notification importance
-      //   vibration: true, // (optional) default: true. Creates the default vibration patten if true.
-      //   visibility:1,
-      //   lights:true,
-      // },)
+      await PushNotifications.createChannel({
+        id: "Trakuaidi", // (required)
+        name: "TrakuaidiChannel", // (required)
+        description: "A channel to categorise your notifications", // (optional) default: undefined.
+        importance: 5, // (optional) default: 4. Int value of the Android notification importance
+        vibration: true, // (optional) default: true. Creates the default vibration patten if true.
+        visibility:1,
+        lights:true,
+        sound:'default'
+      },)
     }
   }
 

@@ -31,7 +31,7 @@
     "@capacitor/ios": "^5.7.1",
     "@capacitor/keyboard": "^5.0.7",
     "@capacitor/network": "^5.0.6",
-    "@capacitor/push-notifications": "^5.1.1",
+    "@capacitor/push-notifications": "^6.0.0",
     "@capacitor/splash-screen": "^5.0.6",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",

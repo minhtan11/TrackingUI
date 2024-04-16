@@ -109,6 +109,7 @@ export class HomePage implements OnInit, AfterViewInit {
         next:(res:any)=>{
           if (res && !res?.isError) {
             this.storage.set('username', this.formGroup.value.userName);
+            this.storage.set('isLogin', true);
             this.navCtrl.navigateForward('main/home');
           } else {
             this.notification.showNotiError('', res?.message);

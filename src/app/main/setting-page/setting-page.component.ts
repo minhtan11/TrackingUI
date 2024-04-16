@@ -87,7 +87,7 @@ export class SettingPageComponent  implements OnInit {
 
   goSignIn(){
     this.onDismiss2();
-    this.storage.remove('password');
+    this.storage.remove('isLogin');
     this.navCtrl.navigateBack('home');
   }
 
