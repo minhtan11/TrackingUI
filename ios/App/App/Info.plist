@@ -4,6 +4,12 @@
 <dict>
 	<key>NSFaceIDUsageDescription</key>
 	<string>For an easier and faster log in.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>For take picture from camera</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>For get picture add from camera</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>For get picture from Library</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -22,7 +28,7 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>http://tracking.nhanshiphang.vn</key>
+			<key>https://tracking.nhanshiphang.vn</key>
 			<string></string>
 		</dict>
 		<key>NSAllowsArbitraryLoads</key>
