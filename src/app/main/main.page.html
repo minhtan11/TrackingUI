@@ -1,5 +1,26 @@
 <ion-content [forceOverscroll]="true" style="--background:white !important;">
   <ion-router-outlet></ion-router-outlet>
+  <ion-modal [isOpen]="isOpen" [canDismiss]="isDismiss" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <ion-text class="dynamic-font text-center" style="color: var(--ion-color-mat-primary);">
+          <h3>{{'Bạn có muốn tạo kiện hàng từ mã '+textCopy + '?'}}</h3>
+        </ion-text>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <button (click)="onAccept()" style="border-radius: 1em;" class="btn text-white me-3" mat-flat-button color="primary">
+            <div class="d-flex align-items-center justify-content-center">
+              <span>Đồng ý</span>
+            </div>
+          </button> 
+          <button (click)="onCancel()" style="border-radius: 1em;" class="btn text-white" mat-flat-button color="warn">
+            <div class="d-flex align-items-center justify-content-center">
+              <span>Hủy bỏ</span>
+            </div>
+          </button> 
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
 </ion-content>
 <ion-footer class="ion-no-border mobile-toolbar">
   <ng-container *ngIf="isReview">

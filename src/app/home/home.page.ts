@@ -10,6 +10,7 @@ import { ApiserviceComponent } from '../apiservice/apiservice.component';
 import { StorageService } from '../storage-service/storage.service';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { environment } from 'src/environments/environment';
+import { BiometricAuthError, BiometryType, NativeBiometric } from "capacitor-native-biometric";
 
 
 @Component({
@@ -28,6 +29,8 @@ export class HomePage implements OnInit, AfterViewInit {
   messageError: any;
   formGroup!: FormGroup;
   isLogin: any = true;
+  userName:any;
+  isAuthen:any = false;
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -51,8 +54,14 @@ export class HomePage implements OnInit, AfterViewInit {
       userName: ['', Validators.required],
       passWord: ['', Validators.required]
     });
-    let username = await this.storage.get('username');
-    if(username) this.formGroup.patchValue({userName:username});
+    // let username = await this.storage.get('username');
+    
+    // if(username){
+    //   this.userName = username;
+    //   this.formGroup.patchValue({userName:this.userName});
+    //   this.isAuthen = true;
+    //   this.dt.detectChanges();
+    // } 
   }
 
   async ngAfterViewInit() {
@@ -69,7 +78,12 @@ export class HomePage implements OnInit, AfterViewInit {
 
   async ionViewWillEnter(){
     let username = await this.storage.get('username');
-    if(username) this.formGroup.patchValue({userName:username});
+    if(username){
+      this.userName = username;
+      this.formGroup.patchValue({userName:this.userName});
+      this.isAuthen = true;
+      this.dt.detectChanges();
+    } 
   }
 
   ionViewWillLeave(){
@@ -124,6 +138,96 @@ export class HomePage implements OnInit, AfterViewInit {
 
   goSignUpPage() {
     this.navCtrl.navigateForward('home/signup');
+  }
+
+  changeAuthen(isAuthen:any){
+    this.isAuthen = isAuthen;
+    this.dt.detectChanges();
+  }
+
+  async onAuthen(){
+    if (!this.userName) {
+      this.notification.showNotiError('', 'Vui lòng đăng nhập tài khoản và mật khẩu trước khi sử dụng xác thực!');
+      return;
+    }
+    const result = await NativeBiometric.isAvailable();
+    if (!result.isAvailable) {
+      switch(result.errorCode){
+        case 0:
+          this.notification.showNotiError('', 'Lỗi không xác định!');
+          break;
+        case 1:
+          this.notification.showNotiError('', 'Thiết bị của bạn không có loại xác thực bằng sinh trắc học!');
+          break;
+        case 3:
+          switch(result.biometryType){
+            case BiometryType.FINGERPRINT:
+            case BiometryType.TOUCH_ID:
+              this.notification.showNotiError('', 'Vui lòng đăng ký dấu vân tay để sử dụng!');
+              break;
+            case BiometryType.FACE_AUTHENTICATION:
+            case BiometryType.FACE_ID:
+              this.notification.showNotiError('', 'Vui lòng đăng ký xác thực khuôn mặt để sử dụng!');
+              break;
+            default:
+              this.notification.showNotiError('', 'Vui lòng đăng ký dấu vân tay/xác thực khuôn mặt để sử dụng!');
+              break;
+          }
+          break;
+      }
+      return;
+    }
+    const verified = await NativeBiometric.verifyIdentity({
+      reason: "Trakuaidi xin chào! Bạn chỉ có thể xác thực được 5 lần! Mời bạn xác thực",
+      title: "Trakuaidi xin chào!",
+      //subtitle: "Đăng nhập",
+      description: "Bạn chỉ có thể xác thực được 5 lần! Mời bạn xác thực",
+      maxAttempts:5,
+      negativeButtonText:'Hủy',
+      useFallback:true
+    })
+      .then((res:any) => true)
+      .catch((res:any) => {
+        if (res && res?.code) {
+          switch(res?.code){
+            case (BiometricAuthError.AUTHENTICATION_FAILED).toString():
+              this.notification.showNotiError('', 'Xác thực không thành công!');
+              break;
+            case (BiometricAuthError.USER_TEMPORARY_LOCKOUT).toString():
+              this.notification.showNotiError('', 'Vui lòng thử lại sau 30 giây!');
+              break;
+            default:
+              this.notification.showNotiError('', 'Xác thực không thành công!');
+              break;
+          }
+        }
+      });
+
+    if(!verified) return;
+    if(verified){
+      let data = {
+        userName: this.userName,
+      }
+      let messageBody = {
+        dataRequest: JSON.stringify(data)
+      };
+      this.api.isLoad(true);
+      setTimeout(() => {
+        this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+          next:(res: any) => {
+            if (res[0]) {
+              this.notification.showNotiError('', res[1].message);
+            } else {
+              this.storage.set('isLogin', true);
+              this.navCtrl.navigateForward('main/home');
+            }
+          },
+          complete:()=> {
+            this.api.isLoad(false);
+          },
+        })
+      }, 1000);
+    }
   }
 
   //#endregion

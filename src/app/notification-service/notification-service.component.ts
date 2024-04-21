@@ -21,8 +21,8 @@ export class NotificationServiceComponent implements OnInit {
     const toast = await this.toastController.create({
       message: text,
       duration: timer,
-      position: 'top',
-      positionAnchor: 'header',
+      position: 'bottom',
+      positionAnchor: 'footer',
       color: 'danger',
       icon: 'alert-circle-outline',
     });
@@ -33,8 +33,8 @@ export class NotificationServiceComponent implements OnInit {
     const toast = await this.toastController.create({
       message: text,
       duration: timer,
-      position: 'top',
-      positionAnchor: 'header',
+      position: 'bottom',
+      positionAnchor: 'footer',
       color: 'success',
       icon: 'checkmark-circle-outline',
     });

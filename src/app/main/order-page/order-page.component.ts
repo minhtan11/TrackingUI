@@ -55,23 +55,23 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   }
 
   ngAfterViewInit() {
-    Network.addListener('networkStatusChange', status => {
-      this.isconnected = status.connected;
-      if (status.connected && status.connectionType != 'none') {
-        this.isloadpage = true;
-        this.dt.detectChanges();
-        setTimeout(() => {
-          this.loadData();
-        }, 500);  
-      }
-      if (!status.connected && status.connectionType == 'none') {
-        this.lstData = [];
-        this.isload = true;
-        this.pageNum = 1;
-        this.isEmpty = false;
-        this.dt.detectChanges();
-      }
-    });
+    // Network.addListener('networkStatusChange', status => {
+    //   this.isconnected = status.connected;
+    //   if (status.connected && status.connectionType != 'none') {
+    //     this.isloadpage = true;
+    //     this.dt.detectChanges();
+    //     setTimeout(() => {
+    //       this.loadData();
+    //     }, 500);  
+    //   }
+    //   if (!status.connected && status.connectionType == 'none') {
+    //     this.lstData = [];
+    //     this.isload = true;
+    //     this.pageNum = 1;
+    //     this.isEmpty = false;
+    //     this.dt.detectChanges();
+    //   }
+    // });
   }
 
   onDestroy(){

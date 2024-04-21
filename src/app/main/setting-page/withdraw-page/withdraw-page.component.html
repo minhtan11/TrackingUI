@@ -11,7 +11,7 @@
         <ion-col size="12" style="font-size: 1.3rem !important;">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Hình thức thanh toán</mat-label>
-            <mat-select #elepaymentMethod formControlName="paymentMethod">
+            <mat-select (valueChange)="valueChange($event,'paymentMethod')" #elepaymentMethod formControlName="paymentMethod">
               <mat-option [value]="1">Tiền mặt</mat-option>
               <mat-option [value]="2">Chuyển khoản</mat-option>
             </mat-select>
@@ -30,7 +30,7 @@
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Số tiền</mat-label>
-            <input #eleAmount formControlName="amount" matInput>
+            <input (keydown)="valueChange($event,'amount')" #eleAmount formControlName="amount" matInput>
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Nội dung</mat-label>

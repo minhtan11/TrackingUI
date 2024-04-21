@@ -56,10 +56,12 @@ export class OrderPageDetailComponent  implements OnInit,DoCheck {
     return index; 
   }
 
-  onPayment(){
+  async onPayment(){
+    let token = await this.storage.get('token');
     let data = {
-      recID: this.oData.recID,
-      userName: this.username
+      id: this.oData.id,
+      userName: this.username,
+      token:token
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)

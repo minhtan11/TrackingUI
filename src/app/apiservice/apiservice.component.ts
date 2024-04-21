@@ -52,8 +52,8 @@ export class ApiserviceComponent implements OnInit {
       const toast = await this.toastController.create({
         message: 'Trakuaidi hiện đang gặp lỗi.Vui lòng thử lại!',
         duration: 3000,
-        position: 'top',
-        positionAnchor: 'header',
+        position: 'bottom',
+        positionAnchor: 'footer',
         color: 'danger',
         icon: 'alert-circle-outline',
       });
@@ -76,8 +76,8 @@ export class ApiserviceComponent implements OnInit {
       const toast = await this.toastController.create({
         message: 'Đã có lỗi xảy ra trong quá trình thực thi hệ thống!',
         duration: 3000,
-        position: 'top',
-        positionAnchor: 'header',
+        position: 'bottom',
+        positionAnchor: 'footer',
         color: 'danger',
         icon: 'alert-circle-outline',
       });

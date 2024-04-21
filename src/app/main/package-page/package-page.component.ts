@@ -52,23 +52,23 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   }
 
   ngAfterViewInit(){
-    Network.addListener('networkStatusChange', status => {
-      this.isconnected = status.connected;
-      if (status.connected && status.connectionType != 'none') {
-        this.isloadpage = true;
-        this.dt.detectChanges();
-        setTimeout(() => {
-          this.loadData();
-        }, 500);  
-      }
-      if (!status.connected && status.connectionType == 'none') {
-        this.lstData = [];
-        this.isload = true;
-        this.pageNum = 1;
-        this.isEmpty = false;
-        this.dt.detectChanges();
-      }
-    });
+    // Network.addListener('networkStatusChange', status => {
+    //   this.isconnected = status.connected;
+    //   if (status.connected && status.connectionType != 'none') {
+    //     this.isloadpage = true;
+    //     this.dt.detectChanges();
+    //     setTimeout(() => {
+    //       this.loadData();
+    //     }, 500);  
+    //   }
+    //   if (!status.connected && status.connectionType == 'none') {
+    //     this.lstData = [];
+    //     this.isload = true;
+    //     this.pageNum = 1;
+    //     this.isEmpty = false;
+    //     this.dt.detectChanges();
+    //   }
+    // });
   }
 
   async ionViewWillEnter(){
@@ -274,16 +274,16 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     if(!this.username) this.username = await this.storage.get('username');
     let type = this.rt.snapshot.queryParams['type'];
     switch(type){
-      case 'addnew':
-        this.pageNum = 1;
-        this.status = 0;
-        this.isload = true;
-        this.isEmpty = false;
-        this.isloadpage = false;
-        this.lstData = [];
-        this.content.scrollToTop();
-        this.loadData();
-        break;
+      // case 'addnew':
+      //   this.pageNum = 1;
+      //   this.status = 0;
+      //   this.isload = true;
+      //   this.isEmpty = false;
+      //   this.isloadpage = false;
+      //   this.lstData = [];
+      //   this.content.scrollToTop();
+      //   this.loadData();
+      //   break;
       case 'change':
         let array = JSON.parse(this.rt.snapshot.queryParams['lstdata']);
         array.forEach((item:any) => {

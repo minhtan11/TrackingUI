@@ -4,6 +4,9 @@
   </ion-toolbar>
 </ion-header>
 <ion-content style="--background:white !important">
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
+    <ion-refresher-content refreshingSpinner="dots"></ion-refresher-content>
+  </ion-refresher>
   <ng-container *ngIf="isReview">
     <div class="d-flex align-items-center w-100">
       <div class="w-100" style="margin: auto;max-width: 850px;">
@@ -381,7 +384,7 @@
       </div>
     </div>
   </ng-container>
-</ion-content>
+</ion-content> 
 
 
 

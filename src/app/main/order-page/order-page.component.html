@@ -39,7 +39,7 @@
     </div>
   </ion-toolbar>
 </ion-header>
-<ion-content style="--background:white !important">
+<ion-content style="--background:white !important;" class="ion-padding">
   <ng-container *ngIf="isloadpage">
     <div style="background-color: white !important;" class="d-flex align-items-center justify-content-center h-100 w-100">
       <ion-spinner style="color: black !important;" mode="ios" name="dots"></ion-spinner>
@@ -63,7 +63,7 @@
   </ng-container>
   <ng-container *ngIf="lstData && lstData.length">
     <div class="w-100 mb-5" style="margin: auto;max-width: 1000px;">
-      <ion-list style="background-color:white !important;">
+      <!-- <ion-list style="background-color:white !important;">
         <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
           <ion-item (click)="viewDetail(item)" lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;--background:white !important;">
             <ion-card class="w-100" style="margin: 0em;box-shadow: none;--background:white !important;" mode="ios">
@@ -146,27 +146,98 @@
                     {{item.totalPrice | number}}
                   </ion-text>
                 </div>
-                <!-- <div class="text-center d-flex justify-content-end pt-3 pb-3">
-                  <button (click)="viewDetail(item)" style="background-color: #ffc107;border: none !important;border-radius: 1em;" type="button" class="btn btn-primary btn-sm text-white">
-                    <div class="d-flex align-items-center justify-content-center">
-                      <i class="bi bi-eye me-2"></i>
-                      <span>Xem chi tiết</span>
-                    </div>
-                  </button>
-                  <ng-container *ngIf="item.status == 1">
-                    <button style="border-radius: 1em;background-color: var(--ion-color-success);border: none;" (click)="onPayment(item)" type="button" class="btn btn-secondary btn-sm text-white ml-3">
-                      <div class="d-flex align-items-center justify-content-center">
-                        <i class="bi bi-credit-card me-2"></i>
-                        <span>Thanh toán</span>
-                      </div>
-                    </button>
-                  </ng-container>
-                </div>  -->
               </ion-card-content>
             </ion-card>
           </ion-item>
         </ng-container>
-      </ion-list>
+      </ion-list> -->
+      <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
+        <ion-card style="margin: 1em;--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;">
+          <ion-card-header style="padding: 1em;">
+            <div style="justify-content: space-between;" class="d-flex align-items-center">
+              <div>
+                <ion-text style="font-size: 1rem;" class="font-weight-bold me-2">
+                  Mã đơn hàng
+                </ion-text>
+              </div>
+              <div class="d-flex align-items-center">
+                <ion-text class="me-2" style="font-size: 1rem;">
+                  {{item.shippingOrderCode}}
+                </ion-text>
+                <ion-icon [cdkCopyToClipboard]="item.shippingOrderCode" (click)="onCopy()" style="font-size: 1.5rem;" name="copy-outline"></ion-icon>
+              </div>
+            </div>
+          </ion-card-header>
+          <ion-card-content style="padding: 1em;">
+            <div class="d-flex align-items-center">
+              <ng-container *ngIf="item.status == 1">
+                <img  style="width: 4em;height: 4em;
+                margin-right: 1rem;" src="../../../assets/image/wait-order.png" alt="">
+              </ng-container>
+              <ng-container *ngIf="item.status == 2">
+                <img  style="width: 4em;height: 4em;
+                margin-right: 1rem;" src="../../../assets/image/done-order.png" alt="">
+              </ng-container>
+              <ng-container *ngIf="item.status == 3">
+                <img  style="width: 4em;height: 4em;
+                margin-right: 1rem;" src="../../../assets/image/ship-cancel.png" alt="">
+              </ng-container>
+              <ng-container *ngIf="item.status == 4">
+                <img  style="width: 4em;height: 4em;
+                margin-right: 1rem;" src="../../../assets/image/ship-other.png" alt="">
+              </ng-container>
+              <div>
+                <ion-text mode="ios">
+                  <span> Vận chuyển:</span>
+                  <span>{{item.shippingMethodName}}</span>
+                </ion-text>
+                <br>
+                <ion-text>
+                  <span>Ngày tạo: </span>
+                  <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                </ion-text>
+                <br>
+                <ion-text>
+                  <span>Người tạo: </span>
+                  <span>{{item.lastName}}</span>
+                </ion-text>
+                <br>
+                <ion-text>
+                  <span>Dịch vụ phụ: </span>
+                  <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
+                  <span *ngIf="item.isWoodPackage && item.isAirPackage">-</span>
+                  <span *ngIf="item.isAirPackage">Bọt khí</span>
+                  <span *ngIf="item.isAirPackage && item.isInsurance">-</span>
+                  <span *ngIf="item.isInsurance">Bảo hiểm</span>
+                  <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
+                </ion-text>
+                <ion-text>
+                </ion-text>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end mb-2">
+              <ng-container [ngSwitch]="item.status">
+                <span style="border-radius: 10px;" *ngSwitchCase="1" class="badge badge-pill badge-secondary">Chờ thanh toán</span>
+                <span style="border-radius: 10px;" *ngSwitchCase="2" class="badge badge-pill badge-success">Đã thanh toán</span>
+                <span style="border-radius: 10px;" *ngSwitchCase="3" class="badge badge-pill badge-danger">Đã hủy</span>
+                <span style="border-radius: 10px;" *ngSwitchCase="4" class="badge badge-pill badge-info">Khác</span>    
+              </ng-container>
+            </div>
+            <div class="d-flex justify-content-end">
+              <ion-text class="font-weight-bold">
+                Tổng tiền:
+              </ion-text>
+              &nbsp;
+              <ion-text class="font-weight-bold">
+                {{item.totalPrice | number}}
+              </ion-text>
+            </div>
+            <div class="d-flex align-items-center justify-content-center mt-3">
+              <ion-icon (click)="viewDetail(item)" style="font-size: 1.5rem;" name="eye-outline"></ion-icon>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
     </div>
     <ion-infinite-scroll *ngIf="isload" (ionInfinite)="onIonInfinite($event)">
       <ion-infinite-scroll-content style="--color: black !important;" loadingSpinner="dots"></ion-infinite-scroll-content>

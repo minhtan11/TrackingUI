@@ -48,11 +48,15 @@ export class CreatePageComponent  implements OnInit {
       isWoodPackage: [false],
       isAirPackage: [false],
       isInsurance: [false],
-      declaration: [Validators.required],
-      declarePrice: [Validators.required],
+      declaration: ['',Validators.required],
+      declarePrice: ['',Validators.required],
       username:[this.username]
     });
     this.username = await this.storage.get('username');
+    let code = this.rt.snapshot.queryParams["code"];
+    if (code) {
+      this.formGroup.patchValue({packageCode:code});
+    }
     this.formGroup.patchValue({username:this.username});
   }
 
@@ -100,6 +104,10 @@ export class CreatePageComponent  implements OnInit {
       }
     }
     setTimeout(() => {
+      if (this.formGroup.value?.isInsurance) {
+        let price = this.formGroup.value?.declarePrice.replace(/,/g, '');
+        this.formGroup.patchValue({ declarePrice: price });
+      }
       this.api.execByBody('Authencation','createpackage',this.formGroup.value,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
         if (res[0]) {
           this.notification.showNotiError('', res[1].message);
@@ -107,7 +115,7 @@ export class CreatePageComponent  implements OnInit {
           if (!res[1].isError) {
             this.notification.showNotiSuccess('', res[1].message);
             this.dt.detectChanges();
-            this.navCtrl.navigateForward('main/package',{queryParams:{type:'addnew',data:JSON.stringify(res[2])}});
+            this.navCtrl.navigateForward('main/package');
           }else{
             this.notification.showNotiError('',res[1].message);
             this.dt.detectChanges();
@@ -121,8 +129,28 @@ export class CreatePageComponent  implements OnInit {
     this.formGroup.reset();
   }
 
-  change(event:any){
-    this.formGroup.patchValue({declaration:'',declarePrice:0});
+  valueChange(event:any,field:any){
+    switch(field.toLowerCase()){
+      case 'declareprice':
+        if (this.eleDeclarePrice.nativeElement.value === '-') return;
+        let commasRemoved = this.eleDeclarePrice.nativeElement.value.replace(/,/g, '');
+        let toInt: number;
+        let toLocale: string;
+        if (commasRemoved.split('.').length > 1) {
+          let decimal = isNaN(parseInt(commasRemoved.split('.')[1])) ? '' : parseInt(commasRemoved.split('.')[1]);
+          toInt = parseInt(commasRemoved);
+          toLocale = toInt.toLocaleString('en-US') + '.' + decimal;
+        } else {
+          toInt = parseInt(commasRemoved);
+          toLocale = toInt.toLocaleString('en-US');
+        }
+        if (toLocale === 'NaN') {
+          this.eleDeclarePrice.nativeElement.value = '';
+        } else {
+          this.eleDeclarePrice.nativeElement.value = toLocale;
+        }
+        break;
+    }
   }
 
   onback(){

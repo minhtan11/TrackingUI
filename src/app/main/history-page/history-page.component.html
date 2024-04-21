@@ -2,7 +2,7 @@
   <ion-toolbar style="--background:white !important;">
     <ion-title class="dynamic-font" style="color: black !important;" mode="ios">Lịch sử giao dịch</ion-title>
   </ion-toolbar>
-  <ion-toolbar style="--background:white !important;">
+  <ion-toolbar style="--background:white !important;" class="pr-3 pl-3">
     <div class="d-flex align-items-center h-100 justify-content-center w-100">
       <div style="overflow-x: scroll;margin: auto;max-width: 1000px;">
         <ion-segment [scrollable]="true" [value]="status" mode="ios">
@@ -36,7 +36,7 @@
     </div>
   </ion-toolbar>
 </ion-header>
-<ion-content style="--background:white !important">
+<ion-content style="--background:white !important" class="ion-padding">
   <ng-container *ngIf="isloadpage">
     <div class="d-flex align-items-center justify-content-center h-100 w-100">
       <ion-spinner style="color: black !important;" mode="ios" name="dots"></ion-spinner>
@@ -60,83 +60,79 @@
   </ng-container>
   <ng-container *ngIf="lstData && lstData.length">
     <div class="w-100 mb-5" style="margin: auto;max-width: 1000px;">
-      <ion-list style="background-color:white !important;">
-        <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
-          <ion-item lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;--background:white !important;">
-            <ion-card class="w-100" style="margin: 0em;box-shadow: none;--background:white !important;">
-              <ion-card-content style="padding: 0.2em;">
-                <div class="d-flex align-items-center">
-                  <ng-container *ngIf="item.tradeType == 1">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/cash.png" alt="">
-                  </ng-container>
-                  <ng-container *ngIf="item.tradeType == 2">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/refund.png" alt="">
-                  </ng-container>
-                  <ng-container *ngIf="item.tradeType == 3">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/money-bag.png" alt="">
-                  </ng-container>
-                  <ng-container *ngIf="item.tradeType == 4">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/money-withdrawal.png" alt="">
-                  </ng-container>
-                  
-                  <div class="w-100">
-                    <ng-container [ngSwitch]="item.tradeType">
-                      <ion-text class="font-weight-bold" *ngSwitchCase="1">
-                        Thanh toán hóa đơn
-                      </ion-text>
-                      <ion-text class="font-weight-bold" *ngSwitchCase="2">
-                        Hoàn tiền
-                      </ion-text>
-                      <ion-text class="font-weight-bold" *ngSwitchCase="3">
-                        Nạp tiền vào ví
-                      </ion-text>
-                      <ion-text class="font-weight-bold" *ngSwitchCase="4">
-                        Rút tiền từ ví
-                      </ion-text> 
-                    </ng-container>
-                    <br>
+      <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
+        <ion-card style="margin: 1em;--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;">
+          <ion-card-content>
+            <div class="d-flex align-items-center">
+              <ng-container *ngIf="item.tradeType == 1">
+                <img  style="width: 4em;height: 4em;
+                margin-right: 1rem;" src="../../../assets/image/cash.png" alt="">
+              </ng-container>
+              <ng-container *ngIf="item.tradeType == 2">
+                <img  style="width: 4em;height: 4em;
+                margin-right: 1rem;" src="../../../assets/image/refund.png" alt="">
+              </ng-container>
+              <ng-container *ngIf="item.tradeType == 3">
+                <img  style="width: 4em;height: 4em;
+                margin-right: 1rem;" src="../../../assets/image/money-bag.png" alt="">
+              </ng-container>
+              <ng-container *ngIf="item.tradeType == 4">
+                <img  style="width: 4em;height: 4em;
+                margin-right: 1rem;" src="../../../assets/image/money-withdrawal.png" alt="">
+              </ng-container>
+              
+              <div class="w-100">
+                <ng-container [ngSwitch]="item.tradeType">
+                  <ion-text class="font-weight-bold" *ngSwitchCase="1">
+                    Thanh toán hóa đơn
+                  </ion-text>
+                  <ion-text class="font-weight-bold" *ngSwitchCase="2">
+                    Hoàn tiền
+                  </ion-text>
+                  <ion-text class="font-weight-bold" *ngSwitchCase="3">
+                    Nạp tiền vào ví
+                  </ion-text>
+                  <ion-text class="font-weight-bold" *ngSwitchCase="4">
+                    Rút tiền từ ví
+                  </ion-text> 
+                </ng-container>
+                <br>
+                <ion-text>
+                  <span>Ngày: </span>
+                  <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                </ion-text>
+                <br>
+                <ng-container *ngIf="item.hContent != null && item.hContent != ''">
+                  <ion-text >
+                    {{item.hContent}}
+                  </ion-text>
+                  <br>
+                </ng-container>
+                <div style="justify-content: space-between;" class="d-flex align-items-center">
+                  <div>
                     <ion-text>
-                      <span>Ngày: </span>
-                      <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                      <span>Số dư ví: </span>
+                      <span>{{(item.moneyLeft | number)+'đ'}}</span>
                     </ion-text>
-                    <br>
-                    <ng-container *ngIf="item.hContent != null && item.hContent != ''">
-                      <ion-text >
-                        {{item.hContent}}
-                      </ion-text>
-                      <br>
-                    </ng-container>
-                    <div style="justify-content: space-between;" class="d-flex align-items-center">
-                      <div>
-                        <ion-text>
-                          <span>Số dư ví: </span>
-                          <span>{{(item.moneyLeft | number)+'đ'}}</span>
-                        </ion-text>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <ng-container *ngIf="item.tradeType == 1 || item.tradeType == 4">
-                          <ion-text color="danger" class="font-weight-bold">
-                            {{'-'+(item.amount | number)+'đ'}}
-                          </ion-text>
-                        </ng-container>
-                        <ng-container *ngIf="item.tradeType == 2 || item.tradeType == 3">
-                          <ion-text color="success" class="font-weight-bold">
-                            {{'+'+(item.amount | number)+'đ'}}
-                          </ion-text>
-                        </ng-container>
-                      </div>
-                    </div>          
                   </div>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </ion-item>
-        </ng-container>
-      </ion-list>
+                  <div class="d-flex align-items-center">
+                    <ng-container *ngIf="item.tradeType == 1 || item.tradeType == 4">
+                      <ion-text color="danger" class="font-weight-bold">
+                        {{'-'+(item.amount | number)+'đ'}}
+                      </ion-text>
+                    </ng-container>
+                    <ng-container *ngIf="item.tradeType == 2 || item.tradeType == 3">
+                      <ion-text color="success" class="font-weight-bold">
+                        {{'+'+item.amount+'đ'}}
+                      </ion-text>
+                    </ng-container>
+                  </div>
+                </div>          
+              </div>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
     </div>
     <ion-infinite-scroll *ngIf="isload" (ionInfinite)="onIonInfinite($event)">
       <ion-infinite-scroll-content style="--color: black !important;" loadingSpinner="dots"></ion-infinite-scroll-content>

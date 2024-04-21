@@ -6,13 +6,16 @@ import {
   PushNotifications,
   Token,
 } from '@capacitor/push-notifications';
+import { StorageService } from '../storage-service/storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FcmService {
 
-  constructor() { }
+  constructor(
+    private storage: StorageService,
+  ) { }
   async initPush() {
     let platform = await Capacitor.getPlatform()
     if (platform !== 'web') {
@@ -43,28 +46,31 @@ export class FcmService {
     await PushNotifications.register();
 
     // On success, we should be able to receive notifications
-    PushNotifications.addListener('registration',
+    await PushNotifications.addListener('registration',
       (token: Token) => {
-        console.log('Push registration success, token: ' + token.value)
+        if (token) {
+          this.storage.set('token', token.value);
+          console.log('Push registration success, token: ' + token.value)
+        }
       }
     );
 
     // Some issue with our setup and push will not work
-    PushNotifications.addListener('registrationError',
+    await PushNotifications.addListener('registrationError',
       (error: any) => {
         console.log('Error on registration: ' + JSON.stringify(error))
       }
     );
 
     // Show us the notification payload if the app is open on our device
-    PushNotifications.addListener('pushNotificationReceived',
+    await PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotificationSchema) => {
         console.log('Push received: ' + JSON.stringify(notification));
       }
     );
 
     // Method called when tapping on a notification
-    PushNotifications.addListener('pushNotificationActionPerformed',
+    await PushNotifications.addListener('pushNotificationActionPerformed',
       (notification: ActionPerformed) => {
         console.log('Push action performed: ' + JSON.stringify(notification));
       }

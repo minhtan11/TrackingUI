@@ -55,13 +55,14 @@ export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
   }
 
   ngAfterViewInit(){
-    Network.addListener('networkStatusChange', status => {
-      if (status.connected && status.connectionType != 'none') {
-        this.getUser();
-        this.getDashBoard();
-      }
-      if (!status.connected && status.connectionType == 'none') {}
-    });
+    // Network.addListener('networkStatusChange', status => {
+    //   if (status.connected && status.connectionType != 'none') {
+    //     this.getUser();
+    //     this.getDashBoard();
+    //   }
+    //   if (!status.connected && status.connectionType == 'none') {}
+    // });
+    
   }
 
   ngOnDestroy(): void {
@@ -149,6 +150,14 @@ export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
         this.dt.detectChanges();
       }
     })
+  }
+
+  onRefresh(event:any){
+    this.getUser();
+    this.getDashBoard();
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
   }
   //#endregion
 

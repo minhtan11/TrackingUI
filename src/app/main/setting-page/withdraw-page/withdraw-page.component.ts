@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
@@ -41,7 +41,7 @@ export class WithdrawPageComponent  implements OnInit {
       bankName: ['', Validators.required],
       accountNumber: ['', Validators.required],
       accountName: ['', Validators.required],
-      amount: [0, Validators.required],
+      amount: ['',Validators.required],
       note: ['', Validators.required],
       username:[''],
       type:[this.type]
@@ -91,12 +91,22 @@ export class WithdrawPageComponent  implements OnInit {
       return;
     }
     this.api.isLoad(true);
-    setTimeout(() => {
-      this.api.execByBody('Authencation','createwithdraw',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe({
+    setTimeout(async () => {
+      let amount = this.formGroup.value?.amount.replace(/,/g, '');
+      this.formGroup.patchValue({amount:amount});
+      let token = await this.storage.get('token');
+      let data = {
+        data: JSON.stringify(this.formGroup.value),
+        token: token
+      }
+      let messageBody = {
+        dataRequest: JSON.stringify(data)
+      };
+      this.api.execByBody('Authencation','createwithdraw',messageBody).pipe(takeUntil(this.destroy$)).subscribe({
         next:(res:any)=>{
           if (res && !res?.isError) {
             this.notification.showNotiSuccess('', res.message);
-            this.navCtrl.navigateBack('main/setting');
+            this.navCtrl.navigateBack('main/home');
             this.dt.detectChanges();
           }else{
             this.notification.showNotiError('',res?.message);
@@ -109,5 +119,40 @@ export class WithdrawPageComponent  implements OnInit {
       })
     }, 1000);
     
+  }
+
+  valueChange(event:any,field:any){
+    switch(field.toLowerCase()){
+      case 'paymentmethod':
+        if (event == 1) {
+          this.formGroup.controls['bankName'].disable();
+          this.formGroup.controls['accountNumber'].disable();
+          this.formGroup.controls['accountName'].disable();
+        }else{
+          this.formGroup.controls['bankName'].enable();
+          this.formGroup.controls['accountNumber'].enable();
+          this.formGroup.controls['accountName'].enable();
+        }
+        break;
+      case 'amount':
+        if (this.eleAmount.nativeElement.value === '-') return;
+        let commasRemoved = this.eleAmount.nativeElement.value.replace(/,/g, '');
+        let toInt: number;
+        let toLocale: string;
+        if (commasRemoved.split('.').length > 1) {
+          let decimal = isNaN(parseInt(commasRemoved.split('.')[1])) ? '' : parseInt(commasRemoved.split('.')[1]);
+          toInt = parseInt(commasRemoved);
+          toLocale = toInt.toLocaleString('en-US') + '.' + decimal;
+        } else {
+          toInt = parseInt(commasRemoved);
+          toLocale = toInt.toLocaleString('en-US');
+        }
+        if (toLocale === 'NaN') {
+          this.eleAmount.nativeElement.value = '';
+        } else {
+          this.eleAmount.nativeElement.value = toLocale;
+        }
+        break;
+    }
   }
 }

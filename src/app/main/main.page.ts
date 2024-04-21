@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IonRouterOutlet, IonTabs, NavController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { StorageService } from '../storage-service/storage.service';
+import { Clipboard, ReadResult } from '@capacitor/clipboard';
 
 @Component({
   selector: 'app-main',
@@ -12,17 +13,34 @@ import { StorageService } from '../storage-service/storage.service';
 })
 export class MainPage implements OnInit,AfterViewInit {
   isReview:any;
+  isOpen:any=false;
+  isDismiss:any=false;
+  textCopy:any = '';
   constructor(
     private navCtrl: NavController,
     private dt : ChangeDetectorRef,
     private storage: StorageService,
     private rt : ActivatedRoute,
-    private routerOutlet: IonRouterOutlet
+    private routerOutlet: IonRouterOutlet,
+    private platform : Platform,
   ) {
     this.isReview = this.rt.snapshot.queryParams["isReview"];
    }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.platform.ready().then(async () => {
+      this.platform.resume.subscribe(async () => {
+        Clipboard.read().then((clipboardRead: ReadResult) => {
+          if (clipboardRead?.value) {
+            this.isOpen = true;
+            this.isDismiss = false;
+            this.textCopy = clipboardRead?.value;
+            this.dt.detectChanges();
+            return;
+          }
+        });
+      });
+    })
   }
 
    ngAfterViewInit() {
@@ -52,6 +70,18 @@ export class MainPage implements OnInit,AfterViewInit {
           break;
       }
     }
-   
+  }
+  onAccept(){
+    this.onCancel();
+    this.navCtrl.navigateForward('main/package/create',{queryParams:{code:this.textCopy}});
+  }
+
+  onCancel(){
+    this.isDismiss = true;
+    this.isOpen = false;
+    Clipboard.write({
+      string: ""
+    });
+    this.dt.detectChanges();
   }
 }
