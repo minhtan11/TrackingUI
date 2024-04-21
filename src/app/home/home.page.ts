@@ -194,11 +194,11 @@ export class HomePage implements OnInit, AfterViewInit {
               this.notification.showNotiError('', 'Xác thực không thành công!');
               break;
             case (BiometricAuthError.USER_TEMPORARY_LOCKOUT).toString():
-              this.notification.showNotiError('', 'Vui lòng thử lại sau 30 giây!');
+              this.notification.showNotiError('', 'BanVui lòng thử lại sau 30 giây!');
               break;
-            default:
-              this.notification.showNotiError('', 'Xác thực không thành công!');
-              break;
+            // default:
+            //   this.notification.showNotiError('', 'Xác thực không thành công!');
+            //   break;
           }
         }
       });
