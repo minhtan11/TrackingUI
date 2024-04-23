@@ -7,17 +7,25 @@ import {
   Token,
 } from '@capacitor/push-notifications';
 import { StorageService } from '../storage-service/storage.service';
+import { NavController } from '@ionic/angular';
+import { ApiserviceComponent } from '../apiservice/apiservice.component';
+import { Subject, takeUntil } from 'rxjs';
+import { NotificationServiceComponent } from '../notification-service/notification-service.component';
+import { Device } from '@capacitor/device';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FcmService {
-
+  private destroy$ = new Subject<void>();
   constructor(
     private storage: StorageService,
+    private navCtrl: NavController,
+    private api: ApiserviceComponent,
+    private notification: NotificationServiceComponent,
   ) { }
   async initPush() {
-    let platform = await Capacitor.getPlatform()
+    let platform = await Capacitor.getPlatform();
     if (platform !== 'web') {
       this.registerPush();
       await PushNotifications.createChannel({
@@ -48,10 +56,8 @@ export class FcmService {
     // On success, we should be able to receive notifications
     await PushNotifications.addListener('registration',
       (token: Token) => {
-        if (token) {
-          this.storage.set('token', token.value);
-          console.log('Push registration success, token: ' + token.value)
-        }
+        console.log('Push registration success, token: ' + token.value);
+        this.storage.set('token', token.value);
       }
     );
 
@@ -65,7 +71,16 @@ export class FcmService {
     // Show us the notification payload if the app is open on our device
     await PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotificationSchema) => {
-        console.log('Push received: ' + JSON.stringify(notification));
+        console.log('Push received: ' + JSON.parse(notification.data['data']));
+        if (notification) {
+          let data = JSON.parse(notification.data['data']);
+          switch(data?.TypeRequest){
+            case 'loginerror':
+              this.storage.remove('isLogin');
+              this.navCtrl.navigateBack('home',{queryParams:{loginError:JSON.stringify(data)}});
+              break;
+          }
+        }
       }
     );
 

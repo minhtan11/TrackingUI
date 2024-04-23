@@ -12,12 +12,11 @@
           <ion-card class="w-100 mx-0" mode="ios" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-top: 0em;--background:white !important;">
             <ion-card-header>
               <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
-                <img style="width: 10rem;
-                height: 10rem;
-                border-radius: 5rem;" [src]="image ? 'data:image/jpeg;base64,'+image?.base64String : '../../../../assets/image/logo-user.png'" alt="">
-                <!-- <ion-text (click)="uploadImage()" class="font-weight-bold mt-2" color="primary">
-                  <u>Chọn ảnh</u>
-                </ion-text> -->
+                <img style="width: 15em;
+                height: 15em;
+                object-fit: cover;
+                border-radius: 50%;" [src]="image ? 'data:image/jpeg;base64,'+image?.base64String : '../../../../assets/image/logo-user.png'" alt="">
+                <span (click)="onOpen()" class="font-weight-bold mt-2 text-primary"><u>Chọn ảnh</u></span>
               </div>
             </ion-card-header>
           </ion-card>
@@ -54,15 +53,36 @@
       </ion-row>
     </ion-grid>
   </div>
-</ion-content>
-<!-- <ion-footer *ngIf="!isHideFooter" class="ion-no-border">
-  <ion-toolbar style="--background:white">
-    <div style="padding-left: 1em;padding-right: 1em;">
-      <button (click)="onUpdate()" style="border-radius: 1em;" class="btn btn-block text-white" mat-flat-button color="primary">
-        <ion-text>
-          CẬP NHẬT THÔNG TIN
+  <ion-modal style="--background:white !important" [isOpen]="isOpen" [canDismiss]="isDismiss" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <ion-text class="dynamic-fontr" style="color: var(--ion-color-mat-primary);">
+          <h3>Chọn ảnh</h3>
         </ion-text>
+        <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
+          <ion-item (click)="uploadImage('1')" lines="none" [button]="true" detail="false" style="--background:white !important">
+            <ion-icon slot="start" mode="ios" name="camera-outline"></ion-icon>
+            <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Chụp ảnh</ion-text>
+          </ion-item>
+          <ion-item (click)="uploadImage('2')" lines="none" [button]="true" detail="false" style="--background:white !important">
+            <ion-icon slot="start" mode="ios" name="image-outline"></ion-icon>
+            <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Chọn từ thư viện</ion-text>
+          </ion-item>
+          <ion-item (click)="onDismiss()" lines="none" [button]="true" detail="false" style="--background:white !important">
+            <ion-icon slot="start" mode="ios"  name="close-outline"></ion-icon>
+            <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Hủy</ion-text>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+<ion-footer *ngIf="!isHideFooter" class="ion-no-border">
+  <ion-toolbar style="--background:white">
+    <div class="d-flex align-items-center justify-content-center h-100" style="padding-left: 1em;padding-right: 1em;">
+      <button (click)="onUpdate()" style="border-radius: 10PX;max-width: 850px;" class="btn btn-block text-white dynamic-font" mat-flat-button color="primary">
+        <span>CẬP NHẬT THÔNG TIN</span>
       </button> 
     </div>
   </ion-toolbar>
-</ion-footer> -->
+</ion-footer>

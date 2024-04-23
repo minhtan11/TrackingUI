@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Keyboard } from '@capacitor/keyboard';
-import { NavController, Platform } from '@ionic/angular';
+import { AlertController, NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -11,7 +11,7 @@ import { StorageService } from '../storage-service/storage.service';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { environment } from 'src/environments/environment';
 import { BiometricAuthError, BiometryType, NativeBiometric } from "capacitor-native-biometric";
-
+import { Device } from '@capacitor/device';
 
 @Component({
   selector: 'app-home',
@@ -42,9 +42,9 @@ export class HomePage implements OnInit, AfterViewInit {
     private rt: ActivatedRoute,
     private navCtrl: NavController,
     private platform : Platform,
-    private http: HttpClient,
-    
+    private alertController: AlertController
   ) {
+    
   }
   //#endregion
 
@@ -84,6 +84,18 @@ export class HomePage implements OnInit, AfterViewInit {
       this.isAuthen = true;
       this.dt.detectChanges();
     } 
+    let loginError = this.rt.snapshot.queryParams["loginError"];
+    if (loginError) {
+      let data = JSON.parse(loginError);
+      const alert = await this.alertController.create({
+        header: 'Trakuaidi xin thông báo!',
+        subHeader: 'Lỗi đăng nhập',
+        message: data?.message || data?.Message,
+        buttons: ['Ok'],
+        mode:'ios'
+      });
+      await alert.present();
+    }
   }
 
   ionViewWillLeave(){
@@ -109,10 +121,17 @@ export class HomePage implements OnInit, AfterViewInit {
       this.elePassword.nativeElement.focus();
       return;
     }
-
+    let token = await this.storage.get('token');
+    const info = await Device.getInfo();
+    const infoID = await Device.getId();
+    let deviceName = info.manufacturer+' '+info.model;
+    let deviceID = infoID.identifier;
     let data = {
       userName:this.formGroup.value?.userName,
-      passWord:this.formGroup.value?.passWord
+      passWord:this.formGroup.value?.passWord,
+      token:token,
+      deviceName:deviceName,
+      deviceID:deviceID
     }
     let messageBody = {
       dataRequest:JSON.stringify(data)
@@ -123,8 +142,9 @@ export class HomePage implements OnInit, AfterViewInit {
         next:(res:any)=>{
           if (res && !res?.isError) {
             this.storage.set('username', this.formGroup.value.userName);
+            this.storage.set('password', this.formGroup.value.passWord);
             this.storage.set('isLogin', true);
-            this.navCtrl.navigateForward('main/home');
+            this.navCtrl.navigateForward('main/mainpage',{queryParams:{checklogin:false}});
           } else {
             this.notification.showNotiError('', res?.message);
           }
@@ -194,7 +214,7 @@ export class HomePage implements OnInit, AfterViewInit {
               this.notification.showNotiError('', 'Xác thực không thành công!');
               break;
             case (BiometricAuthError.USER_TEMPORARY_LOCKOUT).toString():
-              this.notification.showNotiError('', 'BanVui lòng thử lại sau 30 giây!');
+              this.notification.showNotiError('', 'Bạn đã xác thực không thành công quá 5 lần !Vui lòng thử lại sau 30 giây');
               break;
             // default:
             //   this.notification.showNotiError('', 'Xác thực không thành công!');
@@ -205,26 +225,37 @@ export class HomePage implements OnInit, AfterViewInit {
 
     if(!verified) return;
     if(verified){
+      let username = await this.storage.get('username');
+      let password = await this.storage.get('password');
+      let token = await this.storage.get('token');
+      const info = await Device.getInfo();
+      const infoID = await Device.getId();
+      let deviceName = info.manufacturer + ' ' + info.model;
+      let deviceID = infoID.identifier;
       let data = {
-        userName: this.userName,
+        userName: username,
+        passWord: password,
+        token: token,
+        deviceName: deviceName,
+        deviceID: deviceID
       }
       let messageBody = {
         dataRequest: JSON.stringify(data)
       };
       this.api.isLoad(true);
       setTimeout(() => {
-        this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-          next:(res: any) => {
-            if (res[0]) {
-              this.notification.showNotiError('', res[1].message);
-            } else {
+        this.api.execByBody('Authencation', 'login', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+          next: (res: any) => {
+            if (res && !res?.isError) {
               this.storage.set('isLogin', true);
-              this.navCtrl.navigateForward('main/home');
+              this.navCtrl.navigateForward('main/mainpage', { queryParams: { checklogin: false } });
+            } else {
+              this.notification.showNotiError('', res?.message);
             }
           },
-          complete:()=> {
+          complete: () => {
             this.api.isLoad(false);
-          },
+          }
         })
       }, 1000);
     }

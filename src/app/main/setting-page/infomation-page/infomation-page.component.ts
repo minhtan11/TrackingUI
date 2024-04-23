@@ -7,7 +7,7 @@ import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
 import { StorageService } from 'src/app/storage-service/storage.service';
 import { Keyboard } from '@capacitor/keyboard';
-import { Camera, CameraResultType } from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-infomation-page',
@@ -24,6 +24,8 @@ export class InfomationPageComponent  implements OnInit {
   isHideFooter:any=false;
   formGroup!: FormGroup;
   image:any;
+  isOpen:any = false;
+  isDismiss:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -37,22 +39,12 @@ export class InfomationPageComponent  implements OnInit {
   }
 
   ngOnInit() {
-    // this.formGroup = this.formBuilder.group({
-    //   fullName: ['', Validators.required],
-    //   gender: [true, Validators.required],
-    //   phone: ['', Validators.required],
-    //   email: ['', Validators.required],
-    //   address: ['', Validators.required],
-    //   username: new FormControl({ value: '', disabled: true }),
-    //   base64String: [''],
-    //   fileName: ['']
-    // });
     this.formGroup = this.formBuilder.group({
-      fullName: new FormControl({ value: '', disabled: true }),
-      gender: new FormControl({ value: '', disabled: true }),
-      phone: new FormControl({ value: '', disabled: true }),
-      email: new FormControl({ value: '', disabled: true }),
-      address: new FormControl({ value: '', disabled: true }),
+      fullName: ['', Validators.required],
+      gender: ['', Validators.required],
+      phone: ['', Validators.required],
+      email: ['', Validators.required],
+      address: ['', Validators.required],
       username: new FormControl({ value: '', disabled: true }),
       base64String: [''],
       fileName: ['']
@@ -85,8 +77,9 @@ export class InfomationPageComponent  implements OnInit {
   ionViewWillLeave(){
     this.onDestroy();
   }
+  
 
-  onUpdate(){
+  async onUpdate(){
     if (this.formGroup.controls['fullName'].invalid) {
       this.notification.showNotiError('', 'Họ & tên không được bỏ trống');
       this.eleFullName.nativeElement.focus();
@@ -117,6 +110,24 @@ export class InfomationPageComponent  implements OnInit {
       this.formGroup.patchValue({ base64String: this.image?.base64String });
       this.formGroup.patchValue({ fileName: fileName });
     }
+    let username = await this.storage.get('username');
+    let data = this.formGroup.value;
+    data.username = username;
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation','updateaccount',data).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res:any)=>{
+          if (res && !res?.isError) {
+            this.notification.showNotiSuccess('',res?.message);
+            this.navCtrl.navigateForward('main/mainpage',{queryParams:{selected:0}});
+          }else{
+            this.notification.showNotiError('',res?.message);
+          }
+        },complete : ()=>{
+          this.api.isLoad(false);
+        }
+      })
+    }, 1000);
     // this.api.execByBody('Authencation','register',this.formGroup.value,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
     //   if (res && !res?.isError) {
     //     this.storage.set('username', this.formGroup.value.username);
@@ -132,12 +143,41 @@ export class InfomationPageComponent  implements OnInit {
     
   }
   
-  async uploadImage(){
-    this.image = await Camera.getPhoto({
-      quality: 100,
-      allowEditing: true,
-      resultType: CameraResultType.Base64,
-    });
+  async uploadImage(type:any){
+    this.onDismiss();
+    switch(type){
+      case '1':
+        this.image = await Camera.getPhoto({
+          quality: 100,
+          allowEditing: false,
+          resultType: CameraResultType.Base64,
+          saveToGallery:true,
+          source : CameraSource.Camera
+        });
+        this.dt.detectChanges();
+        break;
+      case '2':
+        this.image = await Camera.getPhoto({
+          quality: 100,
+          allowEditing: false,
+          resultType: CameraResultType.Base64,
+          saveToGallery:false,
+          source : CameraSource.Photos
+        });
+        this.dt.detectChanges();
+        break;
+    }
+  }
+
+  onOpen(){
+    this.isOpen = true;
+    this.isDismiss = false;
+    this.dt.detectChanges();
+  }
+
+  onDismiss(){
+    this.isDismiss = true;
+    this.isOpen = false;
     this.dt.detectChanges();
   }
 

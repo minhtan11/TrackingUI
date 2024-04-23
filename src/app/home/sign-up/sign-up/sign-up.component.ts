@@ -8,6 +8,7 @@ import { NotificationServiceComponent } from 'src/app/notification-service/notif
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { Subject, takeUntil } from 'rxjs';
 import { StorageService } from 'src/app/storage-service/storage.service';
+import { Device } from '@capacitor/device';
 
 @Component({
   selector: 'app-sign-up',
@@ -53,7 +54,10 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
       base64String : [''],
-      fileName:['']
+      fileName:[''],
+      tokenDevice:[''],
+      deviceName:[''],
+      deviceID:[''],
     });
   }
 
@@ -88,12 +92,7 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
     this.showPass = !this.showPass;
   }
 
-  onSignUp(){
-    if (this.image) {
-      let fileName = Date.now() + this.formGroup.value.username + '.' + this.image?.format;
-      this.formGroup.patchValue({ base64String: this.image?.base64String });
-      this.formGroup.patchValue({ fileName: fileName });
-    }
+  async onSignUp(){
     if (this.formGroup.controls['fullName'].invalid) {
       this.notification.showNotiError('', 'Họ & tên không được bỏ trống');
       this.eleFullName.nativeElement.focus();
@@ -129,13 +128,29 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
       this.elePassword.nativeElement.focus();
       return;
     }
+    if (this.image) {
+      let fileName = Date.now() + this.formGroup.value.username + '.' + this.image?.format;
+      this.formGroup.patchValue({ base64String: this.image?.base64String });
+      this.formGroup.patchValue({ fileName: fileName });
+    }
+    
+    let token = await this.storage.get('token');
+    const info = await Device.getInfo();
+    const infoID = await Device.getId();
+    let deviceName = info.manufacturer+' '+info.model;
+    let deviceID = infoID.identifier;
+    this.formGroup.patchValue({ deviceName: deviceName });
+    this.formGroup.patchValue({ deviceID: deviceID });
+    if (token) {
+      this.formGroup.patchValue({ tokenDevice: token });
+    }
     this.api.isLoad(true);
     setTimeout(() => {
       this.api.execByBody('Authencation','register',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe({
         next:(res:any)=>{
           if (res && !res?.isError) {
             this.storage.set('username', this.formGroup.value.username);
-            this.navCtrl.navigateForward('main/home');
+            this.navCtrl.navigateForward('main/mainpage');
           }else{
             this.notification.showNotiError('',res?.message);
           }

@@ -25,7 +25,7 @@ const routes: Routes = [
     component: MainPage,
     children:[
       {
-        path: 'home',
+        path: 'mainpage',
         component: HomePageComponent,
       },
       {

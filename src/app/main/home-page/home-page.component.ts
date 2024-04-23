@@ -8,7 +8,7 @@ import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { Network } from '@capacitor/network';
 import { StorageService } from 'src/app/storage-service/storage.service';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
-import Swal from 'sweetalert2'
+import { App } from '@capacitor/app';
 
 @Component({
   selector: 'app-home-page',
@@ -39,7 +39,7 @@ export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
     private routerOutlet: IonRouterOutlet
   ) { 
     router.events.subscribe((val: any) => {
-      if (val instanceof NavigationEnd && val?.type === 1 && val?.url === '/main/home') {
+      if (val instanceof NavigationEnd && val?.type === 1 && (val?.url.includes('/main/mainpage'))) {
         this.getTime();
         this.getUser();
         this.getDashBoard();
@@ -55,6 +55,25 @@ export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
   }
 
   ngAfterViewInit(){
+    this.platform.ready().then(async () => {
+      this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
+        if (!(this.router.url.includes('/main/mainpage'))) {
+          processNextHandler();
+        }
+        if ((this.router.url.includes('/main/mainpage')) || (this.router.url.includes('/home')) || (this.router.url.includes('/main/history')) || (this.router.url.includes('/main/notification')) 
+          || (this.router.url.includes('/main/setting'))) {
+          App.minimizeApp();
+        }
+      });
+    });
+    // this.platform.ready().then(async () => {
+    //   this.platform.backButton.subscribeWithPriority(9999, () => {
+    //     document.addEventListener('backbutton', function (event) {
+    //       event.preventDefault();
+    //       event.stopPropagation();
+    //     }, false);
+    //   });
+    // })
     // Network.addListener('networkStatusChange', status => {
     //   if (status.connected && status.connectionType != 'none') {
     //     this.getUser();
@@ -76,14 +95,22 @@ export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
   //#endregion
 
   //#region Function
-  goOrderPage(){
-    this.onDestroy();
+  goOrderPage(status:any=''){
+    if (status) {
+      this.navCtrl.navigateForward('main/order',{queryParams:{status:status}});
+      return;
+    }
     this.navCtrl.navigateForward('main/order');
+    this.onDestroy();
   }
 
-  goPackagePage(){
-    this.onDestroy();
+  goPackagePage(status:any=''){
+    if (status) {
+      this.navCtrl.navigateForward('main/package',{queryParams:{status:status}});
+      return;
+    }
     this.navCtrl.navigateForward('main/package');
+    this.onDestroy();
   }
 
   goRechargePage(){

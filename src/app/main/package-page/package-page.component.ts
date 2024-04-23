@@ -72,6 +72,11 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   }
 
   async ionViewWillEnter(){
+    let status = this.rt.snapshot.queryParams["status"];
+    if (status) {
+      this.status = status;
+      this.dt.detectChanges();
+    }
     this.init();
     this.dt.detectChanges();
   }
@@ -134,82 +139,10 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     })
   }
 
-  // checkStatus(data: any) {
-  //   if (!data.searchBaiduTimes) {
-  //     Swal.mixin({
-  //       customClass: {
-  //         confirmButton: "btn btn-accent me-2 text-white",
-  //         cancelButton: "btn btn-danger"
-  //       },
-  //       buttonsStyling: false
-  //     }).fire({
-  //       title: "Chú ý",
-  //       text: "Sử dụng chức năng này sẽ tốn phí 500đ/kiện (Chỉ tốn phí lần đầu). Bạn có chắc muốn sử dụng?",
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       cancelButtonColor: "#d33",
-  //       confirmButtonText: "Đồng ý",
-  //       cancelButtonText: "Từ chối",
-  //       heightAuto: false
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         let queryParams = new HttpParams();
-  //         queryParams = queryParams.append("id", data.packageCode);
-  //         queryParams = queryParams.append("userName", this.username);
-  //         this.api.execByParameter('Authencation', 'checkstatus', queryParams,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-  //           if (res && !res[0].isError) {
-  //             let index = this.lstData.findIndex((x:any) => x.packageCode == data.packageCode);
-  //             if(index > -1) this.lstData[index] = res[1];
-  //             this.dt.detectChanges();
-  //             this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[0]),data:JSON.stringify(res[1])}});
-  //           }else{
-  //             this.notification.showNotiError('',res.message);
-  //           }
-  //         })
-  //       }
-  //     });
-  //   } else {
-  //     let queryParams = new HttpParams();
-  //     queryParams = queryParams.append("id", data.packageCode);
-  //     queryParams = queryParams.append("userName", this.username);
-  //     this.api.execByParameter('Authencation', 'checkstatus', queryParams,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-  //       if (res && !res[0].isError) {
-  //         let index = this.lstData.findIndex((x:any) => x.packageCode == data.packageCode);
-  //         if(index > -1) this.lstData[index] = res[1];
-  //         this.dt.detectChanges();
-  //         this.navCtrl.navigateForward('main/package/orderstatus/' + this.username, { queryParams: { result: JSON.stringify(res[0]),data:JSON.stringify(res[1])}});
-  //       }else{
-  //         this.notification.showNotiError('',res.message);
-  //       }
-  //     })
-  //   }
-  // }
-
   createPackage(){
     this.onDestroy();
     this.navCtrl.navigateForward('main/package/create');
   }
-
-  // findPackage(){
-  //   this.onDestroy();
-  //   this.navCtrl.navigateForward('main/package/find');
-  // }
-
-  // cancelPackage(data:any){
-  //   let queryParams = new HttpParams();
-  //   queryParams = queryParams.append("id", data.id);
-  //   queryParams = queryParams.append("userName", this.username);
-  //   this.api.execByParameter('Authencation', 'cancel', queryParams,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-  //     if (res && !res[0].isError) {
-  //       this.notification.showNotiSuccess('', res[0].message);
-  //       let index = this.lstData.findIndex((x: any) => x.packageCode == data.packageCode);
-  //       if (index > -1) this.lstData[index] = res[1];
-  //       this.dt.detectChanges();
-  //     } else {
-  //       this.notification.showNotiError('', res[0].message);
-  //     }
-  //   })
-  // }
 
   onCopy(){
     this.notification.showNotiSuccess('','Đã Sao chép',1000);
@@ -254,7 +187,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   }
 
   onback(){
-    this.navCtrl.navigateBack('main/home');
+    this.navCtrl.navigateBack('main/mainpage');
   }
 
   ionChange(event:any){

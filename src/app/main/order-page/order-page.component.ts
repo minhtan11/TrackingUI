@@ -50,6 +50,11 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   }
 
   async ionViewWillEnter(){
+    let status = this.rt.snapshot.queryParams["status"];
+    if (status) {
+      this.status = status;
+      this.dt.detectChanges();
+    }
     this.init();
     this.dt.detectChanges();
   }
@@ -142,7 +147,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   }
 
   onback(){
-    this.navCtrl.navigateBack('main/home');
+    this.navCtrl.navigateBack('main/mainpage');
   }
 
   onCopy(){

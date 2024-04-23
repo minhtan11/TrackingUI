@@ -106,7 +106,7 @@ export class WithdrawPageComponent  implements OnInit {
         next:(res:any)=>{
           if (res && !res?.isError) {
             this.notification.showNotiSuccess('', res.message);
-            this.navCtrl.navigateBack('main/home');
+            this.navCtrl.navigateForward('main/mainpage',{queryParams:{selected:0}});
             this.dt.detectChanges();
           }else{
             this.notification.showNotiError('',res?.message);

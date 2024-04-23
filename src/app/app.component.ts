@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { NavController, Platform } from '@ionic/angular';
+import { IonRouterOutlet, NavController, Platform } from '@ionic/angular';
 import { StorageService } from './storage-service/storage.service';
 import { HttpParams } from '@angular/common/http';
 import { ApiserviceComponent } from './apiservice/apiservice.component';
@@ -8,12 +8,6 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { Router } from '@angular/router';
 import { Network } from '@capacitor/network';
 import { NotificationServiceComponent } from './notification-service/notification-service.component';
-import {
-  ActionPerformed,
-  PushNotificationSchema,
-  PushNotifications,
-  Token,
-} from '@capacitor/push-notifications';
 import { FcmService } from './services-fcm/fcm.service';
 
 
@@ -34,25 +28,19 @@ export class AppComponent implements OnInit {
     private dt: ChangeDetectorRef,
     private router: Router,
     private notification: NotificationServiceComponent,
-    private fcmService: FcmService
+    private fcmService: FcmService,
   ) { }
 
   ngOnInit() {
+    
+  }
+
+  ngAfterViewInit() {
     this.platform.ready().then(async () => {
-      this.platform.backButton.subscribeWithPriority(9999, () => {
-        document.addEventListener('backbutton', function (event) {
-          event.preventDefault();
-          event.stopPropagation();
-        }, false);
-      });
       this.fcmService.initPush();
       this.loadFlashScreen();
       this.getConfig();
     });
-  }
-
-  ngAfterViewInit() {
-    
   }
 
   onDestroy() {
@@ -63,7 +51,7 @@ export class AppComponent implements OnInit {
   async loadFlashScreen() {
     let isLogin = await this.storage.get('isLogin');
     if (isLogin) {
-      this.navCtrl.navigateForward('main/home');
+      this.navCtrl.navigateForward('main/mainpage',{queryParams:{checklogin:true}});
     }else{
       this.navCtrl.navigateForward('home');
     }

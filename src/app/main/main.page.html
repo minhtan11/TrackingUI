@@ -25,7 +25,7 @@
 <ion-footer class="ion-no-border mobile-toolbar">
   <ng-container *ngIf="isReview">
     <ion-toolbar style="--background:white !important;">
-      <mat-tab-group (selectedTabChange)="selectedTabChange($event)" headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
+      <mat-tab-group [selectedIndex]="selected"  (selectedTabChange)="selectedTabChange($event)" headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
         <mat-tab label="home">
           <ng-template mat-tab-label>
             <!-- <div class="p-3">
@@ -73,7 +73,7 @@
   </ng-container>
   <ng-container *ngIf="!isReview">
     <ion-toolbar style="--background:white !important;">
-      <mat-tab-group (selectedTabChange)="selectedTabChange($event)" headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
+      <mat-tab-group [selectedIndex]="selected" (selectedTabChange)="selectedTabChange($event)" headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
         <mat-tab label="home">
           <ng-template mat-tab-label>
             <div>
