@@ -11,12 +11,22 @@
         <ion-col size="12">
           <ion-card class="w-100 mx-0" mode="ios" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;margin-top: 0em;--background:white !important;">
             <ion-card-header>
-              <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
-                <img style="width: 15em;
-                height: 15em;
-                object-fit: cover;
-                border-radius: 50%;" [src]="image ? 'data:image/jpeg;base64,'+image?.base64String : '../../../../assets/image/logo-user.png'" alt="">
-                <span (click)="onOpen()" class="font-weight-bold mt-2 text-primary"><u>Chọn ảnh</u></span>
+              <div style="flex-direction: column;" class="d-flex align-items-center justify-content">
+                <ng-container *ngIf="oUser == undefined">
+                  <ion-skeleton-text style="width: 15em;height: 15em;
+                  border-radius: 70%;
+                  " [animated]="true" class="mb-2"></ion-skeleton-text>
+                  <ion-skeleton-text style="width: 30%;" [animated]="true"></ion-skeleton-text>
+                </ng-container>
+                <ng-container *ngIf="oUser != undefined">
+                  <img *ngIf="!isChooseImg" class="mb-2" style="width: 15em;height: 15em;
+                  border-radius: 70%;
+                  " [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="" class="mb-2">
+                  <img *ngIf="isChooseImg" class="mb-2" style="width: 15em;height: 15em;
+                  border-radius: 70%;
+                  " [src]="'data:image/jpeg;base64,'+image?.base64String" alt="" class="mb-2">
+                  <span (click)="onOpen()" class="font-weight-bold mt-2 text-primary"><u>Chọn ảnh</u></span>
+                </ng-container>
               </div>
             </ion-card-header>
           </ion-card>

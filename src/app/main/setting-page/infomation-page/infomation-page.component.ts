@@ -26,6 +26,9 @@ export class InfomationPageComponent  implements OnInit {
   image:any;
   isOpen:any = false;
   isDismiss:any=false;
+  imgUser:any = '';
+  oUser:any;
+  isChooseImg:any = false;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -47,10 +50,9 @@ export class InfomationPageComponent  implements OnInit {
       address: ['', Validators.required],
       username: new FormControl({ value: '', disabled: true }),
       base64String: [''],
-      fileName: ['']
+      fileName: [''],
+      img:['']
     });
-    let data = JSON.parse(this.rt.snapshot.queryParams['oUser']);
-    this.formGroup.patchValue(data);
   }
 
   ngAfterViewInit() {
@@ -73,9 +75,32 @@ export class InfomationPageComponent  implements OnInit {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  async ionViewWillEnter(){
+    this.getUser();
+  }
   
   ionViewWillLeave(){
     this.onDestroy();
+  }
+
+  async getUser(){
+    let username = await this.storage.get('username');
+    let data = {
+      userName:username,
+    }
+    let messageBody = {
+      dataRequest:JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        this.oUser = res[1];
+        this.formGroup.patchValue(this.oUser);
+        this.dt.detectChanges();
+      }
+    })
   }
   
 
@@ -167,6 +192,8 @@ export class InfomationPageComponent  implements OnInit {
         this.dt.detectChanges();
         break;
     }
+    this.isChooseImg = true;
+    this.dt.detectChanges();
   }
 
   onOpen(){

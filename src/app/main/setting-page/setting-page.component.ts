@@ -74,7 +74,7 @@ export class SettingPageComponent  implements OnInit {
   }
 
   goInformation(){
-    this.navCtrl.navigateForward('main/setting/information',{queryParams:{oUser:JSON.stringify(this.oUser)}});
+    this.navCtrl.navigateForward('main/setting/information');
   }
 
   goWithdraw(type:any){
