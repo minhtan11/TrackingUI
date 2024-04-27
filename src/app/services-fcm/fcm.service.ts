@@ -50,8 +50,10 @@ export class FcmService {
     if (permStatus.receive !== 'granted') {
       throw new Error('User denied permissions!');
     }
-  
-    await PushNotifications.register();
+
+    if (permStatus.receive === 'granted') {
+      await PushNotifications.register();
+    }
 
     // On success, we should be able to receive notifications
     await PushNotifications.addListener('registration',
