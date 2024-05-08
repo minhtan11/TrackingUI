@@ -98,9 +98,9 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
 
   //#region Function
 
-  trackByFn(index:any, item:any) { 
-    return index; 
-  }
+  // trackByFn(index:any, item:any) { 
+  //   return index; 
+  // }
 
   onDestroy(){
     this.destroy$.next();

@@ -64,6 +64,7 @@ html {
     @media (min-width: 1000px) {
         font-size: 110%;
     }
+    font-family: Roboto, "Helvetica Neue", sans-seri !important;
   }
   html.ios {
     @media (max-width: 359px) and (min-width: 320px) {
@@ -83,7 +84,7 @@ input:focus {
 }
 
 ion-segment {
-    --background: var(--ion-color-mat-accent) !important;
+    //--background: var(--ion-color-mat-accent) !important;
     --offset-bottom: auto !important;
     --overflow: hidden;
     overflow: auto;
@@ -95,11 +96,13 @@ ion-segment {
 
 ion-segment-button {
     --color-checked: var(--ion-color-mat-primary);
+    font-size: 1rem !important;
+    text-transform:none !important;
 }
 
-ion-segment-button::part(indicator-background) {
-    background: white !important;
-  }
+// ion-segment-button::part(indicator-background) {
+//     background: white !important;
+//   }
 
 .tab-selected {
     color: var(--ion-color-mat-primary) !important;
@@ -237,8 +240,20 @@ ul.timeline>.active:before {
 }
 
 .mat-mdc-tab .mdc-tab-indicator__content--underline {
-    border-color: white !important;
+    border-color: var(--ion-color-mat-primary) !important;
 }
+
+.btn-orange.mat-mdc-unelevated-button:not(:disabled){
+    background-color: orange !important;
+}
+
+.btn-gray.mat-mdc-unelevated-button:not(:disabled){
+    background-color: gray !important;
+}
+
+// .btn-sussgest.mat-mdc-unelevated-button:not(:disabled){
+//     background-color: rgb(0, 212, 0) !important;
+// }
 
 .mobile-toolbar ion-toolbar{
     --padding-top:0 !important;
@@ -250,11 +265,11 @@ ul.timeline>.active:before {
 }
 
 ion-searchbar {
-    --background: rgb(201, 198, 198) !important;
-    --color: #fff !important;
-    --placeholder-color: #fff !important;
-    --icon-color: white !important;
-    --clear-button-color: #fff !important;
+    --background: white !important;
+    //--color: #fff !important;
+    //--placeholder-color: #fff !important;
+    //--icon-color: white !important;
+    //--clear-button-color: #fff !important;
     font-size: var(--ion-dynamic-font) !important;
 }
 

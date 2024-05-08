@@ -1,15 +1,20 @@
   <ion-header class="ion-no-border" style="--background:white !important;">
-    <ion-toolbar style="--background:white !important;">
-      <div class="d-flex align-items-center h-100 justify-content-center w-100">
-        <ion-icon (click)="onback()" class="pl-3" slot="start" mode="ios" style="color: var(--ion-color-mat-primary);font-size: 2rem;" name="chevron-back-outline"></ion-icon>
+    <ion-toolbar style="--background:var(--ion-color-mat-primary) !important;">
+      <div style="height: 54px !important; background-color: var(--ion-color-mat-primary) !important;;" class="d-flex align-items-center h-100 justify-content-center w-100">
+        <ion-icon (click)="onback()" class="pl-3" slot="start" mode="ios" style="color: white !important;font-size: 2rem;" name="chevron-back-outline"></ion-icon>
         <ion-searchbar style="max-width: 850px;" placeholder="Tìm kiếm kiện hàng" (ionChange)="ionChange($event)" enterkeyhint="search" mode="ios" class="p-2" show-clear-button="always"></ion-searchbar>
-        <ion-icon (click)="createPackage()" slot="end" class="me-3" style="font-size: 2rem;color: var(--ion-color-mat-primary);" name="duplicate-outline"></ion-icon>
+        <ion-icon (click)="createPackage()" slot="end" class="me-3" style="font-size: 2rem;color: white !important;" name="duplicate-outline"></ion-icon>
       </div>
     </ion-toolbar>
-    <ion-toolbar style="--background:white;" class="pr-3 pl-3">
+    <!-- <div style="background-color:var(--ion-color-mat-primary) !important;height: 54px !important;"  class="d-flex align-items-center h-100 justify-content-center w-100 h-100">
+      <ion-icon (click)="onback()" class="pl-3" slot="start" mode="ios" style="color: white !important;font-size: 2rem;" name="chevron-back-outline"></ion-icon>
+      <ion-searchbar style="max-width: 850px;" placeholder="Tìm kiếm kiện hàng" (ionChange)="ionChange($event)" enterkeyhint="search" mode="ios" class="p-2" show-clear-button="always"></ion-searchbar>
+      <ion-icon (click)="createPackage()" slot="end" class="me-3" style="font-size: 2rem;color: white !important;" name="duplicate-outline"></ion-icon>
+    </div> -->
+    <ion-toolbar style="--background:white !important;">
       <div class="d-flex align-items-center h-100 justify-content-center w-100">
         <div class="w-100" style="overflow-x: scroll;margin: auto;max-width: 1000px;">
-          <ion-segment [scrollable]="true" [value]="status" mode="ios">
+          <ion-segment [scrollable]="true" [value]="status" mode="md">
             <ion-segment-button (click)=" sortData(0)" [value]="0">
               <ion-text class="text-segment">
                 <span style="font-size: 1em;">Tất cả</span>
@@ -84,111 +89,7 @@
     </ng-container>
     <ng-container *ngIf="lstData && lstData.length">
       <div class="w-100 mb-5" style="margin: auto;max-width: 1000px;background-color: white !important;">
-        <!-- <ion-list style="background-color:white !important;">
-          <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
-            <ion-item (click)="viewDetail(item)" lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;--background:white !important;">
-              <ion-card class="w-100" style="margin: 0em;box-shadow: none;--background:white !important;" mode="ios">
-                <ion-card-header style="padding: 0.2em;">
-                  <div style="justify-content: space-between;" class="d-flex align-items-center">
-                    <div>
-                      <ion-text style="font-size: 1.2rem;" class="font-weight-bold me-2">
-                        Mã kiện hàng
-                      </ion-text>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <ion-text class="me-2" style="font-size: 1.2rem;">
-                        {{item.packageCode}}
-                      </ion-text>
-                      <ion-icon [cdkCopyToClipboard]="item.packageCode" (click)="onCopy()" style="font-size: 1.5rem;" name="copy-outline"></ion-icon>
-                    </div>
-                  </div>
-                </ion-card-header>
-                <ion-card-content style="padding: 0.2em;">
-                  <div class="d-flex align-items-center">
-                    <ng-container *ngIf="item.status == 0 || item.status == 1">
-                      <img  style="width: 4em;height: 4em;
-                      margin-right: 1rem;" src="../../../assets/image/package-wait.png" alt="">
-                    </ng-container>
-                    <ng-container *ngIf="item.status == 2 || item.status == 3 || item.status == 4">
-                      <img  style="width: 4em;height: 4em;
-                      margin-right: 1rem;" src="../../../assets/image/package-delivery.png" alt="">
-                    </ng-container>
-                    <ng-container *ngIf="item.status == 5">
-                      <img  style="width: 4em;height: 4em;
-                      margin-right: 1rem;" src="../../../assets/image/package.png" alt="">
-                    </ng-container>
-                    <ng-container *ngIf="item.status == 9 || item.status == 10 || item.status == 11">
-                      <img  style="width: 4em;height: 4em;
-                      margin-right: 1rem;" src="../../../assets/image/package-cancelled.png" alt="">
-                    </ng-container>
-                    <div>
-                      <ion-text mode="ios">
-                        <span> Loại vận chuyển:</span>
-                        <ng-container [ngSwitch]="item.movingMethod">
-                          <span *ngSwitchCase="2">
-                            Chậm
-                          </span>
-                          <span *ngSwitchCase="3">
-                            Bộ
-                          </span>
-                          <span *ngSwitchCase="4">
-                            Bộ lô
-                          </span>
-                          <span *ngSwitchCase="5">
-                            Biển
-                          </span>
-                          <span *ngSwitchDefault>
-                            Nhanh
-                          </span>
-                        </ng-container>
-                      </ion-text>
-                      <br>
-                      <ion-text>
-                        <span>Kho nhận:</span>
-                        <ng-container [ngSwitch]="item.wareHouse">
-                          <span *ngSwitchCase="'1'">
-                            Đông quản
-                          </span>
-                          <span *ngSwitchCase="'2'">
-                            Phật sơn
-                          </span>
-                        </ng-container>
-                        </ion-text>
-                      <br>
-                      <ion-text>
-                        <span>Ngày tạo: </span>
-                        <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
-                      </ion-text>
-                      <br>
-                      <ion-text>
-                        <span>Dịch vụ phụ: </span>
-                        <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
-                        <span *ngIf="item.isWoodPackage && item.isAirPackage">-</span>
-                        <span *ngIf="item.isAirPackage">Bọt khí</span>
-                        <span *ngIf="item.isAirPackage && item.isInsurance">-</span>
-                        <span *ngIf="item.isInsurance">Bảo hiểm</span>
-                        <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
-                      </ion-text>
-                    </div>
-                  </div>
-                  <div class="d-flex justify-content-end mb-2">
-                    <ng-container [ngSwitch]="item.status">
-                      <span style="border-radius: 10px;" *ngSwitchDefault class="badge badge-pill badge-secondary">Chưa xác nhận</span>
-                      <span style="border-radius: 10px;" *ngSwitchCase="2" class="badge badge-pill badge-info">Hàng về kho TQ</span>
-                      <span style="border-radius: 10px;" *ngSwitchCase="3" class="badge badge-pill badge-info">Đang về HCM</span>
-                      <span style="border-radius: 10px;" *ngSwitchCase="4" class="badge badge-pill badge-info">Hàng về tới HCM</span>
-                      <span style="border-radius: 10px;" *ngSwitchCase="5" class="badge badge-pill badge-success">Đã nhận hàng</span>
-                      <span style="border-radius: 10px;" *ngSwitchCase="9" class="badge badge-pill badge-danger">Đã hủy</span>
-                      <span style="border-radius: 10px;" *ngSwitchCase="10" class="badge badge-pill badge-danger">Thất lạc</span>
-                      <span style="border-radius: 10px;" *ngSwitchCase="11" class="badge badge-pill badge-danger">Không nhận được hàng</span>
-                    </ng-container>
-                  </div>
-                </ion-card-content>
-              </ion-card>
-            </ion-item>
-          </ng-container>
-        </ion-list> -->
-        <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
+        <ng-container *ngFor="let item of lstData">
           <ion-card style="margin: 1em;--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;">
             <ion-card-header style="padding: 1em;">
               <div style="justify-content: space-between;" class="d-flex align-items-center">

@@ -1,10 +1,10 @@
 
 <ion-header class="ion-no-border" style="--background:white !important;">
-  <ion-toolbar style="--background:white !important;">
+  <ion-toolbar style="--background:var(--ion-color-mat-primary) !important;">
     <div class="d-flex align-items-center h-100 justify-content-center w-100">
       <div class="w-100" style="margin: auto;max-width: 1000px;">
-        <ion-icon (click)="onback()" class="pl-3" slot="start" mode="ios" style="color: var(--ion-color-mat-primary);font-size: 2rem;" name="chevron-back-outline"></ion-icon>
-        <ion-title style="z-index: -1;color:black !important" mode="ios">Chi tiết kiện ký gửi</ion-title>
+        <ion-icon (click)="onback()" class="pl-3" slot="start" mode="ios" style="color: white !important;font-size: 2rem;" name="chevron-back-outline"></ion-icon>
+        <ion-title style="z-index: -1;color:white !important" mode="ios">Chi tiết kiện ký gửi</ion-title>
       </div>
     </div>
   </ion-toolbar>
@@ -316,7 +316,7 @@
             </ion-grid>
           </div>
           <div *ngIf="oData.status < 2" class="d-flex align-items-center justify-content-center mt-3">
-            <button (click)="onOpen(oData)" style="border-radius: 1em;" class="btn text-white me-3" mat-flat-button color="primary">
+            <button (click)="onOpen(oData)" style="border-radius: 1em;" class="btn text-white me-3 btn-orange" mat-flat-button>
               <!-- <ion-text>
                 Kiểm tra hàng
               </ion-text> -->
@@ -325,7 +325,7 @@
                 <span>Kiểm tra hàng</span>
               </div>
             </button> 
-            <button (click)="cancelPackage(oData)" style="border-radius: 1em;" class="btn text-white" mat-flat-button color="warn">
+            <button (click)="cancelPackage(oData)" style="border-radius: 1em;" class="btn text-white btn-gray" mat-flat-button>
               <!-- <ion-text>
                 Hủy đơn
               </ion-text> -->

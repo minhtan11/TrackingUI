@@ -17,7 +17,7 @@ import { FcmService } from './services-fcm/fcm.service';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot({mode:'ios'}), AppRoutingModule, BrowserAnimationsModule,HttpClientModule,IonicStorageModule,IonicStorageModule.forRoot()],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule,HttpClientModule,IonicStorageModule,IonicStorageModule.forRoot()],
   providers: [
     ApiserviceComponent,
     AuthguardGuard,

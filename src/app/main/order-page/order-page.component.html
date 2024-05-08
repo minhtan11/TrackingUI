@@ -1,14 +1,14 @@
 <ion-header class="ion-no-border" style="--background:white !important;">
-  <ion-toolbar style="--background:white !important;">
+  <ion-toolbar style="--background:var(--ion-color-mat-primary) !important;">
     <div class="d-flex align-items-center h-100 justify-content-center w-100">
-      <ion-icon (click)="onback()" class="pl-3" slot="start" mode="ios" style="color: var(--ion-color-mat-primary);font-size: 2rem;" name="chevron-back-outline"></ion-icon>
+      <ion-icon (click)="onback()" class="pl-3" slot="start" mode="ios" style="color: white !important;font-size: 2rem;" name="chevron-back-outline"></ion-icon>
       <ion-searchbar style="max-width: 850px;" placeholder="Tìm kiếm đơn hàng" (ionChange)="ionChange($event)" enterkeyhint="search" mode="ios" class="p-2" show-clear-button="always"></ion-searchbar>
     </div>
   </ion-toolbar>
   <ion-toolbar style="--background:white !important;" class="pr-3 pl-3">
     <div class="d-flex align-items-center h-100 justify-content-center w-100">
       <div style="overflow-x: scroll;margin: auto;max-width: 1000px;">
-        <ion-segment [scrollable]="true" [value]="status" mode="ios">
+        <ion-segment [scrollable]="true" [value]="status" mode="md">
           <ion-segment-button (click)=" sortData(0)" [value]="0">
             <ion-text class="text-segment">
               <span style="font-size: 1em;">Tất cả</span>
@@ -63,94 +63,6 @@
   </ng-container>
   <ng-container *ngIf="lstData && lstData.length">
     <div class="w-100 mb-5" style="margin: auto;max-width: 1000px;">
-      <!-- <ion-list style="background-color:white !important;">
-        <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
-          <ion-item (click)="viewDetail(item)" lines="none" style="border-bottom: 1px solid #f2f2f2;padding-top: 1em;--background:white !important;">
-            <ion-card class="w-100" style="margin: 0em;box-shadow: none;--background:white !important;" mode="ios">
-              <ion-card-header style="padding: 0.2em;">
-                <div style="justify-content: space-between;" class="d-flex align-items-center">
-                  <div>
-                    <ion-text style="font-size: 1.2rem;" class="font-weight-bold me-2">
-                      Mã đơn hàng
-                    </ion-text>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <ion-text class="me-2" style="font-size: 1.2rem;">
-                      {{item.shippingOrderCode}}
-                    </ion-text>
-                    <ion-icon [cdkCopyToClipboard]="item.shippingOrderCode" (click)="onCopy()" style="font-size: 1.5rem;" name="copy-outline"></ion-icon>
-                  </div>
-                </div>
-              </ion-card-header>
-              <ion-card-content style="padding: 0.2em;">
-                <div class="d-flex align-items-center">
-                  <ng-container *ngIf="item.status == 1">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/wait-order.png" alt="">
-                  </ng-container>
-                  <ng-container *ngIf="item.status == 2">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/done-order.png" alt="">
-                  </ng-container>
-                  <ng-container *ngIf="item.status == 3">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/ship-cancel.png" alt="">
-                  </ng-container>
-                  <ng-container *ngIf="item.status == 4">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/ship-other.png" alt="">
-                  </ng-container>
-                  <div>
-                    <ion-text mode="ios">
-                      <span> Vận chuyển:</span>
-                      <span>{{item.shippingMethodName}}</span>
-                    </ion-text>
-                    <br>
-                    <ion-text>
-                      <span>Ngày tạo: </span>
-                      <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
-                    </ion-text>
-                    <br>
-                    <ion-text>
-                      <span>Người tạo: </span>
-                      <span>{{item.lastName}}</span>
-                    </ion-text>
-                    <br>
-                    <ion-text>
-                      <span>Dịch vụ phụ: </span>
-                      <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
-                      <span *ngIf="item.isWoodPackage && item.isAirPackage">-</span>
-                      <span *ngIf="item.isAirPackage">Bọt khí</span>
-                      <span *ngIf="item.isAirPackage && item.isInsurance">-</span>
-                      <span *ngIf="item.isInsurance">Bảo hiểm</span>
-                      <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
-                    </ion-text>
-                    <ion-text>
-                    </ion-text>
-                  </div>
-                </div>
-                <div class="d-flex justify-content-end mb-2">
-                  <ng-container [ngSwitch]="item.status">
-                    <span style="border-radius: 10px;" *ngSwitchCase="1" class="badge badge-pill badge-grey">Chờ thanh toán</span>
-                    <span style="border-radius: 10px;" *ngSwitchCase="2" class="badge badge-pill badge-success">Đã thanh toán</span>
-                    <span style="border-radius: 10px;" *ngSwitchCase="3" class="badge badge-pill badge-cancel">Đã hủy</span>
-                    <span style="border-radius: 10px;" *ngSwitchCase="4" class="badge badge-pill badge-grey">Khác</span>    
-                  </ng-container>
-                </div>
-                <div class="d-flex justify-content-end">
-                  <ion-text class="font-weight-bold">
-                    Tổng tiền:
-                  </ion-text>
-                  &nbsp;
-                  <ion-text class="font-weight-bold">
-                    {{item.totalPrice | number}}
-                  </ion-text>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </ion-item>
-        </ng-container>
-      </ion-list> -->
       <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
         <ion-card style="margin: 1em;--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;">
           <ion-card-header style="padding: 1em;">

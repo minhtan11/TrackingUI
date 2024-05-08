@@ -1,12 +1,12 @@
 <ion-header class="ion-no-border" style="--background:white !important;">
-  <ion-toolbar style="--background:white !important;">
-    <ion-title class="dynamic-font" style="color:black" mode="ios">{{headerText}}</ion-title>
+  <ion-toolbar *ngIf="selected != 0" style="--background:var(--ion-color-mat-primary) !important;">
+    <ion-title class="dynamic-font" style="color:white !important" mode="ios">{{headerText}}</ion-title>
   </ion-toolbar>
   <ng-container *ngIf="selected == 1">
-    <ion-toolbar style="--background:white !important;" class="pr-3 pl-3">
+    <ion-toolbar style="--background:white !important;">
       <div class="d-flex align-items-center h-100 justify-content-center w-100">
         <div style="overflow-x: scroll;margin: auto;max-width: 1000px;">
-          <ion-segment [scrollable]="true" [value]="statusHis" mode="ios">
+          <ion-segment [scrollable]="true" [value]="statusHis" mode="md">
             <ion-segment-button (click)=" sortDataHis(0)" [value]="0">
               <ion-text class="text-segment">
                 <span style="font-size: 1em;">Tất cả</span>
@@ -39,7 +39,7 @@
   </ng-container>
   
 </ion-header>
-<ion-content [forceOverscroll]="true" style="--background:white !important;">
+<ion-content style="--background:white !important;">
   <ion-refresher mode="ios" slot="fixed" (ionRefresh)="onRefresh($event)">
     <ion-refresher-content refreshingSpinner="dots"></ion-refresher-content>
   </ion-refresher>
@@ -702,7 +702,7 @@
   <ion-modal style="--background:white !important" [isOpen]="isOpen" [canDismiss]="isDismiss" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
     <ng-template>
       <div class="p-3 w-100 h-100">
-        <ion-text class="dynamic-font text-center">
+        <ion-text class="dynamic-font text-center" style="color: black !important;">
           <h3>{{'Bạn có muốn tạo kiện hàng từ mã '+textCopy + '?'}}</h3>
         </ion-text>
         <div class="d-flex align-items-center justify-content-center mt-3">
@@ -723,7 +723,7 @@
   <ion-modal style="--background:white !important" [isOpen]="isOpenPopup1" [canDismiss]="isDismissPopup1" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
     <ng-template>
       <div class="p-3 w-100 h-100">
-        <ion-text class="dynamic-font text-center">
+        <ion-text class="dynamic-font text-center" style="color: black !important;">
           <h3>Bạn có muốn xóa tài khoản này?</h3>
         </ion-text>
         <div class="d-flex align-items-center justify-content-center mt-3">
@@ -744,7 +744,7 @@
   <ion-modal style="--background:white !important" [isOpen]="isOpenPopup2" [canDismiss]="isDismissPopup2" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
     <ng-template>
       <div class="p-3 w-100 h-100">
-        <ion-text class="dynamic-font text-center">
+        <ion-text class="dynamic-font text-center" style="color: black !important;">
           <h3>Bạn có muốn đăng xuất khỏi tài khoản này?</h3>
         </ion-text>
         <div class="d-flex align-items-center justify-content-center mt-3">
