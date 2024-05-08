@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Keyboard } from '@capacitor/keyboard';
 import { NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
@@ -37,7 +38,7 @@ export class WithdrawPageComponent  implements OnInit {
 
   async ngOnInit() {
     this.formGroup = this.formBuilder.group({
-      paymentMethod: [Validators.required],
+      paymentMethod: ['',Validators.required],
       bankName: ['', Validators.required],
       accountNumber: ['', Validators.required],
       accountName: ['', Validators.required],
@@ -50,8 +51,20 @@ export class WithdrawPageComponent  implements OnInit {
     this.formGroup.patchValue({username:username});
   }
 
+  async ngAfterViewInit() {
+    Keyboard.addListener('keyboardWillShow', info => {
+      this.isHideFooter = true;
+      this.dt.detectChanges();
+    });
+
+    Keyboard.addListener('keyboardWillHide', () => {
+      this.isHideFooter = false;
+      this.dt.detectChanges();
+    });
+  }
+
   onback(){
-    this.navCtrl.navigateBack('main/setting');
+    this.navCtrl.navigateBack('main');
   }
 
   onWithDraw(){
@@ -92,11 +105,11 @@ export class WithdrawPageComponent  implements OnInit {
     }
     this.api.isLoad(true);
     setTimeout(async () => {
-      let amount = this.formGroup.value?.amount.replace(/,/g, '');
-      this.formGroup.patchValue({amount:amount});
+      let oData = {...this.formGroup.value};
+      oData.amount = oData?.amount.replace(/,/g, '');
       let token = await this.storage.get('token');
       let data = {
-        data: JSON.stringify(this.formGroup.value),
+        data: JSON.stringify(oData),
         token: token
       }
       let messageBody = {
@@ -106,7 +119,7 @@ export class WithdrawPageComponent  implements OnInit {
         next:(res:any)=>{
           if (res && !res?.isError) {
             this.notification.showNotiSuccess('', res.message);
-            this.navCtrl.navigateForward('main/mainpage',{queryParams:{selected:0}});
+            this.navCtrl.navigateForward('main',{queryParams:{selected:0}});
             this.dt.detectChanges();
           }else{
             this.notification.showNotiError('',res?.message);

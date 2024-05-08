@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Keyboard } from '@capacitor/keyboard';
 import { NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
@@ -44,8 +45,20 @@ export class ChangepasswordPageComponent  implements OnInit {
     this.formGroup.patchValue({userName:username});
   }
 
+  async ngAfterViewInit() {
+    Keyboard.addListener('keyboardWillShow', info => {
+      this.isHideFooter = true;
+      this.dt.detectChanges();
+    });
+
+    Keyboard.addListener('keyboardWillHide', () => {
+      this.isHideFooter = false;
+      this.dt.detectChanges();
+    });
+  }
+
   onback(){
-    this.navCtrl.navigateBack('main/setting');
+    this.navCtrl.navigateBack('main');
   }
 
   onChange(){

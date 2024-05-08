@@ -74,6 +74,7 @@ export class OrderPageDetailComponent  implements OnInit,DoCheck {
             this.oData = res.data;
             this.arrayChange.push(res.data);
             this.notification.showNotiSuccess('',res.message);
+            this.navCtrl.navigateBack('main/order',{queryParams:{type:'change',lstdata:JSON.stringify(this.arrayChange)}});
             this.dt.detectChanges();
           }else{
             this.notification.showNotiError('',res.message);

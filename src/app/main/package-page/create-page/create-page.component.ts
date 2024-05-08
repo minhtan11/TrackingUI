@@ -104,11 +104,11 @@ export class CreatePageComponent  implements OnInit {
       }
     }
     setTimeout(() => {
-      if (this.formGroup.value?.isInsurance) {
-        let price = this.formGroup.value?.declarePrice.replace(/,/g, '');
-        this.formGroup.patchValue({ declarePrice: price });
+      let oData = {...this.formGroup.value};
+      if (oData?.isInsurance) {
+        oData.declarePrice = oData?.declarePrice.replace(/,/g, '');
       }
-      this.api.execByBody('Authencation','createpackage',this.formGroup.value,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      this.api.execByBody('Authencation','createpackage',oData,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
         if (res[0]) {
           this.notification.showNotiError('', res[1].message);
         }else{
@@ -154,7 +154,7 @@ export class CreatePageComponent  implements OnInit {
   }
 
   onback(){
-    this.navCtrl.navigateBack('main/package');
+    this.navCtrl.navigateBack('main/package',{queryParams:{type:'default'}});
   }
   //#endregion
 }

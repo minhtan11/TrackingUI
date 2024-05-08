@@ -150,7 +150,7 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
         next:(res:any)=>{
           if (res && !res?.isError) {
             this.storage.set('username', this.formGroup.value.username);
-            this.navCtrl.navigateForward('main/mainpage');
+            this.navCtrl.navigateForward('main');
           }else{
             this.notification.showNotiError('',res?.message);
           }

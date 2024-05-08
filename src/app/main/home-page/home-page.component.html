@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content style="--background:white !important">
-  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
+  <ion-refresher mode="ios" slot="fixed" (ionRefresh)="onRefresh($event)">
     <ion-refresher-content refreshingSpinner="dots"></ion-refresher-content>
   </ion-refresher>
   <ng-container *ngIf="isReview">

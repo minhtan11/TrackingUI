@@ -55,7 +55,7 @@ export class InfomationPageComponent  implements OnInit {
     });
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     Keyboard.addListener('keyboardWillShow', info => {
       this.isHideFooter = true;
       this.dt.detectChanges();
@@ -144,7 +144,7 @@ export class InfomationPageComponent  implements OnInit {
         next:(res:any)=>{
           if (res && !res?.isError) {
             this.notification.showNotiSuccess('',res?.message);
-            this.navCtrl.navigateForward('main/mainpage',{queryParams:{selected:0}});
+            this.navCtrl.navigateForward('main',{queryParams:{selected:0}});
           }else{
             this.notification.showNotiError('',res?.message);
           }
@@ -153,19 +153,6 @@ export class InfomationPageComponent  implements OnInit {
         }
       })
     }, 1000);
-    // this.api.execByBody('Authencation','register',this.formGroup.value,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
-    //   if (res && !res?.isError) {
-    //     this.storage.set('username', this.formGroup.value.username);
-    //     this.storage.set('password', this.formGroup.value.password);
-    //     this.navCtrl.navigateForward('main');
-    //     this.notification.showNotiSuccess('', 'Tạo tài khoản thành công!');
-    //     this.dt.detectChanges();
-    //   }else{
-    //     this.notification.showNotiError('',res?.message);
-    //     this.dt.detectChanges();
-    //   }
-    // })
-    
   }
   
   async uploadImage(type:any){
@@ -209,7 +196,6 @@ export class InfomationPageComponent  implements OnInit {
   }
 
   onback(){
-    this.navCtrl.navigateBack('main/setting');
+    this.navCtrl.navigateBack('main');
   }
-
 }

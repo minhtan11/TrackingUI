@@ -100,6 +100,7 @@ export class DetailComponent  implements OnInit {
               this.oData = res[2];
               //push data array change
               this.arrayChange.push(res[2]);
+              this.navCtrl.navigateBack('main/package',{queryParams:{type:'change',lstdata:JSON.stringify(this.arrayChange)}});
               this.dt.detectChanges();
             } else {
               this.notification.showNotiError('', res[1].message);

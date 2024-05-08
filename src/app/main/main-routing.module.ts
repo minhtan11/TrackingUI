@@ -23,24 +23,24 @@ const routes: Routes = [
   {
     path: '',
     component: MainPage,
-    children:[
-      {
-        path: 'mainpage',
-        component: HomePageComponent,
-      },
-      {
-        path: 'history',
-        component: HistoryPageComponent,
-      },
-      {
-        path: 'notification',
-        component: NotificationPageComponent,
-      },
-      {
-        path: 'setting',
-        component: SettingPageComponent,
-      },
-    ]
+    // children:[
+    //   {
+    //     path: 'mainpage',
+    //     component: HomePageComponent,
+    //   },
+    //   {
+    //     path: 'history',
+    //     component: HistoryPageComponent,
+    //   },
+    //   {
+    //     path: 'notification',
+    //     component: NotificationPageComponent,
+    //   },
+    //   {
+    //     path: 'setting',
+    //     component: SettingPageComponent,
+    //   },
+    // ]
   },
   {
     path: 'package',

@@ -1,12 +1,14 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonRouterOutlet, IonTabs, NavController, Platform } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, IonRouterOutlet, IonTabs, NavController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { StorageService } from '../storage-service/storage.service';
 import { Clipboard, ReadResult } from '@capacitor/clipboard';
 import { ApiserviceComponent } from '../apiservice/apiservice.component';
 import { Subject, takeUntil } from 'rxjs';
 import { Device } from '@capacitor/device';
+import { NotificationServiceComponent } from '../notification-service/notification-service.component';
+
 
 @Component({
   selector: 'app-main',
@@ -15,11 +17,54 @@ import { Device } from '@capacitor/device';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainPage implements OnInit,AfterViewInit {
+  //#region Contructor
   isReview:any;
   isOpen:any=false;
   isDismiss:any=false;
   textCopy:any = '';
   selected:any = 0;
+  headerText:any = 'Trang chủ';
+  pageSize: any = 50;
+  
+
+  // home
+  oUser:any;
+  titleTime:any = '';
+  ship1:any;
+  ship2:any;
+  pack3:any;
+  pack5:any;
+
+  // history
+  lstDataHistory: any;
+  pageNumHis: any = 1;
+  fromDateHis: any = null;
+  toDateHis: any = null;
+  statusHis: any = 0;
+  idHis: any;
+  isEmptyHis: any = false;
+  isloadHis: any = true;
+  isloadpageHis: any = false;
+  firstLoadHis:any = true;
+
+  //notification
+  lstDataNoti: any;
+  pageNumNoti: any = 1;
+  fromDateNoti: any = null;
+  toDateNoti: any = null;
+  statusNoti: any = -1;
+  idNoti: any;
+  isEmptyNoti: any = false;
+  isloadNoti: any = true;
+  isloadpageNoti: any = false;
+  firstLoadNoti:any = true;
+
+  // setting
+  isOpenPopup1:any=false;
+  isOpenPopup2:any=false;
+  isDismissPopup1:any=false;
+  isDismissPopup2:any=false;
+
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
@@ -29,11 +74,18 @@ export class MainPage implements OnInit,AfterViewInit {
     private routerOutlet: IonRouterOutlet,
     private platform : Platform,
     private api: ApiserviceComponent,
+    private notification: NotificationServiceComponent,
+    private router: Router,
   ) {
     this.isReview = this.rt.snapshot.queryParams["isReview"];
    }
-
+  //#endregion
+  
+  //#region Init
   ngOnInit() {
+    this.getTime();
+    this.getUser();
+    this.getDashBoard();
     this.platform.ready().then(async () => {
       let checklogin = this.rt.snapshot.queryParams["checklogin"];
       if (checklogin) {
@@ -55,8 +107,8 @@ export class MainPage implements OnInit,AfterViewInit {
     })
   }
 
-   ngAfterViewInit() {
-    this.dt.detectChanges();
+  ngAfterViewInit() {
+    
   }
 
   onDestroy() {
@@ -65,38 +117,366 @@ export class MainPage implements OnInit,AfterViewInit {
   }
 
   async ionViewWillEnter(){
+    this.isReview = await this.storage.get('isReview');
+    this.dt.detectChanges();
     let selected = this.rt.snapshot.queryParams["selected"];
     if (selected != null) {
       this.selected = selected;
+      switch(selected){
+        case 0:
+          this.getUser();
+          break;
+      }
       this.dt.detectChanges();
     }
     this.routerOutlet.swipeGesture = false; 
-    this.isReview = await this.storage.get('isReview');
   }
+  //#endregion
 
+  //#region Event
   selectedTabChange(event:any){
     let tab = event?.tab.textLabel;
     if (tab) {
       switch(tab){
         case 'home':
           this.selected = 0;
-          this.navCtrl.navigateForward('main/mainpage');
+          this.headerText = 'Trang chủ';
+          //this.navCtrl.navigateForward('main/mainpage');
           break;
         case 'history':
           this.selected = 1;
-          this.navCtrl.navigateForward('main/history');
+          this.headerText = 'Lịch sử giao dịch';
+          this.initHis();
+          //this.navCtrl.navigateForward('main/history');
           break;
         case 'notification':
           this.selected = 2;
-          this.navCtrl.navigateForward('main/notification');
+          this.headerText = 'Thông báo';
+          this.initNoti();
+          //this.navCtrl.navigateForward('main/notification');
           break;
         case 'setting':
           this.selected = 3;
-          this.navCtrl.navigateForward('main/setting');
+          this.headerText = 'Trang cá nhân';
+          //this.navCtrl.navigateForward('main/setting');
           break;
       }
     }
+    this.dt.detectChanges();
   }
+  //#endregion
+
+  //#region Function
+  
+  //#region HomePage
+
+  getTime(){
+    let today = new Date()
+    let curHr = today.getHours()
+    let time = null;
+
+    if (curHr < 12) {
+      this.titleTime = "Chào buổi sáng!";
+    } else if (curHr < 18) {
+      this.titleTime = "Chào buổi chiều!";
+    } else {
+      this.titleTime = "Chào buổi tối";
+    }
+    this.dt.detectChanges();
+  }
+
+  async getUser(){
+    let username = await this.storage.get('username');
+    let data = {
+      userName:username,
+    }
+    let messageBody = {
+      dataRequest:JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+        this.storage.remove('password');
+        this.navCtrl.navigateBack('home');
+      }else{
+        this.oUser = res[1];
+        this.dt.detectChanges();
+      }
+    })
+  }
+
+  async getDashBoard(){
+    let username = await this.storage.get('username');
+    let data = {
+      userName:username,
+    }
+    let messageBody = {
+      dataRequest:JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'dashboard', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        this.pack3 = res[1][0];
+        this.pack5 = res[1][2];
+        this.ship1 = res[2][0];
+        this.ship2 = res[2][1];
+        this.dt.detectChanges();
+      }
+    })
+  }
+
+  goOrderPage(status:any=''){
+    if (status) {
+      this.navCtrl.navigateForward('main/order',{queryParams:{status:status}});
+      return;
+    }
+    this.navCtrl.navigateForward('main/order');
+    this.onDestroy();
+  }
+
+  goPackagePage(status:any=''){
+    if (status) {
+      this.navCtrl.navigateForward('main/package',{queryParams:{status:status}});
+      return;
+    }
+    this.navCtrl.navigateForward('main/package');
+    this.onDestroy();
+  }
+
+  goRechargePage(){
+    this.onDestroy();
+    this.navCtrl.navigateForward('main/recharge');
+  }
+
+  goServicechargePage(){
+    this.onDestroy();
+    this.navCtrl.navigateForward('main/service-charge');
+  }
+  //#endregion
+
+  //#region History
+  initHis(){
+    if(!this.firstLoadHis) return;
+    this.lstDataHistory = [];
+    this.isloadpageHis = true;
+    this.dt.detectChanges();
+    setTimeout(() => {
+      this.loadDataHis();
+    }, 500);
+  }
+
+  loadDataHis(){
+    let data = {
+      status: this.statusHis,
+      id: this.idHis,
+      //fromDate: this.fromDate,
+      //toDate: this.toDate,
+      pageNum: this.pageNumHis,
+      pageSize: this.pageSize,
+      userName: this.oUser?.username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'historywallet', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        let oData = res[1];
+        this.lstDataHistory = oData[0];
+        this.isloadpageHis = false;
+        if (this.lstDataHistory.length == 0) this.isEmptyHis = true;
+        if (this.lstDataHistory.length == oData[1]) this.isloadHis = false;
+        if(this.firstLoadHis) this.firstLoadHis = false;
+        this.dt.detectChanges();
+      }
+    })
+  }
+
+  sortDataHis(status: any) {
+    if(this.statusHis == status) return;
+    this.statusHis = status;
+    this.isloadHis = true;
+    this.pageNumHis = 1;
+    this.lstDataHistory = [];
+    this.isEmptyHis = false;
+    this.isloadpageHis = true;
+    this.dt.detectChanges();
+    setTimeout(() => {
+      this.loadDataHis();
+    }, 500); 
+  }
+
+  onIonInfiniteHis(event: any) {
+    if (this.isloadHis) {
+      this.pageNumHis += 1;
+      let data = {
+        status: this.statusHis,
+        id: this.idHis,
+        //fromDate: this.fromDate,
+        //toDate: this.toDate,
+        pageNum: this.pageNumHis,
+        pageSize: this.pageSize,
+        userName: this.oUser?.username
+      }
+      let messageBody = {
+        dataRequest: JSON.stringify(data)
+      };
+      this.api.execByBody('Authencation', 'historywallet', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+        if (res[0]) {
+          this.notification.showNotiError('', res[1].message);
+        }else{
+          let oData = res[1];
+          oData[0].forEach((data:any) => {
+            this.lstDataHistory.push(data);
+          });
+          if(this.lstDataHistory.length == oData[1]) this.isloadHis = false;
+          this.onDestroy();
+          setTimeout(() => {
+            (event as InfiniteScrollCustomEvent).target.complete();
+            this.dt.detectChanges();
+          }, 500);
+        }
+      })
+    }
+  }
+  //#endregion
+
+  //#region Notification
+  initNoti(){
+    if(!this.firstLoadNoti) return;
+    this.lstDataNoti = [];
+    this.isloadpageNoti = true;
+    this.dt.detectChanges();
+    setTimeout(() => {
+      this.loadDataNoti();
+    }, 500);
+  }
+
+  loadDataNoti(){
+    let data = {
+      status: this.statusNoti,
+      //fromDate: this.fromDate,
+      //toDate: this.toDate,
+      pageNum: this.pageNumNoti,
+      pageSize: this.pageSize,
+      userName: this.oUser?.username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'notification', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        let oData = res[1];
+        this.lstDataNoti = oData[0];
+        this.isloadpageNoti = false;
+        if (this.lstDataNoti.length == 0) this.isEmptyNoti = true;
+        if (this.lstDataNoti.length == oData[1]) this.isloadNoti = false;
+        if(this.firstLoadNoti) this.firstLoadNoti = false;
+        this.dt.detectChanges();
+      }
+    })
+  }
+
+  onIonInfiniteNoti(event: any) {
+    if (this.isloadNoti) {
+      this.pageNumNoti += 1;
+      let data = {
+        status: this.statusNoti,
+        //fromDate: this.fromDate,
+        //toDate: this.toDate,
+        pageNum: this.pageNumNoti,
+        pageSize: this.pageSize,
+        userName: this.oUser?.username
+      }
+      let messageBody = {
+        dataRequest: JSON.stringify(data)
+      };
+      this.api.execByBody('Authencation', 'notification', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+        if (res[0]) {
+          this.notification.showNotiError('', res[1].message);
+        }else{
+          let oData = res[1];
+          oData[0].forEach((data:any) => {
+            this.lstDataNoti.push(data);
+          });
+          if(this.lstDataNoti.length == oData[1]) this.isloadNoti = false;
+          this.onDestroy();
+          setTimeout(() => {
+            (event as InfiniteScrollCustomEvent).target.complete();
+            this.dt.detectChanges();
+          }, 500);
+        }
+      })
+    }
+  }
+  //#endregion
+  
+  //#region Setting
+  goInformation(){
+    this.navCtrl.navigateForward('main/setting/information');
+  }
+
+  goWithdraw(type:any){
+    this.navCtrl.navigateForward('main/setting/withdraw',{queryParams:{type:type}});
+  }
+
+  goChangePassword(){
+    this.navCtrl.navigateForward('main/setting/changepassword');
+  }
+
+  goSignIn(){
+    this.onDismiss2();
+    this.storage.remove('isLogin');
+    this.navCtrl.navigateBack('home');
+  }
+
+  onDelete() {
+    this.onDismiss();
+    let data = {
+      userName: this.oUser?.username,
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'deleteaccount', messageBody, true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res && !res?.isError) {
+        this.notification.showNotiSuccess('', res?.message);
+        this.storage.remove('username');
+        this.storage.remove('password');
+        this.navCtrl.navigateBack('home');
+      } else {
+        this.notification.showNotiError('', res?.message);
+      }
+      this.onDestroy();
+    })
+  }
+  onOpen(){
+    this.isOpenPopup1 = true;
+    this.isDismissPopup1 = false;
+    this.dt.detectChanges();
+  }
+
+  onOpen2(){
+    this.isOpenPopup2 = true;
+    this.isDismissPopup2 = false;
+    this.dt.detectChanges();
+  }
+
+  onDismiss(){
+    this.isDismissPopup1 = true;
+    this.isOpenPopup1 = false;
+    this.dt.detectChanges();
+  }
+  onDismiss2(){
+    this.isDismissPopup2 = true;
+    this.isOpenPopup2 = false;
+    this.dt.detectChanges();
+  }
+  //#endregion
   onAccept(){
     this.onCancel();
     this.navCtrl.navigateForward('main/package/create',{queryParams:{code:this.textCopy}});
@@ -138,4 +518,36 @@ export class MainPage implements OnInit,AfterViewInit {
       }
     })
   }
+
+  onRefresh(event:any){
+    switch(this.selected){
+      case 0:
+      case 3:
+        this.getUser();
+        this.getDashBoard();
+        break;
+      case 1:
+        this.pageNumHis = 1;
+        this.isEmptyHis = false;
+        this.isloadpageHis = true;
+        this.isloadHis = true;
+        this.loadDataHis();
+        break;
+      case 2:
+        this.pageNumNoti = 1;
+        this.isEmptyNoti = false;
+        this.isloadpageNoti = true;
+        this.isloadNoti = true;
+        this.loadDataNoti();
+        break;
+    }
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
+  }
+
+  // trackByFn(index: any, item: any) {
+  //   return index;
+  // }
+  //#endregion
 }

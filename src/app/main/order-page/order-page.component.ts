@@ -1,9 +1,9 @@
 import { HttpParams } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 import { Network } from '@capacitor/network';
-import { InfiniteScrollCustomEvent, IonContent, NavController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, IonContent, NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
@@ -30,7 +30,6 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   isload:any=true;
   isloadpage:any=false;
   isconnected:any = true;
-  platform:any = "";
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -39,14 +38,26 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     private notification: NotificationServiceComponent,
     private navCtrl: NavController,
     private storage: StorageService,
+    private platform: Platform,
+    private router: Router,
   ) { 
-    this.platform = Capacitor.getPlatform();
   }
   //#endregion
 
   //#region Init
 
   ngOnInit() {
+    // this.platform.ready().then(async () => {
+    //   this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
+    //     if ((this.router.url.includes('/main/package'))) {
+    //       if (!(this.router.url.includes('/main/package/create')) || (this.router.url.includes('/main/package/detail'))) {
+    //         this.navCtrl.navigateForward('main',{queryParams:{selected:0}});
+    //       }else{
+    //         processNextHandler();
+    //       }
+    //     }
+    //   });
+    // });
   }
 
   async ionViewWillEnter(){
@@ -147,7 +158,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   }
 
   onback(){
-    this.navCtrl.navigateBack('main/mainpage');
+    this.navCtrl.navigateBack('main');
   }
 
   onCopy(){

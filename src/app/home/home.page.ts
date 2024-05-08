@@ -144,7 +144,7 @@ export class HomePage implements OnInit, AfterViewInit {
             this.storage.set('username', this.formGroup.value.userName);
             this.storage.set('password', this.formGroup.value.passWord);
             this.storage.set('isLogin', true);
-            this.navCtrl.navigateForward('main/mainpage',{queryParams:{checklogin:false}});
+            this.navCtrl.navigateForward('main',{queryParams:{checklogin:false}});
           } else {
             this.notification.showNotiError('', res?.message);
           }
@@ -248,7 +248,7 @@ export class HomePage implements OnInit, AfterViewInit {
           next: (res: any) => {
             if (res && !res?.isError) {
               this.storage.set('isLogin', true);
-              this.navCtrl.navigateForward('main/mainpage', { queryParams: { checklogin: false } });
+              this.navCtrl.navigateForward('main', { queryParams: { checklogin: false } });
             } else {
               this.notification.showNotiError('', res?.message);
             }

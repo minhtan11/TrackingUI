@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InfiniteScrollCustomEvent, IonContent, IonSegment, IonSegmentButton, NavController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, IonContent, IonSegment, IonSegmentButton, NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
@@ -32,7 +32,6 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   total:any = 0;
   isload:any=true;
   isconnected:any = true;
-  platform:any = "";
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -41,14 +40,25 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     private notification: NotificationServiceComponent,
     private navCtrl: NavController,
     private storage: StorageService,
+    private router: Router,
+    private platform: Platform,
   ) { 
-    this.platform = Capacitor.getPlatform();
   }
   //#endregion
 
   //#region Init
   ngOnInit() {
-    
+    // this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+    //   if ((this.router.url.includes('/main/package'))) {
+    //     if ((this.router.url.includes('/main/package/create')) || (this.router.url.includes('/main/package/detail'))) {
+    //       this.navCtrl.navigateBack('main/package',{queryParams:{type:'default'}});
+    //     }else{
+    //       if (!(this.router.url.includes('/main/package/orderstatus'))) {
+    //         this.navCtrl.navigateBack('main',{queryParams:{selected:0}});
+    //       }
+    //     }
+    //   }
+    // });
   }
 
   ngAfterViewInit(){
@@ -187,7 +197,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   }
 
   onback(){
-    this.navCtrl.navigateBack('main/mainpage');
+    this.navCtrl.navigateBack('main',{queryParams:{selected:0}});
   }
 
   ionChange(event:any){
@@ -207,16 +217,6 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     if(!this.username) this.username = await this.storage.get('username');
     let type = this.rt.snapshot.queryParams['type'];
     switch(type){
-      // case 'addnew':
-      //   this.pageNum = 1;
-      //   this.status = 0;
-      //   this.isload = true;
-      //   this.isEmpty = false;
-      //   this.isloadpage = false;
-      //   this.lstData = [];
-      //   this.content.scrollToTop();
-      //   this.loadData();
-      //   break;
       case 'change':
         let array = JSON.parse(this.rt.snapshot.queryParams['lstdata']);
         array.forEach((item:any) => {
@@ -226,6 +226,13 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
         this.dt.detectChanges();
         break;
       case 'default':
+        if (this.lstData && this.lstData.length == 0) {
+          this.isloadpage = true;
+          this.dt.detectChanges();
+          setTimeout(() => {
+            this.loadData();
+          }, 500);
+        }
         break;
       default:
         this.lstData = [];

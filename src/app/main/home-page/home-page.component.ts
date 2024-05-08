@@ -38,13 +38,13 @@ export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
     private notification: NotificationServiceComponent,
     private routerOutlet: IonRouterOutlet
   ) { 
-    router.events.subscribe((val: any) => {
-      if (val instanceof NavigationEnd && val?.type === 1 && (val?.url.includes('/main/mainpage'))) {
-        this.getTime();
-        this.getUser();
-        this.getDashBoard();
-      }
-    });
+    // router.events.subscribe((val: any) => {
+    //   if (val instanceof NavigationEnd && val?.type === 1 && (val?.url.includes('/main/mainpage'))) {
+    //     this.getTime();
+    //     this.getUser();
+    //     this.getDashBoard();
+    //   }
+    // });
   }
   //#endregion
 
@@ -55,17 +55,17 @@ export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
   }
 
   ngAfterViewInit(){
-    this.platform.ready().then(async () => {
-      this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
-        if (!(this.router.url.includes('/main/mainpage'))) {
-          processNextHandler();
-        }
-        if ((this.router.url.includes('/main/mainpage')) || (this.router.url.includes('/home')) || (this.router.url.includes('/main/history')) || (this.router.url.includes('/main/notification')) 
-          || (this.router.url.includes('/main/setting'))) {
-          App.minimizeApp();
-        }
-      });
-    });
+    // this.platform.ready().then(async () => {
+    //   this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
+    //     if (!(this.router.url.includes('/main/mainpage'))) {
+    //       processNextHandler();
+    //     }
+    //     if ((this.router.url.includes('/main/mainpage')) || (this.router.url.includes('/home')) || (this.router.url.includes('/main/history')) || (this.router.url.includes('/main/notification')) 
+    //       || (this.router.url.includes('/main/setting'))) {
+    //       App.minimizeApp();
+    //     }
+    //   });
+    // });
     // this.platform.ready().then(async () => {
     //   this.platform.backButton.subscribeWithPriority(9999, () => {
     //     document.addEventListener('backbutton', function (event) {

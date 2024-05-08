@@ -1,22 +1,67 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { NavController } from '@ionic/angular';
+import { Subject, takeUntil } from 'rxjs';
+import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
+import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
 
 @Component({
   selector: 'app-servicecharge-page',
   templateUrl: './servicecharge-page.component.html',
   styleUrls: ['./servicecharge-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ServicechargePageComponent  implements OnInit {
   platform:any = "";
-  constructor(private navCtrl: NavController) { 
+  lst1:any;
+  lst2:any;
+  lst3:any;
+  lst4:any;
+  private destroy$ = new Subject<void>();
+  constructor(
+    private navCtrl: NavController,
+    private api: ApiserviceComponent,
+    private notification: NotificationServiceComponent,
+    private dt : ChangeDetectorRef,
+  ) { 
     this.platform = Capacitor.getPlatform();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getFeeWeight();
+  }
+
+  async ionViewWillEnter(){
+  }
+
+  onDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   onback(){
     this.navCtrl.navigateBack('main');
   }
 
+  getFeeWeight(){
+    this.api.execByBody('Authencation', 'getfeeweight', null).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res && !res?.isError) {
+        this.lst1 = res.data.filter((x:any) => x.type == 1);
+        this.lst2 = res.data.filter((x:any) => x.type == 2);
+        this.lst3 = res.data.filter((x:any) => x.type == 3);
+        this.lst4 = res.data.filter((x:any) => x.type == 4);
+        this.dt.detectChanges();
+      }else{
+        this.notification.showNotiError('', res?.message);
+      }
+      this.onDestroy();
+    })
+  }
+
+  onRefresh(event:any){
+    this.getFeeWeight();
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
+  }
 }
