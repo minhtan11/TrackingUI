@@ -21,6 +21,7 @@ export class CreatePageComponent  implements OnInit {
   @ViewChild('eleWareHouse') eleWareHouse: any;
   @ViewChild('eleDeclaration') eleDeclaration: any;
   @ViewChild('eleDeclarePrice') eleDeclarePrice: any;
+  isReview:any;
   username:any='';
   isExec:any=false;
   private destroy$ = new Subject<void>();
@@ -60,7 +61,8 @@ export class CreatePageComponent  implements OnInit {
     this.formGroup.patchValue({username:this.username});
   }
 
-  ionViewWillEnter(){
+  async ionViewWillEnter(){
+    this.isReview = await this.storage.get('isReview');
   }
 
   ionViewWillLeave(){

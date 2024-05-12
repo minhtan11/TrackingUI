@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border" style="--background:white !important;">
-  <ion-toolbar *ngIf="selected != 0" style="--background:var(--ion-color-mat-primary) !important;">
+  <ion-toolbar style="--background:var(--ion-color-mat-primary) !important;">
     <ion-title class="dynamic-font" style="color:white !important" mode="ios">{{headerText}}</ion-title>
   </ion-toolbar>
   <ng-container *ngIf="selected == 1">
@@ -50,20 +50,9 @@
       <div class="w-100" style="margin: auto;max-width: 850px;">
         <ion-card class="mx-0 my-0" style="border-radius: 0em;box-shadow: none;--background:white !important">
           <ion-card-content class="px-0 py-0">
-            <div class="slideshow-container w-100">
-              <div class="mySlides fade" style="display: block;">
-                <img src="../../../assets/image/bg1.jpg" style="width:100%;height: 180px;">
-              </div>
-              <div class="mySlides fade">
-                <img src="../../../assets/image/bg2.jpg" style="width:100%;height: 180px;">
-              </div>
-              <div class="mySlides fade">
-                <img src="../../../assets/image/bg3.jpg" style="width:100%;height: 180px;">
-              </div>
-              <div class="mySlides fade">
-                <img src="../../../assets/image/bg4.jpg" style="width:100%;height: 180px;">
-              </div>
-              </div>
+            <div class="w-100">
+              <img src="../../assets/image/logo-icon2.png" style="width:100%;height: 180px;">  
+            </div>
           </ion-card-content>
         </ion-card> 
         <div class="d-flex justify-content-center align-items-center">
@@ -85,9 +74,6 @@
                 <ng-container *ngIf="oUser == undefined">
                   <ion-skeleton-text style="width: 30%;" [animated]="true"></ion-skeleton-text>
                   <ion-skeleton-text style="width: 40%;" [animated]="true"></ion-skeleton-text>
-                  <div class="d-flex align-items-center justify-content-center w-100">
-                    <ion-skeleton-text style="width: 50%;" [animated]="true"></ion-skeleton-text>
-                  </div>
                 </ng-container>
                 <ng-container *ngIf="oUser != undefined">
                   <!-- <img style="width: 4em;height: 4em;
@@ -99,18 +85,6 @@
                   <ion-text class="ion-text-uppercase font-weight-bold">
                     {{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN}}
                   </ion-text>
-                  <div class="d-flex align-items-center justify-content-center w-100">
-                    <div style="white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;">  
-                      <ion-text class="font-weight-bold">
-                        <span style="font-size: 1.5em;">{{oUser.wallet | number}}</span>
-                      </ion-text>
-                    </div>
-                    <ion-text class="font-weight-bold">
-                      <span>đ</span>
-                    </ion-text>
-                  </div>
                 </ng-container>
               </div>
             </ion-card-header>
@@ -142,10 +116,9 @@
                   <div style="white-space: nowrap;
                                 overflow: hidden;
                                 text-overflow: ellipsis;">
-                    <ion-text *ngIf="ship1 != undefined">
-                      <span class="font-weight-bold">{{ship1 | number}}</span>
+                    <ion-text>
+                      <span class="font-weight-bold">{{0 | number}}</span>
                     </ion-text>
-                    <ion-skeleton-text *ngIf="ship1 == undefined" [animated]="true"></ion-skeleton-text>
                   </div>
                 </div>
               </ion-card-content>
@@ -166,10 +139,9 @@
                   <div style="white-space: nowrap;
                                 overflow: hidden;
                                 text-overflow: ellipsis;">
-                    <ion-text *ngIf="pack3 != undefined">
-                      <span class="font-weight-bold">{{pack3 | number}}</span>
+                    <ion-text>
+                      <span class="font-weight-bold">{{0 | number}}</span>
                     </ion-text>
-                    <ion-skeleton-text *ngIf="pack3 == undefined" [animated]="true"></ion-skeleton-text>
                   </div>
                 </div>
               </ion-card-content>
@@ -192,10 +164,9 @@
                   <div style="white-space: nowrap;
                                 overflow: hidden;
                                 text-overflow: ellipsis;">
-                    <ion-text *ngIf="ship2 != undefined">
-                      <span class="font-weight-bold">{{ship2 | number}}</span>
+                    <ion-text>
+                      <span class="font-weight-bold">{{0 | number}}</span>
                     </ion-text>
-                    <ion-skeleton-text *ngIf="ship2 == undefined" [animated]="true"></ion-skeleton-text>
                   </div>
                 </div>
               </ion-card-content>
@@ -216,10 +187,9 @@
                   <div style="white-space: nowrap;
                                 overflow: hidden;
                                 text-overflow: ellipsis;">
-                    <ion-text *ngIf="pack5 != undefined">
-                      <span class="font-weight-bold">{{pack5 | number}}</span>
+                    <ion-text>
+                      <span class="font-weight-bold">{{0 | number}}</span>
                     </ion-text>
-                    <ion-skeleton-text *ngIf="pack5 == undefined" [animated]="true"></ion-skeleton-text>
                   </div>
                 </div>
               </ion-card-content>

@@ -158,7 +158,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   }
 
   onback(){
-    this.navCtrl.navigateBack('main');
+    this.navCtrl.navigateBack('main',{queryParams:{selected:0}});
   }
 
   onCopy(){

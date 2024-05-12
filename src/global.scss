@@ -88,6 +88,7 @@ ion-segment {
     --offset-bottom: auto !important;
     --overflow: hidden;
     overflow: auto;
+    color:black !important;
 
     &::-webkit-scrollbar {
         display: none;
@@ -95,7 +96,8 @@ ion-segment {
 }
 
 ion-segment-button {
-    --color-checked: var(--ion-color-mat-primary);
+    --color-checked: var(--ion-color-mat-primary) !important;
+    --color:black !important;
     font-size: 1rem !important;
     text-transform:none !important;
 }
@@ -106,7 +108,7 @@ ion-segment-button {
 
 .tab-selected {
     color: var(--ion-color-mat-primary) !important;
-    border-top: 1px solid var(--ion-color-mat-primary) !important;
+    border-top: 1px solid white !important;
 }
 
 .fade {
@@ -240,7 +242,7 @@ ul.timeline>.active:before {
 }
 
 .mat-mdc-tab .mdc-tab-indicator__content--underline {
-    border-color: var(--ion-color-mat-primary) !important;
+    border-color: white !important;
 }
 
 .btn-orange.mat-mdc-unelevated-button:not(:disabled){
@@ -266,10 +268,10 @@ ul.timeline>.active:before {
 
 ion-searchbar {
     --background: white !important;
-    //--color: #fff !important;
-    //--placeholder-color: #fff !important;
-    //--icon-color: white !important;
-    //--clear-button-color: #fff !important;
+    --color: grey !important;
+    --placeholder-color: grey !important;
+    --icon-color: grey !important;
+    --clear-button-color: grey !important;
     font-size: var(--ion-dynamic-font) !important;
 }
 

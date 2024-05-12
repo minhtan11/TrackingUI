@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>NSFaceIDUsageDescription</key>
-    <string>For an easier and faster log in.</string>
+    <string>Ứng dụng cần dùng FaceID để đăng nhập vào hệ thống nhanh hơn và dễ dàng hơn</string>
     <key>NSCameraUsageDescription</key>
-    <string>For take picture from camera</string>
+    <string>Ứng dụng cần truy cập vào photos và camera để chụp ảnh và đính kèm ảnh vào phản hồi và thay đổi ảnh đại diện</string>
     <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>For get picture add from camera</string>
+    <string>Ứng dụng cần truy cập vào photos và camera để chụp ảnh và đính kèm ảnh vào phản hồi và thay đổi ảnh đại diện</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>For get picture from Library</string>
+    <string>Ứng dụng cần truy cập vào photos và camera để chụp ảnh và đính kèm ảnh vào phản hồi và thay đổi ảnh đại diện</string>
     <key>CFBundleDevelopmentRegion</key>
     <string>en</string>
     <key>CFBundleDisplayName</key>

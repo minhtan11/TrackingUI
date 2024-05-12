@@ -39,7 +39,7 @@
         <div class="d-flex align-items-center justify-content-between">
           <mat-checkbox formControlName="isWoodPackage">Đóng gỗ</mat-checkbox>
           <mat-checkbox formControlName = "isAirPackage">Túi khí</mat-checkbox>
-          <mat-checkbox formControlName="isInsurance">Bảo hiểm</mat-checkbox>
+          <mat-checkbox *ngIf="!isReview" formControlName="isInsurance">Bảo hiểm</mat-checkbox>
         </div>
         <ng-container *ngIf="formGroup.value.isInsurance">
           <ion-text color="primary" class="mb-3">

@@ -19,6 +19,7 @@ import { Capacitor } from '@capacitor/core';
 export class PackagePageComponent  implements OnInit,AfterViewInit {
   //#region Contrucstor
   @ViewChild(IonContent) content: IonContent;
+  isReview:any;
   pageNum:any = 1;
   pageSize:any = 50;
   fromDate:any = '';
@@ -82,6 +83,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   }
 
   async ionViewWillEnter(){
+    this.isReview = await this.storage.get('isReview');
     let status = this.rt.snapshot.queryParams["status"];
     if (status) {
       this.status = status;
