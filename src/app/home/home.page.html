@@ -1,79 +1,94 @@
 <ion-content class="ion-padding" style="--background:white">
-  <div class="d-flex align-items-center justify-content-center h-100">
-    <ion-grid class="text-center pr-0 pl-0" [fixed]="true" style="margin: auto;max-width: 850px;">
-      <ion-row>
-        <ion-col size="12" class="pr-0 pl-0">
-          <img style="border-radius: 50%;display: block;
-          margin-left: auto;
-          margin-right: auto;width: 25%;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;" src="../../assets/image/logo-icon.png" alt="">
-        </ion-col>
-        <ion-col size="12" class="pr-0 pl-0">
-          <!-- <ion-text>
-            <span style="font-size: var(--ion-dynamic-font) !important;color:black !important" class="font-weight-bold">NHẬN SHIP HÀNG - MỘT CHỮ TÍN VẠN NIỀM TIN</span>
-          </ion-text>
-          <br>
-          <ion-text>
-            <span style="font-size: var(--ion-dynamic-font) !important;color: var(--ion-color-medium-tint);">Nhận ship hàng luôn đặt lợi ích khách hàng lên hàng đầu</span>
-          </ion-text> -->
-          <ion-text>
-            <span style="color:black !important" class="dynamic-font font-weight-bold">MỘT CHỮ TÍN - VẠN NIỀM TIN</span>
-          </ion-text>
-          <br>
-          <ion-text>
-            <span class="dynamic-font" style="color: var(--ion-color-medium-tint) !important;">Nhận ship hàng luôn đặt lợi ích khách hàng lên hàng đầu</span>
-          </ion-text>
-        </ion-col>
-        <ng-container *ngIf="!isAuthen">
-          <ion-col [formGroup]="formGroup" size="12" class="pr-0 pl-0" style="font-size: 1.3rem !important;">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Tên đăng nhập</mat-label>
-              <input #eleUserName formControlName="userName"  matInput>
+  <!-- <div class="d-flex align-items-center justify-content-center h-100">
+    
+  </div> -->
+  <ion-grid class="text-center pr-0 pl-0" [fixed]="true" style="margin: auto;max-width: 850px;">
+    <ion-row>
+      <ion-col size="12" class="pr-0 pl-0">
+        <img style="border-radius: 50%;display: block;
+        margin-left: auto;
+        margin-right: auto;width: 25%;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;" src="../../assets/image/logo-icon.png" alt="">
+      </ion-col>
+      <ion-col size="12" class="pr-0 pl-0">
+        <ion-text>
+          <span class="dynamic-font font-weight-bold text-dark">MỘT CHỮ TÍN - VẠN NIỀM TIN</span>
+        </ion-text>
+        <br>
+        <ion-text>
+          <span class="dynamic-font" style="color: var(--ion-color-medium-tint) !important;">Nhận ship hàng luôn đặt lợi ích khách hàng lên hàng đầu</span>
+        </ion-text>
+      </ion-col>
+      <ng-container *ngIf="!isAuthen">
+        <ion-col [formGroup]="formGroup" size="12" class="pr-0 pl-0" style="font-size: 1.3rem !important;">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label class="dynamic-font">Tài khoản</mat-label>
+            <input #eleUserName formControlName="userName"  matInput>
+          </mat-form-field>
+          <div class="w-100">
+            <mat-form-field class="w-100">
+              <mat-label class="dynamic-font">Mật khẩu</mat-label>
+              <input #elePassword formControlName="passWord" matInput [type]="!showPass ? 'password' : 'text'">
+              <button class="d-flex align-items-center justify-content-center" mat-icon-button matSuffix (click)="showPass = !showPass">
+                <ion-icon style="color:black !important" [name]="!showPass ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+              </button>
             </mat-form-field>
-            <div class="w-100">
-              <mat-form-field class="w-100">
-                <mat-label>Mật khẩu</mat-label>
-                <input #elePassword formControlName="passWord" matInput [type]="!showPass ? 'password' : 'text'">
-                <button class="d-flex align-items-center justify-content-center" mat-icon-button matSuffix (click)="showPass = !showPass">
-                  <ion-icon style="color:black !important" [name]="!showPass ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
-                </button>
-              </mat-form-field>
-            </div> 
-            <button (click)="onSignIn()" style="border-radius: 10px;" class="btn btn-block text-white dynamic-font" mat-flat-button color="primary">
-              <span>ĐĂNG NHẬP</span>
-            </button>   
-          </ion-col>
-          <ion-col *ngIf="userName" size="12" class="pr-0 pl-0">
-            <span (click)="changeAuthen(true)" style="color: var(--ion-color-mat-primary) !important"><u>Đăng nhập bằng xác thực</u></span>
-            <br>
-          </ion-col>
-        </ng-container>
-        <ng-container *ngIf="isAuthen">
-          <ion-col size="12" class="pr-0 pl-0" style="font-size: 1.3rem !important;">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Tên đăng nhập</mat-label>
-              <input [value]="userName" [disabled]="true" matInput>
-            </mat-form-field>
-            <button (click)="onAuthen()" style="border-radius: 10px;" class="btn text-white dynamic-font" mat-flat-button color="primary">
-              <ion-icon style="font-size: 1.5rem !important;" name="finger-print-outline"></ion-icon>
-            </button>   
-          </ion-col>
-          <ion-col size="12" class="pr-0 pl-0">
-            <span (click)="changeAuthen(false)" style="color: var(--ion-color-mat-primary) !important"><u>Đăng nhập bằng tài khoản khác</u></span>
-            <br>
-          </ion-col>
-        </ng-container>
-        
-        <ion-col size="12" class="pr-0 pl-0">
-          <span style="color: black !important;">Bạn không có tài khoản? </span>
-          <span (click)="goSignUpPage()" style="color: var(--ion-color-mat-primary) !important"><u>Đăng ký</u></span>
+          </div> 
+          <!-- <button (click)="onSignIn()" style="border-radius: 10px;" class="btn btn-block text-white dynamic-font" mat-flat-button color="primary">
+            <span>ĐĂNG NHẬP</span>
+          </button>    -->
+          <ion-button mode="ios" (click)="onSignIn()" class="ion-btn-default" expand="block">
+            <ion-text>
+              <span class="dynamic-font">ĐĂNG NHẬP</span>
+            </ion-text>
+          </ion-button>
+        </ion-col>
+        <ion-col *ngIf="userName" size="12" class="pr-0 pl-0">
+          <ion-text>
+            <span class="dynamic-font" (click)="changeAuthen(true)" style="color: var(--ion-color-mat-primary) !important"><u>Đăng nhập bằng xác thực</u></span>
+          </ion-text>
           <br>
         </ion-col>
-        <ion-col size="12" class="pr-0 pl-0">
-          <img style="width: 80%;object-fit: contain;display: block;margin-left: auto;margin-right: auto;" src="../../assets/image/delivery-service.png" alt="">
+      </ng-container>
+      <ng-container *ngIf="isAuthen">
+        <ion-col size="12" class="pr-0 pl-0" style="font-size: 1.3rem !important;">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label class="dynamic-font">Tên đăng nhập</mat-label>
+            <input [value]="userName" [disabled]="true" matInput>
+          </mat-form-field>
+          <!-- <button (click)="onAuthen()" style="border-radius: 10px;" class="btn text-white dynamic-font" mat-flat-button color="primary">
+            <ion-icon style="font-size: 1.5rem !important;" name="finger-print-outline"></ion-icon>
+          </button>    -->
+          <ion-button mode="ios" (click)="onAuthen()" class="ion-btn-default">
+            <ion-icon style="font-size: 1.5rem !important;" slot="icon-only" name="finger-print-outline"></ion-icon>
+          </ion-button>
         </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
+        <ion-col size="12" class="pr-0 pl-0">
+          <ion-text>
+            <span class="dynamic-font" (click)="changeAuthen(false)" style="color: var(--ion-color-mat-primary) !important"><u>Đăng nhập bằng tài khoản khác</u></span>
+          </ion-text>
+          <br>
+        </ion-col>
+      </ng-container>
+      
+      <ion-col size="12" class="pr-0 pl-0">
+        <ion-text>
+          <span class="dynamic-font" style="color: black !important;">Bạn không có tài khoản? </span>
+        </ion-text>
+        <ion-text>
+          <span class="dynamic-font" (click)="goSignUpPage()" style="color: var(--ion-color-mat-primary) !important"><u>Đăng ký</u></span>
+        </ion-text>
+        <br>
+      </ion-col>
+      <!-- <ion-col size="12" class="pr-0 pl-0">
+        <ion-img style="max-width: 300px !important;min-width: 300px;max-height: 300px;min-height: 300px;object-fit: contain;display: block;margin-left: auto;margin-right: auto;" src="../../assets/image/delivery-service.png"></ion-img>
+      </ion-col> -->
+    </ion-row>
+  </ion-grid>
 </ion-content>
+<ion-footer class="ion-no-border" style="--background:white !important;" *ngIf="!isHideFooter">
+  <ion-toolbar style="--background:white !important;">
+    <ion-img style="max-width: 200px !important;min-width: 200px;max-height: 200px;min-height: 200px;object-fit: contain;display: block;margin-left: auto;margin-right: auto;" src="../../assets/image/delivery-service.png"></ion-img>
+  </ion-toolbar>
+</ion-footer>
 
 

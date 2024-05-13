@@ -28,49 +28,75 @@
 // css for all screen
 html {
     font-size: 100%;
+
     @media (max-width: 289px) {
         font-size: 45%;
     }
+
     @media (min-width: 290px) {
         font-size: 50%;
     }
+
     @media (min-width: 300px) {
         font-size: 52.5%;
     }
+
     @media (min-width: 320px) {
         font-size: 55.5%;
     }
+
     @media (min-width: 325px) {
         font-size: 56.5%;
     }
+
     @media (min-width: 326px) {
         font-size: 57%;
     }
+
     @media (min-width: 330px) {
         font-size: 59%;
     }
+
     @media (min-width: 360px) {
         font-size: 62.5%;
     }
+
     @media (min-width: 411px) {
         font-size: 70%;
     }
+
     @media (min-width: 500px) {
         font-size: 85%;
     }
+
     @media (min-width: 720px) {
         font-size: 100%;
     }
+
     @media (min-width: 1000px) {
         font-size: 110%;
     }
-    font-family: Roboto, "Helvetica Neue", sans-seri !important;
-  }
-  html.ios {
-    @media (max-width: 359px) and (min-width: 320px) {
-        font-size: 59%;
-    }
-  }
+}
+
+// html.ios {
+//     @media (max-width: 359px) and (min-width: 320px) {
+//         font-size: 59%;
+//     }
+// }
+
+.dynamic-font {
+    font-family: Tahoma, sans-serif !important;
+}
+
+.text-dark{
+    color: black !important;
+}
+
+.ion-btn-default{
+    --background: var(--ion-color-mat-primary) !important;
+    --background-activated: var(--ion-color-mat-accent) !important;
+}
+
 
 // .form-control {
 //     //font-size: 0.8em;
@@ -88,7 +114,7 @@ ion-segment {
     --offset-bottom: auto !important;
     --overflow: hidden;
     overflow: auto;
-    color:black !important;
+    color: black !important;
 
     &::-webkit-scrollbar {
         display: none;
@@ -97,9 +123,9 @@ ion-segment {
 
 ion-segment-button {
     --color-checked: var(--ion-color-mat-primary) !important;
-    --color:black !important;
+    --color: black !important;
     font-size: 1rem !important;
-    text-transform:none !important;
+    text-transform: none !important;
 }
 
 // ion-segment-button::part(indicator-background) {
@@ -231,13 +257,13 @@ ul.timeline>.active:before {
     border: none !important;
 }
 
-.mat-mdc-tab-label-container{
+.mat-mdc-tab-label-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.mat-mdc-tab-label-container .mat-mdc-tab-list{
+.mat-mdc-tab-label-container .mat-mdc-tab-list {
     max-width: 850px;
 }
 
@@ -245,11 +271,11 @@ ul.timeline>.active:before {
     border-color: white !important;
 }
 
-.btn-orange.mat-mdc-unelevated-button:not(:disabled){
+.btn-orange.mat-mdc-unelevated-button:not(:disabled) {
     background-color: orange !important;
 }
 
-.btn-gray.mat-mdc-unelevated-button:not(:disabled){
+.btn-gray.mat-mdc-unelevated-button:not(:disabled) {
     background-color: gray !important;
 }
 
@@ -257,13 +283,13 @@ ul.timeline>.active:before {
 //     background-color: rgb(0, 212, 0) !important;
 // }
 
-.mobile-toolbar ion-toolbar{
-    --padding-top:0 !important;
-    --padding-bottom:0 !important
+.mobile-toolbar ion-toolbar {
+    --padding-top: 0 !important;
+    --padding-bottom: 0 !important
 }
 
-.dynamic-font{
-    font-size: var(--ion-dynamic-font) !important
+.d-none{
+    display: none !important;
 }
 
 ion-searchbar {
@@ -278,16 +304,17 @@ ion-searchbar {
 .block {
     width: 100%;
     height: 300px;
-  }
-  
-  ion-modal {
-    --height: auto;
-  }
-ion-toast::part(icon) {
-   font-size: 2rem !important;
 }
 
-.ion-padding{
+ion-modal {
+    --height: auto;
+}
+
+ion-toast::part(icon) {
+    font-size: 2rem !important;
+}
+
+.ion-padding {
     --padding-start: 1rem !important;
     --padding-end: 1rem !important;
     --padding-top: 1rem !important;
