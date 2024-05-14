@@ -30,7 +30,6 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
   formGroup!: FormGroup;
   image:any;
   isOpen:any = false;
-  isDismiss:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -193,12 +192,10 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
 
   onOpen(){
     this.isOpen = true;
-    this.isDismiss = false;
     this.dt.detectChanges();
   }
 
   onDismiss(){
-    this.isDismiss = true;
     this.isOpen = false;
     this.dt.detectChanges();
   }

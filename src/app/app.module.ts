@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy, Router } from '@angular/router';
 
@@ -26,6 +26,7 @@ import { FcmService } from './services-fcm/fcm.service';
     FcmService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })
 export class AppModule {

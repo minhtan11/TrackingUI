@@ -1,20 +1,12 @@
-<!-- <ion-header class="ion-no-border">
-  <ion-toolbar style="--background:var(--ion-color-mat-primary) !important;">
-    <ion-button slot="start" (click)="onback()" fill="clear">
-      <ion-icon style="color: white !important" name="chevron-back-outline"></ion-icon>
-    </ion-button>
-    <ion-title class="dynamic-font" style="color: white !important;">Đăng ký tài khoản</ion-title>
-  </ion-toolbar>
-</ion-header> -->
 <ion-header class="ion-no-border">
-  <ion-toolbar mode="ios" style="--background:var(--ion-color-mat-primary) !important;">
+  <ion-toolbar mode="ios" style="border-radius: 0px 0px 20px 20px;--background:white !important;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
     <ion-button slot="start" (click)="onback()" fill="clear">
-      <ion-icon style="color: white !important" name="chevron-back-outline"></ion-icon>
+      <ion-icon class="text-dark" name="chevron-back-outline"></ion-icon>
     </ion-button>
-    <ion-title class="dynamic-font" style="color: white !important;">Đăng ký tài khoản</ion-title>
+    <ion-title class="dynamic-font text-dark">Đăng ký tài khoản</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true" class="ion-padding" style="--background:white">
+<ion-content class="ion-padding" style="--background:white !important">
   <div class="d-flex align-items-center justify-content-center h-100">
     <ion-grid class="text-center" [fixed]="true" style="margin: auto;max-width: 850px;">
       <ion-row [formGroup]="formGroup">
@@ -26,12 +18,12 @@
                 height: 15em;
                 object-fit: cover;
                 border-radius: 50%;" [src]="image ? 'data:image/jpeg;base64,'+image?.base64String : '../../../../assets/image/logo-user.png'" alt=""> -->
-                <ion-avatar style="max-width: 120px !important;min-width: 120px;max-height: 120px;min-height: 120px;" >
+                <ion-avatar (click)="onOpen()" style="max-width: 120px !important;min-width: 120px;max-height: 120px;min-height: 120px;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;" >
                   <img [src]="image ? 'data:image/jpeg;base64,'+image?.base64String : '../../../../assets/image/logo-user.png'" />
                 </ion-avatar>
-                <ion-text class="mt-2">
+                <!-- <ion-text class="mt-2">
                   <span (click)="onOpen()" style="color: var(--ion-color-mat-primary) !important" class="dynamic-font"><u>Chọn ảnh</u></span>
-                </ion-text>
+                </ion-text> -->
               </div>
             </ion-card-header>
           </ion-card>
@@ -81,7 +73,7 @@
       </ion-row>
     </ion-grid>
   </div>
-  <ion-modal style="--background:white !important" [isOpen]="isOpen" [canDismiss]="isDismiss" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+  <ion-modal style="--background:white !important" [isOpen]="isOpen" (willDismiss)="onDismiss()" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
     <ng-template>
       <div class="p-3 w-100 h-100">
         <ion-text class="dynamic-fontr" style="color: var(--ion-color-mat-primary);">
@@ -105,11 +97,11 @@
     </ng-template>
   </ion-modal>
 </ion-content>
-<ion-footer *ngIf="!isHideFooter" class="ion-no-border" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+<ion-footer *ngIf="!isHideFooter" class="ion-no-border" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
   <ion-toolbar mode="ios" style="--background:white !important">
-    <ion-button mode="ios" (click)="onSignUp()" class="ion-btn-default" expand="block">
-      <ion-text>
-        <span class="dynamic-font">ĐĂNG KÝ</span>
+    <ion-button color="warning" mode="ios" (click)="onSignUp()" expand="block">
+      <ion-text class="dynamic-font" style="color: white !important;">
+        <span>ĐĂNG KÝ</span>
       </ion-text>
     </ion-button>
   </ion-toolbar>

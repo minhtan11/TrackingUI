@@ -1,8 +1,8 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar style="--background:var(--ion-color-mat-primary) !important;">
+  <!-- <ion-toolbar style="--background:var(--ion-color-mat-primary) !important;">
     <ion-title class="dynamic-font" style="color:white !important" mode="ios">{{headerText}}</ion-title>
-  </ion-toolbar>
-  <ng-container *ngIf="selected == 1">
+  </ion-toolbar> -->
+  <!-- <ng-container *ngIf="selected == 1">
     <ion-toolbar style="--background:white !important;">
       <div class="d-flex align-items-center h-100 justify-content-center w-100">
         <div style="overflow-x: scroll;margin: auto;max-width: 1000px;">
@@ -36,14 +36,12 @@
         </div>
       </div>
     </ion-toolbar>
-  </ng-container>
-  
+  </ng-container> -->
 </ion-header>
-<ion-content style="--background:white !important;">
-  <ion-refresher mode="ios" slot="fixed" (ionRefresh)="onRefresh($event)">
+<ion-content class="ion-padding" style="--background:white !important;">
+  <!-- <ion-refresher mode="ios" slot="fixed" (ionRefresh)="onRefresh($event)">
     <ion-refresher-content refreshingSpinner="dots"></ion-refresher-content>
-  </ion-refresher>
-  <!-- <ion-router-outlet></ion-router-outlet> -->
+  </ion-refresher> -->
   <ng-container *ngIf="isReview">
     <!-- Home Page -->
     <div [style]="selected == 0 ? '' : 'display:none !important;'" class="d-flex align-items-center justify-content-center w-100">
@@ -263,7 +261,7 @@
 
   <ng-container *ngIf="!isReview">
     <!-- Home Page -->
-    <div [style]="selected == 0 ? '' : 'display:none !important;'" class="d-flex align-items-center justify-content-center w-100">
+    <!-- <div [style]="selected == 0 ? '' : 'display:none !important;'" class="d-flex align-items-center justify-content-center w-100">
       <div class="w-100">
         <ion-card class="mx-0 my-0" style="border-radius: 0em;box-shadow: none;--background:white !important">
           <ion-card-content class="px-0 py-0">
@@ -469,7 +467,78 @@
           </div>
         </div> 
       </div>
+    </div> -->
+    <div class="w-100 d-flex align-items-center justify-content-between">
+      <div>
+        <div *ngIf="oUser == undefined" class="d-flex">
+          <ion-avatar slot="start" style="margin-left: 0px;width: 3rem;
+          height: 3rem;" class="me-2">
+            <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="">
+          </ion-avatar>
+          <div class="d-flex justify-content-center" style="flex-direction: column;">
+            <ion-skeleton-text style="width: 80px;" [animated]="true"></ion-skeleton-text>
+            <ion-skeleton-text style="width: 80px;" [animated]="true"></ion-skeleton-text>
+          </div>
+        </div>
+        <div *ngIf="oUser != undefined" class="d-flex">
+          <ion-avatar slot="start" style="margin-left: 0px;width: 3rem;
+          height: 3rem;" class="me-2">
+            <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="">
+          </ion-avatar>
+          <div class="d-flex justify-content-center" style="flex-direction: column;">
+            <ion-text class="dynamic-font" style="color: var(--ion-color-medium-tint) !important;">
+              <span>{{titleTime}}</span>
+            </ion-text>
+            <ion-text class="dynamic-font text-dark ion-text-uppercase font-weight-bold">
+              <span>{{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN}}</span>
+            </ion-text>
+          </div>
+        </div>
+      </div>
+      <div>
+        <ion-icon class="text-dark" style="font-size: 2rem;" class="me-4" name="headset-outline"></ion-icon>
+        <ion-icon class="text-dark" style="font-size: 2rem;" name="search-outline"></ion-icon>
+      </div>
     </div>
+    <swiper-container mode="ios" #swiper [slidesPerView]="1" [loop]="true" [pagination]="true">
+      <swiper-slide>
+        <ion-card class="mt-2 mx-0 my-5" mode="ios" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
+          <ion-card-header class="p-0">
+            <img style="
+            display: block;
+            margin: auto;"  src="../../assets/image/card1.jpg" alt="">
+          </ion-card-header>
+        </ion-card>
+      </swiper-slide>
+      <swiper-slide>
+        <ion-card class="mt-2 mx-0 my-5" mode="ios" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
+          <ion-card-header class="p-0">
+            <img style="
+            display: block;
+            margin: auto;"  src="../../assets/image/card2.jpg" alt="">
+          </ion-card-header>
+        </ion-card>
+      </swiper-slide>
+      <swiper-slide>
+        <ion-card class="mt-2 mx-0 my-5" mode="ios" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
+          <ion-card-header class="p-0">
+            <img style="
+            display: block;
+            margin: auto;"  src="../../assets/image/card3.jpg" alt="">
+          </ion-card-header>
+        </ion-card>
+      </swiper-slide>
+      <swiper-slide>
+        <ion-card class="mt-2 mx-0 my-5" mode="ios" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
+          <ion-card-header class="p-0">
+            <img style="
+            display: block;
+            margin: auto;"  src="../../assets/image/card4.jpg" alt="">
+          </ion-card-header>
+        </ion-card>
+      </swiper-slide>
+    </swiper-container>
+
     <!-- Home Page -->
 
     <!-- History Page -->
@@ -733,8 +802,8 @@
       </div>
     </ng-template>
   </ion-modal>
-</ion-content>
-<ion-footer class="ion-no-border mobile-toolbar">
+</ion-content> 
+<ion-footer class="ion-no-border mobile-toolbar" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
   <ng-container *ngIf="isReview">
     <ion-toolbar style="--background:white !important;">
       <mat-tab-group [selectedIndex]="selected"  (selectedTabChange)="selectedTabChange($event)" headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
@@ -746,7 +815,7 @@
               <div class="pb-1" style="white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;">
-                <ion-text>
+                <ion-text class="dynamic-font">
                   <span>Trang chủ</span>
                 </ion-text>
               </div>
@@ -761,7 +830,7 @@
               <div class="pb-1" style="white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;">
-                <ion-text>
+                <ion-text class="dynamic-font">
                   <span>Cá nhân</span>
                 </ion-text>
               </div>
@@ -782,7 +851,7 @@
               <div class="pb-1" style="white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;">
-                <ion-text>
+                <ion-text class="dynamic-font">
                   <span>Trang chủ</span>
                 </ion-text>
               </div>
@@ -797,7 +866,7 @@
               <div class="pb-1" style="white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;">
-                <ion-text>
+                <ion-text class="dynamic-font">
                   <span>Lịch sử GD</span>
                 </ion-text>
               </div>
@@ -813,7 +882,7 @@
               overflow: hidden;
               text-overflow: ellipsis;">
                 <ion-text>
-                  <span>Thông báo</span>
+                  <span class="dynamic-font">Thông báo</span>
                 </ion-text>
               </div>
             </div>
@@ -827,7 +896,7 @@
               <div class="pb-1" style="white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;">
-                <ion-text>
+                <ion-text class="dynamic-font">
                   <span>Cá nhân</span>
                 </ion-text>
               </div>

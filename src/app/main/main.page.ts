@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InfiniteScrollCustomEvent, IonRouterOutlet, IonTabs, NavController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
@@ -8,7 +8,9 @@ import { ApiserviceComponent } from '../apiservice/apiservice.component';
 import { Subject, takeUntil } from 'rxjs';
 import { Device } from '@capacitor/device';
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
-
+import { register } from 'swiper/element/bundle';
+import Swiper from 'swiper';
+register();
 
 @Component({
   selector: 'app-main',
@@ -18,6 +20,9 @@ import { NotificationServiceComponent } from '../notification-service/notificati
 })
 export class MainPage implements OnInit,AfterViewInit {
   //#region Contructor
+  @ViewChild('swiper')
+  swiperRef: ElementRef | undefined;
+  swiper:Swiper;
   isReview:any;
   isOpen:any=false;
   isDismiss:any=false;
@@ -25,6 +30,7 @@ export class MainPage implements OnInit,AfterViewInit {
   selected:any = 0;
   headerText:any = 'Trang chủ';
   pageSize: any = 50;
+  animationInProgress = false;
   
 
   // home
@@ -108,7 +114,7 @@ export class MainPage implements OnInit,AfterViewInit {
   }
 
   ngAfterViewInit() {
-    
+    this.startAnimation();
   }
 
   onDestroy() {
@@ -130,6 +136,17 @@ export class MainPage implements OnInit,AfterViewInit {
       this.dt.detectChanges();
     }
     this.routerOutlet.swipeGesture = false; 
+    this.swiper = this.swiperRef?.nativeElement.swiper;
+  }
+
+  startAnimation() {
+    if(this.animationInProgress) return;
+    this.animationInProgress = true;
+    setTimeout(() => {
+      this.swiper.slideNext(1000);
+      this.animationInProgress = false;
+      this.startAnimation();
+    }, 5000);
   }
   //#endregion
 

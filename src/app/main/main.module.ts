@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -56,6 +56,7 @@ import { FormatdatePipe } from '../pipe/format-date/formatdate.pipe';
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
   ,DecodeVNPipe,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent,FormatdatePipe],
-  providers:[NotificationServiceComponent,DatePipe]
+  providers:[NotificationServiceComponent,DatePipe],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MainPageModule { }
