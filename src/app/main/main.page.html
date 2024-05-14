@@ -1,4 +1,4 @@
-<ion-header class="ion-no-border" style="--background:white !important;">
+<ion-header class="ion-no-border">
   <ion-toolbar style="--background:var(--ion-color-mat-primary) !important;">
     <ion-title class="dynamic-font" style="color:white !important" mode="ios">{{headerText}}</ion-title>
   </ion-toolbar>
@@ -264,209 +264,210 @@
   <ng-container *ngIf="!isReview">
     <!-- Home Page -->
     <div [style]="selected == 0 ? '' : 'display:none !important;'" class="d-flex align-items-center justify-content-center w-100">
-      <div class="w-100" style="margin: auto;max-width: 850px;">
+      <div class="w-100">
         <ion-card class="mx-0 my-0" style="border-radius: 0em;box-shadow: none;--background:white !important">
           <ion-card-content class="px-0 py-0">
             <div class="slideshow-container w-100">
               <div class="mySlides fade" style="display: block;">
-                <img src="../../../assets/image/bg1.jpg" style="width:100%;height: 180px;">
+                <img src="../../../assets/image/bg1.jpg" style="width:100%;height: 100%;">
               </div>
               <div class="mySlides fade">
-                <img src="../../../assets/image/bg2.jpg" style="width:100%;height: 180px;">
+                <img src="../../../assets/image/bg2.jpg" style="width:100%;height: 100%;">
               </div>
               <div class="mySlides fade">
-                <img src="../../../assets/image/bg3.jpg" style="width:100%;height: 180px;">
+                <img src="../../../assets/image/bg3.jpg" style="width:100%;height: 100%;">
               </div>
               <div class="mySlides fade">
-                <img src="../../../assets/image/bg4.jpg" style="width:100%;height: 180px;">
+                <img src="../../../assets/image/bg4.jpg" style="width:100%;height: 100%;">
               </div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+              <div class="d-flex justify-content-center align-items-center" style="width: 10em;height: 10em;
+              border-radius: 70%;background-color: white !important;z-index: 1000;margin-top: -4rem !important;
+              ">
+              <img *ngIf="oUser != undefined" style="width: 9em;height: 9em;
+              border-radius: 70%;
+              " [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="">
+              <ion-skeleton-text *ngIf="oUser == undefined" style="width: 9em;height: 9em;
+              border-radius: 70%;
+              " [animated]="true" class="mb-2"></ion-skeleton-text>
               </div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+              <ion-card style="max-width: 850px !important;border-radius: 1em;margin-top: -5.5rem !important;margin-bottom: 1rem;width: 80%;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important" mode="ios">
+                <ion-card-header style="padding-top: 3rem;">
+                  <div style="flex-direction: column;margin-top: 3rem;" class="d-flex align-items-center justify-content-center">
+                    <ng-container *ngIf="oUser == undefined">
+                      <ion-skeleton-text style="width: 30%;" [animated]="true"></ion-skeleton-text>
+                      <ion-skeleton-text style="width: 40%;" [animated]="true"></ion-skeleton-text>
+                      <div class="d-flex align-items-center justify-content-center w-100">
+                        <ion-skeleton-text style="width: 50%;" [animated]="true"></ion-skeleton-text>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="oUser != undefined">
+                      <ion-text color="medium" class="ion-text-wrap">
+                        {{titleTime}}
+                      </ion-text>
+                      <ion-text class="ion-text-uppercase font-weight-bold">
+                        {{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN}}
+                      </ion-text>
+                      <div class="d-flex align-items-center justify-content-center w-100">
+                        <div style="white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;">  
+                          <ion-text class="font-weight-bold">
+                            <span style="font-size: 1.5em;">{{oUser.wallet | number}}</span>
+                          </ion-text>
+                        </div>
+                        <ion-text class="font-weight-bold">
+                          <span>đ</span>
+                        </ion-text>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ion-card-header>
+              </ion-card>
+            </div>
           </ion-card-content>
         </ion-card> 
-        <div class="d-flex justify-content-center align-items-center">
-          <div class="d-flex justify-content-center align-items-center" style="width: 10em;height: 10em;
-          border-radius: 70%;position: absolute;background-color: white !important;z-index: 1000;margin-top: -10rem;
-          ">
-          <img *ngIf="oUser != undefined" style="width: 9em;height: 9em;
-          border-radius: 70%;
-          " [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="">
-          <ion-skeleton-text *ngIf="oUser == undefined" style="width: 9em;height: 9em;
-          border-radius: 70%;
-          " [animated]="true" class="mb-2"></ion-skeleton-text>
-          </div>
-        </div>
-        <div class="d-flex justify-content-center align-items-center">
-          <ion-card style="border-radius: 1em;margin-top: -5.5rem;margin-bottom: 1rem;width: 80%;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important" mode="ios">
-            <ion-card-header style="padding-top: 3rem;">
-              <div style="flex-direction: column;margin-top: 3rem;" class="d-flex align-items-center justify-content-center">
-                <ng-container *ngIf="oUser == undefined">
-                  <ion-skeleton-text style="width: 30%;" [animated]="true"></ion-skeleton-text>
-                  <ion-skeleton-text style="width: 40%;" [animated]="true"></ion-skeleton-text>
-                  <div class="d-flex align-items-center justify-content-center w-100">
-                    <ion-skeleton-text style="width: 50%;" [animated]="true"></ion-skeleton-text>
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="oUser != undefined">
-                  <!-- <img style="width: 4em;height: 4em;
-                  border-radius: 2em;
-                  " [src]="oUser.img ? oUser.img : '../../../assets/image/logo-user.png'" alt="" class="mb-2"> -->
-                  <ion-text color="medium" class="ion-text-wrap">
-                    {{titleTime}}
+        <div class="w-100 d-flex align-items-center justify-content-center w-100">
+          <div style="max-width: 850px !important;">
+            <div class="row p-3">
+              <div class="col-3">
+                <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
+                  <img (click)="goRechargePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/wallet-icon.png" alt="">
+                  <ion-text class="dynamic-font" style="color: black !important;">
+                    Nạp tiền
                   </ion-text>
-                  <ion-text class="ion-text-uppercase font-weight-bold">
-                    {{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN}}
-                  </ion-text>
-                  <div class="d-flex align-items-center justify-content-center w-100">
-                    <div style="white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;">  
-                      <ion-text class="font-weight-bold">
-                        <span style="font-size: 1.5em;">{{oUser.wallet | number}}</span>
-                      </ion-text>
-                    </div>
-                    <ion-text class="font-weight-bold">
-                      <span>đ</span>
-                    </ion-text>
-                  </div>
-                </ng-container>
+                </div>
               </div>
-            </ion-card-header>
-          </ion-card>
-        </div>
-        <div class="row p-3">
-          <div class="col-3">
-            <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
-              <img (click)="goRechargePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/wallet-icon.png" alt="">
-              <ion-text class="dynamic-font" style="color: black !important;">
-                Nạp tiền
-              </ion-text>
+              <div class="col-3">
+                <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
+                  <img (click)="goPackagePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/package-icon.png" alt="">
+                  <ion-text class="dynamic-font" style="color: black !important;">
+                    Kiện hàng
+                  </ion-text>
+                </div>
+              </div>
+              <div class="col-3">
+                <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
+                  <img (click)="goOrderPage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/checklist-icon.png" alt="">
+                  <ion-text class="dynamic-font" style="color: black !important;">
+                    Đơn hàng
+                  </ion-text>
+                </div>
+              </div>
+              <div class="col-3">
+                <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
+                  <img (click)="goServicechargePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/shipping-cost-icon.png" alt="">
+                  <ion-text class="dynamic-font" style="color: black !important;">
+                    Phí vận chuyển
+                  </ion-text>
+                </div>
+              </div>      
+            </div>
+            <div class="row p-3">
+              <div class="col-6">
+                <ion-card (click)="goOrderPage(1)" mode="ios" class="m-0" style="--background:white !important">
+                  <ion-card-header>
+                    <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;"
+                      src="../../../assets/image/payment.jpg">
+                  </ion-card-header>
+                  <ion-card-content>
+                    <div class="text-center">
+                      <ion-text color="medium">
+                        Đang chờ thanh toán
+                      </ion-text>
+                      <br>
+                      <div style="white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;">
+                        <ion-text *ngIf="ship1 != undefined">
+                          <span class="font-weight-bold">{{ship1 | number}}</span>
+                        </ion-text>
+                        <ion-skeleton-text *ngIf="ship1 == undefined" [animated]="true"></ion-skeleton-text>
+                      </div>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
+              </div>
+              <div class="col-6">
+                <ion-card (click)="goPackagePage(3)" mode="ios" class="m-0" style="--background:white !important">
+                  <ion-card-header>
+                    <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;"
+                      src="../../../assets/image/plan-delivery.jpg">
+                  </ion-card-header>
+                  <ion-card-content>
+                    <div class="text-center">
+                      <ion-text color="medium">
+                        Kiện đang vận chuyển
+                      </ion-text>
+                      <br>
+                      <div style="white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;">
+                        <ion-text *ngIf="pack3 != undefined">
+                          <span class="font-weight-bold">{{pack3 | number}}</span>
+                        </ion-text>
+                        <ion-skeleton-text *ngIf="pack3 == undefined" [animated]="true"></ion-skeleton-text>
+                      </div>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
+              </div>
+            </div>
+            <div class="row p-3">
+              <div class="col-6">
+                <ion-card (click)="goOrderPage(2)" mode="ios" class="m-0" style="--background:white !important">
+                  <ion-card-header>
+                    <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;"
+                      src="../../../assets/image/payment-done.jpg">
+                  </ion-card-header>
+                  <ion-card-content>
+                    <div class="text-center">
+                      <ion-text color="medium">
+                        Đã thanh toán
+                      </ion-text>
+                      <br>
+                      <div style="white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;">
+                        <ion-text *ngIf="ship2 != undefined">
+                          <span class="font-weight-bold">{{ship2 | number}}</span>
+                        </ion-text>
+                        <ion-skeleton-text *ngIf="ship2 == undefined" [animated]="true"></ion-skeleton-text>
+                      </div>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
+              </div>
+              <div class="col-6">
+                <ion-card (click)="goPackagePage(5)" mode="ios" class="m-0" style="--background:white !important">
+                  <ion-card-header>
+                    <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;"
+                      src="../../../../assets/image/delivery-done.jpg">
+                  </ion-card-header>
+                  <ion-card-content>
+                    <div class="text-center">
+                      <ion-text color="medium">
+                        Đã nhận hàng
+                      </ion-text>
+                      <br>
+                      <div style="white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;">
+                        <ion-text *ngIf="pack5 != undefined">
+                          <span class="font-weight-bold">{{pack5 | number}}</span>
+                        </ion-text>
+                        <ion-skeleton-text *ngIf="pack5 == undefined" [animated]="true"></ion-skeleton-text>
+                      </div>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
+              </div>
             </div>
           </div>
-          <div class="col-3">
-            <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
-              <img (click)="goPackagePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/package-icon.png" alt="">
-              <ion-text class="dynamic-font" style="color: black !important;">
-                Kiện hàng
-              </ion-text>
-            </div>
-          </div>
-          <div class="col-3">
-            <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
-              <img (click)="goOrderPage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/checklist-icon.png" alt="">
-              <ion-text class="dynamic-font" style="color: black !important;">
-                Đơn hàng
-              </ion-text>
-            </div>
-          </div>
-          <div class="col-3">
-            <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
-              <img (click)="goServicechargePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/shipping-cost-icon.png" alt="">
-              <ion-text class="dynamic-font" style="color: black !important;">
-                Phí vận chuyển
-              </ion-text>
-            </div>
-          </div>      
-        </div>
-        <div class="row p-3">
-          <div class="col-6">
-            <ion-card (click)="goOrderPage(1)" mode="ios" class="m-0" style="--background:white !important">
-              <ion-card-header>
-                <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;"
-                  src="../../../assets/image/payment.jpg">
-              </ion-card-header>
-              <ion-card-content>
-                <div class="text-center">
-                  <ion-text color="medium">
-                    Đang chờ thanh toán
-                  </ion-text>
-                  <br>
-                  <div style="white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis;">
-                    <ion-text *ngIf="ship1 != undefined">
-                      <span class="font-weight-bold">{{ship1 | number}}</span>
-                    </ion-text>
-                    <ion-skeleton-text *ngIf="ship1 == undefined" [animated]="true"></ion-skeleton-text>
-                  </div>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </div>
-          <div class="col-6">
-            <ion-card (click)="goPackagePage(3)" mode="ios" class="m-0" style="--background:white !important">
-              <ion-card-header>
-                <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;"
-                  src="../../../assets/image/plan-delivery.jpg">
-              </ion-card-header>
-              <ion-card-content>
-                <div class="text-center">
-                  <ion-text color="medium">
-                    Kiện đang vận chuyển
-                  </ion-text>
-                  <br>
-                  <div style="white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis;">
-                    <ion-text *ngIf="pack3 != undefined">
-                      <span class="font-weight-bold">{{pack3 | number}}</span>
-                    </ion-text>
-                    <ion-skeleton-text *ngIf="pack3 == undefined" [animated]="true"></ion-skeleton-text>
-                  </div>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </div>
-        </div>
-        <div class="row p-3">
-          <div class="col-6">
-            <ion-card (click)="goOrderPage(2)" mode="ios" class="m-0" style="--background:white !important">
-              <ion-card-header>
-                <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;"
-                  src="../../../assets/image/payment-done.jpg">
-              </ion-card-header>
-              <ion-card-content>
-                <div class="text-center">
-                  <ion-text color="medium">
-                    Đã thanh toán
-                  </ion-text>
-                  <br>
-                  <div style="white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis;">
-                    <ion-text *ngIf="ship2 != undefined">
-                      <span class="font-weight-bold">{{ship2 | number}}</span>
-                    </ion-text>
-                    <ion-skeleton-text *ngIf="ship2 == undefined" [animated]="true"></ion-skeleton-text>
-                  </div>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </div>
-          <div class="col-6">
-            <ion-card (click)="goPackagePage(5)" mode="ios" class="m-0" style="--background:white !important">
-              <ion-card-header>
-                <img style="width: 15em;display: block;margin-left: auto;margin-right: auto;"
-                  src="../../../../assets/image/delivery-done.jpg">
-              </ion-card-header>
-              <ion-card-content>
-                <div class="text-center">
-                  <ion-text color="medium">
-                    Đã nhận hàng
-                  </ion-text>
-                  <br>
-                  <div style="white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis;">
-                    <ion-text *ngIf="pack5 != undefined">
-                      <span class="font-weight-bold">{{pack5 | number}}</span>
-                    </ion-text>
-                    <ion-skeleton-text *ngIf="pack5 == undefined" [animated]="true"></ion-skeleton-text>
-                  </div>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </div>
-        </div>
+        </div> 
       </div>
     </div>
     <!-- Home Page -->
