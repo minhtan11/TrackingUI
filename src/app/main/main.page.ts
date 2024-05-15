@@ -61,7 +61,6 @@ export class MainPage implements OnInit,AfterViewInit {
   idNoti: any;
   isEmptyNoti: any = false;
   isloadNoti: any = true;
-  isloadpageNoti: any = false;
   firstLoadNoti:any = true;
 
   // setting
@@ -113,7 +112,6 @@ export class MainPage implements OnInit,AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.startAnimation();
   }
 
   onDestroy() {
@@ -135,14 +133,17 @@ export class MainPage implements OnInit,AfterViewInit {
       this.dt.detectChanges();
     }
     this.routerOutlet.swipeGesture = false; 
-    this.swiper = this.swiperRef?.nativeElement.swiper;
+    this.startAnimation();
   }
 
   startAnimation() {
+    this.swiper = this.swiperRef?.nativeElement.swiper;
     if(this.animationInProgress) return;
     this.animationInProgress = true;
     setTimeout(() => {
-      this.swiper.slideNext(1000);
+      if (this.swiper) {
+        this.swiper.slideNext(1000);
+      }
       this.animationInProgress = false;
       this.startAnimation();
     }, 5000);
@@ -364,11 +365,8 @@ export class MainPage implements OnInit,AfterViewInit {
   initNoti(){
     if(!this.firstLoadNoti) return;
     this.lstDataNoti = [];
-    this.isloadpageNoti = true;
     this.dt.detectChanges();
-    setTimeout(() => {
-      this.loadDataNoti();
-    }, 500);
+    this.loadDataNoti();
   }
 
   loadDataNoti(){
@@ -383,19 +381,26 @@ export class MainPage implements OnInit,AfterViewInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'notification', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res[0]) {
-        this.notification.showNotiError('', res[1].message);
-      }else{
-        let oData = res[1];
-        this.lstDataNoti = oData[0];
-        this.isloadpageNoti = false;
-        if (this.lstDataNoti.length == 0) this.isEmptyNoti = true;
-        if (this.lstDataNoti.length == oData[1]) this.isloadNoti = false;
-        if(this.firstLoadNoti) this.firstLoadNoti = false;
-        this.dt.detectChanges();
-      }
-    })
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation', 'notification', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res: any) => {
+          if (res[0]) {
+            this.notification.showNotiError('', res[1].message);
+          }else{
+            let oData = res[1];
+            this.lstDataNoti = oData[0];
+            if (this.lstDataNoti.length == 0) this.isEmptyNoti = true;
+            if (this.lstDataNoti.length == oData[1]) this.isloadNoti = false;
+            if(this.firstLoadNoti) this.firstLoadNoti = false;
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+          this.dt.detectChanges();
+        }
+      })
+    }, 1000);
   }
 
   onIonInfiniteNoti(event: any) {
@@ -552,7 +557,6 @@ export class MainPage implements OnInit,AfterViewInit {
       case 2:
         this.pageNumNoti = 1;
         this.isEmptyNoti = false;
-        this.isloadpageNoti = true;
         this.isloadNoti = true;
         this.loadDataNoti();
         break;
