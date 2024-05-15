@@ -50,7 +50,6 @@ export class MainPage implements OnInit,AfterViewInit {
   idHis: any;
   isEmptyHis: any = false;
   isloadHis: any = true;
-  isloadpageHis: any = false;
   firstLoadHis:any = true;
 
   //notification
@@ -197,7 +196,7 @@ export class MainPage implements OnInit,AfterViewInit {
     } else if (curHr < 18) {
       this.titleTime = "Chào buổi chiều!";
     } else {
-      this.titleTime = "Chào buổi tối";
+      this.titleTime = "Chào buổi tối!";
     }
     this.dt.detectChanges();
   }
@@ -276,11 +275,8 @@ export class MainPage implements OnInit,AfterViewInit {
   initHis(){
     if(!this.firstLoadHis) return;
     this.lstDataHistory = [];
-    this.isloadpageHis = true;
     this.dt.detectChanges();
-    setTimeout(() => {
-      this.loadDataHis();
-    }, 500);
+    this.loadDataHis();
   }
 
   loadDataHis(){
@@ -296,19 +292,26 @@ export class MainPage implements OnInit,AfterViewInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'historywallet', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res[0]) {
-        this.notification.showNotiError('', res[1].message);
-      }else{
-        let oData = res[1];
-        this.lstDataHistory = oData[0];
-        this.isloadpageHis = false;
-        if (this.lstDataHistory.length == 0) this.isEmptyHis = true;
-        if (this.lstDataHistory.length == oData[1]) this.isloadHis = false;
-        if(this.firstLoadHis) this.firstLoadHis = false;
-        this.dt.detectChanges();
-      }
-    })
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation', 'historywallet', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res: any) => {
+          if (res[0]) {
+            this.notification.showNotiError('', res[1].message);
+          }else{
+            let oData = res[1];
+            this.lstDataHistory = oData[0];
+            if (this.lstDataHistory.length == 0) this.isEmptyHis = true;
+            if (this.lstDataHistory.length == oData[1]) this.isloadHis = false;
+            if(this.firstLoadHis) this.firstLoadHis = false;
+          }
+        },
+        complete:()=>{
+          this.dt.detectChanges();
+          this.api.isLoad(false);
+        }
+      })
+    }, 1000);
   }
 
   sortDataHis(status: any) {
@@ -318,11 +321,8 @@ export class MainPage implements OnInit,AfterViewInit {
     this.pageNumHis = 1;
     this.lstDataHistory = [];
     this.isEmptyHis = false;
-    this.isloadpageHis = true;
     this.dt.detectChanges();
-    setTimeout(() => {
-      this.loadDataHis();
-    }, 500); 
+    this.loadDataHis();
   }
 
   onIonInfiniteHis(event: any) {
@@ -546,7 +546,6 @@ export class MainPage implements OnInit,AfterViewInit {
       case 1:
         this.pageNumHis = 1;
         this.isEmptyHis = false;
-        this.isloadpageHis = true;
         this.isloadHis = true;
         this.loadDataHis();
         break;
