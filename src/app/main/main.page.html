@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <ng-container *ngIf="selected == 1">
-    <ion-toolbar mode="ios" style="border-radius: 0px 0px 20px 20px;--background:white !important;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
-      <ion-title style="color: var(--ion-color-mat-primary) !important;;" class="dynamic-font">{{headerText}}</ion-title>
+    <ion-toolbar mode="ios" style="border-radius: 0px 0px 20px 20px;--background: linear-gradient(23deg, rgba(139,237,251,1) 0%, rgba(42,186,227,1) 50%, rgba(100,181,246,1) 100%) !important;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+      <ion-title class="dynamic-font text-dark">{{headerText}}</ion-title>
     </ion-toolbar>
     <ion-toolbar style="--background:white !important;" class="mt-2">
       <ion-segment [scrollable]="true" [value]="statusHis" mode="md">
@@ -34,8 +34,8 @@
     </ion-toolbar>
   </ng-container>
   <ng-container *ngIf="selected != 0 && selected != 1">
-    <ion-toolbar mode="ios" style="border-radius: 0px 0px 20px 20px;--background:white !important;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
-      <ion-title style="color: var(--ion-color-mat-primary) !important;;" class="dynamic-font">{{headerText}}</ion-title>
+    <ion-toolbar mode="ios" style="border-radius: 0px 0px 20px 20px;--background:linear-gradient(23deg, rgba(139,237,251,1) 0%, rgba(42,186,227,1) 50%, rgba(100,181,246,1) 100%) !important;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+      <ion-title class="dynamic-font text-dark">{{headerText}}</ion-title>
     </ion-toolbar>
   </ng-container>
   <!-- <ion-toolbar style="--background:var(--ion-color-mat-primary) !important;">
@@ -268,7 +268,7 @@
     <div [style]="selected == 0 ? '' : 'display:none !important;'" class="w-100">
       <div class="w-100" style="
     border-radius: 0px 0px 20px 20px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;background: linear-gradient(165deg, rgba(2,0,36,1) 0%, rgba(251,251,251,1) 0%, rgba(255,255,255,1) 38%, rgba(73,224,255,1) 57%, rgba(73,224,255,1) 58%);">
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;background: linear-gradient(23deg, rgba(139,237,251,1) 0%, rgba(42,186,227,1) 50%, rgba(100,181,246,1) 100%) !important;">
       <div class="w-100 d-flex align-items-center justify-content-between p-3">
         <div>
           <div *ngIf="oUser == undefined" class="d-flex">
@@ -290,7 +290,7 @@
                 <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="">
               </ion-avatar>
               <div class="d-flex justify-content-center" style="flex-direction: column;">
-                <ion-text class="dynamic-font" style="color: var(--ion-color-medium-tint) !important;">
+                <ion-text class="dynamic-font">
                   <span>{{titleTime}}</span>
                 </ion-text>
                 <ion-text class="dynamic-font text-dark font-weight-bold">
@@ -311,36 +311,28 @@
         <swiper-slide>
           <ion-card class="mt-2 mx-0 my-5" mode="ios" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
             <ion-card-header class="p-0">
-              <img style="
-              display: block;
-              margin: auto;"  src="../../assets/image/card1.jpg" alt="">
+              <img style="height: 15rem" src="../../assets/image/card1.jpg" alt="">
             </ion-card-header>
           </ion-card>
         </swiper-slide>
         <swiper-slide>
           <ion-card class="mt-2 mx-0 my-5" mode="ios" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
             <ion-card-header class="p-0">
-              <img style="
-              display: block;
-              margin: auto;"  src="../../assets/image/card2.jpg" alt="">
+              <img style="height: 15rem" src="../../assets/image/card2.jpg" alt="">
             </ion-card-header>
           </ion-card>
         </swiper-slide>
         <swiper-slide>
           <ion-card class="mt-2 mx-0 my-5" mode="ios" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
             <ion-card-header class="p-0">
-              <img style="
-              display: block;
-              margin: auto;"  src="../../assets/image/card3.jpg" alt="">
+              <img style="height: 15rem" src="../../assets/image/card3.jpg" alt="">
             </ion-card-header>
           </ion-card>
         </swiper-slide>
         <swiper-slide>
           <ion-card class="mt-2 mx-0 my-5" mode="ios" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
             <ion-card-header class="p-0">
-              <img style="
-              display: block;
-              margin: auto;"  src="../../assets/image/card4.jpg" alt="">
+              <img style="height: 15rem" src="../../assets/image/card4.jpg" alt="">
             </ion-card-header>
           </ion-card>
         </swiper-slide>
@@ -627,7 +619,29 @@
     <div [style]="selected == 3 ? '' : 'display:none !important;'" class="w-100" style="margin: auto;max-width: 1000px;">
       <ion-card class="mb-4" mode="ios" style="--background:white !important">
         <ion-card-header>
-          <div style="flex-direction: column;" class="d-flex align-items-center justify-content">
+          <ng-container *ngIf="oUser == undefined">
+            <div style="flex-direction: column;" class="d-flex align-items-center justify-content">
+              <ion-avatar style="width: 6rem !important;
+                                  height: 6rem !important;" class="mb-1">
+                <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+              </ion-avatar>
+              <ion-text class="font-weight-bold dynamic-font">
+                <ion-skeleton-text style="width: 30%;" [animated]="true"></ion-skeleton-text>
+              </ion-text>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="oUser != undefined">
+            <div style="flex-direction: column;" class="d-flex align-items-center justify-content">
+              <ion-avatar style="width: 6rem !important;
+                                  height: 6rem !important;" class="mb-1">
+                <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="">
+              </ion-avatar>
+              <ion-text class="font-weight-bold dynamic-font">
+                {{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN | uppercase}}
+              </ion-text>
+            </div>
+          </ng-container>
+          <!-- <div style="flex-direction: column;" class="d-flex align-items-center justify-content">
             <ng-container *ngIf="oUser == undefined">
               <ion-skeleton-text style="width: 9em;height: 9em;
               border-radius: 70%;
@@ -642,7 +656,7 @@
                 {{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN}}
               </ion-text>
             </ng-container>
-          </div>
+          </div> -->
         </ion-card-header>
       </ion-card>
       <ion-text style="color:black !important;font-size: 1rem !important;" mode="ios" class="font-weight-bold dynamic-font ml-4">Cá nhân</ion-text>
@@ -846,7 +860,7 @@
               overflow: hidden;
               text-overflow: ellipsis;">
                 <ion-text class="dynamic-font">
-                  <span>Cá nhân</span>
+                  <span>Tài khoản</span>
                 </ion-text>
               </div>
             </div>

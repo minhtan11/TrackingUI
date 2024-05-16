@@ -142,7 +142,7 @@ export class MainPage implements OnInit,AfterViewInit {
     this.animationInProgress = true;
     setTimeout(() => {
       if (this.swiper) {
-        this.swiper.slideNext(1000);
+        this.swiper.slideNext(1000,false);
       }
       this.animationInProgress = false;
       this.startAnimation();
@@ -158,24 +158,30 @@ export class MainPage implements OnInit,AfterViewInit {
         case 'home':
           this.selected = 0;
           this.headerText = 'Trang chủ';
-          //this.navCtrl.navigateForward('main/mainpage');
+          this.swiper = this.swiperRef?.nativeElement.swiper;
+          if(this.swiper){
+            this.swiper.enable();
+            this.swiper.init();
+            this.startAnimation();
+          } 
           break;
         case 'history':
           this.selected = 1;
           this.headerText = 'Lịch sử giao dịch';
           this.initHis();
-          //this.navCtrl.navigateForward('main/history');
+          this.swiper = this.swiperRef?.nativeElement.swiper;
+          if(this.swiper) this.swiper.disable();
           break;
         case 'notification':
           this.selected = 2;
           this.headerText = 'Thông báo';
           this.initNoti();
-          //this.navCtrl.navigateForward('main/notification');
+          if(this.swiper) this.swiper.disable();
           break;
         case 'setting':
           this.selected = 3;
-          this.headerText = 'Trang cá nhân';
-          //this.navCtrl.navigateForward('main/setting');
+          this.headerText = 'Tài khoản';
+          if(this.swiper) this.swiper.disable();
           break;
       }
     }
