@@ -1,11 +1,9 @@
 <ion-header class="ion-no-border" style="--background:white !important;">
-  <ion-toolbar style="--background:var(--ion-color-mat-primary) !important;">
-    <div class="d-flex align-items-center h-100 justify-content-center w-100">
-      <div class="w-100" style="margin: auto;max-width: 1000px;">
-        <ion-icon (click)="onback()" class="pl-3" slot="start" mode="ios" style="color: white !important;font-size: 2rem;" name="chevron-back-outline"></ion-icon>
-        <ion-title style="z-index: -1;color:white !important" mode="ios">Nạp tiền</ion-title>
-      </div>
-    </div>
+  <ion-toolbar mode="ios" style="border-radius: 0px 0px 20px 20px;--background:linear-gradient(23deg, rgba(139,237,251,1) 0%, rgba(42,186,227,1) 50%, rgba(100,181,246,1) 100%) !important;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+    <ion-button slot="start" (click)="onback()" fill="clear">
+      <ion-icon style="color: white !important" class="text-dark" name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-title class="dynamic-font text-dark">Nạp tiền</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content style="--background:white !important">

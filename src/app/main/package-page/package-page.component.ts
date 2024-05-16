@@ -29,7 +29,6 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   id:any='';
   lstData:any = [];
   isEmpty:any = false;
-  isloadpage:any=false;
   total:any = 0;
   isload:any=true;
   isconnected:any = true;
@@ -117,11 +116,8 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     this.pageNum = 1;
     this.lstData = [];
     this.isEmpty = false;
-    this.isloadpage = true;
     this.dt.detectChanges();
-    setTimeout(() => {
-      this.loadData();
-    }, 500);  
+    this.loadData();
   }
 
   loadData(){
@@ -137,23 +133,30 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'package', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res[0]) {
-        this.notification.showNotiError('', res[1].message);
-      }else{
-        let oData = res[1];
-        this.lstData = oData[0];
-        this.isloadpage = false;
-        if (this.lstData.length == 0) this.isEmpty = true;
-        if (this.lstData.length == oData[1]) this.isload = false;
-        this.dt.detectChanges();
-      }
-    })
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation', 'package', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res: any) => {
+          if (res[0]) {
+            this.notification.showNotiError('', res[1].message);
+          }else{
+            let oData = res[1];
+            this.lstData = oData[0];
+            if (this.lstData.length == 0) this.isEmpty = true;
+            if (this.lstData.length == oData[1]) this.isload = false;
+            this.dt.detectChanges();
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+        }
+      })
+    }, 1000);
   }
 
   createPackage(){
     this.onDestroy();
-    this.navCtrl.navigateForward('main/package/create');
+    this.navCtrl.navigateForward('main/package/create',{animated:false});
   }
 
   onCopy(){
@@ -209,7 +212,6 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     this.pageNum = 1;
     this.isload = true;
     this.isEmpty = false;
-    this.isloadpage = false;
     this.lstData = [];
     this.content.scrollToTop();
     this.loadData();
@@ -229,20 +231,14 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
         break;
       case 'default':
         if (this.lstData && this.lstData.length == 0) {
-          this.isloadpage = true;
           this.dt.detectChanges();
-          setTimeout(() => {
-            this.loadData();
-          }, 500);
+          this.loadData();
         }
         break;
       default:
         this.lstData = [];
-        this.isloadpage = true;
         this.dt.detectChanges();
-        setTimeout(() => {
-          this.loadData();
-        }, 500);
+        this.loadData();
         break;
     }
   }

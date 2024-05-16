@@ -134,23 +134,25 @@ export class CreatePageComponent  implements OnInit {
   valueChange(event:any,field:any){
     switch(field.toLowerCase()){
       case 'declareprice':
-        if (this.eleDeclarePrice.nativeElement.value === '-') return;
-        let commasRemoved = this.eleDeclarePrice.nativeElement.value.replace(/,/g, '');
-        let toInt: number;
-        let toLocale: string;
-        if (commasRemoved.split('.').length > 1) {
-          let decimal = isNaN(parseInt(commasRemoved.split('.')[1])) ? '' : parseInt(commasRemoved.split('.')[1]);
-          toInt = parseInt(commasRemoved);
-          toLocale = toInt.toLocaleString('en-US') + '.' + decimal;
-        } else {
-          toInt = parseInt(commasRemoved);
-          toLocale = toInt.toLocaleString('en-US');
-        }
-        if (toLocale === 'NaN') {
-          this.eleDeclarePrice.nativeElement.value = '';
-        } else {
-          this.eleDeclarePrice.nativeElement.value = toLocale;
-        }
+        // if (this.eleDeclarePrice.nativeElement.value === '-') return;
+        // let commasRemoved = this.eleDeclarePrice.nativeElement.value.replace(/,/g, '');
+        // let toInt: number;
+        // let toLocale: string;
+        // if (commasRemoved.split('.').length > 1) {
+        //   let decimal = isNaN(parseInt(commasRemoved.split('.')[1])) ? '' : parseInt(commasRemoved.split('.')[1]);
+        //   toInt = parseInt(commasRemoved);
+        //   toLocale = toInt.toLocaleString('en-US') + '.' + decimal;
+        // } else {
+        //   toInt = parseInt(commasRemoved);
+        //   toLocale = toInt.toLocaleString('en-US');
+        // }
+        // if (toLocale === 'NaN') {
+        //   this.eleDeclarePrice.nativeElement.value = '';
+        // } else {
+        //   this.eleDeclarePrice.nativeElement.value = toLocale;
+        // }
+        let price = event.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        console.log(price);
         break;
     }
   }

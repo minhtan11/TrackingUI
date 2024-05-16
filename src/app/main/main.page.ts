@@ -133,6 +133,11 @@ export class MainPage implements OnInit,AfterViewInit {
       this.dt.detectChanges();
     }
     this.routerOutlet.swipeGesture = false; 
+    this.swiper = this.swiperRef?.nativeElement.swiper;
+    if(this.swiper){
+      this.swiper.enable();
+      this.swiper.init();
+    } 
     this.startAnimation();
   }
 
@@ -251,30 +256,34 @@ export class MainPage implements OnInit,AfterViewInit {
 
   goOrderPage(status:any=''){
     if (status) {
-      this.navCtrl.navigateForward('main/order',{queryParams:{status:status}});
+      this.navCtrl.navigateForward('main/order',{animated:false,queryParams:{status:status}});
       return;
     }
-    this.navCtrl.navigateForward('main/order');
+    this.navCtrl.navigateForward('main/order',{animated:false});
+    if(this.swiper) this.swiper.disable();
     this.onDestroy();
   }
 
   goPackagePage(status:any=''){
     if (status) {
-      this.navCtrl.navigateForward('main/package',{queryParams:{status:status}});
+      this.navCtrl.navigateForward('main/package',{animated:false,queryParams:{status:status}});
       return;
     }
-    this.navCtrl.navigateForward('main/package');
+    this.navCtrl.navigateForward('main/package',{animated:false,queryParams:{type:'default'}});
+    if(this.swiper) this.swiper.disable();
     this.onDestroy();
   }
 
   goRechargePage(){
     this.onDestroy();
-    this.navCtrl.navigateForward('main/recharge');
+    this.navCtrl.navigateForward('main/recharge',{animated:false});
+    if(this.swiper) this.swiper.disable();
   }
 
   goServicechargePage(){
     this.onDestroy();
-    this.navCtrl.navigateForward('main/service-charge');
+    this.navCtrl.navigateForward('main/service-charge',{animated:false});
+    if(this.swiper) this.swiper.disable();
   }
   //#endregion
 
