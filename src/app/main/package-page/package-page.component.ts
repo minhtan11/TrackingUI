@@ -9,6 +9,7 @@ import { StorageService } from 'src/app/storage-service/storage.service';
 import Swal from 'sweetalert2';
 import { Network } from '@capacitor/network';
 import { Capacitor } from '@capacitor/core';
+import { Keyboard } from '@capacitor/keyboard';
 
 @Component({
   selector: 'app-package-page',
@@ -32,6 +33,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   total:any = 0;
   isload:any=true;
   isconnected:any = true;
+  isHideFooter:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -62,6 +64,15 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   }
 
   ngAfterViewInit(){
+    Keyboard.addListener('keyboardWillShow', info => {
+      this.isHideFooter = true;
+      this.dt.detectChanges();
+    });
+
+    Keyboard.addListener('keyboardWillHide', () => {
+      this.isHideFooter = false;
+      this.dt.detectChanges();
+    });
     // Network.addListener('networkStatusChange', status => {
     //   this.isconnected = status.connected;
     //   if (status.connected && status.connectionType != 'none') {

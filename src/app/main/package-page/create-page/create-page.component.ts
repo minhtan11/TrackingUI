@@ -1,7 +1,9 @@
+import { formatNumber } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Keyboard } from '@capacitor/keyboard';
 import { NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
@@ -26,6 +28,7 @@ export class CreatePageComponent  implements OnInit {
   isExec:any=false;
   private destroy$ = new Subject<void>();
   formGroup!: FormGroup;
+  isHideFooter:any=false;
   constructor(
     private formBuilder: FormBuilder,
     private notification: NotificationServiceComponent,
@@ -59,6 +62,18 @@ export class CreatePageComponent  implements OnInit {
       this.formGroup.patchValue({packageCode:code});
     }
     this.formGroup.patchValue({username:this.username});
+  }
+
+  ngAfterViewInit() {
+    Keyboard.addListener('keyboardWillShow', info => {
+      this.isHideFooter = true;
+      this.dt.detectChanges();
+    });
+
+    Keyboard.addListener('keyboardWillHide', () => {
+      this.isHideFooter = false;
+      this.dt.detectChanges();
+    });
   }
 
   async ionViewWillEnter(){
@@ -134,25 +149,23 @@ export class CreatePageComponent  implements OnInit {
   valueChange(event:any,field:any){
     switch(field.toLowerCase()){
       case 'declareprice':
-        // if (this.eleDeclarePrice.nativeElement.value === '-') return;
-        // let commasRemoved = this.eleDeclarePrice.nativeElement.value.replace(/,/g, '');
-        // let toInt: number;
-        // let toLocale: string;
-        // if (commasRemoved.split('.').length > 1) {
-        //   let decimal = isNaN(parseInt(commasRemoved.split('.')[1])) ? '' : parseInt(commasRemoved.split('.')[1]);
-        //   toInt = parseInt(commasRemoved);
-        //   toLocale = toInt.toLocaleString('en-US') + '.' + decimal;
-        // } else {
-        //   toInt = parseInt(commasRemoved);
-        //   toLocale = toInt.toLocaleString('en-US');
-        // }
-        // if (toLocale === 'NaN') {
-        //   this.eleDeclarePrice.nativeElement.value = '';
-        // } else {
-        //   this.eleDeclarePrice.nativeElement.value = toLocale;
-        // }
-        let price = event.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        console.log(price);
+        if (this.eleDeclarePrice.nativeElement.value === '-') return;
+        let commasRemoved = this.eleDeclarePrice.nativeElement.value.replace(/,/g, '');
+        let toInt: number;
+        let toLocale: string;
+        if (commasRemoved.split('.').length > 1) {
+          let decimal = isNaN(parseInt(commasRemoved.split('.')[1])) ? '' : parseInt(commasRemoved.split('.')[1]);
+          toInt = parseInt(commasRemoved);
+          toLocale = toInt.toLocaleString('en-US') + '.' + decimal;
+        } else {
+          toInt = parseInt(commasRemoved);
+          toLocale = toInt.toLocaleString('en-US');
+        }
+        if (toLocale === 'NaN') {
+          this.eleDeclarePrice.nativeElement.value = '';
+        } else {
+          this.eleDeclarePrice.nativeElement.value = toLocale;
+        }
         break;
     }
   }
