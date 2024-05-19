@@ -22,7 +22,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   @ViewChild(IonContent) content: IonContent;
   isReview:any;
   pageNum:any = 1;
-  pageSize:any = 50;
+  pageSize:any = 20;
   fromDate:any = '';
   toDate:any = '';
   username:any;
@@ -34,6 +34,13 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   isload:any=true;
   isconnected:any = true;
   isHideFooter:any=false;
+  isOpenEditPackage:any = false;
+  isOpenCheckPackage:any = false;
+  isOpenCheckPackage2:any = false;
+  isOpenCancelPackage:any = false;
+  isOpenRestorePackage:any = false;
+  isOpenDeletePackage:any = false;
+  itemSelected:any;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -50,17 +57,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
 
   //#region Init
   ngOnInit() {
-    // this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
-    //   if ((this.router.url.includes('/main/package'))) {
-    //     if ((this.router.url.includes('/main/package/create')) || (this.router.url.includes('/main/package/detail'))) {
-    //       this.navCtrl.navigateBack('main/package',{queryParams:{type:'default'}});
-    //     }else{
-    //       if (!(this.router.url.includes('/main/package/orderstatus'))) {
-    //         this.navCtrl.navigateBack('main',{queryParams:{selected:0}});
-    //       }
-    //     }
-    //   }
-    // });
+    
   }
 
   ngAfterViewInit(){
@@ -97,10 +94,8 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     let status = this.rt.snapshot.queryParams["status"];
     if (status) {
       this.status = status;
-      this.dt.detectChanges();
     }
     this.init();
-    this.dt.detectChanges();
   }
 
   ionViewWillLeave(){
@@ -147,7 +142,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     this.api.isLoad(true);
     setTimeout(() => {
       this.api.execByBody('Authencation', 'package', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res: any) => {
+        next:(res: any) =>{
           if (res[0]) {
             this.notification.showNotiError('', res[1].message);
           }else{
@@ -167,7 +162,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
 
   createPackage(){
     this.onDestroy();
-    this.navCtrl.navigateForward('main/package/create',{animated:false});
+    this.navCtrl.navigateForward('main/package/create');
   }
 
   onCopy(){
@@ -232,26 +227,285 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     if(!this.username) this.username = await this.storage.get('username');
     let type = this.rt.snapshot.queryParams['type'];
     switch(type){
-      case 'change':
-        let array = JSON.parse(this.rt.snapshot.queryParams['lstdata']);
-        array.forEach((item:any) => {
-          let index = this.lstData.findIndex((x:any) => x.packageCode == item.packageCode);
-          if(index > -1) this.lstData[index] = item;
-        });
-        this.dt.detectChanges();
+      case 'add':
+        this.isload = true;
+        this.pageNum = 1;
+        this.isEmpty = false;
+        this.content.scrollToTop();
+        this.loadData();
         break;
-      case 'default':
-        if (this.lstData && this.lstData.length == 0) {
-          this.dt.detectChanges();
-          this.loadData();
+      case 'change':
+        let data = JSON.parse(this.rt.snapshot.queryParams['dataUpdate']);
+        if(data){
+          let index = this.lstData.findIndex((x:any) => x.id == data.id);
+          if(index > -1){
+            this.lstData[index] = data;
+            this.dt.detectChanges();
+          } 
+        }
+        break;
+      case 'delete':
+        let datas = JSON.parse(this.rt.snapshot.queryParams['dataDelete']);
+        if(datas){
+          let index = this.lstData.findIndex((x:any) => x.id == datas.id);
+          if(index > -1){
+            this.lstData.splice(index,1);
+            this.dt.detectChanges();
+          } 
         }
         break;
       default:
-        this.lstData = [];
-        this.dt.detectChanges();
-        this.loadData();
+        if (this.lstData && this.lstData.length == 0) {
+          this.isload = true;
+          this.pageNum = 1;
+          this.isEmpty = false;
+          this.loadData();
+        }
         break;
     }
   }
+
+  //#region Edit package
+  openPopPackage(item:any){
+    this.itemSelected = {...item};
+    this.isOpenEditPackage = true;
+  }
+
+  cancelEdit(){
+    this.isOpenEditPackage = false;
+    this.dt.detectChanges();
+  }
+
+  editPackage(item:any){
+    this.cancelEdit();
+    let data = JSON.stringify(item);
+    this.navCtrl.navigateForward('main/package/create',{queryParams:{data:data,isEdit:true}});
+  }
+
+  //#endregion Edit package
+
+  //#region CheckPackage
+  openPopCheckPackage(item:any){
+    this.itemSelected = {...item};
+    this.isOpenCheckPackage = true;
+  }
+
+  cancelCheck(){
+    this.isOpenCheckPackage = false;
+    this.dt.detectChanges();
+  }
+
+  openPopCheckPackage2(item:any){
+    this.itemSelected = {...item};
+    this.isOpenCheckPackage2 = true;
+    this.dt.detectChanges();
+  }
+
+  cancelCheck2(){
+    this.isOpenCheckPackage2 = false;
+    this.dt.detectChanges();
+  }
+
+  continuteCheck(item:any){
+    this.cancelCheck();
+    this.dt.detectChanges();
+    let data = {
+      id: item.packageCode,
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation', 'checkavailable', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+        if (res[0]) {
+          this.notification.showNotiError('', res[1].message);
+          this.api.isLoad(false);
+        } else {
+          if (res[1] == 0) {
+            this.api.isLoad(false);
+            this.openPopCheckPackage2(item);
+          }else{
+            this.checkPackage(item);
+          }
+        }
+      })
+    }, 500);
+  }
+
+  checkPackage(item:any){
+    this.cancelCheck2();
+    this.api.isLoad(true);
+    setTimeout(() => {
+      let data = {
+        id: item.packageCode,
+        userName: this.username
+      }
+      let messageBody = {
+        dataRequest: JSON.stringify(data)
+      };
+      this.api.execByBody('Authencation', 'checkstatus', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res:any)=>{
+          if (res[0]) {
+            this.notification.showNotiError('', res[1].message);
+          } else {
+            this.navCtrl.navigateForward('main/package/orderstatus',{ queryParams: {data: JSON.stringify(res[1])}});
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+          this.onDestroy();
+        }
+      })
+    }, 500);
+  }
+  //#endregion CheckPackage
+
+  //#region CancelPackage
+  openPopCancelPackage(item:any){
+    this.itemSelected = {...item};
+    this.isOpenCancelPackage = true;
+  }
+
+  cancelPopPackage(){
+    this.isOpenCancelPackage = false;
+    this.dt.detectChanges();
+  }
+
+  cancelPackage(item:any){
+    this.cancelPopPackage();
+    let data = {
+      id: item.id,
+      userName: this.username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation', 'cancel', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res:any)=>{
+          if (res[0]) {
+            this.notification.showNotiError('', res[1].message);
+          }else{
+            if (!res[1].isError) {
+              this.notification.showNotiSuccess('', res[1].message);
+              if(res[2]){
+                let index = this.lstData.findIndex((x: any) => x.id == res[2].id);
+                if (index > -1) {
+                  this.lstData[index] = res[2];
+                  this.dt.detectChanges();
+                } 
+              }
+            } else {
+              this.notification.showNotiError('', res[1].message);
+            }
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+          this.onDestroy();
+        }
+      })
+    }, 1000);
+  }
+  //#endregion
+
+  //#region restorePackage
+  openPopRestorePackage(item:any){
+    this.itemSelected = {...item};
+    this.isOpenRestorePackage = true;
+  }
+
+  cancelRestorePackage(){
+    this.isOpenRestorePackage = false;
+    this.dt.detectChanges();
+  }
+
+  restorePackage(item:any){
+    this.cancelRestorePackage();
+    let data = {
+      id: item.id,
+      userName: this.username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation', 'restorepackage', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res:any)=>{
+          if (res[0]) {
+            this.notification.showNotiError('', res[1].message);
+          }else{
+            if (!res[1].isError) {
+              this.notification.showNotiSuccess('', res[1].message);
+              if(res[2]){
+                let index = this.lstData.findIndex((x: any) => x.id == res[2].id);
+                if (index > -1) {
+                  this.lstData[index] = res[2];
+                  this.dt.detectChanges();
+                } 
+              }
+            } else {
+              this.notification.showNotiError('', res[1].message);
+            }
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+          this.onDestroy();
+        }
+      })
+    }, 1000);
+  }
+  //#endregion
+
+  //#region DeletePackage
+  openPopDeletePackage(item:any){
+    this.itemSelected = {...item};
+    this.isOpenDeletePackage = true;
+  }
+
+  cancelDeletePackage(){
+    this.isOpenDeletePackage = false;
+    this.dt.detectChanges();
+  }
+
+  deletePackage(item:any){
+    this.cancelDeletePackage();
+    let data = {
+      id: item.id,
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation', 'deletepackage', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res:any)=>{
+          if (res[0]) {
+            this.notification.showNotiError('', res[1].message);
+          }else{
+            if (!res[1].isError) {
+              this.notification.showNotiSuccess('', res[1].message);
+              let index = this.lstData.findIndex((x: any) => x.id == item.id);
+              if (index > -1) {
+                this.lstData.splice(index,1);
+                this.dt.detectChanges();
+              } 
+            } else {
+              this.notification.showNotiError('', res[1].message);
+            }
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+          this.onDestroy();
+        }
+      })
+    }, 1000);
+  }
+  //#endregion
   //#endregion
 }

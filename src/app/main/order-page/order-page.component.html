@@ -1,158 +1,211 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar style="border-radius: 0px 0px 20px 20px;--background:linear-gradient(23deg, rgba(139,237,251,1) 0%, rgba(42,186,227,1) 50%, rgba(100,181,246,1) 100%) !important;">
-    <div class="d-flex align-items-center h-100 justify-content-center w-100">
-      <ion-icon (click)="onback()" class="pl-3" slot="start" mode="ios" style="color: white !important;font-size: 2rem;" name="chevron-back-outline"></ion-icon>
-      <ion-searchbar style="max-width: 850px;" placeholder="Tìm kiếm đơn hàng" (ionChange)="ionChange($event)" enterkeyhint="search" mode="ios" class="p-2" show-clear-button="always"></ion-searchbar>
-    </div>
+  <ion-toolbar mode="ios" class="bg-default">
+    <ion-button slot="start" (click)="onback()" fill="clear">
+      <ion-icon style="color: white !important;" class="text-dark" name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-title class="dynamic-font text-dark">Danh sách đơn hàng</ion-title>
   </ion-toolbar>
-  <ion-toolbar style="--background:white !important;" class="pr-3 pl-3">
-    <div class="d-flex align-items-center h-100 justify-content-center w-100">
-      <div style="overflow-x: scroll;margin: auto;max-width: 1000px;">
-        <ion-segment [scrollable]="true" [value]="status" mode="md">
-          <ion-segment-button (click)=" sortData(0)" [value]="0">
-            <ion-text class="text-segment">
-              <span style="font-size: 1em;">Tất cả</span>
-            </ion-text>
-          </ion-segment-button>
-          <ion-segment-button (click)=" sortData(1)" [value]="1">
-            <ion-text class="text-segment">
-              <span style="font-size: 1em;">Chờ thanh toán</span>
-            </ion-text>
-          </ion-segment-button>
-          <ion-segment-button (click)=" sortData(2)" [value]="2">
-            <ion-text class="text-segment">
-              <span style="font-size: 1em;">Đã thanh toán</span>
-            </ion-text>
-          </ion-segment-button>
-          <ion-segment-button (click)=" sortData(3)" [value]="3">
-            <ion-text class="text-segment">
-              <span style="font-size: 1em;">Đã hủy</span>
-            </ion-text>
-          </ion-segment-button>
-          <ion-segment-button (click)=" sortData(4)" [value]="4">
-            <ion-text class="text-segment">
-              <span style="font-size: 1em;">Khác</span>
-            </ion-text>
-          </ion-segment-button>
-        </ion-segment>
-      </div>
-    </div>
+  <ion-toolbar  style="--background:linear-gradient(154deg, rgba(139,237,251,1) 0%, rgba(42,186,227,1) 50%, rgba(100,181,246,1) 100%) !important;">
+    <ion-searchbar slot="start" class="p-2" placeholder="Tìm kiếm đơn hàng" (ionChange)="ionChange($event)"
+      enterkeyhint="search" mode="ios" show-clear-button="always"></ion-searchbar>
+  </ion-toolbar>
+  <ion-toolbar style="--background:white !important;">
+    <ion-segment [scrollable]="true" [value]="status" mode="md">
+      <ion-segment-button (click)=" sortData(0)" [value]="0">
+        <ion-text class="text-segment dynamic-font text-dark font-weight-bold">
+          <span>Tất cả</span>
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button (click)=" sortData(1)" [value]="1">
+        <ion-text class="text-segment dynamic-font text-dark font-weight-bold">
+          <span>Chờ thanh toán</span>
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button (click)=" sortData(2)" [value]="2">
+        <ion-text class="text-segment dynamic-font text-dark font-weight-bold">
+          <span>Đã thanh toán</span>
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button (click)=" sortData(3)" [value]="3">
+        <ion-text class="text-segment dynamic-font text-dark font-weight-bold">
+          <span>Đã hủy</span>
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button (click)=" sortData(4)" [value]="4">
+        <ion-text class="text-segment dynamic-font text-dark font-weight-bold">
+          <span>Khác</span>
+        </ion-text>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
-<ion-content style="--background:white !important;" class="ion-padding">
-  <ng-container *ngIf="isloadpage">
-    <div style="background-color: white !important;" class="d-flex align-items-center justify-content-center h-100 w-100">
-      <ion-spinner style="color: black !important;" mode="ios" name="dots"></ion-spinner>
-    </div>
-  </ng-container>
+<ion-content style="--background:white !important;">
   <ng-container *ngIf="isEmpty">
     <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
       <img style="width: 40%;" src="../../../assets/image/empty-box.png" alt="">
       <ion-text class="dynamic-font" style="color:black !important">
-        Không có kiện hàng
+        Không có đơn hàng
       </ion-text>
     </div>
   </ng-container>
-  <ng-container *ngIf="!isconnected">
-    <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
-      <img style="width: 40%;" src="../../../assets/image/connection.png" alt="">
-      <ion-text class="dynamic-font" style="color:black !important">
-        Mất kết nối internet
-      </ion-text>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="lstData && lstData.length">
-    <div class="w-100 mb-5" style="margin: auto;max-width: 1000px;">
-      <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
-        <ion-card style="margin: 1em;--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;">
-          <ion-card-header style="padding: 1em;">
-            <div style="justify-content: space-between;" class="d-flex align-items-center">
-              <div>
-                <ion-text style="font-size: 1rem;" class="font-weight-bold me-2">
-                  Mã đơn hàng
-                </ion-text>
+  <div class="w-100 mt-2">
+    <ion-list *ngIf="lstData && lstData.length" class="m-0" style="background-color:white !important;">
+      <ng-container *ngFor="let item of lstData">
+        <ion-item lines="none" style="--background:white !important">
+          <ion-card class="mx-1 my-1 mb-4 w-100"
+            style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;">
+            <ion-card-header class="p-3">
+              <div style="justify-content: space-between;" class="d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                  <ion-text style="font-size: 1rem;" class="dynamic-font text-dark font-weight-bold me-2">
+                    Mã đơn hàng
+                  </ion-text>
+                </div>
+                <div class="d-flex align-items-center">
+                  <ion-text class="dynamic-font me-2" style="font-size: 1rem;">
+                    {{item.shippingOrderCode}}
+                  </ion-text>
+                  <ion-icon [cdkCopyToClipboard]="item.shippingOrderCode" (click)="onCopy()" style="font-size: 2rem;"
+                    name="copy-outline"></ion-icon>
+                </div>
               </div>
-              <div class="d-flex align-items-center">
-                <ion-text class="me-2" style="font-size: 1rem;">
-                  {{item.shippingOrderCode}}
-                </ion-text>
-                <ion-icon [cdkCopyToClipboard]="item.shippingOrderCode" (click)="onCopy()" style="font-size: 1.5rem;" name="copy-outline"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="p-3">
+              <div class="w-100" (click)="viewDetail(item)" >
+                <div class="d-flex align-items-center">
+                  <ng-container *ngIf="item.status == 1">
+                    <img  style="width: 4em;height: 4em;
+                    margin-right: 1rem;" src="../../../assets/image/wait-order.png" alt="">
+                  </ng-container>
+                  <ng-container *ngIf="item.status == 2">
+                    <img  style="width: 4em;height: 4em;
+                    margin-right: 1rem;" src="../../../assets/image/done-order.png" alt="">
+                  </ng-container>
+                  <ng-container *ngIf="item.status == 3">
+                    <img  style="width: 4em;height: 4em;
+                    margin-right: 1rem;" src="../../../assets/image/ship-cancel.png" alt="">
+                  </ng-container>
+                  <ng-container *ngIf="item.status == 4">
+                    <img  style="width: 4em;height: 4em;
+                    margin-right: 1rem;" src="../../../assets/image/ship-other.png" alt="">
+                  </ng-container>
+                  <div>
+                    <ion-text mode="ios" class="dynamic-font">
+                      <span class="font-weight-bold text-dark"> Vận chuyển: </span>
+                      <span>{{item.shippingMethodName}}</span>
+                    </ion-text>
+                    <br>
+                    <ion-text class="dynamic-font">
+                      <span class="font-weight-bold text-dark">Ngày tạo: </span>
+                      <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                    </ion-text>
+                    <br>
+                    <ion-text class="dynamic-font">
+                      <span class="font-weight-bold text-dark">Người tạo: </span>
+                      <span>{{item.lastName}}</span>
+                    </ion-text>
+                    <br>
+                    <ion-text class="dynamic-font">
+                      <span class="font-weight-bold text-dark">Dịch vụ phụ: </span>
+                      <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
+                      <span *ngIf="item.isWoodPackage && item.isAirPackage">-</span>
+                      <span *ngIf="item.isAirPackage">Bọt khí</span>
+                      <span *ngIf="item.isAirPackage && item.isInsurance">-</span>
+                      <span *ngIf="item.isInsurance">Bảo hiểm</span>
+                      <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
+                    </ion-text>
+                    <ion-text>
+                    </ion-text>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end mb-2">
+                  <ng-container [ngSwitch]="item.status">
+                    <ion-badge  mode="ios" *ngSwitchCase="1" color="warning">
+                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                        <span>Chờ thanh toán</span>
+                      </ion-text>
+                    </ion-badge>
+                    <ion-badge  mode="ios" *ngSwitchCase="2" color="success">
+                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                        <span>Đã thanh toán</span>
+                      </ion-text>
+                    </ion-badge>
+                    <ion-badge  mode="ios" *ngSwitchCase="3" color="danger">
+                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                        <span>Đã hủy</span>
+                      </ion-text>
+                    </ion-badge>
+                    <ion-badge  mode="ios" *ngSwitchCase="4" color="medium">
+                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                        <span>Khác</span>
+                      </ion-text>
+                    </ion-badge>
+                  </ng-container>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <ion-text class="dynamic-font font-weight-bold text-dark">
+                    Tổng tiền:
+                  </ion-text>
+                  &nbsp;
+                  <ion-text class="dynamic-font">
+                    {{item.totalPrice | number}}
+                  </ion-text>
+                </div>
               </div>
-            </div>
-          </ion-card-header>
-          <ion-card-content style="padding: 1em;">
-            <div class="d-flex align-items-center">
-              <ng-container *ngIf="item.status == 1">
-                <img  style="width: 4em;height: 4em;
-                margin-right: 1rem;" src="../../../assets/image/wait-order.png" alt="">
-              </ng-container>
-              <ng-container *ngIf="item.status == 2">
-                <img  style="width: 4em;height: 4em;
-                margin-right: 1rem;" src="../../../assets/image/done-order.png" alt="">
-              </ng-container>
-              <ng-container *ngIf="item.status == 3">
-                <img  style="width: 4em;height: 4em;
-                margin-right: 1rem;" src="../../../assets/image/ship-cancel.png" alt="">
-              </ng-container>
-              <ng-container *ngIf="item.status == 4">
-                <img  style="width: 4em;height: 4em;
-                margin-right: 1rem;" src="../../../assets/image/ship-other.png" alt="">
-              </ng-container>
-              <div>
-                <ion-text mode="ios">
-                  <span> Vận chuyển:</span>
-                  <span>{{item.shippingMethodName}}</span>
-                </ion-text>
-                <br>
-                <ion-text>
-                  <span>Ngày tạo: </span>
-                  <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
-                </ion-text>
-                <br>
-                <ion-text>
-                  <span>Người tạo: </span>
-                  <span>{{item.lastName}}</span>
-                </ion-text>
-                <br>
-                <ion-text>
-                  <span>Dịch vụ phụ: </span>
-                  <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
-                  <span *ngIf="item.isWoodPackage && item.isAirPackage">-</span>
-                  <span *ngIf="item.isAirPackage">Bọt khí</span>
-                  <span *ngIf="item.isAirPackage && item.isInsurance">-</span>
-                  <span *ngIf="item.isInsurance">Bảo hiểm</span>
-                  <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
-                </ion-text>
-                <ion-text>
-                </ion-text>
+              <div *ngIf="item.status == 1" class="d-flex align-items-center justify-content-center text-center pt-3">
+                <ion-button (click)="openPayment(item)" mode="ios" size="default" color="success">
+                  <ion-icon style="color: white !important;" slot="start" name="wallet-outline"></ion-icon>
+                  <ion-text style="color: white !important;" class="dynamic-font">
+                    Thanh toán
+                  </ion-text>
+                </ion-button>
               </div>
-            </div>
-            <div class="d-flex justify-content-end mb-2">
-              <ng-container [ngSwitch]="item.status">
-                <span style="border-radius: 10px;" *ngSwitchCase="1" class="badge badge-pill badge-secondary">Chờ thanh toán</span>
-                <span style="border-radius: 10px;" *ngSwitchCase="2" class="badge badge-pill badge-success">Đã thanh toán</span>
-                <span style="border-radius: 10px;" *ngSwitchCase="3" class="badge badge-pill badge-danger">Đã hủy</span>
-                <span style="border-radius: 10px;" *ngSwitchCase="4" class="badge badge-pill badge-info">Khác</span>    
-              </ng-container>
-            </div>
-            <div class="d-flex justify-content-end">
-              <ion-text class="font-weight-bold">
-                Tổng tiền:
-              </ion-text>
-              &nbsp;
-              <ion-text class="font-weight-bold">
-                {{item.totalPrice | number}}
-              </ion-text>
-            </div>
-            <div class="d-flex align-items-center justify-content-center mt-3">
-              <ion-icon (click)="viewDetail(item)" style="font-size: 1.5rem;" name="eye-outline"></ion-icon>
-            </div>
-          </ion-card-content>
-        </ion-card>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
       </ng-container>
-    </div>
-    <ion-infinite-scroll *ngIf="isload" (ionInfinite)="onIonInfinite($event)">
-      <ion-infinite-scroll-content style="--color: black !important;" loadingSpinner="dots"></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-  </ng-container>
+    </ion-list>
+  </div>
+  <!-- payment -->
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelPayment()" [isOpen]="isOpenPayment">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Thanh toán đơn hàng</h3>
+          </ion-text>
+        </div>
+        <div class="w-100 text-center">
+          <ion-text class="dynamic-font text-dark">
+            <span>Bạn có muốn thanh toán cho đơn hàng </span>
+          </ion-text>
+          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
+            <span>{{itemSelected?.shippingOrderCode}}</span>
+          </ion-text>
+          <ion-text class="dynamic-font text-dark">
+            <span>? </span>
+          </ion-text>
+          <ion-text class="dynamic-font text-dark">
+            <span>Tổng thanh toán cho đơn hàng là </span>
+          </ion-text>
+          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
+            <span>{{(itemSelected.totalPrice | number)+'đ'}}</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="onPayment(itemSelected)" mode="ios" size="default" class="ion-btn-default me-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelPayment()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- payment -->
 </ion-content>

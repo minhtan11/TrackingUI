@@ -52,7 +52,7 @@ import { FormatdatePipe } from '../pipe/format-date/formatdate.pipe';
     ReactiveFormsModule,
     MatSelectModule,
     MatCheckboxModule,
-    ClipboardModule
+    ClipboardModule,
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
   ,DecodeVNPipe,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent,FormatdatePipe],

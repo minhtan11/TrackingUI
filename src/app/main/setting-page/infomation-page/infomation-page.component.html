@@ -1,7 +1,9 @@
 <ion-header class="ion-no-border" style="--background:white !important;">
-  <ion-toolbar style="--background:var(--ion-color-mat-primary) !important;">
-    <ion-icon (click)="onback()" class="pl-3" slot="start" mode="ios" style="color: white !important;font-size: 2rem;" name="chevron-back-outline"></ion-icon>
-    <ion-title class="dynamic-font" style="color: white !important;" mode="ios">Thông tin tài khoản</ion-title>
+  <ion-toolbar mode="ios" style="--background:linear-gradient(23deg, rgba(139,237,251,1) 0%, rgba(42,186,227,1) 50%, rgba(100,181,246,1) 100%) !important;">
+    <ion-button slot="start" (click)="onback()" fill="clear">
+      <ion-icon style="color: white !important;" class="text-dark" name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-title class="dynamic-font text-dark">Thông tin tài khoản</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding" style="--background:white !important">
@@ -19,13 +21,12 @@
                   <ion-skeleton-text style="width: 30%;" [animated]="true"></ion-skeleton-text>
                 </ng-container>
                 <ng-container *ngIf="oUser != undefined">
-                  <img *ngIf="!isChooseImg" class="mb-2" style="width: 15em;height: 15em;
-                  border-radius: 70%;
-                  " [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="" class="mb-2">
-                  <img *ngIf="isChooseImg" class="mb-2" style="width: 15em;height: 15em;
-                  border-radius: 70%;
-                  " [src]="'data:image/jpeg;base64,'+image?.base64String" alt="" class="mb-2">
-                  <span (click)="onOpen()" class="font-weight-bold mt-2 text-primary"><u>Chọn ảnh</u></span>
+                  <ion-avatar *ngIf="!isChooseImg" (click)="onOpen()" style="max-width: 120px !important;min-width: 120px;max-height: 120px;min-height: 120px;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;" >
+                    <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" />
+                  </ion-avatar>
+                  <ion-avatar *ngIf="isChooseImg" (click)="onOpen()" style="max-width: 120px !important;min-width: 120px;max-height: 120px;min-height: 120px;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;" >
+                    <img [src]="'data:image/jpeg;base64,'+image?.base64String" />
+                  </ion-avatar>
                 </ng-container>
               </div>
             </ion-card-header>
@@ -63,7 +64,7 @@
       </ion-row>
     </ion-grid>
   </div>
-  <ion-modal style="--background:white !important" [isOpen]="isOpen" [canDismiss]="isDismiss" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+  <ion-modal style="--background:white !important" [isOpen]="isOpen" (willDismiss)="onDismiss()" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
     <ng-template>
       <div class="p-3 w-100 h-100">
         <ion-text class="dynamic-fontr" style="color: var(--ion-color-mat-primary);">
@@ -71,28 +72,29 @@
         </ion-text>
         <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
           <ion-item (click)="uploadImage('1')" lines="none" [button]="true" detail="false" style="--background:white !important">
-            <ion-icon style="color:black !important" slot="start" mode="ios" name="camera-outline"></ion-icon>
-            <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Chụp ảnh</ion-text>
+            <ion-icon class="text-dark me-2" mode="ios" name="camera-outline"></ion-icon>
+            <ion-text class="text-dark" mode="ios" class="font-weight-normal dynamic-font">Chụp ảnh</ion-text>
           </ion-item>
           <ion-item (click)="uploadImage('2')" lines="none" [button]="true" detail="false" style="--background:white !important">
-            <ion-icon style="color:black !important" slot="start" mode="ios" name="image-outline"></ion-icon>
-            <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Chọn từ thư viện</ion-text>
+            <ion-icon class="text-dark me-2" mode="ios" name="image-outline"></ion-icon>
+            <ion-text class="text-dark" mode="ios" class="font-weight-normal dynamic-font">Chọn từ thư viện</ion-text>
           </ion-item>
           <ion-item (click)="onDismiss()" lines="none" [button]="true" detail="false" style="--background:white !important">
-            <ion-icon style="color:black !important" slot="start" mode="ios"  name="close-outline"></ion-icon>
-            <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Hủy</ion-text>
+            <ion-icon class="text-dark me-2" mode="ios"  name="close-outline"></ion-icon>
+            <ion-text class="text-dark" mode="ios" class="font-weight-normal dynamic-font">Hủy</ion-text>
           </ion-item>
         </ion-list>
       </div>
     </ng-template>
   </ion-modal>
 </ion-content>
-<ion-footer *ngIf="!isHideFooter" class="ion-no-border">
-  <ion-toolbar style="--background:white">
-    <div class="d-flex align-items-center justify-content-center h-100" style="padding-left: 1em;padding-right: 1em;">
-      <button (click)="onUpdate()" style="border-radius: 10PX;max-width: 850px;" class="btn btn-block text-white dynamic-font" mat-flat-button color="primary">
+<ion-footer *ngIf="!isHideFooter" class="ion-no-border"
+  style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+  <ion-toolbar mode="ios" style="--background:white !important">
+    <ion-button mode="ios" (click)="onUpdate()" class="ion-btn-default" expand="block">
+      <ion-text class="dynamic-font font-weight-bold" style="color: white !important;">
         <span>CẬP NHẬT THÔNG TIN</span>
-      </button> 
-    </div>
+      </ion-text>
+    </ion-button>
   </ion-toolbar>
 </ion-footer>

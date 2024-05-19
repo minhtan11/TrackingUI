@@ -88,7 +88,7 @@ export class ChangepasswordPageComponent  implements OnInit {
         next:(res:any)=>{
           if (res && !res?.isError) {
             this.notification.showNotiSuccess('', res.message);
-            this.navCtrl.navigateBack('main/setting');
+            this.navCtrl.navigateForward('main',{queryParams:{selected:3}});
           }else{
             this.notification.showNotiError('',res?.message);
           }

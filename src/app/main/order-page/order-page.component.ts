@@ -28,8 +28,9 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   lstData:any = [];
   isEmpty:any = false;
   isload:any=true;
-  isloadpage:any=false;
   isconnected:any = true;
+  itemSelected:any;
+  isOpenPayment:any = false;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -47,17 +48,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   //#region Init
 
   ngOnInit() {
-    // this.platform.ready().then(async () => {
-    //   this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
-    //     if ((this.router.url.includes('/main/package'))) {
-    //       if (!(this.router.url.includes('/main/package/create')) || (this.router.url.includes('/main/package/detail'))) {
-    //         this.navCtrl.navigateForward('main',{queryParams:{selected:0}});
-    //       }else{
-    //         processNextHandler();
-    //       }
-    //     }
-    //   });
-    // });
+    
   }
 
   async ionViewWillEnter(){
@@ -118,11 +109,8 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     this.pageNum = 1;
     this.lstData = [];
     this.isEmpty = false;
-    this.isloadpage = true;
     this.dt.detectChanges();
-    setTimeout(() => {
-      this.loadData();
-    }, 500); 
+    this.loadData();
   }
 
 
@@ -139,18 +127,25 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'order', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res[0]) {
-        this.notification.showNotiError('', res[1].message);
-      }else{
-        let oData = res[1];
-        this.lstData = oData[0];
-        this.isloadpage = false;
-        if (this.lstData.length == 0) this.isEmpty = true;
-        if (this.lstData.length == oData[1]) this.isload = false;
-        this.dt.detectChanges();
-      }
-    })
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation', 'order', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res: any) => {
+          if (res[0]) {
+            this.notification.showNotiError('', res[1].message);
+          }else{
+            let oData = res[1];
+            this.lstData = oData[0];
+            if (this.lstData.length == 0) this.isEmpty = true;
+            if (this.lstData.length == oData[1]) this.isload = false;
+            this.dt.detectChanges();
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+        }
+      })
+    }, 1000);
   }
 
   viewDetail(data:any){
@@ -164,27 +159,6 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   onCopy(){
     this.notification.showNotiSuccess('','Đã Sao chép',1000);
   }
-
-  // onPayment(item:any){
-  //   let data = {
-  //     id: item.id,
-  //     userName: this.username
-  //   }
-  //   let messageBody = {
-  //     dataRequest: JSON.stringify(data)
-  //   };
-  //   this.api.execByParameter('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-  //     if (res && !res.isError) {
-  //       let index = this.lstData.findIndex((x:any) => x.id == data.id);
-  //       if(index > -1) this.lstData[index] = res.data;
-  //       this.notification.showNotiSuccess('',res.message);
-  //       this.dt.detectChanges();
-  //     }else{
-  //       this.notification.showNotiError('',res.message);
-  //     }
-  //     this.onDestroy();
-  //   })
-  // }
 
   onIonInfinite(event:any){ 
     if (this.isload) {
@@ -227,7 +201,6 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     this.pageNum = 1;
     this.isload = true;
     this.isEmpty = false;
-    this.isloadpage = false;
     this.lstData = [];
     this.content.scrollToTop();
     this.loadData();
@@ -238,24 +211,68 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     let type = this.rt.snapshot.queryParams['type'];
     switch(type){
       case 'change':
-        let array = JSON.parse(this.rt.snapshot.queryParams['lstdata']);
-        array.forEach((item:any) => {
-          let index = this.lstData.findIndex((x:any) => x.id == item.id);
-          if(index > -1) this.lstData[index] = item;
-        });
-        this.dt.detectChanges();
-        break;
-      case 'default':
+        let data = JSON.parse(this.rt.snapshot.queryParams['dataUpdate']);
+        if(data){
+          let index = this.lstData.findIndex((x:any) => x.id == data.id);
+          if(index > -1){
+            this.lstData[index] = data;
+            this.dt.detectChanges();
+          } 
+        }
         break;
       default:
-        this.lstData = [];
-        this.isloadpage = true;
-        this.dt.detectChanges();
-        setTimeout(() => {
+        if (this.lstData && this.lstData.length == 0) {
+          this.isload = true;
+          this.pageNum = 1;
+          this.isEmpty = false;
           this.loadData();
-        }, 500);
+        }
         break;
     }
+  }
+
+  openPayment(item:any){
+    this.itemSelected = {...item};
+    this.isOpenPayment = true;
+  }
+
+  cancelPayment(){
+    this.isOpenPayment = false;
+    this.dt.detectChanges();
+  }
+
+  onPayment(item:any){
+    this.cancelPayment();
+    let data = {
+      id: item.id,
+      userName: this.username,
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res:any)=>{
+          if (res && !res.isError) {
+            this.notification.showNotiSuccess('',res.message);
+            if(res?.data){
+              let index = this.lstData.findIndex((x: any) => x.id == res?.data?.id);
+                if (index > -1) {
+                  this.lstData[index] = res?.data;
+                  this.dt.detectChanges();
+                } 
+            }
+          }else{
+            this.notification.showNotiError('',res.message);
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+          this.onDestroy();
+        }
+      })
+    }, 1000);
   }
 
   //#endregion

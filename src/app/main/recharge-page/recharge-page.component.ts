@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-recharge-page',
@@ -8,12 +9,17 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./recharge-page.component.scss'],
 })
 export class RechargePageComponent  implements OnInit {
-  platform:any = "";
-  constructor(private navCtrl: NavController,) { 
-    this.platform = Capacitor.getPlatform();
+  constructor(
+    private navCtrl: NavController,
+    private platform: Platform,
+    private router: Router,
+  ) { 
+
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
   onback(){
     this.navCtrl.navigateBack('main');
   }

@@ -55,7 +55,7 @@ const routes: Routes = [
     component: DetailComponent,
   },
   {
-    path: 'package/orderstatus/:username',
+    path: 'package/orderstatus',
     component: OrderStatusComponent,
   },
   {

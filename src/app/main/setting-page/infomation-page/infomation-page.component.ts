@@ -25,7 +25,6 @@ export class InfomationPageComponent  implements OnInit {
   formGroup!: FormGroup;
   image:any;
   isOpen:any = false;
-  isDismiss:any=false;
   imgUser:any = '';
   oUser:any;
   isChooseImg:any = false;
@@ -144,7 +143,7 @@ export class InfomationPageComponent  implements OnInit {
         next:(res:any)=>{
           if (res && !res?.isError) {
             this.notification.showNotiSuccess('',res?.message);
-            this.navCtrl.navigateForward('main',{queryParams:{selected:0}});
+            this.navCtrl.navigateForward('main',{queryParams:{selected:3}});
           }else{
             this.notification.showNotiError('',res?.message);
           }
@@ -185,12 +184,10 @@ export class InfomationPageComponent  implements OnInit {
 
   onOpen(){
     this.isOpen = true;
-    this.isDismiss = false;
     this.dt.detectChanges();
   }
 
   onDismiss(){
-    this.isDismiss = true;
     this.isOpen = false;
     this.dt.detectChanges();
   }

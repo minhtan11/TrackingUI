@@ -31,6 +31,8 @@ export class HomePage implements OnInit, AfterViewInit {
   isLogin: any = true;
   userName:any;
   isAuthen:any = false;
+  dataLoginError:any;
+  isOpenLoginError:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -86,15 +88,9 @@ export class HomePage implements OnInit, AfterViewInit {
     } 
     let loginError = this.rt.snapshot.queryParams["loginError"];
     if (loginError) {
-      let data = JSON.parse(loginError);
-      const alert = await this.alertController.create({
-        header: 'Trakuaidi xin thông báo!',
-        subHeader: 'Lỗi đăng nhập',
-        message: data?.message || data?.Message,
-        buttons: ['Ok'],
-        mode:'ios'
-      });
-      await alert.present();
+      this.dataLoginError = JSON.parse(loginError);
+      this.isOpenLoginError = true;
+      this.dt.detectChanges();
     }
   }
 
@@ -259,6 +255,11 @@ export class HomePage implements OnInit, AfterViewInit {
         })
       }, 1000);
     }
+  }
+
+  cancelError(){
+    this.isOpenLoginError = false;
+    this.dt.detectChanges();
   }
 
   //#endregion

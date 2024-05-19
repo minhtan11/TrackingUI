@@ -10,6 +10,7 @@ import { Device } from '@capacitor/device';
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
 import { register } from 'swiper/element/bundle';
 import Swiper from 'swiper';
+import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
 register();
 
 @Component({
@@ -18,14 +19,13 @@ register();
   styleUrls: ['./main.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainPage implements OnInit,AfterViewInit {
+export class MainPage implements OnInit {
   //#region Contructor
   @ViewChild('swiper')
   swiperRef: ElementRef | undefined;
   swiper:Swiper;
   isReview:any;
-  isOpen:any=false;
-  isDismiss:any=false;
+  isOpenCopy:any=false;
   textCopy:any = '';
   selected:any = 0;
   headerText:any = 'Trang chủ';
@@ -64,10 +64,8 @@ export class MainPage implements OnInit,AfterViewInit {
   firstLoadNoti:any = true;
 
   // setting
-  isOpenPopup1:any=false;
-  isOpenPopup2:any=false;
-  isDismissPopup1:any=false;
-  isDismissPopup2:any=false;
+  isOpenLogout:any = false;
+  isOpenDelete:any = false;
 
   private destroy$ = new Subject<void>();
   constructor(
@@ -97,21 +95,27 @@ export class MainPage implements OnInit,AfterViewInit {
       }
       this.platform.resume.subscribe(async () => {
         this.onCheckLogin();
-        Clipboard.read().then((clipboardRead: ReadResult) => {
-          if (clipboardRead?.value) {
-            this.isOpen = true;
-            this.isDismiss = false;
-            let value = clipboardRead?.value;
-            this.textCopy = value.replace(/(\r\n\s|\r|\n|\s)/g, ',');
-            this.dt.detectChanges();
-            return;
-          }
-        });
+        if (!(this.router.url.includes('/main/package/create'))) {
+          Clipboard.read().then((clipboardRead: ReadResult) => {
+            if (clipboardRead?.value) {
+              let value = clipboardRead?.value;
+              this.textCopy = value.replace(/(\r\n\s|\r|\n|\s)/g, ',');
+              this.isOpenCopy = true;
+              this.dt.detectChanges();
+              return;
+            }
+          });
+        }
       });
     })
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
+    await PushNotifications.addListener('pushNotificationReceived',
+      (notification: PushNotificationSchema) => {
+        this.getUser();
+      }
+    );
   }
 
   onDestroy() {
@@ -127,6 +131,7 @@ export class MainPage implements OnInit,AfterViewInit {
       this.selected = selected;
       switch(selected){
         case 0:
+        case 3:
           this.getUser();
           break;
       }
@@ -269,7 +274,7 @@ export class MainPage implements OnInit,AfterViewInit {
       this.navCtrl.navigateForward('main/package',{queryParams:{status:status}});
       return;
     }
-    this.navCtrl.navigateForward('main/package',{queryParams:{type:'default'}});
+    this.navCtrl.navigateForward('main/package');
     if(this.swiper) this.swiper.disable();
     this.onDestroy();
   }
@@ -465,63 +470,87 @@ export class MainPage implements OnInit,AfterViewInit {
     this.navCtrl.navigateForward('main/setting/changepassword');
   }
 
-  goSignIn(){
-    this.onDismiss2();
-    this.storage.remove('isLogin');
-    this.navCtrl.navigateBack('home');
+  onOpenLogout(){
+    this.isOpenLogout = true;
   }
 
-  onDelete() {
-    this.onDismiss();
+  cancelLogout(){
+    this.isOpenLogout = false;
+    this.dt.detectChanges();
+  }
+
+  onLogout(){
+    this.cancelLogout();
     let data = {
       userName: this.oUser?.username,
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'deleteaccount', messageBody, true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res && !res?.isError) {
-        this.notification.showNotiSuccess('', res?.message);
-        this.storage.remove('username');
-        this.storage.remove('password');
-        this.navCtrl.navigateBack('home');
-      } else {
-        this.notification.showNotiError('', res?.message);
-      }
-      this.onDestroy();
-    })
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation', 'logoutaccount', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res: any) => {
+          if (res && !res?.isError) {
+            this.storage.remove('isLogin');
+            this.navCtrl.navigateBack('home');
+          } else {
+            this.notification.showNotiError('', res?.message);
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+          this.onDestroy();
+        }
+      })
+    }, 500);
   }
-  onOpen(){
-    this.isOpenPopup1 = true;
-    this.isDismissPopup1 = false;
+
+  onOpenDelete(){
+    this.isOpenDelete = true;
+  }
+
+  cancelDelete(){
+    this.isOpenDelete = false;
     this.dt.detectChanges();
   }
 
-  onOpen2(){
-    this.isOpenPopup2 = true;
-    this.isDismissPopup2 = false;
-    this.dt.detectChanges();
-  }
-
-  onDismiss(){
-    this.isDismissPopup1 = true;
-    this.isOpenPopup1 = false;
-    this.dt.detectChanges();
-  }
-  onDismiss2(){
-    this.isDismissPopup2 = true;
-    this.isOpenPopup2 = false;
-    this.dt.detectChanges();
+  onDelete() {
+    this.cancelDelete();
+    let data = {
+      userName: this.oUser?.username,
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation', 'deleteaccount', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res: any) => {
+          if (res && !res?.isError) {
+            this.notification.showNotiSuccess('', res?.message);
+            this.storage.remove('username');
+            this.storage.remove('password');
+            this.navCtrl.navigateBack('home');
+          } else {
+            this.notification.showNotiError('', res?.message);
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+          this.onDestroy();
+        }
+      })
+    }, 500);
   }
   //#endregion
-  onAccept(){
-    this.onCancel();
+  onCopy(){
+    this.cancelCopy();
     this.navCtrl.navigateForward('main/package/create',{queryParams:{code:this.textCopy}});
   }
 
-  onCancel(){
-    this.isDismiss = true;
-    this.isOpen = false;
+  cancelCopy(){
+    this.isOpenCopy = false;
     Clipboard.write({
       string: ""
     });
@@ -546,8 +575,7 @@ export class MainPage implements OnInit,AfterViewInit {
     };
     this.api.execByBody('Authencation', 'checklogin', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
       if (res && res?.isError) {
-        this.isOpen = false;
-        this.isDismiss = false;
+        this.isOpenCopy = false;
         this.storage.remove('isLogin');
         this.navCtrl.navigateBack('home',{queryParams:{loginError:JSON.stringify(res)}});
         this.dt.detectChanges();

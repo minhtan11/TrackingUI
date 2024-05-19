@@ -36,7 +36,6 @@ export class FcmService {
         vibration: true, // (optional) default: true. Creates the default vibration patten if true.
         visibility:1,
         lights:true,
-        sound:'default'
       },)
     }
   }

@@ -1,78 +1,129 @@
 <ion-header class="ion-no-border" style="--background:white !important;">
-  <ion-toolbar style="--background:var(--ion-color-mat-primary) !important;">
-    <ion-icon (click)="onback()" class="pl-3" slot="start" mode="ios" style="color: white !important;font-size: 2rem;" name="chevron-back-outline"></ion-icon>
-    <ion-title class="dynamic-font" style="color: white !important;" mode="ios">Trạng thái vận chuyển</ion-title>
+  <ion-toolbar mode="ios" class="bg-default">
+    <ion-title class="dynamic-font text-dark">Trạng thái vận chuyển đơn hàng</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content style="--background:white !important;">
-  <div class="w-100" style="margin: auto;max-width: 1000px;">
-    <ng-container *ngIf="oData">
-      <ion-card mode="ios" style="--background:white !important;">
-        <ion-card-header class="text-center">
-          <ion-text>
-            <span class="font-weight-bold">THÔNG TIN VẬN CHUYỂN</span>
-          </ion-text>
-        </ion-card-header>
-      
-        <ion-card-content>
-          <div *ngIf="oData.key" style="justify-content: space-between;" class="d-flex align-items-center">
-            <div>
-              <ion-text>
-                Mã đơn
-              </ion-text>
+  <div class="w-100">
+    <ion-list *ngIf="oData" class="m-0" style="background-color:white !important;">
+      <ion-item lines="none" style="--background:white !important">
+        <ion-card class="w-100 mx-1 my-2" mode="ios" style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;">
+          <ion-card-header>
+            <ion-text class="text-center font-weight-bold dynamic-font text-dark">
+              <span>THÔNG TIN VẬN CHUYỂN</span>
+            </ion-text>
+          </ion-card-header>
+          <ion-card-content>
+            <div style="justify-content: space-between;" class="d-flex align-items-center mb-2">
+              <div>
+                <ion-text class="dynamic-font font-weight-bold text-dark">
+                  Mã đơn
+                </ion-text>
+              </div>
+              <div class="d-flex align-items-center">
+                <ion-text class="dynamic-font">
+                  {{oData.key}}
+                </ion-text>
+              </div>
             </div>
-            <div>
-              <ion-text class="me-2">
-                {{oData.key}}
-              </ion-text>
+            <div style="justify-content: space-between;" class="d-flex align-items-center mb-2">
+              <div>
+                <ion-text class="dynamic-font font-weight-bold text-dark">
+                  Kết quả truy vấn
+                </ion-text>
+              </div>
+              <div class="d-flex align-items-center">
+                <ion-badge *ngIf="oData?.isError" mode="ios" color="danger">
+                  <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                    <span>Thất bại</span>
+                  </ion-text>
+                </ion-badge>
+                <ion-badge *ngIf="!oData?.isError" mode="ios" color="success">
+                  <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                    <span>Thành công</span>
+                  </ion-text>
+                </ion-badge>
+              </div>
             </div>
-          </div>
-          <div style="justify-content: space-between;" class="d-flex align-items-center">
-            <div>
-              <ion-text>
-                Kết quả truy vấn
-              </ion-text>
-            </div>
-            <div>
-              <ion-text color="success">
-                Thành công
-              </ion-text>
-            </div>
-          </div>
-          <div *ngIf="oData.data != null" style="justify-content: space-between;" class="d-flex align-items-center">
-            <div>
-              <ion-text>
-                Công ty vận chuyển
-              </ion-text>
-            </div>
-            <div>
-              <ion-text *ngIf="oData.data.exname != null && oData.data.company != null" color="primary">
-                <a [href]="oData.data.url">{{oData.data.exname +' ('+oData.data.company+')'}}</a>
-              </ion-text>
-            </div>
-          </div>
-          <div *ngIf="oData.data.ico" class="d-flex align-items-center justify-content-center mt-3 mb-3">
-            <img [src]="oData.data.ico" alt="">
-          </div>
-          <!-- <ng-container *ngIf="oData.data.length">
-            <div>
-              <ion-text>
-                Hành trình đơn hàng
-              </ion-text>
-            </div>
-            <div>
-              <ul>
-                <ng-container *ngFor="let item of oData.data; trackBy: trackByFn">
-                  <li>
-                    <span class="d-block">{{item.context}}</span>
-                    <i>{{item.time | date : 'dd/MM/yyyy hh:mm a'}}</i>
-                  </li>
-                </ng-container>
-              </ul>
-            </div>
-          </ng-container> -->
-        </ion-card-content>
-      </ion-card>
-    </ng-container>
+            <ng-container *ngIf="!oData?.isError && oData.data">
+              <div style="justify-content: space-between;" class="d-flex align-items-center mb-2">
+                <div>
+                  <ion-text class="dynamic-font font-weight-bold text-dark">
+                    Công ty vận chuyển
+                  </ion-text>
+                </div>
+                <div class="d-flex align-items-center">
+                  <ion-text *ngIf="oData?.data?.exname != null && oData?.data?.company != null" color="primary">
+                    <a [href]="oData?.data?.url">{{oData?.data?.exname +' ('+oData?.data?.company+')'}}</a>
+                  </ion-text>
+                </div>
+              </div>
+              <div *ngIf="oData?.data?.ico" class="d-flex align-items-center justify-content-center mt-3 mb-3">
+                <img [src]="oData?.data?.ico" alt="">
+              </div>
+              <div>
+                <ion-text class="dynamic-font font-weight-bold text-dark">
+                  Hành trình đơn hàng
+                </ion-text>
+              </div>
+              <div *ngIf="oData?.data?.data" class="p-2 d-flex align-items-center justify-content-center mt-1" style="border: 1px solid #ececec;border-radius: 1em;">
+                <ion-list lines="none">
+                  <ng-container *ngFor="let item of oData?.data?.data">
+                    <ion-item>
+                      <ion-icon style="color: var(--ion-color-mat-primary) !important" slot="start" name="checkmark-circle-outline"></ion-icon>
+                      <ion-text class="dynamic-font text-dark">
+                        <span>{{item?.context}}</span>
+                      </ion-text>
+                    </ion-item>
+                    <ion-item>
+                      <ion-text class="dynamic-font" color="medium">
+                        <span>Ngày: {{item?.time}}</span>
+                      </ion-text>
+                    </ion-item>
+                  </ng-container>
+                </ion-list>
+              </div>
+              
+            </ng-container>
+            <ng-container *ngIf="oData?.isError && oData.data">
+              <div>
+                <ion-text class="dynamic-font font-weight-bold text-dark">
+                  Lý do
+                </ion-text>
+              </div>
+              <div class="d-flex align-items-center">
+                <ion-text class="dynamic-font">
+                  {{oData?.data?.reason ? oData?.data?.reason : oData?.message}}
+                </ion-text>
+              </div>
+            </ng-container>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div class="d-flex align-items-center justify-content-center">
+    <ion-button *ngIf="oPack && oPack?.autoQuery" (click)="changeAutoQuery(false)" mode="ios" class="mb-5" size="default" color="success">
+      <ion-icon style="color: white !important;" slot="start" name="checkbox-outline"></ion-icon>
+      <ion-text style="color: white !important;" class="dynamic-font">
+        Bỏ theo dõi sát kiện
+      </ion-text>
+    </ion-button>
+    <ion-button *ngIf="oPack && !oPack?.autoQuery" (click)="changeAutoQuery(true)" mode="ios" class="mb-5" size="default" color="medium">
+      <ion-icon style="color: white !important;" slot="start" name="square-outline"></ion-icon>
+      <ion-text style="color: white !important;" class="dynamic-font">
+        Đăng ký theo dõi sát kiện
+      </ion-text>
+    </ion-button>
   </div>
 </ion-content>
+<ion-footer class="ion-no-border"
+  style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+  <ion-toolbar mode="ios" style="--background:white !important">
+    <ion-button mode="ios" (click)="onBack()" class="ion-btn-default" expand="block">
+      <ion-text class="dynamic-font font-weight-bold" style="color: white !important;">
+        <span>QUAY VỀ MÀN HÌNH CHÍNH</span>
+      </ion-text>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

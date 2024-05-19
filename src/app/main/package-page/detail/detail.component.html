@@ -1,363 +1,625 @@
 
 <ion-header class="ion-no-border" style="--background:white !important;">
-  <ion-toolbar style="--background:var(--ion-color-mat-primary) !important;">
-    <div class="d-flex align-items-center h-100 justify-content-center w-100">
-      <div class="w-100" style="margin: auto;max-width: 1000px;">
-        <ion-icon (click)="onback()" class="pl-3" slot="start" mode="ios" style="color: white !important;font-size: 2rem;" name="chevron-back-outline"></ion-icon>
-        <ion-title style="z-index: -1;color:white !important" mode="ios">Chi tiết kiện ký gửi</ion-title>
-      </div>
-    </div>
+  <ion-toolbar mode="ios" class="bg-default">
+    <ion-button slot="start" (click)="onback()" fill="clear">
+      <ion-icon style="color: white !important;" class="text-dark" name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-title class="dynamic-font text-dark font-weight-bold">Chi tiết kiện hàng</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content style="--background:white !important;">
-  <div class="w-100" style="margin: auto;max-width: 1000px;">
-    <ng-container *ngIf="oData">
-      <ion-card mode="ios" style="--background:white !important;">
-        <ion-card-header style="padding-bottom: 0em;">
-          <div style="justify-content: space-between;" class="d-flex align-items-center">
-            <div>
-              <ion-text style="font-size: 1.2em;" class="font-weight-bold">
-                Mã Kiện
-              </ion-text>
+  <div class="w-100">
+    <ion-list *ngIf="oData" class="m-0" style="background-color:white !important;">
+      <ion-item lines="none" style="--background:white !important">
+        <ion-card class="w-100 mx-1 my-2" mode="ios" style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;">
+          <ion-card-header style="padding-bottom: 0em;">
+            <div style="justify-content: space-between;" class="d-flex align-items-center">
+              <div>
+                <ion-text style="font-size: 1rem;" class="dynamic-font text-dark font-weight-bold">
+                  Mã Kiện
+                </ion-text>
+              </div>
+              <div class="d-flex align-items-center">
+                <ion-text class="dynamic-font" style="font-size: 1rem;">
+                  {{oData.packageCode}}
+                </ion-text>
+                <ion-icon [cdkCopyToClipboard]="oData.packageCode" (click)="onCopy()" style="font-size: 2rem;"
+                    name="copy-outline"></ion-icon>
+              </div>
             </div>
-            <div class="d-flex align-items-center">
-              <ion-text style="font-size: 1.2em;">
-                {{oData.packageCode}}
-              </ion-text>
-              <!-- <ion-icon style="font-size: 1.5rem;" name="copy-outline"></ion-icon> -->
-            </div>
-          </div>
-        </ion-card-header>
-        <ion-card-content>
-          <div class="w-100" style="border: 1px solid #ececec;border-radius: 1em;margin-top: 1em;">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-6 offset-md-3">
-                  <ul class="timeline">
-                    <ng-container>
-                      <li *ngIf="oData.exportedCNWH == null" class="no-active d-flex align-items-center">
-                        <ion-text>
-                          <span class="font-weight-bold" style="font-size: 0.8rem;">
-                            XUẤT KHO TRUNG QUỐC
-                          </span>
-                        </ion-text>
-                      </li>
-                      <li *ngIf="oData.exportedCNWH != null" class="active">
-                        <ion-text>
-                          <span class="font-weight-bold" style="font-size: 0.8rem;">
-                            XUẤT KHO TRUNG QUỐC
-                          </span>
-                        </ion-text>
-                        <br>
-                        <ion-text color="medium">
-                          <span style="font-size: 0.8rem;">
-                            {{oData.exportedCNWH | formatdate : 'dd/MM/yyyy hh:mm a' || oData.exportedCNWH}}
-                          </span>
-                        </ion-text>
-                      </li>
-                    </ng-container>
-                    <ng-container>
-                      <li *ngIf="oData.dateExpectation == null" class="no-active d-flex align-items-center">
-                        <ion-text>
-                          <span class="font-weight-bold" style="font-size: 0.8rem;">
-                            ĐANG TRÊN ĐƯỜNG VỀ HCM
-                          </span>
-                        </ion-text>
-                      </li>
-                      <li *ngIf="oData.dateExpectation != null" class="active">
-                        <ion-text>
-                          <span class="font-weight-bold" style="font-size: 0.8rem;">
-                            ĐANG TRÊN ĐƯỜNG VỀ HCM
-                          </span>
-                        </ion-text>
-                        <br>
-                        <ion-text color="medium">
-                          <span style="font-size: 0.8rem;">
-                            {{oData.dateExpectation | formatdate : 'dd/MM/yyyy hh:mm a' || oData.dateExpectation}}
-                          </span>
-                        </ion-text>
-                      </li>
-                    </ng-container>
-                    <ng-container>
-                      <li *ngIf="oData.importedSGWH == null" class="no-active d-flex align-items-center">
-                        <ion-text>
-                          <span class="font-weight-bold" style="font-size: 0.8rem;">
-                            ĐÃ VỀ KHO HCM
-                          </span>
-                        </ion-text>
-                      </li>
-                      <li *ngIf="oData.importedSGWH != null" class="active">
-                        <ion-text>
-                          <span class="font-weight-bold" style="font-size: 0.8rem;">
-                            ĐÃ VỀ KHO HCM
-                          </span>
-                        </ion-text>
-                        <br>
-                        <ion-text color="medium">
-                          <span style="font-size: 0.8rem;">
-                            {{oData.importedSGWH | formatdate : 'dd/MM/yyyy hh:mm a' || oData.importedSGWH}}
-                          </span>
-                        </ion-text>
-                      </li>
-                    </ng-container>
-                    <ng-container>
-                      <li *ngIf="oData.receivedDate == null" class="no-active d-flex align-items-center">
-                        <ion-text>
-                          <span class="font-weight-bold" style="font-size: 0.8rem;">
-                            ĐÃ NHẬN HÀNG
-                          </span>
-                        </ion-text>
-                      </li>
-                      <li *ngIf="oData.receivedDate != null" class="active">
-                        <ion-text>
-                          <span class="font-weight-bold" style="font-size: 0.8rem;">
-                            ĐÃ NHẬN HÀNG
-                          </span>
-                        </ion-text>
-                        <br>
-                        <ion-text color="medium">
-                          <span style="font-size: 0.8rem;">
-                            {{oData.receivedDate | formatdate : 'dd/MM/yyyy hh:mm a' || oData.receivedDate}}
-                          </span>
-                        </ion-text>
-                      </li>
-                    </ng-container>                
-                  </ul>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="w-100" style="border: 1px solid #ececec;border-radius: 1em;margin-top: 1em;">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6 offset-md-3">
+                    <ul class="timeline">
+                      <ng-container>
+                        <li *ngIf="oData.exportedCNWH == null" class="no-active d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            <span class="font-weight-bold" style="font-size: 0.8rem;">
+                              XUẤT KHO TRUNG QUỐC
+                            </span>
+                          </ion-text>
+                        </li>
+                        <li *ngIf="oData.exportedCNWH != null" class="active">
+                          <ion-text class="dynamic-font">
+                            <span class="font-weight-bold" style="font-size: 0.8rem;">
+                              XUẤT KHO TRUNG QUỐC
+                            </span>
+                          </ion-text>
+                          <br>
+                          <ion-text color="medium" class="dynamic-font">
+                            <span style="font-size: 0.8rem;">
+                              {{oData.exportedCNWH | formatdate : 'dd/MM/yyyy hh:mm a' || oData.exportedCNWH}}
+                            </span>
+                          </ion-text>
+                        </li>
+                      </ng-container>
+                      <ng-container>
+                        <li *ngIf="oData.dateExpectation == null" class="no-active d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            <span class="font-weight-bold" style="font-size: 0.8rem;">
+                              ĐANG TRÊN ĐƯỜNG VỀ HCM
+                            </span>
+                          </ion-text>
+                        </li>
+                        <li *ngIf="oData.dateExpectation != null" class="active">
+                          <ion-text class="dynamic-font">
+                            <span class="font-weight-bold" style="font-size: 0.8rem;">
+                              ĐANG TRÊN ĐƯỜNG VỀ HCM
+                            </span>
+                          </ion-text>
+                          <br>
+                          <ion-text color="medium" class="dynamic-font">
+                            <span style="font-size: 0.8rem;">
+                              {{oData.dateExpectation | formatdate : 'dd/MM/yyyy hh:mm a' || oData.dateExpectation}}
+                            </span>
+                          </ion-text>
+                        </li>
+                      </ng-container>
+                      <ng-container>
+                        <li *ngIf="oData.importedSGWH == null" class="no-active d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            <span class="font-weight-bold" style="font-size: 0.8rem;">
+                              ĐÃ VỀ KHO HCM
+                            </span>
+                          </ion-text>
+                        </li>
+                        <li *ngIf="oData.importedSGWH != null" class="active">
+                          <ion-text class="dynamic-font">
+                            <span class="font-weight-bold" style="font-size: 0.8rem;">
+                              ĐÃ VỀ KHO HCM
+                            </span>
+                          </ion-text>
+                          <br>
+                          <ion-text color="medium" class="dynamic-font">
+                            <span style="font-size: 0.8rem;">
+                              {{oData.importedSGWH | formatdate : 'dd/MM/yyyy hh:mm a' || oData.importedSGWH}}
+                            </span>
+                          </ion-text>
+                        </li>
+                      </ng-container>
+                      <ng-container>
+                        <li *ngIf="oData.receivedDate == null" class="no-active d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            <span class="font-weight-bold" style="font-size: 0.8rem;">
+                              ĐÃ NHẬN HÀNG
+                            </span>
+                          </ion-text>
+                        </li>
+                        <li *ngIf="oData.receivedDate != null" class="active">
+                          <ion-text class="dynamic-font">
+                            <span class="font-weight-bold" style="font-size: 0.8rem;">
+                              ĐÃ NHẬN HÀNG
+                            </span>
+                          </ion-text>
+                          <br>
+                          <ion-text color="medium" class="dynamic-font">
+                            <span style="font-size: 0.8rem;">
+                              {{oData.receivedDate | formatdate : 'dd/MM/yyyy hh:mm a' || oData.receivedDate}}
+                            </span>
+                          </ion-text>
+                        </li>
+                      </ng-container>                
+                    </ul>
+                  </div>
                 </div>
               </div>
+              <ion-grid fixed>
+                <ion-row>
+                  <ion-col>
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text class="dynamic-font text-dark font-weight-bold">
+                          Trạng thái đơn
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ng-container [ngSwitch]="oData.status">
+                          <ion-badge mode="ios" *ngSwitchDefault color="medium">
+                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                              <span>Chưa xác nhận</span>
+                            </ion-text>
+                          </ion-badge>
+                          <ion-badge mode="ios" *ngSwitchCase="2" color="tertiary">
+                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                              <span>Hàng về kho TQ</span>
+                            </ion-text>
+                          </ion-badge>
+                          <ion-badge mode="ios" *ngSwitchCase="3" color="secondary">
+                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                              <span>Đang về HCM</span>
+                            </ion-text>
+                          </ion-badge>
+                          <ion-badge mode="ios" *ngSwitchCase="4" color="primary">
+                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                              <span>Hàng về tới HCM</span>
+                            </ion-text>
+                          </ion-badge>
+                          <ion-badge mode="ios" *ngSwitchCase="5" color="success">
+                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                              <span>Đã nhận hàng</span>
+                            </ion-text>
+                          </ion-badge>
+                          <ion-badge mode="ios" *ngSwitchCase="9" color="dark">
+                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                              <span>Đã hủy</span>
+                            </ion-text>
+                          </ion-badge>
+                          <ion-badge mode="ios" *ngSwitchCase="10" color="warning">
+                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                              <span>Thất lạc</span>
+                            </ion-text>
+                          </ion-badge>
+                          <ion-badge mode="ios" *ngSwitchCase="11" color="danger">
+                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                              <span>Không nhận được hàng</span>
+                            </ion-text>
+                          </ion-badge>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text class="dynamic-font text-dark font-weight-bold">
+                          Kho nhận
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ng-container [ngSwitch]="oData.wareHouse">
+                          <ion-text *ngSwitchCase="'1'" class="dynamic-font">
+                            Đông quản
+                          </ion-text>
+                          <ion-text *ngSwitchCase="'2'" class="dynamic-font">
+                            Phật sơn
+                          </ion-text>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text class="dynamic-font text-dark font-weight-bold">
+                          Loại vận chuyển
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ng-container [ngSwitch]="oData.movingMethod">
+                          <ion-text *ngSwitchCase="2" class="dynamic-font">
+                            Chậm
+                          </ion-text>
+                          <ion-text *ngSwitchCase="3" class="dynamic-font">
+                            Bộ
+                          </ion-text>
+                          <ion-text *ngSwitchCase="4" class="dynamic-font">
+                            Bộ lô
+                          </ion-text>
+                          <ion-text *ngSwitchCase="5" class="dynamic-font">
+                            Biển
+                          </ion-text>
+                          <ion-text *ngSwitchDefault class="dynamic-font">
+                            Nhanh
+                          </ion-text>
+                        </ng-container>
+                        
+                      </div>
+                    </div>
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text class="dynamic-font text-dark font-weight-bold">
+                          Ngày lên đơn
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ion-text class="dynamic-font">
+                          {{oData.createdDate | date : 'dd/MM/yyyy hh:mm a'}}
+                        </ion-text>
+                      </div>
+                    </div>
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text class="dynamic-font text-dark font-weight-bold">
+                          Vận chuyển
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ion-text class="dynamic-font">
+                          {{(oData.weight ? oData.weight : '0')+'kg - '+ ((oData.weightPrice ? oData.weightPrice : 0)  | number)+'đ'}}
+                        </ion-text>
+                      </div>
+                    </div> 
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text class="dynamic-font text-dark font-weight-bold">
+                          Mô tả
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ion-text class="dynamic-font">
+                          {{oData?.note}}
+                        </ion-text>
+                      </div>
+                    </div> 
+                    <div *ngIf="oData.isWoodPackage || oData.isAirPackage || oData.isInsurance" style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text color="primary" class="dynamic-font font-weight-bold">
+                          Dịch vụ phụ
+                        </ion-text>
+                      </div>
+                    </div>
+                    <ng-container *ngIf="oData.isWoodPackage">
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Đóng gỗ
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <i class="bi bi-check2-circle"></i>
+                        </div>
+                      </div> 
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Phí đóng gỗ
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            {{((oData.woodPackagePrice != null ? oData.woodPackagePrice : 0 ) | number)+'đ'}}
+                          </ion-text>
+                        </div>
+                      </div> 
+                    </ng-container>
+                    <ng-container *ngIf="oData.isAirPackage">
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Bọt khí
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <i class="bi bi-check2-circle"></i>
+                        </div>
+                      </div> 
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Phí bọt khí
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            {{((oData.airPackagePrice != null ? oData.airPackagePrice : 0) | number)+'đ'}}
+                          </ion-text>
+                        </div>
+                      </div> 
+                    </ng-container>
+                    <ng-container *ngIf="oData.isInsurance">
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Bảo hiểm
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <i class="bi bi-check2-circle"></i>
+                        </div>
+                      </div> 
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Phí bảo hiểm
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            {{((oData.isInsurancePrice != null ? oData.isInsurancePrice : 0) | number)+'đ'}}
+                          </ion-text>
+                        </div>
+                      </div> 
+                    </ng-container>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </div>
-            <ion-grid fixed>
-              <ion-row>
-                <ion-col>
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                    <div>
-                      <ion-text>
-                        Trạng thái đơn
+            <div class="w-100 pt-3">
+              <swiper-container mode="ios" [slidesPerView]="1" [pagination]="true">
+                <swiper-slide>
+                  <div class="d-flex align-items-center justify-content-center text-center">
+                    <ion-button (click)="openPopPackage(oData)" mode="ios" size="default" class="ion-btn-default mb-5">
+                      <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
+                      <ion-text style="color: white !important;" class="dynamic-font">
+                        Nhập mô tả
                       </ion-text>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <ng-container [ngSwitch]="oData.status">
-                        <ion-text *ngSwitchCase="2">
-                          Hàng về kho TQ
-                        </ion-text>
-                        <ion-text *ngSwitchCase="3">
-                          Đang về HCM
-                        </ion-text>
-                        <ion-text *ngSwitchCase="4">
-                          Hàng về tới HCM
-                        </ion-text>
-                        <ion-text *ngSwitchCase="5">
-                          Đã nhận hàng
-                        </ion-text>
-                        <ion-text *ngSwitchCase="9">
-                          Đã hủy
-                        </ion-text>
-                        <ion-text *ngSwitchCase="10">
-                          Thất lạc
-                        </ion-text>
-                        <ion-text *ngSwitchCase="11">
-                          Không nhận được hàng
-                        </ion-text>
-                        <ion-text *ngSwitchDefault>
-                          Chưa xác nhận
-                        </ion-text>
-                      </ng-container>
-                    </div>
+                    </ion-button>
                   </div>
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                    <div>
-                      <ion-text>
-                        Kho nhận
+                </swiper-slide>
+                <ng-container *ngIf="oData?.status < 2">
+                  <swiper-slide>
+                    <div class="d-flex align-items-center justify-content-center text-center">
+                      <ion-button (click)="openPopCheckPackage(oData)" mode="ios" class="mb-5" size="default" color="warning">
+                        <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
+                        <ion-text style="color: white !important;" class="dynamic-font">
+                          Kiểm tra hàng
+                        </ion-text>
+                      </ion-button>
+                    </div>
+                  </swiper-slide>
+                  <swiper-slide>
+                    <div class="d-flex align-items-center justify-content-center text-center">
+                      <ion-button (click)="openPopCancelPackage(oData)" mode="ios" class="mb-5" size="default" color="medium">
+                        <ion-icon style="color: white !important;" slot="start" name="stop-circle-outline"></ion-icon>
+                        <ion-text style="color: white !important;" class="dynamic-font">
+                          Hủy đơn
+                        </ion-text>
+                      </ion-button>
+                    </div>
+                  </swiper-slide>
+                  <swiper-slide>
+                    <div class="d-flex align-items-center justify-content-center text-center">
+                      <ion-button (click)="openPopDeletePackage(oData)" mode="ios" class="mb-5" size="default" color="danger">
+                        <ion-icon style="color: white !important;" slot="start" name="trash-outline"></ion-icon>
+                        <ion-text style="color: white !important;" class="dynamic-font">
+                          Xóa đơn
+                        </ion-text>
+                      </ion-button>
+                    </div>
+                  </swiper-slide>
+                </ng-container>
+                <swiper-slide *ngIf="oData.status == 9 && oData?.canceledBy == username">
+                  <div class="d-flex align-items-center justify-content-center text-center">
+                    <ion-button (click)="openPopRestorePackage(oData)" mode="ios" class="mb-5" size="default" color="success">
+                      <ion-icon style="color: white !important;" slot="start" name="sync-circle-outline"></ion-icon>
+                      <ion-text style="color: white !important;" class="dynamic-font">
+                        Khôi phục
                       </ion-text>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <ng-container [ngSwitch]="oData.wareHouse">
-                        <ion-text *ngSwitchCase="'1'">
-                          Đông quản
-                        </ion-text>
-                        <ion-text *ngSwitchCase="'2'">
-                          Phật sơn
-                        </ion-text>
-                      </ng-container>
-                    </div>
+                    </ion-button>
                   </div>
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                    <div>
-                      <ion-text>
-                        Loại vận chuyển
-                      </ion-text>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <ng-container [ngSwitch]="oData.movingMethod">
-                        <ion-text *ngSwitchCase="2">
-                          Chậm
-                        </ion-text>
-                        <ion-text *ngSwitchCase="3">
-                          Bộ
-                        </ion-text>
-                        <ion-text *ngSwitchCase="4">
-                          Bộ lô
-                        </ion-text>
-                        <ion-text *ngSwitchCase="5">
-                          Biển
-                        </ion-text>
-                        <ion-text *ngSwitchDefault>
-                          Nhanh
-                        </ion-text>
-                      </ng-container>
-                      
-                    </div>
-                  </div>
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                    <div>
-                      <ion-text>
-                        Ngày lên đơn
-                      </ion-text>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <ion-text>
-                        {{oData.createdDate | date : 'dd/MM/yyyy hh:mm a'}}
-                      </ion-text>
-                    </div>
-                  </div>
-                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                    <div>
-                      <ion-text>
-                        Vận chuyển
-                      </ion-text>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <ion-text>
-                        {{(oData.weight ? oData.weight : '0')+'kg - '+ ((oData.weightPrice ? oData.weightPrice : 0)  | number)+'đ'}}
-                      </ion-text>
-                    </div>
-                  </div> 
-                  <div *ngIf="oData.isWoodPackage || oData.isAirPackage || oData.isInsurance" style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                    <div>
-                      <ion-text color="primary">
-                        Dịch vụ phụ
-                      </ion-text>
-                    </div>
-                  </div>
-                  <ng-container *ngIf="oData.isWoodPackage">
-                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                      <div>
-                        <ion-text>
-                          Đóng gỗ
-                        </ion-text>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <i class="bi bi-check2-circle"></i>
-                      </div>
-                    </div> 
-                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                      <div>
-                        <ion-text>
-                          Phí đóng gỗ
-                        </ion-text>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <ion-text>
-                          {{((oData.woodPackagePrice != null ? oData.woodPackagePrice : 0 ) | number)+'đ'}}
-                        </ion-text>
-                      </div>
-                    </div> 
-                  </ng-container>
-                  <ng-container *ngIf="oData.isAirPackage">
-                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                      <div>
-                        <ion-text>
-                          Bọt khí
-                        </ion-text>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <i class="bi bi-check2-circle"></i>
-                      </div>
-                    </div> 
-                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                      <div>
-                        <ion-text>
-                          Phí bọt khí
-                        </ion-text>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <ion-text>
-                          {{((oData.airPackagePrice != null ? oData.airPackagePrice : 0) | number)+'đ'}}
-                        </ion-text>
-                      </div>
-                    </div> 
-                  </ng-container>
-                  <ng-container *ngIf="oData.isInsurance">
-                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                      <div>
-                        <ion-text>
-                          Bảo hiểm
-                        </ion-text>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <i class="bi bi-check2-circle"></i>
-                      </div>
-                    </div> 
-                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                      <div>
-                        <ion-text>
-                          Phí bảo hiểm
-                        </ion-text>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <ion-text>
-                          {{((oData.isInsurancePrice != null ? oData.isInsurancePrice : 0) | number)+'đ'}}
-                        </ion-text>
-                      </div>
-                    </div> 
-                  </ng-container>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-          <div *ngIf="oData.status < 2" class="d-flex align-items-center justify-content-center mt-3">
-            <button (click)="onOpen(oData)" style="border-radius: 1em;" class="btn text-white me-3 btn-orange" mat-flat-button>
-              <!-- <ion-text>
-                Kiểm tra hàng
-              </ion-text> -->
-              <div class="d-flex align-items-center justify-content-center">
-                <i class="bi bi-check2-circle me-2"></i>
-                <span>Kiểm tra hàng</span>
-              </div>
-            </button> 
-            <button (click)="cancelPackage(oData)" style="border-radius: 1em;" class="btn text-white btn-gray" mat-flat-button>
-              <!-- <ion-text>
-                Hủy đơn
-              </ion-text> -->
-              <div class="d-flex align-items-center justify-content-center">
-                <i class="bi bi-x-octagon me-2"></i>
-                <span>Hủy đơn</span>
-              </div>
-            </button> 
-          </div>
-        </ion-card-content>
-      </ion-card>
-    </ng-container>
+                </swiper-slide>
+              </swiper-container>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-list>
   </div>
-  <ion-modal style="--background:white !important" [isOpen]="isOpen" [canDismiss]="isDismiss" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+  <!-- update note -->
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelEdit()" [isOpen]="isOpenEditPackage">
     <ng-template>
       <div class="p-3 w-100 h-100">
-        <ion-text class="dynamic-font text-center" style="color: var(--ion-color-mat-primary);">
-          <h3>Sử dụng chức năng này sẽ tốn phí 500đ/kiện (Chỉ tốn phí lần đầu). Bạn có chắc muốn sử dụng?</h3>
-        </ion-text>
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Nhập mô tả kiện hàng</h3>
+          </ion-text>
+        </div>
+        <div class="w-100 text-center">
+          <ion-text class="dynamic-font text-dark">
+            <span>Bạn có muốn nhập mô tả cho kiện hàng </span>
+          </ion-text>
+          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
+            <span>{{oData?.packageCode}}</span>
+          </ion-text>
+          <ion-text class="dynamic-font text-dark">
+            <span>?</span>
+          </ion-text>
+        </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <button (click)="checkStatus(oData)" style="border-radius: 1em;" class="btn text-white me-3" mat-flat-button color="primary">
-            <div class="d-flex align-items-center justify-content-center">
-              <span>Đồng ý</span>
-            </div>
-          </button> 
-          <button (click)="onDismiss()" style="border-radius: 1em;" class="btn text-white" mat-flat-button color="warn">
-            <div class="d-flex align-items-center justify-content-center">
-              <span>Hủy bỏ</span>
-            </div>
-          </button> 
+          <ion-button (click)="editPackage(oData)" mode="ios" size="default" class="ion-btn-default me-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelEdit()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
         </div>
       </div>
     </ng-template>
   </ion-modal>
+  <!-- update note -->
+
+  <!-- CheckPackkage -->
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelCheck()" [isOpen]="isOpenCheckPackage">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Kiểm tra kiện hàng</h3>
+          </ion-text>
+        </div>
+        <div class="w-100 text-center">
+          <ion-text class="dynamic-font text-dark">
+            <span>Bạn có muốn kiểm tra kiện hàng </span>
+          </ion-text>
+          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
+            <span>{{oData?.packageCode}}</span>
+          </ion-text>
+          <ion-text class="dynamic-font text-dark">
+            <span>?</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="continuteCheck(oData)" mode="ios" size="default" class="ion-btn-default me-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelCheck()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelCheck2()" [isOpen]="isOpenCheckPackage2">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Kiểm tra kiện hàng</h3>
+          </ion-text>
+        </div>
+        <div class="w-100" text-center>
+          <ion-text class="dynamic-font text-dark">
+            <span>Bạn đã hết lượt tra cứu miễn phí, tiếp tục sẽ tốn phí </span>
+          </ion-text>
+          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
+            <span>500đ.</span>
+          </ion-text>
+          <ion-text class="dynamic-font text-dark">
+            <span>Bạn có muốn tiếp tục?</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="checkPackage(oData)" mode="ios" size="default" class="ion-btn-default me-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelCheck2()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- CheckPackkage -->
+
+  <!-- CancelPackkage -->
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelPopPackage()" [isOpen]="isOpenCancelPackage">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Hủy kiện hàng</h3>
+          </ion-text>
+        </div>
+        <div class="w-100 text-center">
+          <ion-text class="dynamic-font text-dark">
+            <span>Bạn có muốn hủy kiện hàng </span>
+          </ion-text>
+          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
+            <span>{{oData?.packageCode}}</span>
+          </ion-text>
+          <ion-text class="dynamic-font text-dark">
+            <span>?</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="cancelPackage(oData)" mode="ios" size="default" class="ion-btn-default me-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelPopPackage()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- CancelPackkage -->
+
+  <!-- RestorePackkage -->
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelRestorePackage()" [isOpen]="isOpenRestorePackage">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Khôi phục kiện hàng</h3>
+          </ion-text>
+        </div>
+        <div class="w-100 text-center">
+          <ion-text class="dynamic-font text-dark">
+            <span>Bạn có muốn khôi phục kiện hàng </span>
+          </ion-text>
+          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
+            <span>{{oData?.packageCode}}</span>
+          </ion-text>
+          <ion-text class="dynamic-font text-dark">
+            <span>?</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="restorePackage(oData)" mode="ios" size="default" class="ion-btn-default me-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelRestorePackage()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- RestorePackkage -->
+
+  <!-- DeletePackkage -->
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelDeletePackage()" [isOpen]="isOpenDeletePackage">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Xóa kiện hàng</h3>
+          </ion-text>
+        </div>
+        <div class="w-100 text-center">
+          <ion-text class="dynamic-font text-dark">
+            <span>Bạn có muốn xóa kiện hàng </span>
+          </ion-text>
+          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
+            <span>{{oData?.packageCode}}</span>
+          </ion-text>
+          <ion-text class="dynamic-font text-dark">
+            <span>?</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="deletePackage(oData)" mode="ios" size="default" class="ion-btn-default me-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelDeletePackage()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- DeletePackkage -->
 </ion-content>

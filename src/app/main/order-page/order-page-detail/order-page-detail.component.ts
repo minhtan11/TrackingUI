@@ -17,7 +17,7 @@ export class OrderPageDetailComponent  implements OnInit,DoCheck {
   oData:any;
   username:any;
   lstPackage:any;
-  arrayChange:any=[];
+  isOpenPayment:any = false;
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
@@ -52,16 +52,52 @@ export class OrderPageDetailComponent  implements OnInit,DoCheck {
     this.destroy$.complete();
   }
 
-  trackByFn(index:any, item:any) { 
-    return index; 
+  // async onPayment(){
+  //   let token = await this.storage.get('token');
+  //   let data = {
+  //     id: this.oData.id,
+  //     userName: this.username,
+  //     token:token
+  //   }
+  //   let messageBody = {
+  //     dataRequest: JSON.stringify(data)
+  //   };
+  //   this.api.isLoad(true);
+  //   setTimeout(() => {
+  //     this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe({
+  //       next:(res:any)=>{
+  //         if (res && !res.isError) {
+  //           this.oData = res.data;
+  //           this.arrayChange.push(res.data);
+  //           this.notification.showNotiSuccess('',res.message);
+  //           this.navCtrl.navigateBack('main/order',{queryParams:{type:'change',lstdata:JSON.stringify(this.arrayChange)}});
+  //           this.dt.detectChanges();
+  //         }else{
+  //           this.notification.showNotiError('',res.message);
+  //         }
+  //       },
+  //       complete:()=>{
+  //         this.api.isLoad(false);
+  //         this.onDestroy();
+  //       }
+  //     })
+  //   }, 1000);
+  // }
+
+  openPayment(item:any){
+    this.isOpenPayment = true;
   }
 
-  async onPayment(){
-    let token = await this.storage.get('token');
+  cancelPayment(){
+    this.isOpenPayment = false;
+    this.dt.detectChanges();
+  }
+
+  onPayment(item:any){
+    this.cancelPayment();
     let data = {
-      id: this.oData.id,
+      id: item.id,
       userName: this.username,
-      token:token
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)
@@ -71,11 +107,8 @@ export class OrderPageDetailComponent  implements OnInit,DoCheck {
       this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe({
         next:(res:any)=>{
           if (res && !res.isError) {
-            this.oData = res.data;
-            this.arrayChange.push(res.data);
             this.notification.showNotiSuccess('',res.message);
-            this.navCtrl.navigateBack('main/order',{queryParams:{type:'change',lstdata:JSON.stringify(this.arrayChange)}});
-            this.dt.detectChanges();
+            this.navCtrl.navigateBack('main/order',{queryParams:{type:'change',dataUpdate:JSON.stringify(res?.data)}});
           }else{
             this.notification.showNotiError('',res.message);
           }
@@ -89,11 +122,7 @@ export class OrderPageDetailComponent  implements OnInit,DoCheck {
   }
 
   onback(){
-    if (this.arrayChange.length) {
-      this.navCtrl.navigateBack('main/order',{queryParams:{type:'change',lstdata:JSON.stringify(this.arrayChange)}});
-    }else{
-      this.navCtrl.navigateBack('main/order',{queryParams:{type:'default'}});
-    }
+    this.navCtrl.navigateBack('main/order');
   }
 
   getDetailPackage(){
@@ -112,5 +141,9 @@ export class OrderPageDetailComponent  implements OnInit,DoCheck {
         this.onDestroy();
       }
     })
+  }
+
+  onCopy(){
+    this.notification.showNotiSuccess('','Đã Sao chép',1000);
   }
 }

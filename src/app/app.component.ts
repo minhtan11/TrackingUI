@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
       }
       if ((this.router.url.includes('/main/package'))) {
         if ((this.router.url.includes('/main/package/create')) || (this.router.url.includes('/main/package/detail'))) {
-          this.navCtrl.navigateBack('main/package',{queryParams:{type:'default'}});
+          this.navCtrl.navigateBack('main/package');
         }else{
           if (!(this.router.url.includes('/main/package/orderstatus'))) {
             this.navCtrl.navigateBack('main',{queryParams:{selected:0}});
@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
       }
       if ((this.router.url.includes('/main/order'))) {
         if ((this.router.url.includes('/main/order/detail'))) {
-          this.navCtrl.navigateBack('main/order',{queryParams:{type:'default'}});
+          this.navCtrl.navigateBack('main/order');
         }else{
           this.navCtrl.navigateBack('main',{queryParams:{selected:0}});
         }

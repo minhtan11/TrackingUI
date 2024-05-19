@@ -4,17 +4,17 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChil
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Keyboard } from '@capacitor/keyboard';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
 import { StorageService } from 'src/app/storage-service/storage.service';
+import { Clipboard, ReadResult } from '@capacitor/clipboard';
 
 @Component({
   selector: 'app-create-page',
   templateUrl: './create-page.component.html',
-  styleUrls: ['./create-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./create-page.component.scss']
 })
 export class CreatePageComponent  implements OnInit {
   //#region Constructor
@@ -23,12 +23,16 @@ export class CreatePageComponent  implements OnInit {
   @ViewChild('eleWareHouse') eleWareHouse: any;
   @ViewChild('eleDeclaration') eleDeclaration: any;
   @ViewChild('eleDeclarePrice') eleDeclarePrice: any;
+  @ViewChild('eleNote') eleNote: any;
   isReview:any;
   username:any='';
   isExec:any=false;
   private destroy$ = new Subject<void>();
   formGroup!: FormGroup;
   isHideFooter:any=false;
+  isEdit:any=false;
+  isOpenCopy:any=false;
+  textCopy:any;
   constructor(
     private formBuilder: FormBuilder,
     private notification: NotificationServiceComponent,
@@ -37,7 +41,8 @@ export class CreatePageComponent  implements OnInit {
     private dt : ChangeDetectorRef,
     private navCtrl: NavController,
     private storage: StorageService,
-    private router:Router
+    private router:Router,
+    private platform : Platform,
   ) {
    }
   //#endregion
@@ -46,6 +51,7 @@ export class CreatePageComponent  implements OnInit {
 
   async ngOnInit() {
     this.formGroup = this.formBuilder.group({
+      id:[0],
       packageCode: ['',Validators.required],
       movingMethod: [Validators.required],
       wareHouse: [Validators.required],
@@ -54,30 +60,64 @@ export class CreatePageComponent  implements OnInit {
       isInsurance: [false],
       declaration: ['',Validators.required],
       declarePrice: ['',Validators.required],
-      username:[this.username]
+      note: ['', Validators.maxLength(70)],
+      username:['']
     });
     this.username = await this.storage.get('username');
-    let code = this.rt.snapshot.queryParams["code"];
-    if (code) {
-      this.formGroup.patchValue({packageCode:code});
-    }
     this.formGroup.patchValue({username:this.username});
+    
   }
 
   ngAfterViewInit() {
     Keyboard.addListener('keyboardWillShow', info => {
       this.isHideFooter = true;
-      this.dt.detectChanges();
     });
 
     Keyboard.addListener('keyboardWillHide', () => {
       this.isHideFooter = false;
-      this.dt.detectChanges();
     });
+    this.platform.ready().then(async () => {
+      this.platform.resume.subscribe(async () => {
+        if ((this.router.url.includes('/main/package/create'))) {
+          Clipboard.read().then((clipboardRead: ReadResult) => {
+            if (clipboardRead?.value) {
+              let value = clipboardRead?.value;
+              this.textCopy = value.replace(/(\r\n\s|\r|\n|\s)/g, ',');
+              this.isOpenCopy = true;
+              this.dt.detectChanges();
+              return;
+            }
+          });
+        }
+      });
+    })
   }
 
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
+    let isEdit = this.rt.snapshot.queryParams["isEdit"];
+    if(isEdit){
+      this.isEdit = isEdit;
+      let data = JSON.parse(this.rt.snapshot.queryParams["data"]);
+      if (data) {
+        this.formGroup.patchValue(data);
+        this.formGroup.controls['packageCode'].disable();
+        this.formGroup.controls['movingMethod'].disable();
+        this.formGroup.controls['wareHouse'].disable();
+        this.formGroup.controls['isWoodPackage'].disable();
+        this.formGroup.controls['isAirPackage'].disable();
+        this.formGroup.controls['isInsurance'].disable();
+        this.formGroup.controls['declaration'].disable();
+        this.formGroup.controls['declarePrice'].disable();
+        setTimeout(() => {
+          if(this.eleNote) this.eleNote.nativeElement.focus();
+        }, 500);
+      }
+    }
+    let code = this.rt.snapshot.queryParams["code"];
+    if (code) {
+      this.formGroup.patchValue({packageCode:code});
+    }
   }
 
   ionViewWillLeave(){
@@ -120,26 +160,55 @@ export class CreatePageComponent  implements OnInit {
         return;
       }
     }
+    this.api.isLoad(true);
     setTimeout(() => {
       let oData = {...this.formGroup.value};
       if (oData?.isInsurance) {
         oData.declarePrice = oData?.declarePrice.replace(/,/g, '');
       }
-      this.api.execByBody('Authencation','createpackage',oData,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
-        if (res[0]) {
-          this.notification.showNotiError('', res[1].message);
-        }else{
-          if (!res[1].isError) {
-            this.notification.showNotiSuccess('', res[1].message);
-            this.dt.detectChanges();
-            this.navCtrl.navigateForward('main/package');
+      this.api.execByBody('Authencation','createpackage',oData).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res:any)=>{
+          if (res[0]) {
+            this.notification.showNotiError('', res[1].message);
           }else{
-            this.notification.showNotiError('',res[1].message);
-            this.dt.detectChanges();
+            if (!res[1].isError) {
+              this.notification.showNotiSuccess('', res[1].message);
+              this.navCtrl.navigateForward('main/package',{queryParams:{type:'add'}});
+            }else{
+              this.notification.showNotiError('',res[1].message);
+              
+            }
           }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
         }
       })
-    }, 100);
+    }, 500);
+  }
+
+  update(){
+    this.api.isLoad(true);
+    setTimeout(() => {
+      let data = this.formGroup.getRawValue();
+      this.api.execByBody('Authencation','updatenotepackage',data).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res:any)=>{
+          if (res[0]) {
+            this.notification.showNotiError('', res[1].message);
+          }else{
+            if (!res[1].isError) {
+              this.notification.showNotiSuccess('', res[1].message);
+              this.navCtrl.navigateBack('main/package',{queryParams:{type:'change',dataUpdate:JSON.stringify(res[2])}});
+            }else{
+              this.notification.showNotiError('',res[1].message);
+            }
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+        }
+      })
+    }, 500);
   }
 
   reset(){
@@ -171,7 +240,20 @@ export class CreatePageComponent  implements OnInit {
   }
 
   onback(){
-    this.navCtrl.navigateBack('main/package',{queryParams:{type:'default'}});
+    this.navCtrl.navigateBack('main/package');
+  }
+
+  onCopy(){
+    this.cancelCopy();
+    this.formGroup.patchValue({packageCode:this.textCopy});
+  }
+
+  cancelCopy(){
+    this.isOpenCopy = false;
+    Clipboard.write({
+      string: ""
+    });
+    this.dt.detectChanges();
   }
   //#endregion
 }
