@@ -141,6 +141,7 @@ export class MainPage implements OnInit {
     }
     this.routerOutlet.swipeGesture = false; 
     this.form = await Capacitor.getPlatform();
+    this.dt.detectChanges();
     this.swiper = this.swiperRef?.nativeElement.swiper;
     if(this.swiper){
       this.swiper.enable();

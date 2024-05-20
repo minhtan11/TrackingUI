@@ -28,7 +28,7 @@
 // css for all screen
 html {
     //font-family: 'Comic Sans MS' !important;
-    font-size: 13px;
+    font-size: 13px !important;
     font-family: Tahoma, sans-serif !important;
 
     // @media (max-width: 289px) {
@@ -80,11 +80,10 @@ html {
     // }
 }
 
-// html.ios {
-//     @media (max-width: 359px) and (min-width: 320px) {
-//         font-size: 59%;
-//     }
-// }
+html.ios {
+    font-size: 14px !important;
+    font-family: Tahoma, sans-serif !important;
+}
 
 .dynamic-font {
     font-family: Tahoma, sans-serif !important;
