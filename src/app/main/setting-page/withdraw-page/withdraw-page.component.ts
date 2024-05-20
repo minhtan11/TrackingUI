@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Keyboard } from '@capacitor/keyboard';
-import { NavController } from '@ionic/angular';
+import { IonContent, NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
@@ -20,6 +20,7 @@ export class WithdrawPageComponent  implements OnInit {
   @ViewChild('eleAccountName') eleAccountName: any;
   @ViewChild('eleAmount') eleAmount: any;
   @ViewChild('eleNote') eleNote: any;
+  @ViewChild(IonContent) content: IonContent;
   type:any;
   isHideFooter:any=false;
   formGroup!: FormGroup;
@@ -54,6 +55,9 @@ export class WithdrawPageComponent  implements OnInit {
   async ngAfterViewInit() {
     Keyboard.addListener('keyboardWillShow', info => {
       this.isHideFooter = true;
+      setTimeout(() => {
+        this.content.scrollToBottom();
+      }, 100);
       this.dt.detectChanges();
     });
 

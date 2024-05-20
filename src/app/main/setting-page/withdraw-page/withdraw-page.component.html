@@ -58,7 +58,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Số tiền</mat-label>
-        <input (keyup)="valueChange($event,'amount')" #eleAmount formControlName="amount" matInput>
+        <input inputmode="numeric" type="text" (keyup)="valueChange($event,'amount')" #eleAmount formControlName="amount" matInput>
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Nội dung</mat-label>

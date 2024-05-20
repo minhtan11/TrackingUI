@@ -41,6 +41,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   isOpenRestorePackage:any = false;
   isOpenDeletePackage:any = false;
   itemSelected:any;
+  firstLoad:any = true;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -150,6 +151,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
             this.lstData = oData[0];
             if (this.lstData.length == 0) this.isEmpty = true;
             if (this.lstData.length == oData[1]) this.isload = false;
+            if(this.firstLoad) this.firstLoad = false;
             this.dt.detectChanges();
           }
         },
@@ -250,12 +252,13 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
           let index = this.lstData.findIndex((x:any) => x.id == datas.id);
           if(index > -1){
             this.lstData.splice(index,1);
+            if(this.lstData.length == 0) this.isEmpty = true;
             this.dt.detectChanges();
           } 
         }
         break;
       default:
-        if (this.lstData && this.lstData.length == 0) {
+        if (this.lstData && this.lstData.length == 0 && this.firstLoad) {
           this.isload = true;
           this.pageNum = 1;
           this.isEmpty = false;
@@ -492,6 +495,7 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
               let index = this.lstData.findIndex((x: any) => x.id == item.id);
               if (index > -1) {
                 this.lstData.splice(index,1);
+                if(this.lstData.length == 0) this.isEmpty = true;
                 this.dt.detectChanges();
               } 
             } else {

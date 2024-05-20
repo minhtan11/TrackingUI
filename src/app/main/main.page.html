@@ -49,7 +49,7 @@
       <div [ngClass]="form == 'ios' ? 'padding-statusbar-ios' : ''" class="w-100" class="bg-default-2">
         <div class="w-100 d-flex align-items-center justify-content-between p-3">
           <div>
-            <div *ngIf="oUser == undefined" class="d-flex p-1" style="background: white !important;border-radius: 50px;">
+            <div *ngIf="oUser == undefined" class="d-flex" style="background: white !important;border-radius: 50px;">
               <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
                 <ion-avatar slot="start" style="width: 3.5rem !important;
                     height: 3.5rem !important;" class="me-2" class="me-2">
@@ -61,7 +61,7 @@
                 </div>
               </ion-item>
             </div>
-            <div *ngIf="oUser != undefined" class="d-flex p-1" style="background: white !important;border-radius: 50px;">
+            <div *ngIf="oUser != undefined" class="d-flex" style="background: white !important;border-radius: 50px;">
               <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
                 <ion-avatar slot="start" style="width: 3.5rem !important;
                           height: 3.5rem !important;" class="me-2">
@@ -326,13 +326,13 @@
                           <div>
                             <ion-text class="dynamic-font">
                               <span>Số dư ví: </span>
-                              <span>{{(item2?.data?.moneyLeft | number)+'đ'}}</span>
+                              <span>{{(item2?.data?.moneyLeft)+'đ'}}</span>
                             </ion-text>
                           </div>
                           <div class="d-flex align-items-center">
                             <ng-container *ngIf="item2?.data?.tradeType == 1 || item2?.data?.tradeType == 4">
                               <ion-text color="danger" class="font-weight-bold dynamic-font">
-                                {{'-'+(item2?.data?.amount | number)+'đ'}}
+                                {{'-'+(item2?.data?.amount)+'đ'}}
                               </ion-text>
                             </ng-container>
                             <ng-container *ngIf="item2?.data?.tradeType == 2 || item2?.data?.tradeType == 3">
@@ -519,7 +519,7 @@
                   <ion-item lines="none" [button]="true" detail="false" style="--background:white !important">
                     <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Số dư ví</ion-text>
                     <ion-text slot="end" class="dynamic-font text-dark">
-                      <span>{{oUser?.wallet | number}}</span><span>đ</span>
+                      <span>{{oUser?.wallet}}</span><span>đ</span>
                     </ion-text>
                   </ion-item>
                   <ion-item (click)="goWithdraw(1)" lines="none" [button]="true" detail="false" style="--background:white !important">
