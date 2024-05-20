@@ -28,61 +28,63 @@
 // css for all screen
 html {
     //font-family: 'Comic Sans MS' !important;
-    font-size: 100%;
-    @media (max-width: 289px) {
-        font-size: 45%;
-    }
+    font-size: 13px;
+    font-family: Tahoma, sans-serif !important;
 
-    @media (min-width: 290px) {
-        font-size: 50%;
-    }
+    // @media (max-width: 289px) {
+    //     font-size: 45%;
+    // }
 
-    @media (min-width: 300px) {
-        font-size: 52.5%;
-    }
+    // @media (min-width: 290px) {
+    //     font-size: 50%;
+    // }
 
-    @media (min-width: 320px) {
-        font-size: 55.5%;
-    }
+    // @media (min-width: 300px) {
+    //     font-size: 52.5%;
+    // }
 
-    @media (min-width: 325px) {
-        font-size: 56.5%;
-    }
+    // @media (min-width: 320px) {
+    //     font-size: 55.5%;
+    // }
 
-    @media (min-width: 326px) {
-        font-size: 57%;
-    }
+    // @media (min-width: 325px) {
+    //     font-size: 56.5%;
+    // }
 
-    @media (min-width: 330px) {
-        font-size: 59%;
-    }
+    // @media (min-width: 326px) {
+    //     font-size: 57%;
+    // }
 
-    @media (min-width: 360px) {
-        font-size: 62.5%;
-    }
+    // @media (min-width: 330px) {
+    //     font-size: 59%;
+    // }
 
-    @media (min-width: 411px) {
-        font-size: 70%;
-    }
+    // @media (min-width: 360px) {
+    //     font-size: 62.5%;
+    // }
 
-    @media (min-width: 500px) {
-        font-size: 85%;
-    }
+    // @media (min-width: 411px) {
+    //     font-size: 70%;
+    // }
 
-    @media (min-width: 720px) {
-        font-size: 100%;
-    }
+    // @media (min-width: 500px) {
+    //     font-size: 85%;
+    // }
 
-    @media (min-width: 1000px) {
-        font-size: 110%;
-    }
+    // @media (min-width: 720px) {
+    //     font-size: 100%;
+    // }
+
+    // @media (min-width: 1000px) {
+    //     font-size: 110%;
+    // }
 }
 
-html.ios {
-    @media (max-width: 359px) and (min-width: 320px) {
-        font-size: 59%;
-    }
-}
+// html.ios {
+//     @media (max-width: 359px) and (min-width: 320px) {
+//         font-size: 59%;
+//     }
+// }
 
 .dynamic-font {
     font-family: Tahoma, sans-serif !important;
@@ -123,8 +125,9 @@ ion-segment {
 
 ion-segment-button {
     --color-checked: var(--ion-color-mat-primary) !important;
-    --color: black !important;
-    font-size: 1rem !important;
+    //--color: black !important;
+    //font-size: 1rem !important;
+    font-family: Tahoma, sans-serif !important;
     text-transform: none !important;
 }
 
@@ -340,3 +343,8 @@ ion-toast::part(icon) {
 .bg-default-2{
     background:linear-gradient(23deg, rgba(139,237,251,1) 0%, rgba(42,186,227,1) 50%, rgba(100,181,246,1) 100%) !important;
 }
+
+.padding-statusbar-ios{
+    padding-top: var(--ion-safe-area-top, 0);
+}
+

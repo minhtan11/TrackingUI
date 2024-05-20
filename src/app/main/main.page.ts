@@ -11,6 +11,7 @@ import { NotificationServiceComponent } from '../notification-service/notificati
 import { register } from 'swiper/element/bundle';
 import Swiper from 'swiper';
 import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
+import { Capacitor } from '@capacitor/core';
 register();
 
 @Component({
@@ -31,6 +32,7 @@ export class MainPage implements OnInit {
   headerText:any = 'Trang chủ';
   pageSize: any = 50;
   animationInProgress = false;
+  form:any;
   
 
   // home
@@ -138,6 +140,7 @@ export class MainPage implements OnInit {
       this.dt.detectChanges();
     }
     this.routerOutlet.swipeGesture = false; 
+    this.form = await Capacitor.getPlatform();
     this.swiper = this.swiperRef?.nativeElement.swiper;
     if(this.swiper){
       this.swiper.enable();
@@ -167,7 +170,6 @@ export class MainPage implements OnInit {
       switch(tab){
         case 'home':
           this.selected = 0;
-          this.headerText = 'Trang chủ';
           this.swiper = this.swiperRef?.nativeElement.swiper;
           if(this.swiper){
             this.swiper.enable();
