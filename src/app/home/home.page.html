@@ -16,7 +16,7 @@
         </ion-text>
       </ion-col>
       <ng-container *ngIf="!isAuthen">
-        <ion-col [formGroup]="formGroup" size="12" class="pr-0 pl-0" style="font-size: 1.3rem !important;">
+        <ion-col [formGroup]="formGroup" size="12" class="pr-0 pl-0" style="font-size: 13px !important;">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label class="dynamic-font">Tài khoản</mat-label>
             <input #eleUserName formControlName="userName"  matInput>
@@ -47,7 +47,7 @@
         </ion-col>
       </ng-container>
       <ng-container *ngIf="isAuthen">
-        <ion-col size="12" class="pr-0 pl-0" style="font-size: 1.3rem !important;">
+        <ion-col size="12" class="pr-0 pl-0" style="font-size: 13px !important;">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label class="dynamic-font">Tên đăng nhập</mat-label>
             <input [value]="userName" [disabled]="true" matInput>
@@ -76,9 +76,9 @@
         </ion-text>
         <br>
       </ion-col>
-      <!-- <ion-col size="12" class="pr-0 pl-0">
-        <ion-img style="max-width: 300px !important;min-width: 300px;max-height: 300px;min-height: 300px;object-fit: contain;display: block;margin-left: auto;margin-right: auto;" src="../../assets/image/delivery-service.png"></ion-img>
-      </ion-col> -->
+      <ion-col size="12" class="pr-0 pl-0">
+        <ion-img style="max-width: 200px !important;min-width: 200px;max-height: 200px;min-height: 200px;object-fit: contain;display: block;margin-left: auto;margin-right: auto;" src="../../assets/image/delivery-service.png"></ion-img>
+      </ion-col>
     </ion-row>
   </ion-grid>
   <!-- loginerror-->
@@ -107,10 +107,4 @@
   </ion-modal>
   <!-- loginerror -->
 </ion-content>
-<ion-footer class="ion-no-border" style="--background:white !important;" *ngIf="!isHideFooter">
-  <ion-toolbar style="--background:white !important;">
-    <ion-img style="max-width: 200px !important;min-width: 200px;max-height: 200px;min-height: 200px;object-fit: contain;display: block;margin-left: auto;margin-right: auto;" src="../../assets/image/delivery-service.png"></ion-img>
-  </ion-toolbar>
-</ion-footer>
-
 

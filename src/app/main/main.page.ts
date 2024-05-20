@@ -30,7 +30,7 @@ export class MainPage implements OnInit {
   textCopy:any = '';
   selected:any = 0;
   headerText:any = 'Trang chủ';
-  pageSize: any = 50;
+  pageSize: any = 20;
   animationInProgress = false;
   form:any;
   
@@ -326,7 +326,11 @@ export class MainPage implements OnInit {
             let oData = res[1];
             this.lstDataHistory = oData[0];
             if (this.lstDataHistory.length == 0) this.isEmptyHis = true;
-            if (this.lstDataHistory.length == oData[1]) this.isloadHis = false;
+            let total = 0;
+            this.lstDataHistory.forEach((item:any) => {
+              total +=item.datas.length;
+            });
+            if(total == oData[1]) this.isloadHis = false;
             if(this.firstLoadHis) this.firstLoadHis = false;
           }
         },
@@ -369,10 +373,21 @@ export class MainPage implements OnInit {
           this.notification.showNotiError('', res[1].message);
         }else{
           let oData = res[1];
-          oData[0].forEach((data:any) => {
-            this.lstDataHistory.push(data);
+          oData[0].forEach((item:any) => {
+            let index = this.lstDataHistory.findIndex((x:any)=> x.key == item.key);
+            if (index > -1) {
+              item.datas.forEach((item2:any) => {
+                this.lstDataHistory[index].datas.push(item2);
+              });
+            }else{
+              this.lstDataHistory.push(item);
+            }
           });
-          if(this.lstDataHistory.length == oData[1]) this.isloadHis = false;
+          let total = 0;
+            this.lstDataHistory.forEach((item:any) => {
+              total +=item.datas.length;
+            });
+            if(total == oData[1]) this.isloadHis = false;
           this.onDestroy();
           setTimeout(() => {
             (event as InfiniteScrollCustomEvent).target.complete();
