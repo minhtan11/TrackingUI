@@ -46,13 +46,13 @@
   <ng-container *ngIf="!isReview">
     <!-- Home Page -->
     <div [style]="selected == 0 ? '' : 'display:none !important;'" class="w-100">
-      <div class="padding-statusbar-ios w-100">
-        <div class="w-100 d-flex align-items-center justify-content-between pt-3">
+      <div class="padding-statusbar-ios w-100 bg-default-2">
+        <div class="w-100 d-flex align-items-center justify-content-between p-3">
           <div>
             <div *ngIf="oUser == undefined" class="d-flex" style="background: white !important;border-radius: 50px;">
               <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
                 <ion-avatar slot="start" style="width: 3.5rem !important;
-                        height: 3.5rem !important;" class="me-2" class="me-1">
+                        height: 3.5rem !important;" class="me-1" class="me-1">
                   <ion-skeleton-text [animated]="true"></ion-skeleton-text>
                 </ion-avatar>
                 <div class="d-flex justify-content-center p-2" style="flex-direction: column;">
@@ -82,15 +82,11 @@
             </div>
           </div>
           <div>
-            <ion-icon class="me-3" style="font-size: 2rem;color: black !important;" name="headset-outline"></ion-icon>
+            <ion-icon class="me-3" style="font-size: 2rem;color: white !important;" name="headset-outline"></ion-icon>
           </div>
         </div>
       </div>
-      <div class="w-100">
-        <ion-searchbar style="--border-radius: 30px !important;" [disabled]="true" slot="start" class="p-2"
-          placeholder="Tìm kiếm dịch vụ" enterkeyhint="search" mode="ios" show-clear-button="always"></ion-searchbar>
-      </div>
-      <div class="w-100 p-3 pt-0">
+      <div class="w-100 p-3">
         <swiper-container mode="ios" #swiper [slidesPerView]="1" [loop]="true" [pagination]="true">
           <swiper-slide>
             <ion-card class="mt-2 mx-0 my-5" mode="ios"
