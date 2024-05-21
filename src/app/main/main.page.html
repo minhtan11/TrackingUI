@@ -46,8 +46,11 @@
   <ng-container *ngIf="!isReview">
     <!-- Home Page -->
     <div [style]="selected == 0 ? '' : 'display:none !important;'" class="w-100">
-      <div class="padding-statusbar-ios w-100 bg-default-2">
-        <div class="w-100 d-flex align-items-center justify-content-between p-3">
+      <div class="padding-statusbar-ios w-100">
+        <img style="width: 100%;border-radius: 0px 0px 30px 30px;" src="../../assets/image/homebg.jpg" alt="">
+        <div style="position: absolute;
+        z-index: 1000;
+        top: 0;" class="w-100 d-flex align-items-center justify-content-between p-3">
           <div>
             <div *ngIf="oUser == undefined" class="d-flex" style="background: white !important;border-radius: 50px;">
               <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
@@ -86,6 +89,46 @@
           </div>
         </div>
       </div>
+      <!-- <div class="padding-statusbar-ios w-100 bg-default-2">
+        <div class="w-100 d-flex align-items-center justify-content-between p-3">
+          <div>
+            <div *ngIf="oUser == undefined" class="d-flex" style="background: white !important;border-radius: 50px;">
+              <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
+                <ion-avatar slot="start" style="width: 3.5rem !important;
+                        height: 3.5rem !important;" class="me-1" class="me-1">
+                  <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+                </ion-avatar>
+                <div class="d-flex justify-content-center p-2" style="flex-direction: column;">
+                  <ion-skeleton-text style="width: 80px;" [animated]="true"></ion-skeleton-text>
+                  <ion-skeleton-text style="width: 80px;" [animated]="true"></ion-skeleton-text>
+                </div>
+              </ion-item>
+            </div>
+            <div *ngIf="oUser != undefined" class="d-flex" style="background: white !important;border-radius: 50px;">
+              <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
+                <ion-avatar slot="start" style="width: 3.5rem !important;
+                              height: 3.5rem !important;" class="me-1">
+                  <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'"
+                    alt="">
+                </ion-avatar>
+                <div class="d-flex justify-content-center p-2" style="flex-direction: column;">
+                  <ion-text color="medium" class="dynamic-font">
+                    <span>{{titleTime}}</span>
+                  </ion-text>
+                  <ion-text style="overflow: hidden;
+                          text-overflow: ellipsis;
+                          max-width: 140px;" class="dynamic-font text-dark font-weight-bold ion-text-nowrap">
+                    <span>{{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN | uppercase}}</span>
+                  </ion-text>
+                </div>
+              </ion-item>
+            </div>
+          </div>
+          <div>
+            <ion-icon class="me-3" style="font-size: 2rem;color: white !important;" name="headset-outline"></ion-icon>
+          </div>
+        </div>
+      </div> -->
       <div class="w-100 p-3">
         <swiper-container mode="ios" #swiper [slidesPerView]="1" [loop]="true" [pagination]="true">
           <swiper-slide>
