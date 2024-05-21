@@ -46,7 +46,7 @@
   <ng-container *ngIf="!isReview">
     <!-- Home Page -->
     <div [style]="selected == 0 ? '' : 'display:none !important;'" class="w-100">
-      <div [ngClass]="form == 'ios' ? 'padding-statusbar-ios' : ''" class="w-100" class="bg-default-2">
+      <div class="padding-statusbar-ios w-100" class="bg-default-2">
         <div class="w-100 d-flex align-items-center justify-content-between p-3">
           <div>
             <div *ngIf="oUser == undefined" class="d-flex" style="background: white !important;border-radius: 50px;">
@@ -86,33 +86,34 @@
           </div>
         </div>
       </div>
+
     <div class="w-100 p-3">
       <swiper-container mode="ios" #swiper [slidesPerView]="1" [loop]="true" [pagination]="true">
         <swiper-slide>
           <ion-card class="mt-2 mx-0 my-5" mode="ios" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
             <ion-card-header class="p-0">
-              <img src="https://www.nhanshiphang.vn/wp-content/uploads/d7503e0d890673582a17.jpg" alt="">
+              <img style="height: 10rem;" src="https://www.nhanshiphang.vn/wp-content/uploads/d7503e0d890673582a17.jpg" alt="">
             </ion-card-header>
           </ion-card>
         </swiper-slide>
         <swiper-slide>
           <ion-card class="mt-2 mx-0 my-5" mode="ios" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
             <ion-card-header class="p-0">
-              <img src="https://www.nhanshiphang.vn/wp-content/uploads/6372ad2f1a24e07ab935.jpg" alt="">
+              <img style="height: 10rem;" src="https://www.nhanshiphang.vn/wp-content/uploads/6372ad2f1a24e07ab935.jpg" alt="">
             </ion-card-header>
           </ion-card>
         </swiper-slide>
         <swiper-slide>
           <ion-card class="mt-2 mx-0 my-5" mode="ios" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
             <ion-card-header class="p-0">
-              <img src="https://www.nhanshiphang.vn/wp-content/uploads/b1acd2f165fa9fa4c6eb.jpg" alt="">
+              <img style="height: 10rem;" src="https://www.nhanshiphang.vn/wp-content/uploads/b1acd2f165fa9fa4c6eb.jpg" alt="">
             </ion-card-header>
           </ion-card>
         </swiper-slide>
         <swiper-slide>
           <ion-card class="mt-2 mx-0 my-5" mode="ios" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
             <ion-card-header class="p-0">
-              <img src="https://www.nhanshiphang.vn/wp-content/uploads/968f17d2a0d95a8703c8.jpg" alt="">
+              <img style="height: 10rem;" src="https://www.nhanshiphang.vn/wp-content/uploads/968f17d2a0d95a8703c8.jpg" alt="">
             </ion-card-header>
           </ion-card>
         </swiper-slide>
@@ -272,7 +273,7 @@
       <ion-list *ngIf="lstDataHistory && lstDataHistory.length" class="m-0" style="background-color:white !important;">
         <ng-container *ngFor="let item of lstDataHistory">
           <ion-item-group>
-            <ion-item-divider style="background-color: #f0f7f7 !important;">
+            <ion-item-divider style="background-color: white !important;">
               <ion-text class="font-weight-bold text-dark dynamic-font">
                 Tháng {{item?.key}}
               </ion-text>
@@ -283,11 +284,11 @@
                   <ion-card-header class="p-2 pb-1">
                     <div class="d-flex align-items-center">
                       <ion-icon style="font-size: 1rem;" class="me-2" name="checkmark-done-outline"></ion-icon>
-                      <ion-text class="dynamic-font">
+                      <ion-text class="text-dark dynamic-font">
                         <span>{{item2?.data?.createdDate | date : 'hh:mm a'}}</span>
                       </ion-text>
                     </div>
-                    <ion-text class="dynamic-font">
+                    <ion-text class="text-dark dynamic-font">
                       <span>Ngày: </span>
                       <span>{{item2?.data?.createdDate | date : 'dd/MM/yyyy'}}</span>
                     </ion-text>
@@ -302,29 +303,29 @@
                       </div>
                       <div class="w-100">
                         <ng-container [ngSwitch]="item2?.data?.tradeType">
-                          <ion-text class="font-weight-bold dynamic-font" *ngSwitchCase="1">
+                          <ion-text class="text-dark font-weight-bold dynamic-font" *ngSwitchCase="1">
                             Thanh toán hóa đơn
                           </ion-text>
-                          <ion-text class="font-weight-bold dynamic-font" *ngSwitchCase="2">
+                          <ion-text class="text-dark font-weight-bold dynamic-font" *ngSwitchCase="2">
                             Hoàn tiền
                           </ion-text>
-                          <ion-text class="font-weight-bold dynamic-font" *ngSwitchCase="3">
+                          <ion-text class="text-dark font-weight-bold dynamic-font" *ngSwitchCase="3">
                             Nạp tiền vào ví
                           </ion-text>
-                          <ion-text class="font-weight-bold dynamic-font" *ngSwitchCase="4">
+                          <ion-text class="text-dark font-weight-bold dynamic-font" *ngSwitchCase="4">
                             Rút tiền từ ví
                           </ion-text> 
                         </ng-container>
                         <br>
                         <ng-container *ngIf="item2?.data?.hContent != null && item2?.data?.hContent != ''">
-                          <ion-text class="dynamic-font">
+                          <ion-text class="text-dark dynamic-font">
                             {{item2?.data?.hContent}}
                           </ion-text>
                           <br>
                         </ng-container>
                         <div style="justify-content: space-between;" class="d-flex align-items-center">
                           <div>
-                            <ion-text class="dynamic-font">
+                            <ion-text class="text-dark dynamic-font">
                               <span>Số dư ví: </span>
                               <span>{{(item2?.data?.moneyLeft)+'đ'}}</span>
                             </ion-text>
@@ -349,68 +350,6 @@
               </ion-item>
             </ng-container>
           </ion-item-group>
-          <!-- <ion-item lines="none" style="--background:white !important">
-            <ion-card class="mx-1 my-3 w-100" style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;">
-              <ion-card-content class="p-3">
-                <div class="d-flex align-items-center">
-                  <div style="width: 5em;height: 5em;" class="me-2" >
-                    <img *ngIf="item.tradeType == 1" style="width: 4em;height: 4em;" src="../../../assets/image/cash.png" alt="">
-                    <img *ngIf="item.tradeType == 2" style="width: 4em;height: 4em;" src="../../../assets/image/refund.png" alt="">
-                    <img *ngIf="item.tradeType == 3" style="width: 4em;height: 4em;" src="../../../assets/image/money-bag.png" alt="">
-                    <img *ngIf="item.tradeType == 4" style="width: 4em;height: 4em;" src="../../../assets/image/money-withdrawal.png" alt="">
-                  </div>
-                  <div class="w-100">
-                    <ng-container [ngSwitch]="item.tradeType">
-                      <ion-text class="font-weight-bold dynamic-font" *ngSwitchCase="1">
-                        Thanh toán hóa đơn
-                      </ion-text>
-                      <ion-text class="font-weight-bold dynamic-font" *ngSwitchCase="2">
-                        Hoàn tiền
-                      </ion-text>
-                      <ion-text class="font-weight-bold dynamic-font" *ngSwitchCase="3">
-                        Nạp tiền vào ví
-                      </ion-text>
-                      <ion-text class="font-weight-bold dynamic-font" *ngSwitchCase="4">
-                        Rút tiền từ ví
-                      </ion-text> 
-                    </ng-container>
-                    <br>
-                    <ion-text class="dynamic-font">
-                      <span>Ngày: </span>
-                      <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
-                    </ion-text>
-                    <br>
-                    <ng-container *ngIf="item.hContent != null && item.hContent != ''">
-                      <ion-text dynamic-font>
-                        {{item.hContent}}
-                      </ion-text>
-                      <br>
-                    </ng-container>
-                    <div style="justify-content: space-between;" class="d-flex align-items-center">
-                      <div>
-                        <ion-text class="dynamic-font">
-                          <span>Số dư ví: </span>
-                          <span>{{(item.moneyLeft | number)+'đ'}}</span>
-                        </ion-text>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <ng-container *ngIf="item.tradeType == 1 || item.tradeType == 4">
-                          <ion-text color="danger" class="font-weight-bold dynamic-font">
-                            {{'-'+(item.amount | number)+'đ'}}
-                          </ion-text>
-                        </ng-container>
-                        <ng-container *ngIf="item.tradeType == 2 || item.tradeType == 3">
-                          <ion-text color="success" class="font-weight-bold dynamic-font">
-                            {{'+'+item.amount+'đ'}}
-                          </ion-text>
-                        </ng-container>
-                      </div>
-                    </div>          
-                  </div>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </ion-item> -->
         </ng-container>
       </ion-list>
     </div>
@@ -437,11 +376,11 @@
               <ion-card-header class="p-2 pb-1">
                 <div class="d-flex align-items-center">
                   <ion-icon style="font-size: 1rem;" class="me-2" name="checkmark-done-outline"></ion-icon>
-                  <ion-text class="dynamic-font">
+                  <ion-text class="text-dark dynamic-font">
                     <span>{{item.createdDate | date : 'hh:mm a'}}</span>
                   </ion-text>
                 </div>
-                <ion-text class="dynamic-font">
+                <ion-text class="text-dark dynamic-font">
                   <span>Ngày: </span>
                   <span>{{item.createdDate | date : 'dd/MM/yyyy'}}</span>
                 </ion-text>
@@ -450,15 +389,13 @@
               border-radius: 15px;" class="p-3">
                 <div class="d-flex align-items-center">
                   <div class="w-100">
-                    <ion-text class="font-weight-bold dynamic-font">
+                    <ion-text class="text-dark font-weight-bold dynamic-font">
                       Trakuaidi xin thông báo tới Quý khách
                     </ion-text>
                     <br>
-                    <ion-text class="dynamic-font">
+                    <ion-text class="text-dark dynamic-font">
                       <span style="white-space: pre-line;" [innerHTML]="item.message"></span>
                     </ion-text>
-                    <br>
-                    
                   </div>
                 </div>
               </ion-card-content>

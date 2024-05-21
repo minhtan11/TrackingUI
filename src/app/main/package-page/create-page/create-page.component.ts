@@ -255,5 +255,9 @@ export class CreatePageComponent  implements OnInit {
     });
     this.dt.detectChanges();
   }
+
+  onclick(ele:any){
+    ele.scrollIntoView();
+  }
   //#endregion
 }
