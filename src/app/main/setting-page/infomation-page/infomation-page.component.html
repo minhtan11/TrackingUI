@@ -35,7 +35,7 @@
         <ion-col size="12" style="font-size: 1.3rem !important;">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Họ & tên</mat-label>
-            <input [disabled]="true" #eleFullName formControlName="fullName" matInput>
+            <input (click)="onclick(eleFullName)" [disabled]="true" #eleFullName formControlName="fullName" matInput>
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Giới tính</mat-label>
@@ -46,19 +46,19 @@
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Số điện thoại</mat-label>
-            <input [disabled]="true" #elePhone formControlName="phone" matInput>
+            <input (click)="onclick(elePhone)" [disabled]="true" #elePhone formControlName="phone" matInput>
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Email</mat-label>
-            <input [disabled]="true" #eleEmail formControlName="email" matInput>
+            <input (click)="onclick(eleEmail)" [disabled]="true" #eleEmail formControlName="email" matInput>
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Địa chỉ</mat-label>
-            <input [disabled]="true" #eleAddress formControlName="address" matInput>
+            <input (click)="onclick(eleAddress)" [disabled]="true" #eleAddress formControlName="address" matInput>
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Tên tài khoản</mat-label>
-            <input [disabled]="true" #eleUserName formControlName="username" matInput>
+            <input (click)="onclick(eleUserName)" [disabled]="true" #eleUserName formControlName="username" matInput>
           </mat-form-field> 
         </ion-col>
       </ion-row>

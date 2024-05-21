@@ -28,7 +28,7 @@
 // css for all screen
 html {
     //font-family: 'Comic Sans MS' !important;
-    font-size: 13px !important;
+    font-size: 12px !important;
     font-family: Tahoma, sans-serif !important;
 
     // @media (max-width: 289px) {
@@ -110,29 +110,39 @@ input:focus {
     border-color: #ced4da !important;
 }
 
-ion-segment {
-    //--background: var(--ion-color-mat-accent) !important;
+ion-segment#custom {
+    --background: white !important;
     --offset-bottom: auto !important;
     --overflow: hidden;
     overflow: auto;
-    color: black !important;
+    color: var(--ion-color-medium-tint) !important;
 
     &::-webkit-scrollbar {
         display: none;
     }
 }
 
-ion-segment-button {
-    --color-checked: var(--ion-color-mat-primary) !important;
+ion-segment-button#custom {
+    --color-checked: white !important;
     --color: var(--ion-color-medium-tint) !important;
     //font-size: 1rem !important;
     font-family: Tahoma, sans-serif !important;
     text-transform: none !important;
+    height: 40px !important;
+    box-shadow: unset !important;
+    border: 1px solid;
+    border-color: var(--ion-color-mat-primary) !important;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
-// ion-segment-button::part(indicator-background) {
-//     background: white !important;
-//   }
+ion-segment-button#custom::part(indicator-background) {
+    background: var(--ion-color-mat-primary)  !important;
+  }
+
+ion-segment-button#custom::part(indicator) {
+    padding: 1px !important;
+}
 
 .tab-selected {
     color: var(--ion-color-mat-primary) !important;
@@ -298,7 +308,7 @@ ul.timeline>.active:before {
     display: none !important;
 }
 
-ion-searchbar {
+ion-searchbar#custom-search {
     --background: white !important;
     --color: grey !important;
     --placeholder-color: grey !important;

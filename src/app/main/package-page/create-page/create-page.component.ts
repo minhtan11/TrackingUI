@@ -70,11 +70,12 @@ export class CreatePageComponent  implements OnInit {
 
   ngAfterViewInit() {
     Keyboard.addListener('keyboardWillShow', info => {
-      this.isHideFooter = true;
+      //this.isHideFooter = true;
     });
 
     Keyboard.addListener('keyboardWillHide', () => {
       this.isHideFooter = false;
+      this.dt.detectChanges();
     });
     this.platform.ready().then(async () => {
       this.platform.resume.subscribe(async () => {
@@ -257,7 +258,12 @@ export class CreatePageComponent  implements OnInit {
   }
 
   onclick(ele:any){
-    ele.scrollIntoView();
+    this.isHideFooter = true;
+    this.dt.detectChanges();
+    setTimeout(() => {
+      ele.scrollIntoView();
+    }, 500);
+    
   }
   //#endregion
 }

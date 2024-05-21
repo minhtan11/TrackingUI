@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InfiniteScrollCustomEvent, IonRouterOutlet, IonTabs, NavController, Platform } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, IonContent, IonRouterOutlet, IonTabs, NavController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { StorageService } from '../storage-service/storage.service';
 import { Clipboard, ReadResult } from '@capacitor/clipboard';
@@ -24,6 +24,7 @@ export class MainPage implements OnInit {
   //#region Contructor
   @ViewChild('swiper')
   swiperRef: ElementRef | undefined;
+  @ViewChild(IonContent) content: IonContent;
   swiper:Swiper;
   isReview:any;
   isOpenCopy:any=false;
@@ -116,6 +117,8 @@ export class MainPage implements OnInit {
     await PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotificationSchema) => {
         this.getUser();
+        this.refreshHis();
+        this.refreshNoti();
       }
     );
   }
@@ -197,6 +200,7 @@ export class MainPage implements OnInit {
           if(this.swiper) this.swiper.disable();
           break;
       }
+      this.content.scrollToTop();
     }
     this.dt.detectChanges();
   }
@@ -303,7 +307,7 @@ export class MainPage implements OnInit {
     this.loadDataHis();
   }
 
-  loadDataHis(){
+  loadDataHis(isShowLoad:any=true){
     let data = {
       status: this.statusHis,
       id: this.idHis,
@@ -316,30 +320,53 @@ export class MainPage implements OnInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.isLoad(true);
-    setTimeout(() => {
+    if (isShowLoad) {
+      this.api.isLoad(true);
+      setTimeout(() => {
+        this.api.execByBody('Authencation', 'historywallet', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+          next: (res: any) => {
+            if (res[0]) {
+              this.notification.showNotiError('', res[1].message);
+            } else {
+              let oData = res[1];
+              this.lstDataHistory = oData[0];
+              if (this.lstDataHistory.length == 0) this.isEmptyHis = true;
+              let total = 0;
+              this.lstDataHistory.forEach((item: any) => {
+                total += item.datas.length;
+              });
+              if (total == oData[1]) this.isloadHis = false;
+              if (this.firstLoadHis) this.firstLoadHis = false;
+            }
+          },
+          complete: () => {
+            this.dt.detectChanges();
+            this.api.isLoad(false);
+          }
+        })
+      }, 1000);
+    }else{
       this.api.execByBody('Authencation', 'historywallet', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res: any) => {
+        next: (res: any) => {
           if (res[0]) {
             this.notification.showNotiError('', res[1].message);
-          }else{
+          } else {
             let oData = res[1];
             this.lstDataHistory = oData[0];
             if (this.lstDataHistory.length == 0) this.isEmptyHis = true;
             let total = 0;
-            this.lstDataHistory.forEach((item:any) => {
-              total +=item.datas.length;
+            this.lstDataHistory.forEach((item: any) => {
+              total += item.datas.length;
             });
-            if(total == oData[1]) this.isloadHis = false;
-            if(this.firstLoadHis) this.firstLoadHis = false;
+            if (total == oData[1]) this.isloadHis = false;
+            if (this.firstLoadHis) this.firstLoadHis = false;
           }
         },
-        complete:()=>{
+        complete: () => {
           this.dt.detectChanges();
-          this.api.isLoad(false);
         }
       })
-    }, 1000);
+    }
   }
 
   sortDataHis(status: any) {
@@ -407,7 +434,7 @@ export class MainPage implements OnInit {
     this.loadDataNoti();
   }
 
-  loadDataNoti(){
+  loadDataNoti(isShowLoad:any=true){
     let data = {
       status: this.statusNoti,
       //fromDate: this.fromDate,
@@ -419,26 +446,46 @@ export class MainPage implements OnInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.isLoad(true);
-    setTimeout(() => {
+    if (isShowLoad) {
+      this.api.isLoad(true);
+      setTimeout(() => {
+        this.api.execByBody('Authencation', 'notification', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+          next: (res: any) => {
+            if (res[0]) {
+              this.notification.showNotiError('', res[1].message);
+            } else {
+              let oData = res[1];
+              this.lstDataNoti = oData[0];
+              if (this.lstDataNoti.length == 0) this.isEmptyNoti = true;
+              if (this.lstDataNoti.length == oData[1]) this.isloadNoti = false;
+              if (this.firstLoadNoti) this.firstLoadNoti = false;
+            }
+          },
+          complete: () => {
+            this.api.isLoad(false);
+            this.dt.detectChanges();
+          }
+        })
+      }, 1000);
+    }else{
       this.api.execByBody('Authencation', 'notification', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res: any) => {
+        next: (res: any) => {
           if (res[0]) {
             this.notification.showNotiError('', res[1].message);
-          }else{
+          } else {
             let oData = res[1];
             this.lstDataNoti = oData[0];
             if (this.lstDataNoti.length == 0) this.isEmptyNoti = true;
             if (this.lstDataNoti.length == oData[1]) this.isloadNoti = false;
-            if(this.firstLoadNoti) this.firstLoadNoti = false;
+            if (this.firstLoadNoti) this.firstLoadNoti = false;
           }
         },
-        complete:()=>{
-          this.api.isLoad(false);
+        complete: () => {
           this.dt.detectChanges();
         }
       })
-    }, 1000);
+    }
+    
   }
 
   onIonInfiniteNoti(event: any) {
@@ -625,6 +672,24 @@ export class MainPage implements OnInit {
     setTimeout(() => {
       event.target.complete();
     }, 2000);
+  }
+
+  refreshHis(){
+    if (!this.firstLoadHis) {
+      this.isloadHis = true;
+      this.pageNumHis = 1;
+      this.isEmptyHis = false;
+      this.loadDataHis(false);
+    }
+  }
+
+  refreshNoti(){
+    if (!this.firstLoadNoti) {
+      this.isloadNoti = true;
+      this.pageNumNoti = 1;
+      this.isEmptyNoti = false;
+      this.loadDataNoti(false);
+    }
   }
 
   // trackByFn(index: any, item: any) {

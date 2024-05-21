@@ -47,8 +47,8 @@ export class ChangepasswordPageComponent  implements OnInit {
 
   async ngAfterViewInit() {
     Keyboard.addListener('keyboardWillShow', info => {
-      this.isHideFooter = true;
-      this.dt.detectChanges();
+      // this.isHideFooter = true;
+      // this.dt.detectChanges();
     });
 
     Keyboard.addListener('keyboardWillHide', () => {
@@ -101,4 +101,11 @@ export class ChangepasswordPageComponent  implements OnInit {
     
   }
 
+  onclick(ele:any){
+    this.isHideFooter = true;
+    this.dt.detectChanges();
+    setTimeout(() => {
+      ele.scrollIntoView();
+    }, 500);
+  }
 }

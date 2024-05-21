@@ -54,11 +54,11 @@ export class WithdrawPageComponent  implements OnInit {
 
   async ngAfterViewInit() {
     Keyboard.addListener('keyboardWillShow', info => {
-      this.isHideFooter = true;
-      setTimeout(() => {
-        this.content.scrollToBottom();
-      }, 100);
-      this.dt.detectChanges();
+      // this.isHideFooter = true;
+      // setTimeout(() => {
+      //   this.content.scrollToBottom();
+      // }, 100);
+      // this.dt.detectChanges();
     });
 
     Keyboard.addListener('keyboardWillHide', () => {
@@ -171,5 +171,13 @@ export class WithdrawPageComponent  implements OnInit {
         }
         break;
     }
+  }
+
+  onclick(ele:any){
+    this.isHideFooter = true;
+    this.dt.detectChanges();
+    setTimeout(() => {
+      ele.scrollIntoView();
+    }, 500);
   }
 }

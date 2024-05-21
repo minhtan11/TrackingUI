@@ -31,7 +31,7 @@
         <ion-col size="12" style="font-size: 13px !important">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label class="dynamic-font">Họ & tên</mat-label>
-            <input #eleFullName formControlName="fullName" matInput>
+            <input (click)="onclick(eleFullName)" #eleFullName formControlName="fullName" matInput>
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label class="dynamic-font">Giới tính</mat-label>
@@ -42,24 +42,24 @@
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label class="dynamic-font">Số điện thoại</mat-label>
-            <input #elePhone formControlName="phone" matInput>
+            <input (click)="onclick(elePhone)" #elePhone formControlName="phone" matInput>
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label class="dynamic-font">Email</mat-label>
-            <input #eleEmail formControlName="email" matInput>
+            <input (click)="onclick(eleEmail)" #eleEmail formControlName="email" matInput>
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label class="dynamic-font">Địa chỉ</mat-label>
-            <input #eleAddress formControlName="address" matInput>
+            <input (click)="onclick(eleAddress)" #eleAddress formControlName="address" matInput>
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label class="dynamic-font">Tên tài khoản</mat-label>
-            <input #eleUserName formControlName="username" matInput>
+            <input (click)="onclick(eleUserName)" #eleUserName formControlName="username" matInput>
           </mat-form-field>
           <div class="w-100">
             <mat-form-field class="w-100">
               <mat-label class="dynamic-font">Mật khẩu</mat-label>
-              <input #elePassword formControlName="password" matInput [type]="!showPass ? 'password' : 'text'">
+              <input (click)="onclick(elePassword)" #elePassword formControlName="password" matInput [type]="!showPass ? 'password' : 'text'">
               <button class="d-flex align-items-center justify-content-center" mat-icon-button matSuffix (click)="showPass = !showPass">
                 <ion-icon [name]="!showPass ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
               </button>

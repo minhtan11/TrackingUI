@@ -6,32 +6,32 @@
     <ion-title style="color: white !important;" class="dynamic-font text-dark">Danh sách đơn hàng</ion-title>
   </ion-toolbar>
   <ion-toolbar  style="--background:linear-gradient(154deg, rgba(139,237,251,1) 0%, rgba(42,186,227,1) 50%, rgba(100,181,246,1) 100%) !important;">
-    <ion-searchbar slot="start" class="p-2" placeholder="Tìm kiếm đơn hàng" (ionChange)="ionChange($event)"
+    <ion-searchbar id='custom-search' slot="start" class="p-2" placeholder="Tìm kiếm đơn hàng" (ionChange)="ionChange($event)"
       enterkeyhint="search" mode="ios" show-clear-button="always"></ion-searchbar>
   </ion-toolbar>
   <ion-toolbar style="--background:white !important;">
-    <ion-segment [scrollable]="true" [value]="status" mode="md">
-      <ion-segment-button (click)=" sortData(0)" [value]="0">
+    <ion-segment id="custom" mode="ios" [scrollable]="true" [value]="status">
+      <ion-segment-button id="custom" (click)=" sortData(0)" [value]="0">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Tất cả</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button (click)=" sortData(1)" [value]="1">
+      <ion-segment-button id="custom" (click)=" sortData(1)" [value]="1">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Chờ thanh toán</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button (click)=" sortData(2)" [value]="2">
+      <ion-segment-button id="custom" (click)=" sortData(2)" [value]="2">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Đã thanh toán</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button (click)=" sortData(3)" [value]="3">
+      <ion-segment-button id="custom" (click)=" sortData(3)" [value]="3">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Đã hủy</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button (click)=" sortData(4)" [value]="4">
+      <ion-segment-button id="custom" (click)=" sortData(4)" [value]="4">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Khác</span>
         </ion-text>

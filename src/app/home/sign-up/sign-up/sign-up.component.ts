@@ -62,8 +62,8 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
 
   ngAfterViewInit() {
     Keyboard.addListener('keyboardWillShow', info => {
-      this.isHideFooter = true;
-      this.dt.detectChanges();
+      // this.isHideFooter = true;
+      // this.dt.detectChanges();
     });
 
     Keyboard.addListener('keyboardWillHide', () => {
@@ -198,6 +198,14 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
   onDismiss(){
     this.isOpen = false;
     this.dt.detectChanges();
+  }
+
+  onclick(ele:any){
+    this.isHideFooter = true;
+    this.dt.detectChanges();
+    setTimeout(() => {
+      ele.scrollIntoView();
+    }, 500);
   }
   //#endregion
 
