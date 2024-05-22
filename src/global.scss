@@ -26,64 +26,67 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 // css for all screen
-html {
+html{
     //font-family: 'Comic Sans MS' !important;
-    font-size: 12px !important;
+    //font-size: 10px !important;
     font-family: Tahoma, sans-serif !important;
+    @media (min-width: 320px) {
+        font-size: 10px !important;
+    }
 
-    // @media (max-width: 289px) {
-    //     font-size: 45%;
-    // }
+    @media (min-width: 360px) {
+        font-size: 10px !important;
+    }
 
-    // @media (min-width: 290px) {
-    //     font-size: 50%;
-    // }
+    @media (min-width: 375px) {
+        font-size: 11px !important;
+    }
 
-    // @media (min-width: 300px) {
-    //     font-size: 52.5%;
-    // }
+    @media (min-width: 390px) {
+        font-size: 12px !important;
+    }
 
-    // @media (min-width: 320px) {
-    //     font-size: 55.5%;
-    // }
+    @media (min-width: 393px) {
+        font-size: 12px !important;
+    }
 
-    // @media (min-width: 325px) {
-    //     font-size: 56.5%;
-    // }
+    @media (min-width: 400px) {
+        font-size: 12px !important;
+    }
 
-    // @media (min-width: 326px) {
-    //     font-size: 57%;
-    // }
+    @media (min-width: 411px) {
+        font-size: 13px !important;
+    }
 
-    // @media (min-width: 330px) {
-    //     font-size: 59%;
-    // }
+    @media (min-width: 428px) {
+        font-size: 13.5px !important;
+    }
 
-    // @media (min-width: 360px) {
-    //     font-size: 62.5%;
-    // }
+    @media (min-width: 430px) {
+        font-size: 14px !important;
+    }
 
-    // @media (min-width: 411px) {
-    //     font-size: 70%;
-    // }
+    @media (min-width: 448px) {
+        font-size: 14.2px !important;
+    }
 
-    // @media (min-width: 500px) {
-    //     font-size: 85%;
-    // }
+    @media (min-width: 500px) {
+        font-size: 15px !important;
+    }
 
-    // @media (min-width: 720px) {
-    //     font-size: 100%;
-    // }
+    @media (min-width: 720px) {
+        font-size: 15.5px !important;
+    }
 
-    // @media (min-width: 1000px) {
-    //     font-size: 110%;
-    // }
+    @media (min-width: 1000px) {
+        font-size: 16px !important;
+    }
 }
 
-html.ios {
-    font-size: 14px !important;
-    font-family: Tahoma, sans-serif !important;
-}
+// html.ios {
+//     font-size: 14px !important;
+//     font-family: Tahoma, sans-serif !important;
+// }
 
 .dynamic-font {
     font-family: Tahoma, sans-serif !important;
@@ -270,13 +273,13 @@ ul.timeline>.active:before {
 }
 
 .mat-mdc-tab-label-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
 }
 
 .mat-mdc-tab-label-container .mat-mdc-tab-list {
-    max-width: 850px;
+    //max-width: 850px;
 }
 
 .mat-mdc-tab .mdc-tab-indicator__content--underline {
@@ -355,5 +358,9 @@ ion-toast::part(icon) {
 
 .padding-statusbar-ios{
     padding-top: var(--ion-safe-area-top, 0);
+}
+
+.text-white{
+    color: white !important;
 }
 

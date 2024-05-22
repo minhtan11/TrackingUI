@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Keyboard } from '@capacitor/keyboard';
@@ -12,6 +12,7 @@ import { StorageService } from 'src/app/storage-service/storage.service';
   selector: 'app-withdraw-page',
   templateUrl: './withdraw-page.component.html',
   styleUrls: ['./withdraw-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WithdrawPageComponent  implements OnInit {
   @ViewChild('elepaymentMethod') elepaymentMethod: any;
@@ -54,11 +55,8 @@ export class WithdrawPageComponent  implements OnInit {
 
   async ngAfterViewInit() {
     Keyboard.addListener('keyboardWillShow', info => {
-      // this.isHideFooter = true;
-      // setTimeout(() => {
-      //   this.content.scrollToBottom();
-      // }, 100);
-      // this.dt.detectChanges();
+      this.isHideFooter = true;
+      this.dt.detectChanges();
     });
 
     Keyboard.addListener('keyboardWillHide', () => {
@@ -171,13 +169,5 @@ export class WithdrawPageComponent  implements OnInit {
         }
         break;
     }
-  }
-
-  onclick(ele:any){
-    this.isHideFooter = true;
-    this.dt.detectChanges();
-    setTimeout(() => {
-      ele.scrollIntoView();
-    }, 500);
   }
 }

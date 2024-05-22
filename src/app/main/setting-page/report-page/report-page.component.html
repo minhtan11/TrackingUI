@@ -1,0 +1,20 @@
+<ion-header class="ion-no-border" style="--background:white !important;">
+  <ion-toolbar mode="ios" style="--background:linear-gradient(23deg, rgba(139,237,251,1) 0%, rgba(42,186,227,1) 50%, rgba(100,181,246,1) 100%) !important;">
+    <ion-button slot="start" (click)="onback()" fill="clear">
+      <ion-icon style="color: white !important;" class="text-dark" name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-title style="color: white !important;" class="dynamic-font text-dark">Phiếu khiếu nại</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" style="--background:white !important">
+</ion-content>
+<ion-footer *ngIf="!isHideFooter" class="ion-no-border"
+  style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+  <ion-toolbar mode="ios" style="--background:white !important">
+    <ion-button mode="ios" (click)="onReport()" class="ion-btn-default" expand="block">
+      <ion-text class="dynamic-font font-weight-bold" style="color: white !important;">
+        <span>TẠO PHIẾU KHIẾU NẠI</span>
+      </ion-text>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

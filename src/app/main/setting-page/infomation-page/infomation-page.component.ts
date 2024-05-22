@@ -56,8 +56,8 @@ export class InfomationPageComponent  implements OnInit {
 
   async ngAfterViewInit() {
     Keyboard.addListener('keyboardWillShow', info => {
-      // this.isHideFooter = true;
-      // this.dt.detectChanges();
+      this.isHideFooter = true;
+      this.dt.detectChanges();
     });
 
     Keyboard.addListener('keyboardWillHide', () => {
@@ -194,13 +194,5 @@ export class InfomationPageComponent  implements OnInit {
 
   onback(){
     this.navCtrl.navigateBack('main');
-  }
-
-  onclick(ele:any){
-    this.isHideFooter = true;
-    this.dt.detectChanges();
-    setTimeout(() => {
-      ele.scrollIntoView();
-    }, 500);
   }
 }

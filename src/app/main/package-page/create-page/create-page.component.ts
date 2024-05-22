@@ -256,14 +256,5 @@ export class CreatePageComponent  implements OnInit {
     });
     this.dt.detectChanges();
   }
-
-  onclick(ele:any){
-    this.isHideFooter = true;
-    this.dt.detectChanges();
-    setTimeout(() => {
-      ele.scrollIntoView();
-    }, 500);
-    
-  }
   //#endregion
 }

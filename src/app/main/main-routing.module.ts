@@ -18,6 +18,7 @@ import { OrderStatusComponent } from './package-page/order-status/order-status.c
 import { InfomationPageComponent } from './setting-page/infomation-page/infomation-page.component';
 import { WithdrawPageComponent } from './setting-page/withdraw-page/withdraw-page.component';
 import { ChangepasswordPageComponent } from './setting-page/changepassword-page/changepassword-page.component';
+import { ReportPageComponent } from './setting-page/report-page/report-page.component';
 
 const routes: Routes = [
   {
@@ -85,6 +86,10 @@ const routes: Routes = [
   {
     path: 'setting/changepassword',
     component: ChangepasswordPageComponent,
+  },
+  {
+    path: 'setting/report',
+    component: ReportPageComponent,
   },
   // {
   //   path: 'home',

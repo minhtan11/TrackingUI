@@ -35,6 +35,7 @@ import { InfomationPageComponent } from './setting-page/infomation-page/infomati
 import { WithdrawPageComponent } from './setting-page/withdraw-page/withdraw-page.component';
 import { ChangepasswordPageComponent } from './setting-page/changepassword-page/changepassword-page.component';
 import { FormatdatePipe } from '../pipe/format-date/formatdate.pipe';
+import { ReportPageComponent } from './setting-page/report-page/report-page.component';
 
 @NgModule({
   imports: [
@@ -55,7 +56,7 @@ import { FormatdatePipe } from '../pipe/format-date/formatdate.pipe';
     ClipboardModule,
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
-  ,DecodeVNPipe,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent,FormatdatePipe],
+  ,DecodeVNPipe,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent,FormatdatePipe,ReportPageComponent],
   providers:[NotificationServiceComponent,DatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

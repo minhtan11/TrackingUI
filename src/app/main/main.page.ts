@@ -535,6 +535,10 @@ export class MainPage implements OnInit {
     this.navCtrl.navigateForward('main/setting/changepassword');
   }
 
+  goReport(){
+    this.navCtrl.navigateForward('main/setting/report');
+  }
+
   onOpenLogout(){
     this.isOpenLogout = true;
   }
