@@ -7,6 +7,51 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding" style="--background:white !important">
+  <div class="w-100" style="margin: auto;max-width: 1000px;">
+    <ion-card mode="ios" style="--background:white !important">
+      <ion-card-header>
+        <img style="width: 100px;
+            height: 100px;
+            display: block;
+            margin: auto;" src="../../../../assets/image/complain.png" alt="">
+      </ion-card-header>
+      <ion-card-content>
+        <div class="alert alert-warning d-flex" role="alert">
+          <i class="bi bi-exclamation-triangle-fill icon-16 mr-2"></i>
+          <div>
+            <ion-text class="mb-0 dynamic-font text-dark">
+              <b>Lưu ý:</b>
+            </ion-text>
+            <br>
+            <ion-text class="mb-0 dynamic-font text-dark">
+              Hãy tạo phiếu khiếu nại với vấn đề của bạn! Với những đơn ngoài giờ hành chính. Thời gian hệ thống xử lý có thể chậm hơn bình thường.
+              Mong quý khách hàng thông cảm!
+            </ion-text>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <div class="w-100" [formGroup]="formGroup">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Hình thức khiếu nại</mat-label>
+        <mat-select #eleType
+          formControlName="type">
+          <mat-option [value]="0">Khiếu nại thiếu hàng</mat-option>
+          <mat-option [value]="1">Khiếu nại sai mẫu (bồi thường)</mat-option>
+          <mat-option [value]="2">Khiếu nại sai mẫu (trả hàng)</mat-option>
+          <mat-option [value]="3">Lỗi hệ thống</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Mã đơn hàng</mat-label>
+        <input #eleTransId formControlName="transId" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Nội dung</mat-label>
+        <input #eleContext formControlName="context" matInput>
+      </mat-form-field>
+    </div>
+  </div>
 </ion-content>
 <ion-footer *ngIf="!isHideFooter" class="ion-no-border"
   style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
