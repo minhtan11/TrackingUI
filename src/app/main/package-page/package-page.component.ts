@@ -95,8 +95,10 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     let status = this.rt.snapshot.queryParams["status"];
     if (status) {
       this.status = status;
+      this.dt.detectChanges();
     }
     this.init();
+    this.dt.detectChanges();
   }
 
   ionViewWillLeave(){

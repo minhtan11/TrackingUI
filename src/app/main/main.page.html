@@ -47,7 +47,7 @@
     <!-- Home Page -->
     <div [style]="selected == 0 ? '' : 'display:none !important;'" class="w-100">
       <div class="w-100">
-        <img style="width: 100%;border-radius: 0px 0px 15px 15px;" src="../../assets/image/homebg.jpg" alt="">
+        <img style="width: 100%;border-radius: 0px 0px 20px 20px;" src="../../assets/image/homebg.jpg" alt="">
         <div style="position: absolute;
         z-index: 1000;
         top: var(--ion-safe-area-top, 0);" class="w-100 d-flex align-items-center justify-content-between p-2">
@@ -64,7 +64,7 @@
                 </div>
               </ion-item>
             </div>
-            <div *ngIf="oUser != undefined" class="d-flex">
+            <div *ngIf="oUser != undefined" class="d-flex" style="background: white !important;border-radius: 50px;">
               <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
                 <ion-avatar slot="start" style="width: 3rem !important;
                               height: 3rem !important;" class="me-1">
@@ -72,12 +72,12 @@
                     alt="">
                 </ion-avatar>
                 <div class="d-flex justify-content-center p-1" style="flex-direction: column;">
-                  <ion-text style="color: white !important;" class="dynamic-font">
+                  <ion-text color="medium" class="dynamic-font">
                     <span>{{titleTime}}</span>
                   </ion-text>
                   <ion-text style="overflow: hidden;
                           text-overflow: ellipsis;
-                          max-width: 200px;color: white !important;" class="dynamic-font font-weight-bold ion-text-nowrap">
+                          max-width: 200px;" class="dynamic-font text-dark font-weight-bold ion-text-nowrap">
                     <span>{{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN | uppercase}}</span>
                   </ion-text>
                 </div>
