@@ -144,8 +144,26 @@ export class MainPage implements OnInit {
       this.dt.detectChanges();
     }
     this.routerOutlet.swipeGesture = false; 
-    this.form = await Capacitor.getPlatform();
+    this.swiper = this.swiperRef?.nativeElement.swiper;
+    if(this.swiper){
+      this.swiper.enable();
+      this.swiper.init();
+    } 
+    this.startAnimation();
     this.dt.detectChanges();
+  }
+
+  startAnimation() {
+    this.swiper = this.swiperRef?.nativeElement.swiper;
+    if(this.animationInProgress) return;
+    this.animationInProgress = true;
+    setTimeout(() => {
+      if (this.swiper) {
+        this.swiper.slideNext(1000,false);
+      }
+      this.animationInProgress = false;
+      this.startAnimation();
+    }, 5000);
   }
   //#endregion
 
@@ -156,20 +174,30 @@ export class MainPage implements OnInit {
       switch(tab){
         case 'home':
           this.selected = 0;
+          this.swiper = this.swiperRef?.nativeElement.swiper;
+          if(this.swiper){
+            this.swiper.enable();
+            this.swiper.init();
+            this.startAnimation();
+          } 
           break;
         case 'history':
           this.selected = 1;
           this.headerText = 'Lịch sử giao dịch';
           this.initHis();
+          this.swiper = this.swiperRef?.nativeElement.swiper;
+          if(this.swiper) this.swiper.disable();
           break;
         case 'notification':
           this.selected = 2;
           this.headerText = 'Thông báo';
           this.initNoti();
+          if(this.swiper) this.swiper.disable();
           break;
         case 'setting':
           this.selected = 3;
           this.headerText = 'Tài khoản';
+          if(this.swiper) this.swiper.disable();
           break;
       }
       this.content.scrollToTop();

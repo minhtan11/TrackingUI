@@ -386,11 +386,11 @@
           </div> -->
         </div>
       </div>
-      <div class="w-100 p-3">
-        <!-- <swiper-container mode="ios" #swiper [slidesPerView]="1" [loop]="true" [pagination]="true">
+      <div class="w-100 p-3 pt-0">
+        <swiper-container mode="ios" #swiper [slidesPerView]="1" [loop]="true" [pagination]="true">
           <swiper-slide>
             <ion-card class="mt-2 mx-0 my-5" mode="ios"
-              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
+              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important;border-radius: 20px;">
               <ion-card-header class="p-0">
                 <img src="https://www.nhanshiphang.vn/wp-content/uploads/d7503e0d890673582a17.jpg"
                   alt="">
@@ -399,7 +399,7 @@
           </swiper-slide>
           <swiper-slide>
             <ion-card class="mt-2 mx-0 my-5" mode="ios"
-              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
+              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important;border-radius: 20px;">
               <ion-card-header class="p-0">
                 <img src="https://www.nhanshiphang.vn/wp-content/uploads/6372ad2f1a24e07ab935.jpg"
                   alt="">
@@ -408,7 +408,7 @@
           </swiper-slide>
           <swiper-slide>
             <ion-card class="mt-2 mx-0 my-5" mode="ios"
-              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
+              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important;border-radius: 20px;">
               <ion-card-header class="p-0">
                 <img src="https://www.nhanshiphang.vn/wp-content/uploads/b1acd2f165fa9fa4c6eb.jpg"
                   alt="">
@@ -417,15 +417,15 @@
           </swiper-slide>
           <swiper-slide>
             <ion-card class="mt-2 mx-0 my-5" mode="ios"
-              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
+              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important;border-radius: 20px;">
               <ion-card-header class="p-0">
                 <img src="https://www.nhanshiphang.vn/wp-content/uploads/968f17d2a0d95a8703c8.jpg"
                   alt="">
               </ion-card-header>
             </ion-card>
           </swiper-slide>
-        </swiper-container> -->
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        </swiper-container>
+        <!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
           <div style="border-radius: 20px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;"  class="carousel-inner">
             <div class="carousel-item active" data-interval="5000">
               <img src="https://www.nhanshiphang.vn/wp-content/uploads/d7503e0d890673582a17.jpg" class="d-block w-100">
@@ -440,7 +440,7 @@
               <img src="https://www.nhanshiphang.vn/wp-content/uploads/968f17d2a0d95a8703c8.jpg" class="d-block w-100" alt="...">
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="pl-3 w-100">
         <ion-text class="dynamic-font text-dark">
@@ -453,9 +453,10 @@
             <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
               <!-- <img (click)="goRechargePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/wallet-icon.png"
                 alt=""> -->
-              <ion-avatar (click)="goRechargePage()">
+              <!-- <ion-avatar (click)="goRechargePage()">
                   <img src="../../assets/image/icon-wallet.png" />
-              </ion-avatar>
+              </ion-avatar> -->
+              <img (click)="goRechargePage()" src="../../assets/image/icon-wallet.png" />
               <ion-text class="dynamic-font" style="color: black !important;">
                 Nạp tiền
               </ion-text>
@@ -465,9 +466,10 @@
             <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
               <!-- <img (click)="goPackagePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/package-icon.png"
                 alt=""> -->
-              <ion-avatar (click)="goPackagePage()">
+              <!-- <ion-avatar (click)="goPackagePage()">
                   <img src="../../assets/image/icon-package.png" />
-              </ion-avatar>
+              </ion-avatar> -->
+              <img (click)="goPackagePage()" src="../../assets/image/icon-package.png" />
               <ion-text class="dynamic-font" style="color: black !important;">
                 Kiện hàng
               </ion-text>
@@ -477,9 +479,10 @@
             <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
               <!-- <img (click)="goOrderPage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/checklist-icon.png"
                 alt=""> -->
-              <ion-avatar (click)="goOrderPage()">
+              <!-- <ion-avatar (click)="goOrderPage()">
                   <img src="../../assets/image/icon-order.png" />
-              </ion-avatar>
+              </ion-avatar> -->
+              <img (click)="goOrderPage()" src="../../assets/image/icon-order.png" />
               <ion-text class="dynamic-font" style="color: black !important;">
                 Đơn hàng
               </ion-text>
@@ -489,9 +492,10 @@
             <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
               <!-- <img (click)="goServicechargePage()" style="width: 3rem;height: 3rem;"
                 src="../../../assets/image/shipping-cost-icon.png" alt=""> -->
-              <ion-avatar (click)="goServicechargePage()">
+              <!-- <ion-avatar (click)="goServicechargePage()">
                   <img src="../../assets/image/icon-airport.png" />
-              </ion-avatar>
+              </ion-avatar> -->
+              <img (click)="goServicechargePage()" src="../../assets/image/icon-airport.png" />
               <ion-text class="dynamic-font" style="color: black !important;">
                 Phí vận chuyển
               </ion-text>
