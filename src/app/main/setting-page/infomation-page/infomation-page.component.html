@@ -21,10 +21,10 @@
                   <ion-skeleton-text style="width: 30%;" [animated]="true"></ion-skeleton-text>
                 </ng-container>
                 <ng-container *ngIf="oUser != undefined">
-                  <ion-avatar *ngIf="!isChooseImg" (click)="onOpen()" style="max-width: 120px !important;min-width: 120px;max-height: 120px;min-height: 120px;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;" >
+                  <ion-avatar *ngIf="!isChooseImg" (click)="onOpen()" style="max-width: 120px !important;min-width: 120px;max-height: 120px;min-height: 120px;">
                     <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" />
                   </ion-avatar>
-                  <ion-avatar *ngIf="isChooseImg" (click)="onOpen()" style="max-width: 120px !important;min-width: 120px;max-height: 120px;min-height: 120px;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;" >
+                  <ion-avatar *ngIf="isChooseImg" (click)="onOpen()" style="max-width: 120px !important;min-width: 120px;max-height: 120px;min-height: 120px;">
                     <img [src]="'data:image/jpeg;base64,'+image?.base64String" />
                   </ion-avatar>
                 </ng-container>

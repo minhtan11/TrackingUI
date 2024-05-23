@@ -146,25 +146,6 @@ export class MainPage implements OnInit {
     this.routerOutlet.swipeGesture = false; 
     this.form = await Capacitor.getPlatform();
     this.dt.detectChanges();
-    this.swiper = this.swiperRef?.nativeElement.swiper;
-    if(this.swiper){
-      this.swiper.enable();
-      this.swiper.init();
-    } 
-    this.startAnimation();
-  }
-
-  startAnimation() {
-    this.swiper = this.swiperRef?.nativeElement.swiper;
-    if(this.animationInProgress) return;
-    this.animationInProgress = true;
-    setTimeout(() => {
-      if (this.swiper) {
-        this.swiper.slideNext(1000,false);
-      }
-      this.animationInProgress = false;
-      this.startAnimation();
-    }, 5000);
   }
   //#endregion
 
@@ -175,30 +156,20 @@ export class MainPage implements OnInit {
       switch(tab){
         case 'home':
           this.selected = 0;
-          this.swiper = this.swiperRef?.nativeElement.swiper;
-          if(this.swiper){
-            this.swiper.enable();
-            this.swiper.init();
-            this.startAnimation();
-          } 
           break;
         case 'history':
           this.selected = 1;
           this.headerText = 'Lịch sử giao dịch';
           this.initHis();
-          this.swiper = this.swiperRef?.nativeElement.swiper;
-          if(this.swiper) this.swiper.disable();
           break;
         case 'notification':
           this.selected = 2;
           this.headerText = 'Thông báo';
           this.initNoti();
-          if(this.swiper) this.swiper.disable();
           break;
         case 'setting':
           this.selected = 3;
           this.headerText = 'Tài khoản';
-          if(this.swiper) this.swiper.disable();
           break;
       }
       this.content.scrollToTop();
@@ -303,6 +274,16 @@ export class MainPage implements OnInit {
     this.selected = 3;
     this.headerText = 'Tài khoản';
     if (this.swiper) this.swiper.disable();
+  }
+
+  goZalo(){
+    this.cancelSupport();
+    window.open("http://zalo.me/1977119545826967396?src=qr")
+  }
+
+  goPhone(){
+    this.cancelSupport();
+    window.open("tel:+84911233488");
   }
   //#endregion
 

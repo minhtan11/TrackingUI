@@ -52,20 +52,37 @@
         z-index: 1000;
         top: var(--ion-safe-area-top, 0);" class="w-100 d-flex align-items-center justify-content-between p-2">
           <div>
-            <div *ngIf="oUser == undefined" class="d-flex" style="background: white !important;border-radius: 50px;">
-              <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
+            <div *ngIf="oUser == undefined" class="d-flex w-100" style="background: white !important;border-radius: 50px;">
+              <div class="p-2 w-100 d-flex align-items-center justify-content-center">
                 <ion-avatar slot="start" style="width: 3rem !important;
                         height: 3rem !important;" class="me-1" class="me-1">
                   <ion-skeleton-text [animated]="true"></ion-skeleton-text>
                 </ion-avatar>
-                <div class="d-flex justify-content-center p-2" style="flex-direction: column;">
+                <div class="d-flex justify-content-center pr-2 pl-2" style="flex-direction: column;">
                   <ion-skeleton-text style="width: 80px;" [animated]="true"></ion-skeleton-text>
                   <ion-skeleton-text style="width: 80px;" [animated]="true"></ion-skeleton-text>
                 </div>
-              </ion-item>
+              </div>
             </div>
-            <div *ngIf="oUser != undefined" class="d-flex" style="background: white !important;border-radius: 50px;">
-              <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
+            <div *ngIf="oUser != undefined" class="d-flex w-100" style="background: white !important;border-radius: 50px;">
+              <div class="p-2 w-100 d-flex align-items-center justify-content-center">
+                <ion-avatar (click)="goSetting()" slot="start" style="width: 3rem !important;
+                              height: 3rem !important;" class="me-1">
+                  <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'"
+                    alt="">
+                </ion-avatar>
+                <div class="d-flex justify-content-center pr-2 pl-2" style="flex-direction: column;">
+                  <ion-text color="medium" class="dynamic-font">
+                    <span>{{titleTime}}</span>
+                  </ion-text>
+                  <ion-text style="overflow: hidden;
+                          text-overflow: ellipsis;
+                          max-width: 150px;" class="dynamic-font text-dark font-weight-bold ion-text-nowrap">
+                    <span>{{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN | uppercase}}</span>
+                  </ion-text>
+                </div>
+              </div>
+              <!-- <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
                 <ion-avatar (click)="goSetting()" slot="start" style="width: 3rem !important;
                               height: 3rem !important;" class="me-1">
                   <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'"
@@ -81,50 +98,13 @@
                     <span>{{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN | uppercase}}</span>
                   </ion-text>
                 </div>
-              </ion-item>
+              </ion-item> -->
             </div>
           </div>
+          <!-- <div>
+            <ion-icon class="me-3" style="font-size: 2rem;color: white !important;" name="headset-outline"></ion-icon>
+          </div> -->
         </div>
-      </div>
-      <div class="w-100 p-3">
-        <swiper-container mode="ios" #swiper [slidesPerView]="1" [loop]="true" [pagination]="true">
-          <swiper-slide>
-            <ion-card class="mt-2 mx-0 my-5" mode="ios"
-              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
-              <ion-card-header class="p-0">
-                <img src="https://www.nhanshiphang.vn/wp-content/uploads/d7503e0d890673582a17.jpg"
-                  alt="">
-              </ion-card-header>
-            </ion-card>
-          </swiper-slide>
-          <swiper-slide>
-            <ion-card class="mt-2 mx-0 my-5" mode="ios"
-              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
-              <ion-card-header class="p-0">
-                <img src="https://www.nhanshiphang.vn/wp-content/uploads/6372ad2f1a24e07ab935.jpg"
-                  alt="">
-              </ion-card-header>
-            </ion-card>
-          </swiper-slide>
-          <swiper-slide>
-            <ion-card class="mt-2 mx-0 my-5" mode="ios"
-              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
-              <ion-card-header class="p-0">
-                <img src="https://www.nhanshiphang.vn/wp-content/uploads/b1acd2f165fa9fa4c6eb.jpg"
-                  alt="">
-              </ion-card-header>
-            </ion-card>
-          </swiper-slide>
-          <swiper-slide>
-            <ion-card class="mt-2 mx-0 my-5" mode="ios"
-              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
-              <ion-card-header class="p-0">
-                <img src="https://www.nhanshiphang.vn/wp-content/uploads/968f17d2a0d95a8703c8.jpg"
-                  alt="">
-              </ion-card-header>
-            </ion-card>
-          </swiper-slide>
-        </swiper-container>
       </div>
       <div class="pl-3 w-100">
         <ion-text class="dynamic-font text-dark">
@@ -135,8 +115,11 @@
         <swiper-container mode="ios" [slidesPerView]="4">
           <swiper-slide>
             <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
-              <img (click)="goPackagePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/package-icon.png"
-                alt="">
+              <!-- <img (click)="goPackagePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/package-icon.png"
+                alt=""> -->
+              <ion-avatar (click)="goPackagePage()">
+                  <img src="../../assets/image/icon-package.png" />
+              </ion-avatar>
               <ion-text class="dynamic-font" style="color: black !important;">
                 Kiện hàng
               </ion-text>
@@ -255,7 +238,7 @@
     <!-- Setting Page -->
     <div [style]="selected == 3 ? 'background:linear-gradient(97deg, rgba(139,237,251,1) 0%, rgba(42,186,227,1) 50%, rgba(100,181,246,1) 100%)' : 'display:none !important;'" class="w-100">
       <div class="w-100 p-3" style="height: 200px;">
-        <ion-card class="mx-0 my-0 w-100" mode="ios" style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;border-radius: 20px;">
+        <ion-card class="mx-0 my-0 w-100" mode="ios" style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;border-radius: 20px;font-size: unset;">
           <ion-card-header>
             <ng-container *ngIf="oUser == undefined">
               <div style="flex-direction: column;" class="d-flex align-items-center justify-content">
@@ -349,20 +332,37 @@
         z-index: 1000;
         top: var(--ion-safe-area-top, 0);" class="w-100 d-flex align-items-center justify-content-between p-2">
           <div>
-            <div *ngIf="oUser == undefined" class="d-flex" style="background: white !important;border-radius: 50px;">
-              <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
+            <div *ngIf="oUser == undefined" class="d-flex w-100" style="background: white !important;border-radius: 50px;">
+              <div class="p-2 w-100 d-flex align-items-center justify-content-center">
                 <ion-avatar slot="start" style="width: 3rem !important;
                         height: 3rem !important;" class="me-1" class="me-1">
                   <ion-skeleton-text [animated]="true"></ion-skeleton-text>
                 </ion-avatar>
-                <div class="d-flex justify-content-center p-2" style="flex-direction: column;">
+                <div class="d-flex justify-content-center pr-2 pl-2" style="flex-direction: column;">
                   <ion-skeleton-text style="width: 80px;" [animated]="true"></ion-skeleton-text>
                   <ion-skeleton-text style="width: 80px;" [animated]="true"></ion-skeleton-text>
                 </div>
-              </ion-item>
+              </div>
             </div>
-            <div *ngIf="oUser != undefined" class="d-flex" style="background: white !important;border-radius: 50px;">
-              <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
+            <div *ngIf="oUser != undefined" class="d-flex w-100" style="background: white !important;border-radius: 50px;">
+              <div class="p-2 w-100 d-flex align-items-center justify-content-center">
+                <ion-avatar (click)="goSetting()" slot="start" style="width: 3rem !important;
+                              height: 3rem !important;" class="me-1">
+                  <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'"
+                    alt="">
+                </ion-avatar>
+                <div class="d-flex justify-content-center pr-2 pl-2" style="flex-direction: column;">
+                  <ion-text color="medium" class="dynamic-font">
+                    <span>{{titleTime}}</span>
+                  </ion-text>
+                  <ion-text style="overflow: hidden;
+                          text-overflow: ellipsis;
+                          max-width: 150px;" class="dynamic-font text-dark font-weight-bold ion-text-nowrap">
+                    <span>{{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN | uppercase}}</span>
+                  </ion-text>
+                </div>
+              </div>
+              <!-- <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
                 <ion-avatar (click)="goSetting()" slot="start" style="width: 3rem !important;
                               height: 3rem !important;" class="me-1">
                   <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'"
@@ -378,7 +378,7 @@
                     <span>{{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN | uppercase}}</span>
                   </ion-text>
                 </div>
-              </ion-item>
+              </ion-item> -->
             </div>
           </div>
           <!-- <div>
@@ -386,48 +386,8 @@
           </div> -->
         </div>
       </div>
-      <!-- <div class="padding-statusbar-ios w-100 bg-default-2">
-        <div class="w-100 d-flex align-items-center justify-content-between p-3">
-          <div>
-            <div *ngIf="oUser == undefined" class="d-flex" style="background: white !important;border-radius: 50px;">
-              <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
-                <ion-avatar slot="start" style="width: 3.5rem !important;
-                        height: 3.5rem !important;" class="me-1" class="me-1">
-                  <ion-skeleton-text [animated]="true"></ion-skeleton-text>
-                </ion-avatar>
-                <div class="d-flex justify-content-center p-2" style="flex-direction: column;">
-                  <ion-skeleton-text style="width: 80px;" [animated]="true"></ion-skeleton-text>
-                  <ion-skeleton-text style="width: 80px;" [animated]="true"></ion-skeleton-text>
-                </div>
-              </ion-item>
-            </div>
-            <div *ngIf="oUser != undefined" class="d-flex" style="background: white !important;border-radius: 50px;">
-              <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
-                <ion-avatar slot="start" style="width: 3.5rem !important;
-                              height: 3.5rem !important;" class="me-1">
-                  <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'"
-                    alt="">
-                </ion-avatar>
-                <div class="d-flex justify-content-center p-2" style="flex-direction: column;">
-                  <ion-text color="medium" class="dynamic-font">
-                    <span>{{titleTime}}</span>
-                  </ion-text>
-                  <ion-text style="overflow: hidden;
-                          text-overflow: ellipsis;
-                          max-width: 140px;" class="dynamic-font text-dark font-weight-bold ion-text-nowrap">
-                    <span>{{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN | uppercase}}</span>
-                  </ion-text>
-                </div>
-              </ion-item>
-            </div>
-          </div>
-          <div>
-            <ion-icon class="me-3" style="font-size: 2rem;color: white !important;" name="headset-outline"></ion-icon>
-          </div>
-        </div>
-      </div> -->
       <div class="w-100 p-3">
-        <swiper-container mode="ios" #swiper [slidesPerView]="1" [loop]="true" [pagination]="true">
+        <!-- <swiper-container mode="ios" #swiper [slidesPerView]="1" [loop]="true" [pagination]="true">
           <swiper-slide>
             <ion-card class="mt-2 mx-0 my-5" mode="ios"
               style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important">
@@ -464,7 +424,23 @@
               </ion-card-header>
             </ion-card>
           </swiper-slide>
-        </swiper-container>
+        </swiper-container> -->
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <div style="border-radius: 20px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;"  class="carousel-inner">
+            <div class="carousel-item active" data-interval="5000">
+              <img src="https://www.nhanshiphang.vn/wp-content/uploads/d7503e0d890673582a17.jpg" class="d-block w-100">
+            </div>
+            <div class="carousel-item" data-interval="5000">
+              <img src="https://www.nhanshiphang.vn/wp-content/uploads/6372ad2f1a24e07ab935.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item" data-interval="5000">
+              <img src="https://www.nhanshiphang.vn/wp-content/uploads/b1acd2f165fa9fa4c6eb.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item" data-interval="5000">
+              <img src="https://www.nhanshiphang.vn/wp-content/uploads/968f17d2a0d95a8703c8.jpg" class="d-block w-100" alt="...">
+            </div>
+          </div>
+        </div>
       </div>
       <div class="pl-3 w-100">
         <ion-text class="dynamic-font text-dark">
@@ -475,8 +451,11 @@
         <swiper-container mode="ios" [slidesPerView]="4">
           <swiper-slide>
             <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
-              <img (click)="goRechargePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/wallet-icon.png"
-                alt="">
+              <!-- <img (click)="goRechargePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/wallet-icon.png"
+                alt=""> -->
+              <ion-avatar (click)="goRechargePage()">
+                  <img src="../../assets/image/icon-wallet.png" />
+              </ion-avatar>
               <ion-text class="dynamic-font" style="color: black !important;">
                 Nạp tiền
               </ion-text>
@@ -484,8 +463,11 @@
           </swiper-slide>
           <swiper-slide>
             <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
-              <img (click)="goPackagePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/package-icon.png"
-                alt="">
+              <!-- <img (click)="goPackagePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/package-icon.png"
+                alt=""> -->
+              <ion-avatar (click)="goPackagePage()">
+                  <img src="../../assets/image/icon-package.png" />
+              </ion-avatar>
               <ion-text class="dynamic-font" style="color: black !important;">
                 Kiện hàng
               </ion-text>
@@ -493,8 +475,11 @@
           </swiper-slide>
           <swiper-slide>
             <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
-              <img (click)="goOrderPage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/checklist-icon.png"
-                alt="">
+              <!-- <img (click)="goOrderPage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/checklist-icon.png"
+                alt=""> -->
+              <ion-avatar (click)="goOrderPage()">
+                  <img src="../../assets/image/icon-order.png" />
+              </ion-avatar>
               <ion-text class="dynamic-font" style="color: black !important;">
                 Đơn hàng
               </ion-text>
@@ -502,8 +487,11 @@
           </swiper-slide>
           <swiper-slide>
             <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
-              <img (click)="goServicechargePage()" style="width: 3rem;height: 3rem;"
-                src="../../../assets/image/shipping-cost-icon.png" alt="">
+              <!-- <img (click)="goServicechargePage()" style="width: 3rem;height: 3rem;"
+                src="../../../assets/image/shipping-cost-icon.png" alt=""> -->
+              <ion-avatar (click)="goServicechargePage()">
+                  <img src="../../assets/image/icon-airport.png" />
+              </ion-avatar>
               <ion-text class="dynamic-font" style="color: black !important;">
                 Phí vận chuyển
               </ion-text>
@@ -703,11 +691,11 @@
                   </ion-card-header>
                   <ion-card-content style="background-color: #e7f6ff !important;border-radius: 15px;" class="p-3">
                     <div class="d-flex align-items-center">
-                      <div style="width: 4em;height: 3em;" class="me-2" >
-                        <img *ngIf="item2?.data?.tradeType == 1" style="width: 3em;height: 3em;" src="../../../assets/image/cash.png" alt="">
-                        <img *ngIf="item2?.data?.tradeType == 2" style="width: 3em;height: 3em;" src="../../../assets/image/refund.png" alt="">
-                        <img *ngIf="item2?.data?.tradeType == 3" style="width: 3em;height: 3em;" src="../../../assets/image/money-bag.png" alt="">
-                        <img *ngIf="item2?.data?.tradeType == 4" style="width: 3em;height: 3em;" src="../../../assets/image/money-withdrawal.png" alt="">
+                      <div class="pr-3" >
+                        <img *ngIf="item2?.data?.tradeType == 1" src="../../assets/image/icon-payment-order.png" alt="">
+                        <img *ngIf="item2?.data?.tradeType == 2" src="../../assets/image/icon-refund.png" alt="">
+                        <img *ngIf="item2?.data?.tradeType == 3" src="../../assets/image/icon-add-dolla.png" alt="">
+                        <img *ngIf="item2?.data?.tradeType == 4" src="../../assets/image/icon-withdraw.png" alt="">
                       </div>
                       <div class="w-100">
                         <ng-container [ngSwitch]="item2?.data?.tradeType">
@@ -820,7 +808,7 @@
     <!-- Setting Page -->
     <div [style]="selected == 3 ? 'background:linear-gradient(97deg, rgba(139,237,251,1) 0%, rgba(42,186,227,1) 50%, rgba(100,181,246,1) 100%)' : 'display:none !important;'" class="w-100">
       <div class="w-100 p-3" style="height: 200px;">
-        <ion-card class="mx-0 my-0 w-100" mode="ios" style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;border-radius: 20px;">
+        <ion-card class="mx-0 my-0 w-100" mode="ios" style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;border-radius: 20px;font-size: unset;">
           <ion-card-header>
             <ng-container *ngIf="oUser == undefined">
               <div style="flex-direction: column;" class="d-flex align-items-center justify-content">
@@ -854,10 +842,10 @@
       <div class="w-100 p-3" style="height: calc(100vh - 340px);background-color: white !important;border-radius: 30px 30px 0 0;">
         <div class="w-100 p-2 d-flex align-items-center justify-content-center">
           <div style="width: 50%;">
-            <ion-card class="mx-1 my-1" style="border-radius: 20px;box-shadow: none !important;--background: #e7f6ff;">
+            <ion-card class="mx-1 my-1" style="border-radius: 20px;box-shadow: none !important;--background: #e7f6ff;font-size: unset;">
               <ion-card-header class="p-1 p-2">
                 <div class="w-100 d-flex align-items-center justify-content-center">
-                  <img class="me-2" style="width: 2rem;height: 2rem;" src="../../assets/image/wallet.png" alt="">
+                  <img class="mr-2" style="width: 2rem;height: 2rem;" src="../../assets/image/wallet.png" alt="">
                   <ion-text class="dynamic-font font-weight-bold text-dark">
                     <span>Số dư ví</span>
                   </ion-text>
@@ -878,10 +866,10 @@
             </ion-card>
           </div>
           <div style="width: 50%;">
-            <ion-card class="mx-1 my-1" style="border-radius: 20px;box-shadow: none !important;--background: #e7f6ff;">
+            <ion-card class="mx-1 my-1" style="border-radius: 20px;box-shadow: none !important;--background: #e7f6ff;font-size: unset;">
               <ion-card-header class="p-1 p-2">
                 <div class="w-100 d-flex align-items-center justify-content-center">
-                  <img class="me-2" style="width: 2rem;height: 2rem;" src="../../assets/image/star.png" alt="">
+                  <img class="mr-2" style="width: 2rem;height: 2rem;" src="../../assets/image/star.png" alt="">
                   <ion-text class="dynamic-font font-weight-bold text-dark">
                     <span>Điểm tra cứu</span>
                   </ion-text>
@@ -963,10 +951,6 @@
                   <ion-item class="p-2" (click)="onOpenLogout()" lines="none" [button]="true" detail="false" style="--background:white !important">
                     <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Đăng xuất</ion-text>
                     <ion-icon slot="end" style="color: var(--ion-color-mat-primary) !important;" name="exit-outline"></ion-icon>
-                  </ion-item>
-                  <ion-item class="p-2" (click)="onOpenDelete()" lines="none" [button]="true" detail="false" style="--background:white !important">
-                    <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Xóa tài khoản</ion-text>
-                    <ion-icon slot="end" mode="ios" color="danger" name="trash-outline"></ion-icon>
                   </ion-item>
                 </ion-list>
               </ion-card-content>
@@ -1086,13 +1070,13 @@
           </ion-text>
         </div>
         <div class="w-100 text-center pb-3">
-          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font text-dark">
+          <ion-text style="color: var(--ion-color-mat-primary) !important;font-weight: bold;" class="dynamic-font text-dark">
             <span>Bạn có thể liên hệ qua các phương thức sau</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-between">
           <div style="flex-direction: column;" class="w-50 d-flex align-items-center justify-content-center">
-            <ion-thumbnail>
+            <ion-thumbnail (click)="goZalo()">
               <img src="../../assets/image/zalo-icon.png" />
             </ion-thumbnail>
             <ion-text class="dynamic-font text-center text-dark">
@@ -1100,7 +1084,7 @@
             </ion-text>
           </div>
           <div style="flex-direction: column;" class="w-50 d-flex align-items-center justify-content-center">
-            <ion-thumbnail>
+            <ion-thumbnail (click)="goPhone()">
               <img src="../../assets/image/icon-phone.png" />
             </ion-thumbnail>
             <ion-text class="dynamic-font text-center text-dark">
@@ -1128,30 +1112,34 @@
 <ion-footer class="ion-no-border mobile-toolbar" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
   <ng-container *ngIf="isReview">
     <ion-toolbar style="--background:white !important;">
-      <mat-tab-group [selectedIndex]="selected"  (selectedTabChange)="selectedTabChange($event)" headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
+      <mat-tab-group [selectedIndex]="selected" (selectedTabChange)="selectedTabChange($event)" headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
         <mat-tab label="home">
           <ng-template mat-tab-label>
-            <div>
+            <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
               <ion-icon style="font-size: 20px" name="home-outline"></ion-icon>
-              <br>
-              <div class="pb-1">
-                <ion-text class="dynamic-font">
-                  <span>Trang chủ</span>
-                </ion-text>
-              </div>
+              <ion-text class="dynamic-font">
+                <span>Trang chủ</span>
+              </ion-text>
+            </div>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="notification">
+          <ng-template mat-tab-label>
+            <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
+              <ion-icon style="font-size: 20px" name="notifications-outline"></ion-icon>
+              <ion-text class="dynamic-font">
+                <span>Thông báo</span>
+              </ion-text>
             </div>
           </ng-template>
         </mat-tab>
         <mat-tab label="setting">
           <ng-template mat-tab-label>
-            <div>
+            <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
               <ion-icon style="font-size: 20px" name="person-outline"></ion-icon>
-              <br>
-              <div class="pb-1">
-                <ion-text class="dynamic-font">
-                  <span>Cá nhân</span>
-                </ion-text>
-              </div>
+              <ion-text class="dynamic-font">
+                <span>Tài khoản</span>
+              </ion-text>
             </div>
           </ng-template>
         </mat-tab>
@@ -1163,59 +1151,41 @@
       <mat-tab-group [selectedIndex]="selected" (selectedTabChange)="selectedTabChange($event)" headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
         <mat-tab label="home">
           <ng-template mat-tab-label>
-            <div>
+            <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
               <ion-icon style="font-size: 20px" name="home-outline"></ion-icon>
-              <br>
-              <div class="p-2 pb-1 pt-0">
-                <ion-text class="dynamic-font">
-                  <span>Trang chủ</span>
-                </ion-text>
-              </div>
+              <ion-text class="dynamic-font">
+                <span>Trang chủ</span>
+              </ion-text>
             </div>
           </ng-template>
         </mat-tab>
         <mat-tab label="history">
           <ng-template mat-tab-label>
-            <div>
+            <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
               <ion-icon style="font-size: 20px" name="time-outline"></ion-icon>
-              <br>
-              <div class="p-2 pb-1 pt-0" style="white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;">
-                <ion-text class="dynamic-font">
-                  <span>Lịch sử GD</span>
-                </ion-text>
-              </div>
+              <ion-text class="dynamic-font">
+                <span>Lịch sử GD</span>
+              </ion-text>
             </div>
           </ng-template>
         </mat-tab>
         <mat-tab label="notification">
           <ng-template mat-tab-label>
-            <div>
+            <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
               <ion-icon style="font-size: 20px" name="notifications-outline"></ion-icon>
-              <br>
-              <div class="p-2 pb-1 pt-0" style="white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;">
-                <ion-text>
-                  <span class="dynamic-font">Thông báo</span>
-                </ion-text>
-              </div>
+              <ion-text class="dynamic-font">
+                <span>Thông báo</span>
+              </ion-text>
             </div>
           </ng-template>
         </mat-tab>
         <mat-tab label="setting">
           <ng-template mat-tab-label>
-            <div>
+            <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
               <ion-icon style="font-size: 20px" name="person-outline"></ion-icon>
-              <br>
-              <div class="p-2 pb-1 pt-0" style="white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;">
-                <ion-text class="dynamic-font">
-                  <span>Tài khoản</span>
-                </ion-text>
-              </div>
+              <ion-text class="dynamic-font">
+                <span>Tài khoản</span>
+              </ion-text>
             </div>
           </ng-template>
         </mat-tab>

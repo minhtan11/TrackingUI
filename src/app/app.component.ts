@@ -84,7 +84,7 @@ export class AppComponent implements OnInit {
     setTimeout(() => {
       this.isload = false;
       this.dt.detectChanges();
-    }, 3000);
+    }, 4000);
   }
 
   getConfig(){
