@@ -43,7 +43,7 @@
   <!-- <ion-refresher mode="ios" slot="fixed" (ionRefresh)="onRefresh($event)">
     <ion-refresher-content refreshingSpinner="dots"></ion-refresher-content>
   </ion-refresher> -->
-  <ng-container *ngIf="!isReview">
+  <ng-container *ngIf="isReview">
     <!-- Home Page -->
     <div [style]="selected == 0 ? '' : 'display:none !important;'" class="w-100">
       <div class="w-100">
@@ -1086,12 +1086,12 @@
           </ion-text>
         </div>
         <div class="w-100 text-center pb-3">
-          <ion-text class="dynamic-font text-dark">
+          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font text-dark">
             <span>Bạn có thể liên hệ qua các phương thức sau</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-between">
-          <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
+          <div style="flex-direction: column;" class="w-50 d-flex align-items-center justify-content-center">
             <ion-thumbnail>
               <img src="../../assets/image/zalo-icon.png" />
             </ion-thumbnail>
@@ -1099,7 +1099,7 @@
               <span>Nhắn qua Zalo</span>
             </ion-text>
           </div>
-          <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center">
+          <div style="flex-direction: column;" class="w-50 d-flex align-items-center justify-content-center">
             <ion-thumbnail>
               <img src="../../assets/image/icon-phone.png" />
             </ion-thumbnail>
