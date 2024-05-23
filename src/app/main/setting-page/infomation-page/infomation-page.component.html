@@ -71,17 +71,20 @@
           <h3>Chọn ảnh</h3>
         </ion-text>
         <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
-          <ion-item (click)="uploadImage('1')" lines="none" [button]="true" detail="false" style="--background:white !important">
-            <ion-icon class="text-dark me-2" mode="ios" name="camera-outline"></ion-icon>
-            <ion-text class="text-dark" mode="ios" class="font-weight-normal dynamic-font">Chụp ảnh</ion-text>
+          <ion-item class="p-2" (click)="uploadImage('1')" lines="none" [button]="true" detail="false" style="--background:white !important">
+            <!-- <ion-icon class="text-dark me-2" mode="ios" name="camera-outline"></ion-icon> -->
+            <img class="pr-2" src="../../../../assets/image/icon-camera.png" alt="">
+            <ion-text style="font-weight: bold;" class="text-dark" mode="ios" class="dynamic-font">Chụp ảnh</ion-text>
           </ion-item>
-          <ion-item (click)="uploadImage('2')" lines="none" [button]="true" detail="false" style="--background:white !important">
-            <ion-icon class="text-dark me-2" mode="ios" name="image-outline"></ion-icon>
-            <ion-text class="text-dark" mode="ios" class="font-weight-normal dynamic-font">Chọn từ thư viện</ion-text>
+          <ion-item class="p-2" (click)="uploadImage('2')" lines="none" [button]="true" detail="false" style="--background:white !important">
+            <!-- <ion-icon class="text-dark me-2" mode="ios" name="image-outline"></ion-icon> -->
+            <img class="pr-2" src="../../../../assets/image/icon-picture.png" alt="">
+            <ion-text style="font-weight: bold;" class="text-dark" mode="ios" class="dynamic-font">Chọn từ thư viện</ion-text>
           </ion-item>
-          <ion-item (click)="onDismiss()" lines="none" [button]="true" detail="false" style="--background:white !important">
-            <ion-icon class="text-dark me-2" mode="ios"  name="close-outline"></ion-icon>
-            <ion-text class="text-dark" mode="ios" class="font-weight-normal dynamic-font">Hủy</ion-text>
+          <ion-item class="p-2" (click)="onDismiss()" lines="none" [button]="true" detail="false" style="--background:white !important">
+            <!-- <ion-icon class="text-dark me-2" mode="ios"  name="close-outline"></ion-icon> -->
+            <img class="pr-2" src="../../../../assets/image/icon-close.png" alt="">
+            <ion-text style="font-weight: bold;" class="text-dark" mode="ios" class="dynamic-font">Hủy</ion-text>
           </ion-item>
         </ion-list>
       </div>
