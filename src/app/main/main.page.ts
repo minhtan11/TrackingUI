@@ -28,6 +28,7 @@ export class MainPage implements OnInit {
   swiper:Swiper;
   isReview:any;
   isOpenCopy:any=false;
+  isOpenSupport:any=false;
   textCopy:any = '';
   selected:any = 0;
   headerText:any = 'Trang chủ';
@@ -296,6 +297,12 @@ export class MainPage implements OnInit {
     this.onDestroy();
     this.navCtrl.navigateForward('main/service-charge');
     if(this.swiper) this.swiper.disable();
+  }
+
+  goSetting(){
+    this.selected = 3;
+    this.headerText = 'Tài khoản';
+    if (this.swiper) this.swiper.disable();
   }
   //#endregion
 
@@ -611,6 +618,15 @@ export class MainPage implements OnInit {
         }
       })
     }, 500);
+  }
+
+  onOpenSupport(){
+    this.isOpenSupport = true;
+  }
+
+  cancelSupport(){
+    this.isOpenSupport = false;
+    this.dt.detectChanges();
   }
   //#endregion
   onCopy(){

@@ -39,7 +39,6 @@ export class ReportPageComponent  implements OnInit {
       context: ['', Validators.required],
       status: [1],
       createdBy:[''],
-      createdDate:[Date.now()]
     });
     let username = await this.storage.get('username');
     this.formGroup.patchValue({createdBy:username});
@@ -67,7 +66,7 @@ export class ReportPageComponent  implements OnInit {
       this.eleType.nativeElement.focus();
       return;
     }
-    if (this.formGroup.controls['tranId'].invalid) {
+    if (this.formGroup.controls['transId'].invalid) {
       this.notification.showNotiError('', 'Mã đơn hàng không được bỏ trống!');
       this.eleTransId.nativeElement.focus();
       return;
