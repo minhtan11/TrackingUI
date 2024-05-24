@@ -96,6 +96,7 @@ export class CreatePageComponent  implements OnInit {
 
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
+    this.dt.detectChanges();
     let isEdit = this.rt.snapshot.queryParams["isEdit"];
     if(isEdit){
       this.isEdit = isEdit;

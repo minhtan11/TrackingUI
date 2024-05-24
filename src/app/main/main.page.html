@@ -106,7 +106,7 @@
           </div> -->
         </div>
       </div>
-      <div class="pl-3 w-100">
+      <div class="pl-3 pt-3 w-100">
         <ion-text class="dynamic-font text-dark">
           <h3 class="mx-0 my-0 font-weight-bold ">Dịch vụ</h3>
         </ion-text>
@@ -281,7 +281,10 @@
               <ion-card-content class="p-0">
                 <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
                   <ion-item class="p-2" (click)="goReport()" lines="none" [button]="true" detail="false" style="--background:white !important">
-                    <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Khiếu nại</ion-text>
+                    <div class="d-flex align-items-center justify-content-center">
+                      <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-report-setting.png" alt="">
+                      <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Khiếu nại</ion-text>
+                    </div>
                     <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
                   </ion-item>
                 </ion-list>
@@ -298,20 +301,26 @@
               <ion-card-content class="p-0">
                 <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
                   <ion-item class="p-2" (click)="goInformation()" lines="none" [button]="true" detail="false" style="--background:white !important">
-                    <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Thông tin tài khoản</ion-text>
+                    <div class="d-flex align-items-center justify-content-center">
+                      <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-account-setting.png" alt="">
+                      <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Thông tin tài khoản</ion-text>
+                    </div>
                     <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
                   </ion-item>
                   <ion-item class="p-2" class="p-2" (click)="goChangePassword()" lines="none" [button]="true" detail="false" style="--background:white !important">
-                    <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Đổi mật khẩu</ion-text>
-                    <ion-icon  slot="end" color="medium" name="sync-outline"></ion-icon>
+                    <div class="d-flex align-items-center justify-content-center">
+                      <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-password-setting.png" alt="">
+                      <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Đổi mật khẩu</ion-text>
+                    </div>
+                    <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
                   </ion-item>
                   <ion-item class="p-2" (click)="onOpenLogout()" lines="none" [button]="true" detail="false" style="--background:white !important">
                     <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Đăng xuất</ion-text>
-                    <ion-icon slot="end" style="color: var(--ion-color-mat-primary) !important;" name="exit-outline"></ion-icon>
+                    <img slot="end"  style="width: 2rem;height: 2rem;"  src="../../assets/image/icon-logout-setting.png" alt="">
                   </ion-item>
                   <ion-item class="p-2" (click)="onOpenDelete()" lines="none" [button]="true" detail="false" style="--background:white !important">
                     <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Xóa tài khoản</ion-text>
-                    <ion-icon slot="end" mode="ios" color="danger" name="trash-outline"></ion-icon>
+                    <img slot="end"  style="width: 2rem;height: 2rem;"  src="../../assets/image/icon-account-denie.png" alt="">
                   </ion-item>
                 </ion-list>
               </ion-card-content>
@@ -390,7 +399,7 @@
         <swiper-container mode="ios" #swiper [slidesPerView]="1" [loop]="true" [pagination]="true">
           <swiper-slide>
             <div class="p-2 mb-5">
-              <img style="border-radius: 20px;box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" src="https://www.nhanshiphang.vn/wp-content/uploads/d7503e0d890673582a17.jpg"
+              <img class="w-100" style="border-radius: 20px;box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" src="https://www.nhanshiphang.vn/wp-content/uploads/d7503e0d890673582a17.jpg"
               alt="">
             </div>
             <!-- <ion-card class="mt-2 mx-0 my-5" mode="ios"
@@ -402,7 +411,7 @@
           </swiper-slide>
           <swiper-slide>
             <div class="p-2 mb-5">
-              <img style="border-radius: 20px;box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" src="https://www.nhanshiphang.vn/wp-content/uploads/6372ad2f1a24e07ab935.jpg"
+              <img class="w-100" style="border-radius: 20px;box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" src="https://www.nhanshiphang.vn/wp-content/uploads/6372ad2f1a24e07ab935.jpg"
               alt="">
             </div>
             <!-- <ion-card class="mt-2 mx-0 my-5" mode="ios"
@@ -415,7 +424,7 @@
           </swiper-slide>
           <swiper-slide>
             <div class="p-2 mb-5">
-              <img style="border-radius: 20px;box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" src="https://www.nhanshiphang.vn/wp-content/uploads/b1acd2f165fa9fa4c6eb.jpg"
+              <img class="w-100" style="border-radius: 20px;box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" src="https://www.nhanshiphang.vn/wp-content/uploads/b1acd2f165fa9fa4c6eb.jpg"
               alt="">
             </div>
             <!-- <ion-card class="mt-2 mx-0 my-5" mode="ios"
@@ -428,7 +437,7 @@
           </swiper-slide>
           <swiper-slide>
             <div class="p-2 mb-5">
-              <img style="border-radius: 20px;box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" src="https://www.nhanshiphang.vn/wp-content/uploads/968f17d2a0d95a8703c8.jpg"
+              <img class="w-100" style="border-radius: 20px;box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" src="https://www.nhanshiphang.vn/wp-content/uploads/968f17d2a0d95a8703c8.jpg"
               alt="">
             </div>
             <!-- <ion-card class="mt-2 mx-0 my-5" mode="ios"
@@ -918,11 +927,17 @@
               <ion-card-content class="p-0">
                 <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
                   <ion-item class="p-2" (click)="goWithdraw(1)" lines="none" [button]="true" detail="false" style="--background:white !important">
-                    <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Nạp tiền</ion-text>
+                    <div class="d-flex align-items-center justify-content-center">
+                      <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-money-setting.png" alt="">
+                      <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Nạp tiền</ion-text>
+                    </div>
                     <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
                   </ion-item>
                   <ion-item class="p-2" (click)="goWithdraw(2)" lines="none" [button]="true" detail="false" style="--background:white !important">
-                    <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Rút tiền</ion-text>
+                    <div class="d-flex align-items-center justify-content-center">
+                      <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-request-setting.png" alt="">
+                      <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Rút tiền</ion-text>
+                    </div>
                     <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
                   </ion-item>
                 </ion-list>
@@ -939,12 +954,18 @@
               <ion-card-content class="p-0">
                 <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
                   <ion-item class="p-2" (click)="goReport()" lines="none" [button]="true" detail="false" style="--background:white !important">
-                    <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Khiếu nại</ion-text>
+                    <div class="d-flex align-items-center justify-content-center">
+                      <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-report-setting.png" alt="">
+                      <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Khiếu nại</ion-text>
+                    </div>
                     <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
                   </ion-item>
                   <ion-item class="p-2" (click)="onOpenSupport()" lines="none" [button]="true" detail="false" style="--background:white !important">
-                    <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Trung tâm hỗ trợ</ion-text>
-                    <ion-icon slot="end" color="medium" name="headset-outline"></ion-icon>
+                    <div class="d-flex align-items-center justify-content-center">
+                      <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-support-setting.png" alt="">
+                      <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Trung tâm hỗ trợ</ion-text>
+                    </div>
+                    <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
                   </ion-item>
                 </ion-list>
               </ion-card-content>
@@ -960,16 +981,22 @@
               <ion-card-content class="p-0">
                 <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
                   <ion-item class="p-2" (click)="goInformation()" lines="none" [button]="true" detail="false" style="--background:white !important">
-                    <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Thông tin tài khoản</ion-text>
+                    <div class="d-flex align-items-center justify-content-center">
+                      <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-account-setting.png" alt="">
+                      <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Thông tin tài khoản</ion-text>
+                    </div>
                     <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
                   </ion-item>
                   <ion-item class="p-2" class="p-2" (click)="goChangePassword()" lines="none" [button]="true" detail="false" style="--background:white !important">
-                    <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Đổi mật khẩu</ion-text>
-                    <ion-icon  slot="end" color="medium" name="sync-outline"></ion-icon>
+                    <div class="d-flex align-items-center justify-content-center">
+                      <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-password-setting.png" alt="">
+                      <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Đổi mật khẩu</ion-text>
+                    </div>
+                    <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
                   </ion-item>
                   <ion-item class="p-2" (click)="onOpenLogout()" lines="none" [button]="true" detail="false" style="--background:white !important">
                     <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Đăng xuất</ion-text>
-                    <ion-icon slot="end" style="color: var(--ion-color-mat-primary) !important;" name="exit-outline"></ion-icon>
+                    <img slot="end"  style="width: 2rem;height: 2rem;"  src="../../assets/image/icon-logout-setting.png" alt="">
                   </ion-item>
                 </ion-list>
               </ion-card-content>
@@ -1138,16 +1165,6 @@
               <ion-icon style="font-size: 20px" name="home-outline"></ion-icon>
               <ion-text class="dynamic-font">
                 <span>Trang chủ</span>
-              </ion-text>
-            </div>
-          </ng-template>
-        </mat-tab>
-        <mat-tab label="notification">
-          <ng-template mat-tab-label>
-            <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
-              <ion-icon style="font-size: 20px" name="notifications-outline"></ion-icon>
-              <ion-text class="dynamic-font">
-                <span>Thông báo</span>
               </ion-text>
             </div>
           </ng-template>
