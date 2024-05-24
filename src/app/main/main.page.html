@@ -697,9 +697,9 @@
       <ion-list *ngIf="lstDataHistory && lstDataHistory.length" class="m-0" style="background-color:white !important;">
         <ng-container *ngFor="let item of lstDataHistory">
           <ion-item-group>
-            <ion-item-divider style="background-color: white !important;" mode="ios">
-              <ion-text class="font-weight-bold text-dark dynamic-font">
-                Tháng {{item?.key}}
+            <ion-item-divider style="background-color: var(--ion-color-mat-accent) !important;" mode="ios">
+              <ion-text class="text-dark dynamic-font">
+                <h3 class="mx-0 my-0 font-weight-bold">Tháng {{item?.key}}</h3>
               </ion-text>
             </ion-item-divider>
             <ng-container *ngFor="let item2 of item?.datas">
