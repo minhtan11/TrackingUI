@@ -82,12 +82,12 @@
             <ion-card-header class="p-3">
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div class="d-flex align-items-center">
-                  <ion-text style="font-size: 1rem;" class="dynamic-font text-dark font-weight-bold me-2">
+                  <ion-text style="font-size: 1rem;" class="dynamic-font text-dark font-weight-bold pr-2">
                     Mã kiện hàng
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text class="dynamic-font me-2" style="font-size: 1rem;">
+                  <ion-text class="dynamic-font pr-2" style="font-size: 1rem;">
                     {{item.packageCode}}
                   </ion-text>
                   <ion-icon [cdkCopyToClipboard]="item.packageCode" (click)="onCopy()" style="font-size: 2rem;"
