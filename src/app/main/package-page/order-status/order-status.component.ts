@@ -57,7 +57,7 @@ export class OrderStatusComponent  implements OnInit {
   }
 
   onBack(){
-    this.navCtrl.navigateBack('main',{queryParams:{selected:0}});
+    this.navCtrl.navigateBack('main/package');
   }
 
   getPackage(){

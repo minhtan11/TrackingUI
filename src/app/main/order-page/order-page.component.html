@@ -10,28 +10,28 @@
       enterkeyhint="search" mode="ios" show-clear-button="always"></ion-searchbar>
   </ion-toolbar>
   <ion-toolbar style="--background:white !important;">
-    <ion-segment id="custom" mode="ios" [scrollable]="true" [value]="status">
-      <ion-segment-button id="custom" (click)=" sortData(0)" [value]="0">
+    <ion-segment  mode="md" [scrollable]="true" [value]="status">
+      <ion-segment-button  (click)=" sortData(0)" [value]="0">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Tất cả</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button id="custom" (click)=" sortData(1)" [value]="1">
+      <ion-segment-button  (click)=" sortData(1)" [value]="1">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Chờ thanh toán</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button id="custom" (click)=" sortData(2)" [value]="2">
+      <ion-segment-button  (click)=" sortData(2)" [value]="2">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Đã thanh toán</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button id="custom" (click)=" sortData(3)" [value]="3">
+      <ion-segment-button  (click)=" sortData(3)" [value]="3">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Đã hủy</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button id="custom" (click)=" sortData(4)" [value]="4">
+      <ion-segment-button  (click)=" sortData(4)" [value]="4">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Khác</span>
         </ion-text>

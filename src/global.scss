@@ -101,6 +101,11 @@ html{
     --background-activated: var(--ion-color-mat-accent) !important;
 }
 
+.ion-btn-orange{
+    --background: orange !important;
+    --background-activated: rgb(255, 214, 137) !important;
+}
+
 
 // .form-control {
 //     //font-size: 0.8em;
@@ -113,7 +118,7 @@ input:focus {
     border-color: #ced4da !important;
 }
 
-ion-segment#custom {
+ion-segment {
     --background: white !important;
     --offset-bottom: auto !important;
     --overflow: hidden;
@@ -125,27 +130,24 @@ ion-segment#custom {
     }
 }
 
-ion-segment-button#custom {
-    --color-checked: white !important;
+ion-segment-button {
+    --color-checked: orange !important;
     --color: var(--ion-color-medium-tint) !important;
     //font-size: 1rem !important;
     font-family: Tahoma, sans-serif !important;
     text-transform: none !important;
-    height: 40px !important;
-    box-shadow: unset !important;
-    border: 1px solid;
-    border-color: var(--ion-color-mat-primary) !important;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
+    font-size: unset !important;
+    min-height: unset !important;
+    height: 3rem !important;
 }
 
-ion-segment-button#custom::part(indicator-background) {
-    background: var(--ion-color-mat-primary)  !important;
-  }
+// ion-segment-button#custom::part(indicator-background) {
+//     background: var(--ion-color-mat-primary)  !important;
+//   }
 
-ion-segment-button#custom::part(indicator) {
-    padding: 1px !important;
-}
+// ion-segment-button#custom::part(indicator) {
+//     padding: 1px !important;
+// }
 
 .tab-selected {
     color: var(--ion-color-mat-primary) !important;

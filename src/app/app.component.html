@@ -14,14 +14,14 @@
             <span class="dynamic-font" style="color: var(--ion-color-medium-tint) !important;">Nhận ship hàng luôn đặt lợi ích khách hàng lên hàng đầu</span>
           </ion-text>
         </div>
-        <ion-spinner style="color: black !important;" mode="ios" name="crescent"></ion-spinner>
+        <ion-spinner style="color: var(--ion-color-mat-primary) !important;" mode="ios" name="crescent"></ion-spinner>
       </div>
     </ion-content>
   </ng-container>
   <div [style]="!isload ? '' : 'display: none;'" class="w-100 h-100" style="background-color:white !important;">
     <div id="loader-icon" style="z-index: 1000;background: rgb(225 225 225 / 50%);position: absolute;visibility: hidden;flex-direction: column " class="d-flex align-items-center justify-content-center w-100 h-100">
       <img style="width: 30%;" src="../assets/image/3D-loader.gif" alt="">
-      <ion-spinner mode="ios" name="dots"></ion-spinner>
+      <ion-spinner style="color: var(--ion-color-mat-primary) !important;" mode="ios" name="crescent"></ion-spinner>
     </div>
     <ion-router-outlet></ion-router-outlet>
   </div>

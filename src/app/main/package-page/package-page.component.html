@@ -10,48 +10,48 @@
       enterkeyhint="search" mode="ios" show-clear-button="always"></ion-searchbar>
   </ion-toolbar>
   <ion-toolbar *ngIf="!isReview" style="--background:white !important;">
-    <ion-segment id="custom" mode="ios" [scrollable]="true" [value]="status">
-      <ion-segment-button id="custom" (click)=" sortData(0)" [value]="0">
+    <ion-segment mode="md" [scrollable]="true" [value]="status">
+      <ion-segment-button (click)=" sortData(0)" [value]="0">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Tất cả</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button id="custom" (click)=" sortData(1)" [value]="1">
+      <ion-segment-button (click)=" sortData(1)" [value]="1">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Chưa xác nhận</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button id="custom" (click)=" sortData(2)" [value]="2">
+      <ion-segment-button (click)=" sortData(2)" [value]="2">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Hàng về kho TQ</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button id="custom" (click)=" sortData(3)" [value]="3">
+      <ion-segment-button (click)=" sortData(3)" [value]="3">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Đang trên đường về HCM</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button id="custom" (click)=" sortData(4)" [value]="4">
+      <ion-segment-button (click)=" sortData(4)" [value]="4">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Hàng về tới HCM</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button id="custom" (click)=" sortData(5)" [value]="5">
+      <ion-segment-button (click)=" sortData(5)" [value]="5">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Đã nhận hàng</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button id="custom" (click)=" sortData(9)" [value]="9">
+      <ion-segment-button (click)=" sortData(9)" [value]="9">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Đã hủy</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button id="custom" (click)=" sortData(10)" [value]="10">
+      <ion-segment-button (click)=" sortData(10)" [value]="10">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Thất lạc</span>
         </ion-text>
       </ion-segment-button>
-      <ion-segment-button id="custom" (click)=" sortData(11)" [value]="11">
+      <ion-segment-button (click)=" sortData(11)" [value]="11">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Không nhận được hàng</span>
         </ion-text>
@@ -626,7 +626,7 @@
 <ion-footer *ngIf="!isHideFooter" class="ion-no-border"
   style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
   <ion-toolbar mode="ios" style="--background:white !important">
-    <ion-button mode="ios" (click)="createPackage()" class="ion-btn-default" expand="block">
+    <ion-button mode="ios" (click)="createPackage()" class="ion-btn-orange" expand="block">
       <ion-text class="dynamic-font font-weight-bold" style="color: white !important;">
         <span>THÊM KIỆN HÀNG</span>
       </ion-text>

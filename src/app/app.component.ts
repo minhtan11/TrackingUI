@@ -43,7 +43,8 @@ export class AppComponent implements OnInit {
     });
     this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
       if ((this.router.url.includes('main/service-charge')) ||  (this.router.url.includes('main/recharge')) 
-        || (this.router.url.includes('main/setting/information')) ||  (this.router.url.includes('main/setting/withdraw')) ||  (this.router.url.includes('main/setting/changepassword'))) {
+        || (this.router.url.includes('main/setting/information')) ||  (this.router.url.includes('main/setting/withdraw')) ||  (this.router.url.includes('main/setting/changepassword')) 
+        ||  (this.router.url.includes('main/setting/report'))) {
         this.navCtrl.navigateBack('main');
         return;
       }

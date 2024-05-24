@@ -4,28 +4,28 @@
       <ion-title style="color: white !important;" class="dynamic-font text-dark">{{headerText}}</ion-title>
     </ion-toolbar>
     <ion-toolbar style="--background:white !important;">
-      <ion-segment id="custom" [scrollable]="true" [value]="statusHis" mode="ios">
-        <ion-segment-button id="custom" (click)=" sortDataHis(0)" [value]="0">
+      <ion-segment [scrollable]="true" [value]="statusHis" mode="md">
+        <ion-segment-button (click)=" sortDataHis(0)" [value]="0">
           <ion-text class="text-segment dynamic-font font-weight-bold">
             <span>Tất cả</span>
           </ion-text>
         </ion-segment-button>
-        <ion-segment-button id="custom" (click)=" sortDataHis(1)" [value]="1">
+        <ion-segment-button (click)=" sortDataHis(1)" [value]="1">
           <ion-text class="text-segment dynamic-font font-weight-bold">
             <span>Thanh toán hóa đơn</span>
           </ion-text>
         </ion-segment-button>
-        <ion-segment-button id="custom" (click)=" sortDataHis(2)" [value]="2">
+        <ion-segment-button (click)=" sortDataHis(2)" [value]="2">
           <ion-text class="text-segment dynamic-font font-weight-bold">
             <span>Hoàn tiền</span>
           </ion-text>
         </ion-segment-button>
-        <ion-segment-button id="custom" (click)=" sortDataHis(3)" [value]="3">
+        <ion-segment-button (click)=" sortDataHis(3)" [value]="3">
           <ion-text class="text-segment dynamic-font font-weight-bold">
             <span>Nạp tiền</span>
           </ion-text>
         </ion-segment-button>
-        <ion-segment-button id="custom" (click)=" sortDataHis(4)" [value]="4">
+        <ion-segment-button (click)=" sortDataHis(4)" [value]="4">
           <ion-text class="text-segment dynamic-font font-weight-bold">
             <span>Rút tiền</span>
           </ion-text>
@@ -814,7 +814,7 @@
                 <div class="d-flex align-items-center">
                   <div class="w-100">
                     <ion-text class="text-dark font-weight-bold dynamic-font">
-                      Trakuaidi xin thông báo tới Quý khách
+                      Trakuaidi xin thông báo tới Quý khách!
                     </ion-text>
                     <br>
                     <ion-text class="text-dark dynamic-font">
