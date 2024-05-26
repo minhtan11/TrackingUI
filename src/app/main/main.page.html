@@ -336,8 +336,9 @@
     <!-- Home Page -->
     <div [style]="selected == 0 ? '' : 'display:none !important;'" class="w-100">
       <div class="w-100">
-        <img style="width: 100%;border-radius: 0px 0px 20px 20px;" src="../../assets/image/homebg.jpg" alt="">
-        <div style="position: absolute;
+        <ion-img src="../../assets/image/box-load.png" style="width: 100%;border-radius: 0px 0px 20px 20px;"></ion-img>
+        <!-- <img style="width: 100%;border-radius: 0px 0px 20px 20px;" src="../../assets/image/homebg.jpg" alt=""> -->
+        <!-- <div style="position: absolute;
         z-index: 1000;
         top: var(--ion-safe-area-top, 0);" class="w-100 d-flex align-items-center justify-content-between p-2">
           <div>
@@ -371,84 +372,37 @@
                   </ion-text>
                 </div>
               </div>
-              <!-- <ion-item lines="none" style="--padding-start:0.4rem;--background:none !important;">
-                <ion-avatar (click)="goSetting()" slot="start" style="width: 3rem !important;
-                              height: 3rem !important;" class="me-1">
-                  <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'"
-                    alt="">
-                </ion-avatar>
-                <div class="d-flex justify-content-center p-1" style="flex-direction: column;">
-                  <ion-text color="medium" class="dynamic-font">
-                    <span>{{titleTime}}</span>
-                  </ion-text>
-                  <ion-text style="overflow: hidden;
-                          text-overflow: ellipsis;
-                          max-width: 200px;" class="dynamic-font text-dark font-weight-bold ion-text-nowrap">
-                    <span>{{(oUser.fullName ? oUser.fullName : oUser.username) | decodeVN | uppercase}}</span>
-                  </ion-text>
-                </div>
-              </ion-item> -->
             </div>
           </div>
-          <!-- <div>
-            <ion-icon class="me-3" style="font-size: 2rem;color: white !important;" name="headset-outline"></ion-icon>
-          </div> -->
-        </div>
+        </div> -->
       </div>
       <div class="w-100 p-3 pt-0">
-        <swiper-container mode="ios" #swiper [slidesPerView]="1" [loop]="true" [pagination]="true">
+        <!-- <swiper-container mode="ios" #swiper [slidesPerView]="1" [loop]="true" [pagination]="true">
           <swiper-slide>
             <div class="p-2 mb-5">
               <img class="w-100" style="border-radius: 20px;box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" src="https://www.nhanshiphang.vn/wp-content/uploads/d7503e0d890673582a17.jpg"
               alt="">
             </div>
-            <!-- <ion-card class="mt-2 mx-0 my-5" mode="ios"
-              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important;border-radius: 20px;">
-              <ion-card-header class="p-0">
-                
-              </ion-card-header>
-            </ion-card> -->
           </swiper-slide>
           <swiper-slide>
             <div class="p-2 mb-5">
               <img class="w-100" style="border-radius: 20px;box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" src="https://www.nhanshiphang.vn/wp-content/uploads/6372ad2f1a24e07ab935.jpg"
               alt="">
             </div>
-            <!-- <ion-card class="mt-2 mx-0 my-5" mode="ios"
-              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important;border-radius: 20px;">
-              <ion-card-header class="p-0">
-                <img src="https://www.nhanshiphang.vn/wp-content/uploads/6372ad2f1a24e07ab935.jpg"
-                  alt="">
-              </ion-card-header>
-            </ion-card> -->
           </swiper-slide>
           <swiper-slide>
             <div class="p-2 mb-5">
               <img class="w-100" style="border-radius: 20px;box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" src="https://www.nhanshiphang.vn/wp-content/uploads/b1acd2f165fa9fa4c6eb.jpg"
               alt="">
             </div>
-            <!-- <ion-card class="mt-2 mx-0 my-5" mode="ios"
-              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important;border-radius: 20px;">
-              <ion-card-header class="p-0">
-                <img src="https://www.nhanshiphang.vn/wp-content/uploads/b1acd2f165fa9fa4c6eb.jpg"
-                  alt="">
-              </ion-card-header>
-            </ion-card> -->
           </swiper-slide>
           <swiper-slide>
             <div class="p-2 mb-5">
               <img class="w-100" style="border-radius: 20px;box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" src="https://www.nhanshiphang.vn/wp-content/uploads/968f17d2a0d95a8703c8.jpg"
               alt="">
             </div>
-            <!-- <ion-card class="mt-2 mx-0 my-5" mode="ios"
-              style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;--background:white !important;border-radius: 20px;">
-              <ion-card-header class="p-0">
-                <img src="https://www.nhanshiphang.vn/wp-content/uploads/968f17d2a0d95a8703c8.jpg"
-                  alt="">
-              </ion-card-header>
-            </ion-card> -->
           </swiper-slide>
-        </swiper-container>
+        </swiper-container> -->
         <!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
           <div style="border-radius: 20px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;"  class="carousel-inner">
             <div class="carousel-item active" data-interval="5000">
@@ -472,14 +426,9 @@
         </ion-text>
       </div>
       <div class="w-100 p-3">
-        <swiper-container mode="ios" [slidesPerView]="4">
+        <!-- <swiper-container mode="ios" [slidesPerView]="4">
           <swiper-slide>
             <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
-              <!-- <img (click)="goRechargePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/wallet-icon.png"
-                alt=""> -->
-              <!-- <ion-avatar (click)="goRechargePage()">
-                  <img src="../../assets/image/icon-wallet.png" />
-              </ion-avatar> -->
               <img (click)="goRechargePage()" src="../../assets/image/icon-wallet.png" />
               <ion-text class="dynamic-font" style="color: black !important;">
                 Nạp tiền
@@ -488,11 +437,6 @@
           </swiper-slide>
           <swiper-slide>
             <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
-              <!-- <img (click)="goPackagePage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/package-icon.png"
-                alt=""> -->
-              <!-- <ion-avatar (click)="goPackagePage()">
-                  <img src="../../assets/image/icon-package.png" />
-              </ion-avatar> -->
               <img (click)="goPackagePage()" src="../../assets/image/icon-package.png" />
               <ion-text class="dynamic-font" style="color: black !important;">
                 Kiện hàng
@@ -501,11 +445,6 @@
           </swiper-slide>
           <swiper-slide>
             <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
-              <!-- <img (click)="goOrderPage()" style="width: 3rem;height: 3rem;" src="../../../assets/image/checklist-icon.png"
-                alt=""> -->
-              <!-- <ion-avatar (click)="goOrderPage()">
-                  <img src="../../assets/image/icon-order.png" />
-              </ion-avatar> -->
               <img (click)="goOrderPage()" src="../../assets/image/icon-order.png" />
               <ion-text class="dynamic-font" style="color: black !important;">
                 Đơn hàng
@@ -514,18 +453,13 @@
           </swiper-slide>
           <swiper-slide>
             <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center text-center">
-              <!-- <img (click)="goServicechargePage()" style="width: 3rem;height: 3rem;"
-                src="../../../assets/image/shipping-cost-icon.png" alt=""> -->
-              <!-- <ion-avatar (click)="goServicechargePage()">
-                  <img src="../../assets/image/icon-airport.png" />
-              </ion-avatar> -->
               <img (click)="goServicechargePage()" src="../../assets/image/icon-airport.png" />
               <ion-text class="dynamic-font" style="color: black !important;">
                 Phí vận chuyển
               </ion-text>
             </div>
           </swiper-slide>
-        </swiper-container>
+        </swiper-container> -->
       </div>
       <div class="pl-3 w-100">
         <ion-text class="dynamic-font text-dark">
