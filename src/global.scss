@@ -351,11 +351,19 @@ ion-toast::part(icon) {
 }
 
 .bg-default{
-    --background:linear-gradient(23deg, rgba(139,237,251,1) 0%, rgba(42,186,227,1) 50%, rgba(100,181,246,1) 100%) !important;
+    --background:var(--ion-color-mat-primary) !important;
+}
+
+.bg-toast-default{
+    --background:var(--ion-color-mat-primary) !important;
+}
+
+.bg-toast-orange{
+    --background:orange !important;
 }
 
 .bg-default-2{
-    background:linear-gradient(23deg, rgba(139,237,251,1) 0%, rgba(42,186,227,1) 50%, rgba(100,181,246,1) 100%) !important;
+    background:var(--ion-color-mat-primary) !important;
 }
 
 .padding-statusbar-ios{
@@ -364,5 +372,9 @@ ion-toast::part(icon) {
 
 .text-white{
     color: white !important;
+}
+
+.carousel-indicators .active{
+    background-color: var(--ion-color-mat-primary) !important;
 }
 

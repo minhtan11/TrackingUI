@@ -22,10 +22,7 @@ register();
 })
 export class MainPage implements OnInit {
   //#region Contructor
-  @ViewChild('swiper')
-  swiperRef: ElementRef | undefined;
   @ViewChild(IonContent) content: IonContent;
-  swiper:Swiper;
   isReview:any;
   isOpenCopy:any=false;
   isOpenSupport:any=false;
@@ -144,26 +141,7 @@ export class MainPage implements OnInit {
       this.dt.detectChanges();
     }
     this.routerOutlet.swipeGesture = false; 
-    this.swiper = this.swiperRef?.nativeElement.swiper;
-    if(this.swiper){
-      this.swiper.enable();
-      this.swiper.init();
-    } 
-    this.startAnimation();
     this.dt.detectChanges();
-  }
-
-  startAnimation() {
-    this.swiper = this.swiperRef?.nativeElement.swiper;
-    if(this.animationInProgress) return;
-    this.animationInProgress = true;
-    setTimeout(() => {
-      if (this.swiper) {
-        this.swiper.slideNext(1000,false);
-      }
-      this.animationInProgress = false;
-      this.startAnimation();
-    }, 5000);
   }
   //#endregion
 
@@ -174,30 +152,20 @@ export class MainPage implements OnInit {
       switch(tab){
         case 'home':
           this.selected = 0;
-          this.swiper = this.swiperRef?.nativeElement.swiper;
-          if(this.swiper){
-            this.swiper.enable();
-            this.swiper.init();
-            this.startAnimation();
-          } 
           break;
         case 'history':
           this.selected = 1;
           this.headerText = 'Lịch sử giao dịch';
           this.initHis();
-          this.swiper = this.swiperRef?.nativeElement.swiper;
-          if(this.swiper) this.swiper.disable();
           break;
         case 'notification':
           this.selected = 2;
           this.headerText = 'Thông báo';
           this.initNoti();
-          if(this.swiper) this.swiper.disable();
           break;
         case 'setting':
           this.selected = 3;
           this.headerText = 'Tài khoản';
-          if(this.swiper) this.swiper.disable();
           break;
       }
       this.content.scrollToTop();
@@ -272,7 +240,6 @@ export class MainPage implements OnInit {
       return;
     }
     this.navCtrl.navigateForward('main/order');
-    if(this.swiper) this.swiper.disable();
     this.onDestroy();
   }
 
@@ -282,26 +249,21 @@ export class MainPage implements OnInit {
       return;
     }
     this.navCtrl.navigateForward('main/package');
-    if(this.swiper) this.swiper.disable();
-    this.onDestroy();
   }
 
   goRechargePage(){
     this.onDestroy();
     this.navCtrl.navigateForward('main/recharge');
-    if(this.swiper) this.swiper.disable();
   }
 
   goServicechargePage(){
     this.onDestroy();
     this.navCtrl.navigateForward('main/service-charge');
-    if(this.swiper) this.swiper.disable();
   }
 
   goSetting(){
     this.selected = 3;
     this.headerText = 'Tài khoản';
-    if (this.swiper) this.swiper.disable();
   }
 
   goZalo(){
