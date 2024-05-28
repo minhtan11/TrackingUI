@@ -23,6 +23,9 @@ register();
 export class MainPage implements OnInit {
   //#region Contructor
   @ViewChild(IonContent) content: IonContent;
+  @ViewChild('swiper')
+  swiperRef: ElementRef | undefined;
+  swiper:Swiper;
   isReview:any;
   isOpenCopy:any=false;
   isOpenSupport:any=false;
@@ -32,6 +35,7 @@ export class MainPage implements OnInit {
   pageSize: any = 20;
   animationInProgress = false;
   form:any;
+  animation:any;
   
 
   // home
@@ -141,7 +145,31 @@ export class MainPage implements OnInit {
       this.dt.detectChanges();
     }
     this.routerOutlet.swipeGesture = false; 
+    this.animationInProgress = false;
+    this.startAnimation();
     this.dt.detectChanges();
+    this.dt.detectChanges();
+  }
+
+  ionViewDidLeave(){
+    this.swiper.disable();
+    clearTimeout(this.animation);
+  }
+
+  startAnimation() {
+    this.swiper = this.swiperRef?.nativeElement.swiper;
+    if(this.swiper){
+      this.swiper.enable();
+    } 
+    if(this.animationInProgress) return;
+    this.animationInProgress = true;
+    this.animation = setTimeout(() => {
+      if (this.swiper) {
+        this.swiper.slideNext(1000,false);
+      }
+      this.animationInProgress = false;
+      this.startAnimation();
+    }, 5000);
   }
   //#endregion
 
@@ -152,20 +180,28 @@ export class MainPage implements OnInit {
       switch(tab){
         case 'home':
           this.selected = 0;
+          this.animationInProgress = false;
+          this.startAnimation();
           break;
         case 'history':
           this.selected = 1;
           this.headerText = 'Lịch sử giao dịch';
           this.initHis();
+          this.swiper.disable();
+          clearTimeout(this.animation);
           break;
         case 'notification':
           this.selected = 2;
           this.headerText = 'Thông báo';
           this.initNoti();
+          this.swiper.disable();
+          clearTimeout(this.animation);
           break;
         case 'setting':
           this.selected = 3;
           this.headerText = 'Tài khoản';
+          this.swiper.disable();
+          clearTimeout(this.animation);
           break;
       }
       this.content.scrollToTop();

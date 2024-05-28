@@ -131,7 +131,7 @@ ion-segment {
 }
 
 ion-segment-button {
-    --color-checked: orange !important;
+    --color-checked: var(--ion-color-mat-primary) !important;
     --color: var(--ion-color-medium-tint) !important;
     //font-size: 1rem !important;
     font-family: Tahoma, sans-serif !important;
@@ -376,5 +376,13 @@ ion-toast::part(icon) {
 
 .carousel-indicators .active{
     background-color: var(--ion-color-mat-primary) !important;
+}
+
+.scroll-hidden::-webkit-scrollbar {
+    display: none;
+}
+
+ion-fab {
+    margin-bottom: var(--ion-safe-area-bottom, 0);
 }
 

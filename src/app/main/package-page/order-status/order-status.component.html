@@ -67,9 +67,9 @@
                 </ion-text>
               </div>
               <div *ngIf="oData?.data?.data" class="p-2 d-flex align-items-center justify-content-center mt-1" style="border: 1px solid #ececec;border-radius: 1em;">
-                <ion-list lines="none">
+                <ion-list lines="none" style="background-color:white !important;">
                   <ng-container *ngFor="let item of oData?.data?.data">
-                    <ion-item>
+                    <ion-item style="background-color:white !important;">
                       <ion-icon style="color: var(--ion-color-mat-primary) !important" slot="start" name="checkmark-circle-outline"></ion-icon>
                       <ion-text class="dynamic-font text-dark">
                         <span>{{item?.context}}</span>
@@ -102,14 +102,14 @@
       </ion-item>
     </ion-list>
   </div>
-  <div class="d-flex align-items-center justify-content-center">
-    <ion-button *ngIf="oPack && oPack?.autoQuery" (click)="changeAutoQuery(false)" mode="ios" class="mb-5" size="default" color="success">
+  <div class="w-100 d-flex align-items-center justify-content-center" style="position: absolute;bottom: 0;padding-bottom:  var(--ion-safe-area-bottom, 0) !important;">
+    <ion-button *ngIf="oPack && oPack?.autoQuery" (click)="changeAutoQuery(false)" mode="ios" size="default" class="ion-btn-orange">
       <ion-icon style="color: white !important;" slot="start" name="checkbox-outline"></ion-icon>
       <ion-text style="color: white !important;" class="dynamic-font">
         Bỏ theo dõi sát kiện
       </ion-text>
     </ion-button>
-    <ion-button *ngIf="oPack && !oPack?.autoQuery" (click)="changeAutoQuery(true)" mode="ios" class="mb-5" size="default" color="medium">
+    <ion-button *ngIf="oPack && !oPack?.autoQuery" (click)="changeAutoQuery(true)" mode="ios" size="default" color="medium">
       <ion-icon style="color: white !important;" slot="start" name="square-outline"></ion-icon>
       <ion-text style="color: white !important;" class="dynamic-font">
         Đăng ký theo dõi sát kiện

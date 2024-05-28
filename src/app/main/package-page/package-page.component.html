@@ -342,15 +342,16 @@
                   </ng-container>
                 </div>
               </div>
-              <div class="w-100 pt-3 d-flex align-items-center justify-content-center">
-                <div class="d-flex align-items-center justify-content-center">
-                  <ion-button (click)="openPopPackage(item)" mode="ios" size="default" class="ion-btn-default">
-                    <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
-                    <ion-text style="color: white !important;" class="dynamic-font">
-                      Nhập mô tả
-                    </ion-text>
-                  </ion-button>
-                  <ion-button (click)="openPopCheckPackage(item)" mode="ios" size="default" color="warning">
+              <div class="w-100 pt-3 d-flex align-items-center scroll-hidden" style="justify-content: space-evenly;
+              overflow: scroll;">
+                <ion-button (click)="openPopPackage(item)" mode="ios" size="default" class="ion-btn-default">
+                  <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
+                  <ion-text style="color: white !important;" class="dynamic-font">
+                    Nhập mô tả
+                  </ion-text>
+                </ion-button>
+                <ng-container *ngIf="item?.status < 2">
+                  <ion-button (click)="openPopCheckPackage(item)" mode="ios" size="default" class="ion-btn-orange">
                     <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
                       Kiểm tra hàng
@@ -368,7 +369,15 @@
                       Xóa đơn
                     </ion-text>
                   </ion-button>
-                </div>
+                </ng-container>
+                <ng-container *ngIf="item.status == 9 && item?.canceledBy == username">
+                  <ion-button (click)="openPopRestorePackage(item)" mode="ios" class="mb-5" size="default" color="success">
+                    <ion-icon style="color: white !important;" slot="start" name="sync-circle-outline"></ion-icon>
+                    <ion-text style="color: white !important;" class="dynamic-font">
+                      Khôi phục
+                    </ion-text>
+                  </ion-button>
+                </ng-container>
               </div>
               <!-- <div class="w-100 pt-3">
                 <swiper-container mode="ios" [slidesPerView]="1" [pagination]="true">
@@ -453,7 +462,7 @@
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="editPackage(itemSelected)" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="editPackage(itemSelected)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -474,23 +483,26 @@
     <ng-template>
       <div class="p-3 w-100 h-100">
         <div class="w-100 mb-3">
-          <ion-text class="dynamic-font text-center text-dark">
-            <h3 class="mx-0 my-0 font-weight-bold">Kiểm tra kiện hàng</h3>
+          <ion-text>
+            <h3 class="mx-0 my-0 font-weight-bold dynamic-font text-center text-dark">Kiểm tra kiện hàng</h3>
           </ion-text>
         </div>
         <div class="w-100 text-center">
           <ion-text class="dynamic-font text-dark">
-            <span>Bạn có muốn kiểm tra kiện hàng </span>
+            <span>Sẽ mất 1 điểm truy cứu khi bạn kiểm tra kiện hàng! </span>
+          </ion-text>
+          <ion-text class="dynamic-font text-dark">
+            <span>Bạn có muốn tiếp tục kiểm tra kiện hàng </span>
           </ion-text>
           <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
             <span>{{itemSelected?.packageCode}}</span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
-            <span>?</span>
+            <span> không?</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="continuteCheck(itemSelected)" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="continuteCheck(itemSelected)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -524,7 +536,7 @@
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="checkPackage(itemSelected)" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="checkPackage(itemSelected)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -561,7 +573,7 @@
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="cancelPackage(itemSelected)" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="cancelPackage(itemSelected)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -598,7 +610,7 @@
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="restorePackage(itemSelected)" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="restorePackage(itemSelected)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -635,7 +647,7 @@
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="deletePackage(itemSelected)" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="deletePackage(itemSelected)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
