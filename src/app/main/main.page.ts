@@ -134,13 +134,6 @@ export class MainPage implements OnInit {
   }
 
   async ionViewWillEnter(){
-    // let data = {
-    //   username:'admin',
-    //   password:'admin'
-    // }
-    // this.http.post('https://sureerp.huongthuy.com.vn/v1/api/lvapi/login',data).subscribe((res:any)=>{
-    //   console.log(res);
-    // })
     this.isReview = await this.storage.get('isReview');
     this.dt.detectChanges();
     let selected = this.rt.snapshot.queryParams["selected"];

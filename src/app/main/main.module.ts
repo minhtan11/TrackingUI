@@ -53,7 +53,7 @@ import { ReportPageComponent } from './setting-page/report-page/report-page.comp
     ReactiveFormsModule,
     MatSelectModule,
     MatCheckboxModule,
-    ClipboardModule,
+    ClipboardModule
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
   ,DecodeVNPipe,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent,FormatdatePipe,ReportPageComponent],

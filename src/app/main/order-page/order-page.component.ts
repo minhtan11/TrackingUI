@@ -1,5 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 import { Network } from '@capacitor/network';
@@ -33,7 +34,9 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   isOpenPayment:any = false;
   totalPay:any = 0;
   totalOrder:any = 0;
+  isOpenFilter:any = false;
   private destroy$ = new Subject<void>();
+  formGroup!: FormGroup;
   constructor(
     private dt : ChangeDetectorRef,
     private api : ApiserviceComponent,
@@ -43,6 +46,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     private storage: StorageService,
     private platform: Platform,
     private router: Router,
+    private formBuilder: FormBuilder,
   ) { 
   }
   //#endregion
@@ -50,7 +54,10 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   //#region Init
 
   ngOnInit() {
-    
+    this.formGroup = this.formBuilder.group({
+      fromDate: [null],
+      toDate: [null],
+    });
   }
 
   async ionViewWillEnter(){
@@ -120,8 +127,8 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     let data = {
       status: this.status,
       id: this.id,
-      //fromDate: this.fromDate,
-      //toDate: this.toDate,
+      fromDate: this.formGroup.value.fromDate,
+      toDate: this.formGroup.value.toDate,
       pageNum: this.pageNum,
       pageSize: this.pageSize,
       userName: this.username
@@ -278,6 +285,31 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
       })
     }, 1000);
   }
+  //#endregion
 
+  //#region FilterPackage
+  openPopFilter(){
+    this.isOpenFilter = true;
+  }
+
+  cancelFilter(){
+    this.isOpenFilter = false;
+    this.dt.detectChanges();
+  }
+
+  onFilter(){
+    this.isload = true;
+    this.pageNum = 1;
+    this.lstData = [];
+    this.isEmpty = false;
+    this.dt.detectChanges();
+    this.loadData();
+    this.cancelFilter();
+  }
+
+  clearFilter(){
+    this.formGroup.reset();
+    this.dt.detectChanges();
+  }
   //#endregion
 }

@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { Network } from '@capacitor/network';
 import { Capacitor } from '@capacitor/core';
 import { Keyboard } from '@capacitor/keyboard';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-package-page',
@@ -40,9 +41,11 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   isOpenCancelPackage:any = false;
   isOpenRestorePackage:any = false;
   isOpenDeletePackage:any = false;
+  isOpenFilter:any = false;
   itemSelected:any;
   firstLoad:any = true;
   private destroy$ = new Subject<void>();
+  formGroup!: FormGroup;
   constructor(
     private dt : ChangeDetectorRef,
     private api : ApiserviceComponent,
@@ -52,13 +55,17 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     private storage: StorageService,
     private router: Router,
     private platform: Platform,
+    private formBuilder: FormBuilder,
   ) { 
   }
   //#endregion
 
   //#region Init
   ngOnInit() {
-    
+    this.formGroup = this.formBuilder.group({
+      fromDate: [null],
+      toDate: [null],
+    });
   }
 
   ngAfterViewInit(){
@@ -133,8 +140,8 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     let data = {
       status: this.status,
       id: this.id,
-      //fromDate: this.fromDate,
-      //toDate: this.toDate,
+      fromDate: this.formGroup.value.fromDate,
+      toDate: this.formGroup.value.toDate,
       pageNum: this.pageNum,
       pageSize: this.pageSize,
       userName: this.username
@@ -513,5 +520,31 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     }, 1000);
   }
   //#endregion
+  //#endregion
+
+  //#region FilterPackage
+  openPopFilter(){
+    this.isOpenFilter = true;
+  }
+
+  cancelFilter(){
+    this.isOpenFilter = false;
+    this.dt.detectChanges();
+  }
+
+  onFilter(){
+    this.isload = true;
+    this.pageNum = 1;
+    this.lstData = [];
+    this.isEmpty = false;
+    this.dt.detectChanges();
+    this.loadData();
+    this.cancelFilter();
+  }
+
+  clearFilter(){
+    this.formGroup.reset();
+    this.dt.detectChanges();
+  }
   //#endregion
 }

@@ -5,11 +5,11 @@
     </ion-button>
     <ion-title style="color: white !important;" class="dynamic-font text-dark">Danh sách kiện hàng</ion-title>
   </ion-toolbar>
-  <ion-toolbar class="p-2" style="--background:var(--ion-color-mat-primary) !important;">
+  <ion-toolbar class="p-2" class="bg-default">
     <div class="w-100 d-flex align-items-center">
-      <ion-searchbar class="pb-0 pl-0" style="--border-radius:20px !important" id='custom-search' placeholder="Tìm kiếm kiện hàng" (ionChange)="ionChange($event)"
+      <ion-searchbar class="pb-0 pl-0 pl-2 pr-2" style="--border-radius:20px !important" id='custom-search' placeholder="Tìm kiếm kiện hàng" (ionChange)="ionChange($event)"
       enterkeyhint="search" mode="ios" show-clear-button="always"></ion-searchbar>
-      <ion-icon class="pr-2" style="color: white !important;font-size: 2rem;" name="funnel-outline"></ion-icon>  
+      <ion-icon (click)="openPopFilter()" class="pr-2" style="color: white !important;font-size: 2rem;" name="funnel-outline"></ion-icon>  
     </div>
   </ion-toolbar>
   <ion-toolbar *ngIf="!isReview" style="--background:white !important;">
@@ -665,6 +665,51 @@
     </ng-template>
   </ion-modal>
   <!-- DeletePackkage -->
+
+  <!-- FilterPackkage -->
+  <ion-modal style="--background:white !important" (willDismiss)="cancelFilter()" [isOpen]="isOpenFilter" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <ion-text class="dynamic-font text-center" style="color: var(--ion-color-mat-primary);">
+          <h3 class="font-weight-bold">Bộ lọc</h3>
+        </ion-text>
+        <div [formGroup]="formGroup">
+          <ion-text>
+            <h4 class="mt-0 font-weight-bold dynamic-font text-dark">Từ ngày</h4>
+          </ion-text>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Chọn từ ngày</mat-label>
+            <input formControlName="fromDate" matInput [matDatepicker]="picker" readonly>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <ion-text>
+            <h4 class="mt-0 font-weight-bold dynamic-font text-dark">Đến ngày</h4>
+          </ion-text>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Chọn đến ngày</mat-label>
+            <input formControlName="toDate" matInput [matDatepicker]="picker2" readonly>
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div style="margin-bottom: var(--ion-safe-area-bottom, 0);" class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button class="w-100" (click)="clearFilter()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Xóa bộ lọc
+            </ion-text>
+          </ion-button> 
+          <ion-button (click)="onFilter()" mode="ios" size="default" class="ion-btn-default w-100">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Áp dụng
+            </ion-text>
+          </ion-button> 
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- FilterPackkage -->
+
 </ion-content>
 <ion-footer *ngIf="!isHideFooter" class="ion-no-border"
   style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
