@@ -50,6 +50,23 @@
   </ng-container>
   <div class="w-100 mt-2">
     <ion-list *ngIf="lstData && lstData.length" class="m-0" style="background-color:white !important;">
+      <div *ngIf="status == 1" class="w-100 p-2 pt-0">
+        <ion-text class="dynamic-font" color="medium">
+          <span>Tổng đơn: </span>
+        </ion-text>
+        <ion-text class="dynamic-font text-dark font-weight-bold">
+          {{totalOrder}}
+        </ion-text>
+        <ion-text class="dynamic-font text-dark">
+          |
+        </ion-text>
+        <ion-text class="dynamic-font" color="medium">
+          <span>Tổng tiền chưa thanh toán: </span>
+        </ion-text>
+        <ion-text class="dynamic-font text-dark font-weight-bold">
+          {{(totalPay | number)+'đ'}}
+        </ion-text>
+      </div>
       <ng-container *ngFor="let item of lstData">
         <ion-item lines="none" style="--background:white !important">
           <ion-card class="mx-1 my-1 mb-4 w-100"
@@ -57,12 +74,12 @@
             <ion-card-header class="p-3">
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div class="d-flex align-items-center">
-                  <ion-text style="font-size: 1rem;" class="dynamic-font text-dark font-weight-bold me-2">
+                  <ion-text style="font-size: 1rem;" class="dynamic-font text-dark font-weight-bold pr-2">
                     Mã đơn hàng
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text class="dynamic-font me-2" style="font-size: 1rem;">
+                  <ion-text class="dynamic-font pr-2" style="font-size: 1rem;">
                     {{item.shippingOrderCode}}
                   </ion-text>
                   <ion-icon [cdkCopyToClipboard]="item.shippingOrderCode" (click)="onCopy()" style="font-size: 2rem;"
@@ -148,7 +165,7 @@
                   </ion-text>
                   &nbsp;
                   <ion-text class="dynamic-font">
-                    {{item.totalPrice | number}}
+                    {{(item.totalPrice | number)+'đ'}}
                   </ion-text>
                 </div>
               </div>

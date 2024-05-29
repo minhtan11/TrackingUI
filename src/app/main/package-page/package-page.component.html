@@ -5,9 +5,12 @@
     </ion-button>
     <ion-title style="color: white !important;" class="dynamic-font text-dark">Danh sách kiện hàng</ion-title>
   </ion-toolbar>
-  <ion-toolbar  style="--background:var(--ion-color-mat-primary) !important;">
-    <ion-searchbar id='custom-search' slot="start" class="p-2" placeholder="Tìm kiếm kiện hàng" (ionChange)="ionChange($event)"
+  <ion-toolbar class="p-2" style="--background:var(--ion-color-mat-primary) !important;">
+    <div class="w-100 d-flex align-items-center">
+      <ion-searchbar class="pb-0 pl-0" style="--border-radius:20px !important" id='custom-search' placeholder="Tìm kiếm kiện hàng" (ionChange)="ionChange($event)"
       enterkeyhint="search" mode="ios" show-clear-button="always"></ion-searchbar>
+      <ion-icon class="pr-2" style="color: white !important;font-size: 2rem;" name="funnel-outline"></ion-icon>  
+    </div>
   </ion-toolbar>
   <ion-toolbar *ngIf="!isReview" style="--background:white !important;">
     <ion-segment mode="md" [scrollable]="true" [value]="status">
@@ -342,7 +345,7 @@
                   </ng-container>
                 </div>
               </div>
-              <div class="w-100 pt-3 d-flex align-items-center scroll-hidden" style="justify-content: space-evenly;
+              <div class="w-100 pt-3 d-flex align-items-center scroll-hidden" style="justify-content: space-around;
               overflow: scroll;">
                 <ion-button (click)="openPopPackage(item)" mode="ios" size="default" class="ion-btn-default">
                   <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
@@ -489,7 +492,7 @@
         </div>
         <div class="w-100 text-center">
           <ion-text class="dynamic-font text-dark">
-            <span>Sẽ mất 1 điểm truy cứu khi bạn kiểm tra kiện hàng! </span>
+            <span>Khi kiểm tra hàng được vận chuyển nội địa bên Trung Quốc,bạn sẽ mất 1 điểm tra cứu! </span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
             <span>Bạn có muốn tiếp tục kiểm tra kiện hàng </span>

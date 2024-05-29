@@ -16,6 +16,7 @@ export class OrderStatusComponent  implements OnInit {
   oData:any;
   oPack:any;
   username:any;
+  isOpenPopupAuto:any = false;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -57,7 +58,15 @@ export class OrderStatusComponent  implements OnInit {
   }
 
   onBack(){
-    this.navCtrl.navigateBack('main/package');
+    if(this.oPack){
+      if(!this.oPack.autoQuery){
+        this.openPopupAuto();
+      }else{
+        this.navCtrl.navigateBack('main/package',{queryParams:{type:'change',dataUpdate:JSON.stringify(this.oPack)}});
+      }
+    }else{
+      this.navCtrl.navigateBack('main/package',{queryParams:{type:'change',dataUpdate:JSON.stringify(this.oPack)}});
+    }
   }
 
   getPackage(){
@@ -78,7 +87,18 @@ export class OrderStatusComponent  implements OnInit {
     })
   }
 
+  openPopupAuto(){
+    this.isOpenPopupAuto = true;
+  }
+  
+  cancelPopupAuto(isReturn:any = false){
+    this.isOpenPopupAuto = false;
+    if(isReturn) this.navCtrl.navigateBack('main/package',{queryParams:{type:'change',dataUpdate:JSON.stringify(this.oPack)}});
+    this.dt.detectChanges();
+  }
+
   changeAutoQuery(check:any){
+    this.cancelPopupAuto();
     let data = {
       id: this.oPack.id,
       check: check

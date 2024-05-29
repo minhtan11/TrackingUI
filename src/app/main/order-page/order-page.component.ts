@@ -31,6 +31,8 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   isconnected:any = true;
   itemSelected:any;
   isOpenPayment:any = false;
+  totalPay:any = 0;
+  totalOrder:any = 0;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -138,6 +140,8 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
             this.lstData = oData[0];
             if (this.lstData.length == 0) this.isEmpty = true;
             if (this.lstData.length == oData[1]) this.isload = false;
+            this.totalOrder = oData[1];
+            this.totalPay = this?.lstData.reduce((sum:any, data:any) => sum + data?.totalPrice,0);
             this.dt.detectChanges();
           }
         },

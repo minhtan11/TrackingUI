@@ -5,13 +5,14 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { StorageService } from '../storage-service/storage.service';
 import { Clipboard, ReadResult } from '@capacitor/clipboard';
 import { ApiserviceComponent } from '../apiservice/apiservice.component';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, of, switchMap, takeUntil } from 'rxjs';
 import { Device } from '@capacitor/device';
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
 import { register } from 'swiper/element/bundle';
 import Swiper from 'swiper';
 import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
+import { HttpClient } from '@angular/common/http';
 register();
 
 @Component({
@@ -83,6 +84,7 @@ export class MainPage implements OnInit {
     private api: ApiserviceComponent,
     private notification: NotificationServiceComponent,
     private router: Router,
+    private http: HttpClient,
   ) {
     this.isReview = this.rt.snapshot.queryParams["isReview"];
    }
@@ -123,6 +125,7 @@ export class MainPage implements OnInit {
         this.refreshNoti();
       }
     );
+    
   }
 
   onDestroy() {
@@ -131,6 +134,13 @@ export class MainPage implements OnInit {
   }
 
   async ionViewWillEnter(){
+    // let data = {
+    //   username:'admin',
+    //   password:'admin'
+    // }
+    // this.http.post('https://sureerp.huongthuy.com.vn/v1/api/lvapi/login',data).subscribe((res:any)=>{
+    //   console.log(res);
+    // })
     this.isReview = await this.storage.get('isReview');
     this.dt.detectChanges();
     let selected = this.rt.snapshot.queryParams["selected"];

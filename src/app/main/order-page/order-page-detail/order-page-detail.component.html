@@ -34,6 +34,18 @@
                 </ion-text>
               </div>
               <ng-container *ngFor="let item of lstPackage">
+                <div style="justify-content: space-between;" class="d-flex align-items-center">
+                  <div>
+                    <ion-text class="dynamic-font text-dark">
+                      Mã Kiện
+                    </ion-text>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <ion-text class="dynamic-font">
+                      {{item.packageCode}}
+                    </ion-text>
+                  </div>
+                </div>
                 <div class="w-100" style="border: 1px solid #ececec;border-radius: 1em;margin-top: 1em;">
                   <div class="container">
                     <div class="row">
@@ -56,7 +68,7 @@
                               <br>
                               <ion-text color="medium" class="dynamic-font">
                                 <span style="font-size: 0.8rem;">
-                                  {{item.exportedCNWH | formatdate : 'dd/MM/yyyy hh:mm a' || item.exportedCNWH}}
+                                  {{item?.exportedCNWH | formatdate : 'dd/MM/yyyy hh:mm a' || item.exportedCNWH}}
                                 </span>
                               </ion-text>
                             </li>
@@ -78,7 +90,8 @@
                               <br>
                               <ion-text color="medium" class="dynamic-font">
                                 <span style="font-size: 0.8rem;">
-                                  {{item.dateExpectation | formatdate : 'dd/MM/yyyy hh:mm a' || item.dateExpectation}}
+                                  <!-- {{item.dateExpectation | formatdate : 'dd/MM/yyyy hh:mm a' || item.dateExpectation}} -->
+                                  {{item?.dateExpectation}}
                                 </span>
                               </ion-text>
                             </li>
