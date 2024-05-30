@@ -41,33 +41,6 @@ export class AppComponent implements OnInit {
       this.loadFlashScreen();
       this.getConfig();
     });
-    this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
-      if ((this.router.url.includes('main/service-charge')) ||  (this.router.url.includes('main/recharge')) 
-        || (this.router.url.includes('main/setting/information')) ||  (this.router.url.includes('main/setting/withdraw')) ||  (this.router.url.includes('main/setting/changepassword')) 
-        ||  (this.router.url.includes('main/setting/report'))) {
-        this.navCtrl.navigateBack('main');
-        return;
-      }
-      if ((this.router.url.includes('/main/package'))) {
-        if ((this.router.url.includes('/main/package/create')) || (this.router.url.includes('/main/package/detail'))) {
-          this.navCtrl.navigateBack('main/package');
-        }else{
-          if (!(this.router.url.includes('/main/package/orderstatus'))) {
-            this.navCtrl.navigateBack('main',{queryParams:{selected:0}});
-          }
-        }
-        return;
-      }
-      if ((this.router.url.includes('/main/order'))) {
-        if ((this.router.url.includes('/main/order/detail'))) {
-          this.navCtrl.navigateBack('main/order');
-        }else{
-          this.navCtrl.navigateBack('main',{queryParams:{selected:0}});
-        }
-        return;
-      }
-      App.minimizeApp();
-    });
   }
 
   onDestroy() {

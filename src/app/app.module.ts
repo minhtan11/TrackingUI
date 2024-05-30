@@ -14,6 +14,7 @@ import { AuthguardGuard } from './authguardservice/authguard.guard';
 import { StorageService } from './storage-service/storage.service';
 import { NotificationServiceComponent } from './notification-service/notification-service.component';
 import { FcmService } from './services-fcm/fcm.service';
+import { PreviousRouterServiceService } from './previous-router-service/previous-router-service.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { FcmService } from './services-fcm/fcm.service';
     StorageService,
     NotificationServiceComponent,
     FcmService,
+    PreviousRouterServiceService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

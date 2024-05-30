@@ -10,7 +10,7 @@
     </div>
   </ion-toolbar>
   <ion-toolbar *ngIf="!isReview" style="--background:white !important;">
-    <ion-segment style="border-bottom: 1px solid #E3E3E3 !important;" mode="md" [scrollable]="true" [value]="status">
+    <ion-segment mode="md" [scrollable]="true" [value]="status">
       <ion-segment-button (click)=" sortData(0)" [value]="0">
         <div class="d-flex align-items-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-2">
@@ -20,7 +20,6 @@
             <span>(22)</span>
           </ion-text>
         </div>
-        
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(1)" [value]="1">
         <ion-text class="text-segment dynamic-font font-weight-bold">
@@ -447,6 +446,12 @@
       </ng-container>
     </ion-list>
   </div>
+  <ion-fab style="margin-bottom: var(--ion-safe-area-bottom, 0);" slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="createPackage()" class="ion-btn-orange">
+      <img style="width: 3rem;height: 3rem;" src="../../../assets/image/add-package.png" alt="">
+    </ion-fab-button>
+  </ion-fab>
+
   <!-- update note -->
   <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelEdit()" [isOpen]="isOpenEditPackage">
     <ng-template>

@@ -1,8 +1,11 @@
 <ion-header class="ion-no-border">
   <ion-toolbar mode="ios" class="bg-default">
-    <ion-button slot="start" (click)="onback()" fill="clear">
+    <!-- <ion-button slot="start" (click)="onback()" fill="clear">
       <ion-icon style="color: white !important;" name="chevron-back-outline"></ion-icon>
-    </ion-button>
+    </ion-button> -->
+    <ion-buttons class="pl-3" slot="start">
+      <ion-back-button style="--color:white !important;--color-focused:white !important;" text="" icon="chevron-back-circle-outline"></ion-back-button>
+    </ion-buttons>
     <ion-title style="color: white !important;" class="dynamic-font text-dark">Phí vận chuyển</ion-title>
   </ion-toolbar>
 </ion-header>

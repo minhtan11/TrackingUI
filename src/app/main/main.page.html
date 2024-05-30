@@ -82,6 +82,37 @@
     </ng-template>
   </ion-modal>
   <!-- create package -->
+
+  <!-- Exit App -->
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelExit()" [isOpen]="isOpenExit">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Thoát ứng dụng</h3>
+          </ion-text>
+        </div>
+        <div class="w-100 text-center">
+          <ion-text class="dynamic-font text-dark">
+            <span>Bạn có muốn đóng ứng dụng không?</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="onExit()" mode="ios" size="default" class="ion-btn-default me-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelExit()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- Exit App  -->
 </ion-content> 
 <ion-footer class="ion-no-border mobile-toolbar" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
   <ng-container *ngIf="isReview">
@@ -117,6 +148,7 @@
           <ng-template mat-tab-label>
             <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
               <ion-icon class="mb-1" style="font-size: 20px" name="home-outline"></ion-icon>
+              <!-- <i style="font-size: 20px" class="bi bi-house mb-1"></i> -->
               <ion-text style="font-size: 0.7rem;" class="dynamic-font">
                 <span>Trang chủ</span>
               </ion-text>
@@ -127,6 +159,7 @@
           <ng-template mat-tab-label>
             <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
               <ion-icon class="mb-1" style="font-size: 20px" name="cube-outline"></ion-icon>
+              <!-- <i style="font-size: 20px" class="bi bi-box-fill mb-1"></i> -->
               <ion-text style="font-size: 0.7rem;" class="dynamic-font">
                 <span>Kiện hàng</span>
               </ion-text>
@@ -137,6 +170,7 @@
           <ng-template mat-tab-label>
             <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
               <ion-icon class="mb-1" style="font-size: 20px" name="time-outline"></ion-icon>
+              <!-- <i style="font-size: 20px" class="bi bi-clock-history mb-1"></i> -->
               <ion-text style="font-size: 0.7rem;" class="dynamic-font">
                 <span>Lịch sử GD</span>
               </ion-text>
@@ -147,6 +181,7 @@
           <ng-template mat-tab-label>
             <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
               <ion-icon class="mb-1" style="font-size: 20px" name="notifications-outline"></ion-icon>
+              <!-- <i style="font-size: 20px" class="bi bi-bell mb-1"></i> -->
               <ion-text style="font-size: 0.7rem;" class="dynamic-font">
                 <span>Thông báo</span>
               </ion-text>
@@ -157,6 +192,7 @@
           <ng-template mat-tab-label>
             <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
               <ion-icon class="mb-1" style="font-size: 20px" name="person-outline"></ion-icon>
+              <!-- <i style="font-size: 20px" class="bi bi-person-circle mb-1"></i> -->
               <ion-text style="font-size: 0.7rem;" class="dynamic-font">
                 <span>Tài khoản</span>
               </ion-text>

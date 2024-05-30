@@ -36,6 +36,7 @@ import { WithdrawPageComponent } from './setting-page/withdraw-page/withdraw-pag
 import { ChangepasswordPageComponent } from './setting-page/changepassword-page/changepassword-page.component';
 import { FormatdatePipe } from '../pipe/format-date/formatdate.pipe';
 import { ReportPageComponent } from './setting-page/report-page/report-page.component';
+import { PreviousRouterServiceService } from '../previous-router-service/previous-router-service.service';
 
 @NgModule({
   imports: [
@@ -57,7 +58,7 @@ import { ReportPageComponent } from './setting-page/report-page/report-page.comp
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
   ,DecodeVNPipe,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent,FormatdatePipe,ReportPageComponent],
-  providers:[NotificationServiceComponent,DatePipe],
+  providers:[NotificationServiceComponent,DatePipe,PreviousRouterServiceService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MainPageModule { }

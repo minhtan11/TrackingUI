@@ -10,6 +10,7 @@ import { StorageService } from 'src/app/storage-service/storage.service';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
 import { App } from '@capacitor/app';
 import Swiper from 'swiper';
+import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 
 @Component({
   selector: 'app-home-page',
@@ -40,8 +41,16 @@ export class HomePageComponent{
     private api : ApiserviceComponent,
     private storage: StorageService,
     private notification: NotificationServiceComponent,
-    private routerOutlet: IonRouterOutlet
+    private routerOutlet: IonRouterOutlet,
+    private previous:PreviousRouterServiceService
   ) { 
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {        
+        if (event && event.urlAfterRedirects.includes('/main/mainpage')) {
+          this.getDashBoard();
+        }
+      };
+    });
     // router.events.subscribe((val: any) => {
     //   if (val instanceof NavigationEnd && val?.type === 1 && (val?.url.includes('/main/mainpage'))) {
     //     this.getTime();
@@ -74,21 +83,21 @@ export class HomePageComponent{
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
     this.dt.detectChanges();
-    this.getDashBoard();
+    //this.getDashBoard();
     this.animationInProgress = false;
     this.startAnimation();
   }
 
   ionViewDidLeave(){
-    this.swiper.disable();
+    //this.swiper.disable();
     clearTimeout(this.animation);
   }
 
   startAnimation() {
-    this.swiper = this.swiperRef?.nativeElement.swiper;
-    if(this.swiper){
-      this.swiper.enable();
-    } 
+    this.swiper = this.swiperRef?.nativeElement?.swiper;
+    // if(this.swiper){
+    //   this.swiper?.enable();
+    // } 
     if(this.animationInProgress) return;
     this.animationInProgress = true;
     this.animation = setTimeout(() => {

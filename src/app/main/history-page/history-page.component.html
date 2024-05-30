@@ -3,7 +3,7 @@
     <ion-title style="color: white !important;" class="dynamic-font text-dark">Lịch sử giao dịch</ion-title>
   </ion-toolbar>
   <ion-toolbar style="--background:white !important;">
-    <ion-segment style="border-bottom: 1px solid #E3E3E3 !important;" [scrollable]="true" [value]="status" mode="md">
+    <ion-segment [scrollable]="true" [value]="status" mode="md">
       <ion-segment-button (click)=" sortDataHis(0)" [value]="0">
         <ion-text class="text-segment dynamic-font font-weight-bold">
           <span>Tất cả</span>

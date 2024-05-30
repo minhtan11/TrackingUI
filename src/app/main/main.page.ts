@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { InfiniteScrollCustomEvent, IonContent, IonRouterOutlet, IonTabs, NavController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { StorageService } from '../storage-service/storage.service';
@@ -13,6 +13,8 @@ import Swiper from 'swiper';
 import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
 import { HttpClient } from '@angular/common/http';
+import { App } from '@capacitor/app';
+import { PreviousRouterServiceService } from '../previous-router-service/previous-router-service.service';
 register();
 
 @Component({
@@ -28,6 +30,7 @@ export class MainPage implements OnInit {
   isOpenCopy:any=false;
   textCopy:any = '';
   selected:any = 0;
+  isOpenExit:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
@@ -38,10 +41,28 @@ export class MainPage implements OnInit {
     private platform : Platform,
     private api: ApiserviceComponent,
     private notification: NotificationServiceComponent,
-    private router: Router,
+    private router: Router
     
   ) {
-    this.isReview = this.rt.snapshot.queryParams["isReview"];
+    //this.isReview = this.rt.snapshot.queryParams["isReview"];
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {        
+        if (event && event.urlAfterRedirects.includes('/main/mainpage')) {
+          if(this.selected != 0){
+            this.selected = 0;
+            dt.detectChanges();
+          }
+          return;
+        }
+        if (event && event.urlAfterRedirects.includes('/main/package')) {
+          if(this.selected != 1){
+            this.selected = 1;
+            dt.detectChanges();
+          }
+          return;
+        }
+      };
+    });
    }
   //#endregion
   
@@ -75,7 +96,37 @@ export class MainPage implements OnInit {
         //this.refreshNoti();
       }
     );
-    
+    // this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+    //   if ((this.router.url.includes('main/history')) ||  (this.router.url.includes('main/notification')) ||  (this.router.url.includes('main/setting'))) {
+    //     this.navCtrl.navigateBack('main');
+    //     return;
+    //   }
+    //   if((this.router.url.includes('main/package'))){
+    //     if((!this.router.url.includes('main/package/create')) || (!this.router.url.includes('main/package/detail')) || (!this.router.url.includes('main/package/orderstatus'))){
+    //       this.navCtrl.navigateBack('main');
+    //     }
+    //     return;
+    //   }
+    //   if((this.router.url.includes('main/order'))){
+    //     if((!this.router.url.includes('main/package/create')) || (!this.router.url.includes('main/package/detail')) || (!this.router.url.includes('main/package/orderstatus'))){
+    //       this.navCtrl.navigateBack('main');
+    //     }
+    //     return;
+    //   }
+    //   if((this.router.url.includes('main/setting'))){
+    //     if((!this.router.url.includes('main/package/information')) || (!this.router.url.includes('main/package/withdraw')) || (!this.router.url.includes('main/package/changepassword'))
+    //       || (!this.router.url.includes('main/package/report'))){
+    //       this.navCtrl.navigateBack('main');
+    //     }
+    //     return;
+    //   }
+    //   if((this.router.url.includes('main/mainpage'))){
+    //     this.isOpenExit = true;
+    //     this.dt.detectChanges();
+    //     return;
+    //   }
+    //   processNextHandler();
+    // });
   }
 
   onDestroy() {
@@ -104,7 +155,6 @@ export class MainPage implements OnInit {
   //#region Event
   selectedTabChange(event:any){
     let tab = event?.tab.textLabel;
-    console.log(event);
     if (tab) {
       switch(tab){
         case 'home':
@@ -186,6 +236,16 @@ export class MainPage implements OnInit {
         this.onDestroy();
       }
     })
+  }
+
+  onExit(){
+    this.cancelExit();
+    App.exitApp();
+  }
+
+  cancelExit(){
+    this.isOpenExit = false;
+    this.dt.detectChanges();
   }
 
   // refreshNoti(){

@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 import { NavController } from '@ionic/angular';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, filter, pairwise, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
 
@@ -17,13 +18,21 @@ export class ServicechargePageComponent  implements OnInit {
   lst2:any;
   lst3:any;
   lst4:any;
+  previousUrl:any = '';
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
     private api: ApiserviceComponent,
     private notification: NotificationServiceComponent,
     private dt : ChangeDetectorRef,
+    private router: Router
   ) { 
+    router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        console.log('prev:', event.url);
+        this.previousUrl = event.url;
+      });
     this.platform = Capacitor.getPlatform();
   }
 
