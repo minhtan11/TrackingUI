@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { IonRouterOutlet, NavController, Platform } from '@ionic/angular';
 import { StorageService } from './storage-service/storage.service';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiserviceComponent } from './apiservice/apiservice.component';
 import { Subject, takeUntil } from 'rxjs';
 import { SplashScreen } from '@capacitor/splash-screen';

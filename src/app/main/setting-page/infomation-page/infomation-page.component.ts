@@ -143,7 +143,7 @@ export class InfomationPageComponent  implements OnInit {
         next:(res:any)=>{
           if (res && !res?.isError) {
             this.notification.showNotiSuccess('',res?.message);
-            this.navCtrl.navigateForward('main',{queryParams:{selected:3}});
+            this.navCtrl.navigateBack('main/setting');
           }else{
             this.notification.showNotiError('',res?.message);
           }
@@ -193,6 +193,6 @@ export class InfomationPageComponent  implements OnInit {
   }
 
   onback(){
-    this.navCtrl.navigateBack('main');
+    this.navCtrl.navigateBack('main/setting');
   }
 }

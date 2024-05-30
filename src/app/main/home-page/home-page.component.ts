@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { IonRouterOutlet, NavController, Platform, ViewDidEnter, ViewWillEnter } from '@ionic/angular';
 import { Subject, connect, takeUntil } from 'rxjs';
@@ -9,6 +9,7 @@ import { Network } from '@capacitor/network';
 import { StorageService } from 'src/app/storage-service/storage.service';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
 import { App } from '@capacitor/app';
+import Swiper from 'swiper';
 
 @Component({
   selector: 'app-home-page',
@@ -16,16 +17,19 @@ import { App } from '@capacitor/app';
   styleUrls: ['./home-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
+export class HomePageComponent{
   //#region Contrucstor
+  @ViewChild('swiper')
+  swiperRef: ElementRef | undefined;
+  swiper:Swiper;
   oUser:any;
-  titleTime:any = '';
   ship1:any;
   ship2:any;
   pack3:any;
   pack5:any;
-  isload:any = true;
   isReview:any;
+  animationInProgress = false;
+  animation:any;
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -55,32 +59,6 @@ export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
   }
 
   ngAfterViewInit(){
-    // this.platform.ready().then(async () => {
-    //   this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
-    //     if (!(this.router.url.includes('/main/mainpage'))) {
-    //       processNextHandler();
-    //     }
-    //     if ((this.router.url.includes('/main/mainpage')) || (this.router.url.includes('/home')) || (this.router.url.includes('/main/history')) || (this.router.url.includes('/main/notification')) 
-    //       || (this.router.url.includes('/main/setting'))) {
-    //       App.minimizeApp();
-    //     }
-    //   });
-    // });
-    // this.platform.ready().then(async () => {
-    //   this.platform.backButton.subscribeWithPriority(9999, () => {
-    //     document.addEventListener('backbutton', function (event) {
-    //       event.preventDefault();
-    //       event.stopPropagation();
-    //     }, false);
-    //   });
-    // })
-    // Network.addListener('networkStatusChange', status => {
-    //   if (status.connected && status.connectionType != 'none') {
-    //     this.getUser();
-    //     this.getDashBoard();
-    //   }
-    //   if (!status.connected && status.connectionType == 'none') {}
-    // });
     
   }
 
@@ -91,6 +69,35 @@ export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
   onDestroy(){
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  async ionViewWillEnter(){
+    this.isReview = await this.storage.get('isReview');
+    this.dt.detectChanges();
+    this.getDashBoard();
+    this.animationInProgress = false;
+    this.startAnimation();
+  }
+
+  ionViewDidLeave(){
+    this.swiper.disable();
+    clearTimeout(this.animation);
+  }
+
+  startAnimation() {
+    this.swiper = this.swiperRef?.nativeElement.swiper;
+    if(this.swiper){
+      this.swiper.enable();
+    } 
+    if(this.animationInProgress) return;
+    this.animationInProgress = true;
+    this.animation = setTimeout(() => {
+      if (this.swiper) {
+        this.swiper.slideNext(1000,false);
+      }
+      this.animationInProgress = false;
+      this.startAnimation();
+    }, 5000);
   }
   //#endregion
 
@@ -110,7 +117,6 @@ export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
       return;
     }
     this.navCtrl.navigateForward('main/package');
-    this.onDestroy();
   }
 
   goRechargePage(){
@@ -121,41 +127,6 @@ export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
   goServicechargePage(){
     this.onDestroy();
     this.navCtrl.navigateForward('main/service-charge');
-  }
-
-  getTime(){
-    let today = new Date()
-    let curHr = today.getHours()
-    let time = null;
-
-    if (curHr < 12) {
-      this.titleTime = "Chào buổi sáng!";
-    } else if (curHr < 18) {
-      this.titleTime = "Chào buổi chiều!";
-    } else {
-      this.titleTime = "Chào buổi tối";
-    }
-    this.dt.detectChanges();
-  }
-
-  async getUser(){
-    let username = await this.storage.get('username');
-    let data = {
-      userName:username,
-    }
-    let messageBody = {
-      dataRequest:JSON.stringify(data)
-    };
-    this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res[0]) {
-        this.notification.showNotiError('', res[1].message);
-        this.storage.remove('password');
-        this.navCtrl.navigateBack('home');
-      }else{
-        this.oUser = res[1];
-        this.dt.detectChanges();
-      }
-    })
   }
 
   async getDashBoard(){
@@ -177,14 +148,6 @@ export class HomePageComponent  implements OnInit,AfterViewInit,OnDestroy {
         this.dt.detectChanges();
       }
     })
-  }
-
-  onRefresh(event:any){
-    this.getUser();
-    this.getDashBoard();
-    setTimeout(() => {
-      event.target.complete();
-    }, 2000);
   }
   //#endregion
 

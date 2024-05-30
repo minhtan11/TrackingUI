@@ -14,13 +14,13 @@ import Swal from 'sweetalert2'
   styleUrls: ['./setting-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingPageComponent  implements OnInit {
+export class SettingPageComponent {
   oUser:any;
   isReview:any;
-  isOpen:any=false;
-  isOpen2:any=false;
-  isDismiss:any=false;
-  isDismiss2:any=false;
+  titleTime:any = '';
+  isOpenLogout:any = false;
+  isOpenDelete:any = false;
+  isOpenSupport:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -44,6 +44,7 @@ export class SettingPageComponent  implements OnInit {
 
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
+    this.getTime();
     this.getUser();
   }
 
@@ -53,6 +54,21 @@ export class SettingPageComponent  implements OnInit {
 
   ionViewWillLeave(){
     this.onDestroy();
+  }
+
+  getTime(){
+    let today = new Date()
+    let curHr = today.getHours()
+    let time = null;
+
+    if (curHr < 12) {
+      this.titleTime = "Chào buổi sáng!";
+    } else if (curHr < 18) {
+      this.titleTime = "Chào buổi chiều!";
+    } else {
+      this.titleTime = "Chào buổi tối";
+    }
+    this.dt.detectChanges();
   }
 
   async getUser(){
@@ -66,6 +82,8 @@ export class SettingPageComponent  implements OnInit {
     this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res[0]) {
         this.notification.showNotiError('', res[1].message);
+        this.storage.remove('password');
+        this.navCtrl.navigateBack('home');
       }else{
         this.oUser = res[1];
         this.dt.detectChanges();
@@ -85,52 +103,106 @@ export class SettingPageComponent  implements OnInit {
     this.navCtrl.navigateForward('main/setting/changepassword');
   }
 
-  goSignIn(){
-    this.onDismiss2();
-    this.storage.remove('isLogin');
-    this.navCtrl.navigateBack('home');
+  goReport(){
+    this.navCtrl.navigateForward('main/setting/report');
   }
 
-  async onDelete() {
-    this.onDismiss();
-    let username = await this.storage.get('username');
+  //#region Logout
+  onOpenLogout(){
+    this.isOpenLogout = true;
+  }
+
+  cancelLogout(){
+    this.isOpenLogout = false;
+    this.dt.detectChanges();
+  }
+
+  onLogout(){
+    this.cancelLogout();
     let data = {
-      userName: username,
+      userName: this.oUser?.username,
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'deleteaccount', messageBody, true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res && !res?.isError) {
-        this.notification.showNotiSuccess('', res?.message);
-        this.storage.remove('username');
-        this.storage.remove('password');
-        this.navCtrl.navigateBack('home');
-      } else {
-        this.notification.showNotiError('', res?.message);
-      }
-    })
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation', 'logoutaccount', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res: any) => {
+          if (res && !res?.isError) {
+            this.storage.remove('isLogin');
+            this.navCtrl.navigateBack('home');
+          } else {
+            this.notification.showNotiError('', res?.message);
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+          this.onDestroy();
+        }
+      })
+    }, 500);
   }
-  onOpen(){
-    this.isOpen = true;
-    this.isDismiss = false;
+  //#endregion
+
+  //#region delete account
+  onOpenDelete(){
+    this.isOpenDelete = true;
+  }
+
+  cancelDelete(){
+    this.isOpenDelete = false;
     this.dt.detectChanges();
   }
 
-  onOpen2(){
-    this.isOpen2 = true;
-    this.isDismiss2 = false;
+  onDelete() {
+    this.cancelDelete();
+    let data = {
+      userName: this.oUser?.username,
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.isLoad(true);
+    setTimeout(() => {
+      this.api.execByBody('Authencation', 'deleteaccount', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
+        next:(res: any) => {
+          if (res && !res?.isError) {
+            this.notification.showNotiSuccess('', res?.message);
+            this.storage.remove('username');
+            this.storage.remove('password');
+            this.navCtrl.navigateBack('home');
+          } else {
+            this.notification.showNotiError('', res?.message);
+          }
+        },
+        complete:()=>{
+          this.api.isLoad(false);
+          this.onDestroy();
+        }
+      })
+    }, 500);
+  }
+  //#endregion
+
+  //#region support
+  onOpenSupport(){
+    this.isOpenSupport = true;
+  }
+
+  cancelSupport(){
+    this.isOpenSupport = false;
     this.dt.detectChanges();
   }
 
-  onDismiss(){
-    this.isDismiss = true;
-    this.isOpen = false;
-    this.dt.detectChanges();
+  goZalo(){
+    this.cancelSupport();
+    window.open("http://zalo.me/1977119545826967396?src=qr")
   }
-  onDismiss2(){
-    this.isDismiss2 = true;
-    this.isOpen2 = false;
-    this.dt.detectChanges();
+
+  goPhone(){
+    this.cancelSupport();
+    window.open("tel:+84911233488");
   }
+  //#endregion
 }

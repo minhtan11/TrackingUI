@@ -1,57 +1,52 @@
 <ion-header class="ion-no-border" style="--background:white !important;">
-  <ion-toolbar style="--background:white !important;">
-    <ion-title class="dynamic-font" style="color: black !important;" mode="ios">Thông báo</ion-title>
+  <ion-toolbar mode="ios" class="bg-default">
+    <ion-title style="color: white !important;" class="dynamic-font text-dark">Thông báo</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content style="--background:white !important" class="ion-padding">
-  <ng-container *ngIf="isloadpage">
-    <div class="d-flex align-items-center justify-content-center h-100 w-100">
-      <ion-spinner style="color: black !important;" mode="ios" name="dots"></ion-spinner>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="isEmpty">
-    <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
-      <img style="width: 40%;" src="../../../assets/image/empty-box.png" alt="">
-      <ion-text class="dynamic-font" style="color:black !important">
-        Không có thông báo
-      </ion-text>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="!isconnected">
-    <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
-      <img style="width: 40%;" src="../../../assets/image/connection.png" alt="">
-      <ion-text class="dynamic-font" style="color:black !important">
-        Mất kết nối internet
-      </ion-text>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="lstData && lstData.length">
-    <div class="w-100 mb-5" style="margin: auto;max-width: 1000px;">
-      <ng-container *ngFor="let item of lstData; trackBy: trackByFn">
-        <ion-card style="margin: 1em;--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;">
-          <ion-card-content>
-            <div class="d-flex align-items-center">
-              <div class="w-100">
-                <ion-text class="font-weight-bold">
-                  Trakuaidi xin thông báo tới Quý khách
-                </ion-text>
-                <br>
-                <ion-text>
-                  <span [innerHTML]="item.message"></span>
-                </ion-text>
-                <br>
-                <ion-text>
-                  <span>Ngày: </span>
-                  <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
+<ion-content style="--background:white !important;">
+  <div *ngIf="isEmpty" style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
+    <img style="width: 40%;" src="../../../assets/image/empty-box.png" alt="">
+    <ion-text class="dynamic-font" style="color:black !important">
+      Không có thông báo
+    </ion-text>
+  </div>
+  <div class="w-100">
+    <ion-list *ngIf="lstData && lstData.length" class="m-0" style="background-color:white !important;">
+      <ng-container *ngFor="let item of lstData">
+        <ion-item lines="none" style="--background:white !important">
+          <ion-card class="mx-1 my-3 w-100" style="--background:white !important;box-shadow: none !important;">
+            <ion-card-header class="p-2 pb-1">
+              <div class="d-flex align-items-center">
+                <ion-icon style="font-size: 1rem;" class="pr-2" name="checkmark-done-outline"></ion-icon>
+                <ion-text class="text-dark dynamic-font">
+                  <span>{{item.createdDate | date : 'hh:mm a'}}</span>
                 </ion-text>
               </div>
-            </div>
-          </ion-card-content>
-        </ion-card>
+              <ion-text class="text-dark dynamic-font">
+                <span>Ngày: </span>
+                <span>{{item.createdDate | date : 'dd/MM/yyyy'}}</span>
+              </ion-text>
+            </ion-card-header>
+            <ion-card-content style="background-color: #e7f6ff !important;
+            border-radius: 15px;" class="p-3">
+              <div class="d-flex align-items-center">
+                <div class="w-100">
+                  <ion-text class="text-dark font-weight-bold dynamic-font">
+                    Trakuaidi xin thông báo tới Quý khách!
+                  </ion-text>
+                  <br>
+                  <ion-text class="text-dark dynamic-font">
+                    <span style="white-space: pre-line;" [innerHTML]="item.message"></span>
+                  </ion-text>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
       </ng-container>
-    </div>
-    <ion-infinite-scroll *ngIf="isload" (ionInfinite)="onIonInfinite($event)">
-      <ion-infinite-scroll-content style="--color: black !important;" loadingSpinner="dots"></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-  </ng-container>
+    </ion-list>
+  </div>
+  <ion-infinite-scroll *ngIf="isload" (ionInfinite)="onIonInfiniteNoti($event)">
+    <ion-infinite-scroll-content style="--color: black !important;" loadingSpinner="dots"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

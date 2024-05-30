@@ -1,8 +1,5 @@
 <ion-header class="ion-no-border" style="--background:white !important;">
   <ion-toolbar mode="ios" class="bg-default">
-    <ion-button slot="start" (click)="onback()" fill="clear">
-      <ion-icon style="color: white !important;" class="text-dark" name="chevron-back-outline"></ion-icon>
-    </ion-button>
     <ion-title style="color: white !important;" class="dynamic-font text-dark">Danh sách kiện hàng</ion-title>
   </ion-toolbar>
   <ion-toolbar class="p-2" class="bg-default">
@@ -13,11 +10,17 @@
     </div>
   </ion-toolbar>
   <ion-toolbar *ngIf="!isReview" style="--background:white !important;">
-    <ion-segment mode="md" [scrollable]="true" [value]="status">
+    <ion-segment style="border-bottom: 1px solid #E3E3E3 !important;" mode="md" [scrollable]="true" [value]="status">
       <ion-segment-button (click)=" sortData(0)" [value]="0">
-        <ion-text class="text-segment dynamic-font font-weight-bold">
-          <span>Tất cả</span>
-        </ion-text>
+        <div class="d-flex align-items-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-2">
+            <span>Tất cả</span>
+          </ion-text>
+          <ion-text style="color: orange;" class="dynamic-font">
+            <span>(22)</span>
+          </ion-text>
+        </div>
+        
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(1)" [value]="1">
         <ion-text class="text-segment dynamic-font font-weight-bold">
@@ -711,7 +714,7 @@
   <!-- FilterPackkage -->
 
 </ion-content>
-<ion-footer *ngIf="!isHideFooter" class="ion-no-border"
+<!-- <ion-footer *ngIf="!isHideFooter" class="ion-no-border"
   style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
   <ion-toolbar mode="ios" style="--background:white !important">
     <ion-button mode="ios" (click)="createPackage()" class="ion-btn-orange" expand="block">
@@ -720,4 +723,4 @@
       </ion-text>
     </ion-button>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->
