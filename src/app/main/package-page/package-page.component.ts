@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { InfiniteScrollCustomEvent, IonContent, IonSegment, IonSegmentButton, NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
@@ -11,6 +11,7 @@ import { Network } from '@capacitor/network';
 import { Capacitor } from '@capacitor/core';
 import { Keyboard } from '@capacitor/keyboard';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 
 @Component({
   selector: 'app-package-page',
@@ -56,7 +57,25 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     private router: Router,
     private platform: Platform,
     private formBuilder: FormBuilder,
+    private previous:PreviousRouterServiceService
   ) { 
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {        
+        if (event && !(event.urlAfterRedirects.includes('/main/package/create')) && !(event.urlAfterRedirects.includes('/main/package/detail'))
+          && !(event.urlAfterRedirects.includes('/main/package/orderstatus'))) {
+          let type = this.rt.snapshot.queryParams['type'];
+          switch(type){
+            case 'add':
+              this.isload = true;
+              this.pageNum = 1;
+              this.isEmpty = false;
+              this.content.scrollToTop();
+              this.loadData();
+              break;
+          }
+        }
+      };
+    });
   }
   //#endregion
 
@@ -236,45 +255,50 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
 
   async init(){
     if(!this.username) this.username = await this.storage.get('username');
-    let type = this.rt.snapshot.queryParams['type'];
-    switch(type){
-      case 'add':
-        this.isload = true;
-        this.pageNum = 1;
-        this.isEmpty = false;
-        this.content.scrollToTop();
-        this.loadData();
-        break;
-      case 'change':
-        let data = JSON.parse(this.rt.snapshot.queryParams['dataUpdate']);
-        if(data){
-          let index = this.lstData.findIndex((x:any) => x.id == data.id);
-          if(index > -1){
-            this.lstData[index] = data;
-            this.dt.detectChanges();
-          } 
-        }
-        break;
-      case 'delete':
-        let datas = JSON.parse(this.rt.snapshot.queryParams['dataDelete']);
-        if(datas){
-          let index = this.lstData.findIndex((x:any) => x.id == datas.id);
-          if(index > -1){
-            this.lstData.splice(index,1);
-            if(this.lstData.length == 0) this.isEmpty = true;
-            this.dt.detectChanges();
-          } 
-        }
-        break;
-      default:
-        if (this.lstData && this.lstData.length == 0 && this.firstLoad) {
-          this.isload = true;
-          this.pageNum = 1;
-          this.isEmpty = false;
-          this.loadData();
-        }
-        break;
-    }
+    this.loadData();
+    // let type = this.rt.snapshot.queryParams['type'];
+    // switch(type){
+    //   case 'add':
+    //     this.isload = true;
+    //     this.pageNum = 1;
+    //     this.isEmpty = false;
+    //     this.content.scrollToTop();
+    //     this.loadData();
+    //     break;
+    //   // case 'change':
+    //   //   let data = JSON.parse(this.rt.snapshot.queryParams['dataUpdate']);
+    //   //   if(data){
+    //   //     let index = this.lstData.findIndex((x:any) => x.id == data.id);
+    //   //     if(index > -1){
+    //   //       this.lstData[index] = data;
+    //   //       this.dt.detectChanges();
+    //   //     } 
+    //   //   }
+    //   //   break;
+    //   // case 'delete':
+    //   //   let datas = JSON.parse(this.rt.snapshot.queryParams['dataDelete']);
+    //   //   if(datas){
+    //   //     let index = this.lstData.findIndex((x:any) => x.id == datas.id);
+    //   //     if(index > -1){
+    //   //       this.lstData.splice(index,1);
+    //   //       if(this.lstData.length == 0) this.isEmpty = true;
+    //   //       this.dt.detectChanges();
+    //   //     } 
+    //   //   }
+    //   //   break;
+    //   default:
+    //     // if (this.lstData && this.lstData.length == 0 && this.firstLoad) {
+    //     //   this.isload = true;
+    //     //   this.pageNum = 1;
+    //     //   this.isEmpty = false;
+    //     //   this.loadData();
+    //     // }
+    //     this.isload = true;
+    //     this.pageNum = 1;
+    //     this.isEmpty = false;
+    //     this.loadData();
+    //     break;
+    // }
   }
 
   //#region Edit package

@@ -31,6 +31,7 @@ export class MainPage implements OnInit {
   textCopy:any = '';
   selected:any = 0;
   isOpenExit:any=false;
+  lastBack:any = Date.now();
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
@@ -96,37 +97,40 @@ export class MainPage implements OnInit {
         //this.refreshNoti();
       }
     );
-    // this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
-    //   if ((this.router.url.includes('main/history')) ||  (this.router.url.includes('main/notification')) ||  (this.router.url.includes('main/setting'))) {
-    //     this.navCtrl.navigateBack('main');
-    //     return;
-    //   }
-    //   if((this.router.url.includes('main/package'))){
-    //     if((!this.router.url.includes('main/package/create')) || (!this.router.url.includes('main/package/detail')) || (!this.router.url.includes('main/package/orderstatus'))){
-    //       this.navCtrl.navigateBack('main');
-    //     }
-    //     return;
-    //   }
-    //   if((this.router.url.includes('main/order'))){
-    //     if((!this.router.url.includes('main/package/create')) || (!this.router.url.includes('main/package/detail')) || (!this.router.url.includes('main/package/orderstatus'))){
-    //       this.navCtrl.navigateBack('main');
-    //     }
-    //     return;
-    //   }
-    //   if((this.router.url.includes('main/setting'))){
-    //     if((!this.router.url.includes('main/package/information')) || (!this.router.url.includes('main/package/withdraw')) || (!this.router.url.includes('main/package/changepassword'))
-    //       || (!this.router.url.includes('main/package/report'))){
-    //       this.navCtrl.navigateBack('main');
-    //     }
-    //     return;
-    //   }
-    //   if((this.router.url.includes('main/mainpage'))){
-    //     this.isOpenExit = true;
-    //     this.dt.detectChanges();
-    //     return;
-    //   }
-    //   processNextHandler();
-    // });
+    this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+      if ((this.router.url.includes('main/history')) ||  (this.router.url.includes('main/notification')) ||  (this.router.url.includes('main/setting'))) {
+        this.navCtrl.navigateBack('main');
+        return;
+      }
+      if((this.router.url.includes('main/package'))){
+        if((!this.router.url.includes('main/package/create')) && (!this.router.url.includes('main/package/detail')) && (!this.router.url.includes('main/package/orderstatus'))){
+          this.navCtrl.navigateBack('main');
+          return;
+        }
+      }
+      // if((this.router.url.includes('main/order'))){
+      //   if((!this.router.url.includes('main/package/create')) || (!this.router.url.includes('main/package/detail')) || (!this.router.url.includes('main/package/orderstatus'))){
+      //     this.navCtrl.navigateBack('main');
+      //   }
+      //   return;
+      // }
+      // if((this.router.url.includes('main/setting'))){
+      //   if((!this.router.url.includes('main/package/information')) || (!this.router.url.includes('main/package/withdraw')) || (!this.router.url.includes('main/package/changepassword'))
+      //     || (!this.router.url.includes('main/package/report'))){
+      //     this.navCtrl.navigateBack('main');
+      //   }
+      //   return;
+      // }
+      if((this.router.url.includes('main/mainpage'))){
+        if (Date.now() - this.lastBack < 500) { // logic for double tap: delay of 500ms between two clicks of back button
+          this.isOpenExit = true;
+          this.dt.detectChanges();
+        }
+        this.lastBack= Date.now();
+        return;
+      }
+      processNextHandler();
+    });
   }
 
   onDestroy() {

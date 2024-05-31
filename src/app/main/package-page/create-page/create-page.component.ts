@@ -2,7 +2,7 @@ import { formatNumber } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Keyboard } from '@capacitor/keyboard';
 import { NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
@@ -10,6 +10,7 @@ import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
 import { StorageService } from 'src/app/storage-service/storage.service';
 import { Clipboard, ReadResult } from '@capacitor/clipboard';
+import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 
 @Component({
   selector: 'app-create-page',
@@ -33,6 +34,8 @@ export class CreatePageComponent  implements OnInit {
   isEdit:any=false;
   isOpenCopy:any=false;
   textCopy:any;
+  previousUrl:any ='';
+  numAdd:any=0;
   constructor(
     private formBuilder: FormBuilder,
     private notification: NotificationServiceComponent,
@@ -43,6 +46,7 @@ export class CreatePageComponent  implements OnInit {
     private storage: StorageService,
     private router:Router,
     private platform : Platform,
+    private previous:PreviousRouterServiceService
   ) {
    }
   //#endregion
@@ -92,6 +96,13 @@ export class CreatePageComponent  implements OnInit {
         }
       });
     })
+    this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+      if((this.router.url.includes('main/package/create'))){
+        this.onback();
+        return;
+      }
+      processNextHandler();
+    })
   }
 
   async ionViewWillEnter(){
@@ -119,6 +130,11 @@ export class CreatePageComponent  implements OnInit {
     let code = this.rt.snapshot.queryParams["code"];
     if (code) {
       this.formGroup.patchValue({packageCode:code});
+    }
+    let url = this.previous.getPreviousUrl();
+    if (url) {
+      let array = url.split('?');
+      this.previousUrl = array[0];
     }
   }
 
@@ -175,7 +191,9 @@ export class CreatePageComponent  implements OnInit {
           }else{
             if (!res[1].isError) {
               this.notification.showNotiSuccess('', res[1].message);
-              this.navCtrl.navigateForward('main/package',{queryParams:{type:'add'}});
+              // this.navCtrl.navigateForward('main/package',{queryParams:{type:'add'}});
+              this.reset();
+              this.numAdd++;
             }else{
               this.notification.showNotiError('',res[1].message);
               
@@ -215,6 +233,17 @@ export class CreatePageComponent  implements OnInit {
 
   reset(){
     this.formGroup.reset();
+    this.formGroup.patchValue({id:0});
+    this.formGroup.patchValue({packageCode:''});
+    this.formGroup.patchValue({movingMethod:null});
+    this.formGroup.patchValue({wareHouse:null});
+    this.formGroup.patchValue({isWoodPackage:false});
+    this.formGroup.patchValue({isAirPackage:false});
+    this.formGroup.patchValue({isInsurance:false});
+    this.formGroup.patchValue({declaration:''});
+    this.formGroup.patchValue({declarePrice:''});
+    this.formGroup.patchValue({note:''});
+    this.formGroup.patchValue({username:this.username});
   }
 
   valueChange(event:any,field:any){
@@ -242,7 +271,15 @@ export class CreatePageComponent  implements OnInit {
   }
 
   onback(){
-    this.navCtrl.navigateBack('main/package');
+    if(this.previousUrl.includes('/main/package')){
+      if(this.numAdd > 0){
+        this.navCtrl.navigateBack(this.previousUrl,{queryParams:{type:'add'}});
+      }else{
+        this.navCtrl.navigateBack(this.previousUrl);
+      }
+    }else{
+      this.navCtrl.navigateBack(this.previousUrl);
+    }
   }
 
   onCopy(){

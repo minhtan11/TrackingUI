@@ -42,7 +42,7 @@ export class HomePageComponent{
     private storage: StorageService,
     private notification: NotificationServiceComponent,
     private routerOutlet: IonRouterOutlet,
-    private previous:PreviousRouterServiceService
+    
   ) { 
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {        
