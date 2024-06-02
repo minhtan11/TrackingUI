@@ -400,7 +400,7 @@
                 </swiper-slide>
               </swiper-container>
             </div> -->
-            <div class="w-100 pt-3 d-flex align-items-center scroll-hidden" style="justify-content: space-around;
+            <div [ngClass]="oData?.status < 2 ? 'justify-content-start' : 'justify-content-center'" class="w-100 pt-3 d-flex align-items-center scroll-hidden" style="
               overflow: scroll;">
                 <ion-button (click)="openPopPackage(oData)" mode="ios" size="default" class="ion-btn-default">
                   <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>

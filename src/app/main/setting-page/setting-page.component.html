@@ -295,7 +295,7 @@
         </ion-text>
         <ion-list [inset]="true" style="background-color:white !important;">
           <ng-container *ngFor="let item of listUser">
-            <ion-item *ngIf="item?.username != userName" class="pb-3" lines="none" style="background-color:white !important;">
+            <ion-item *ngIf="item?.username != userName" class="pb-3" lines="none" style="--background:white !important;">
               <div (click)="onChangeAccount(item)"  class="w-100 d-flex align-items-center">
                 <ion-avatar style="width: 3rem;height: 3rem;"  class="mr-3" aria-hidden="true" slot="start">
                   <img [src]="item?.img ? 'data:image/jpeg;base64,'+item?.img : '../../../assets/image/logo-user.png'" />
@@ -311,7 +311,7 @@
               </ion-button>
             </ion-item>
           </ng-container>
-          <ion-item lines="none" style="background-color:white !important;">
+          <ion-item lines="none" style="--background:white !important;">
             <div (click)="onOpenAddAccount()"  class="w-100 d-flex align-items-center">
               <ion-avatar style="width: 3rem;height: 3rem;"  class="mr-3" aria-hidden="true" slot="start">
                 <img alt="" src="../../assets/image/plus.png" />

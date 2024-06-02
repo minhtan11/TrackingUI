@@ -387,7 +387,7 @@
                   </ng-container>
                 </div>
               </div>
-              <div class="w-100 pt-3 d-flex align-items-center scroll-hidden" style="justify-content: space-around;
+              <div [ngClass]="item?.status < 2 ? 'justify-content-start' : 'justify-content-center'" class="w-100 pt-3 d-flex align-items-center scroll-hidden" style="
               overflow: scroll;">
                 <ion-button (click)="openPopPackage(item)" mode="ios" size="default" class="ion-btn-default">
                   <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
