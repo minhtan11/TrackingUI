@@ -16,7 +16,6 @@ import { PreviousRouterServiceService } from 'src/app/previous-router-service/pr
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePageComponent{
   //#region Contrucstor
@@ -42,6 +41,7 @@ export class HomePageComponent{
     private storage: StorageService,
     private notification: NotificationServiceComponent,
     private routerOutlet: IonRouterOutlet,
+    private previous:PreviousRouterServiceService
     
   ) { 
     router.events.subscribe(event => {
@@ -62,13 +62,17 @@ export class HomePageComponent{
   //#endregion
 
   //#region Init
-  async ngOnInit() {
-    this.isReview = await this.storage.get('isReview');
-    this.routerOutlet.swipeGesture = false;
+  ngOnInit() {
+    // let isload = this.rt.snapshot.queryParams["isload"];
+    // if (isload) {
+    //   this.api.isLoad2(true);
+    //   setTimeout(() => {
+    //     this.api.isLoad2(false);
+    //   }, 2000);
+    // }
   }
 
   ngAfterViewInit(){
-    
   }
 
   ngOnDestroy(): void {
@@ -82,8 +86,6 @@ export class HomePageComponent{
 
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
-    this.dt.detectChanges();
-    //this.getDashBoard();
     this.animationInProgress = false;
     this.startAnimation();
   }
@@ -138,6 +140,16 @@ export class HomePageComponent{
     this.navCtrl.navigateForward('main/service-charge');
   }
 
+  goHistoryPage(){
+    this.onDestroy();
+    this.navCtrl.navigateForward('main/history');
+  }
+
+  goRegulationsPage(){
+    this.onDestroy();
+    this.navCtrl.navigateForward('main/regulation');
+  }
+
   async getDashBoard(){
     let username = await this.storage.get('username');
     let data = {
@@ -154,7 +166,7 @@ export class HomePageComponent{
         this.pack5 = res[1][2];
         this.ship1 = res[2][0];
         this.ship2 = res[2][1];
-        this.dt.detectChanges();
+        
       }
     })
   }

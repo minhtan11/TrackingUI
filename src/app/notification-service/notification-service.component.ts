@@ -21,10 +21,10 @@ export class NotificationServiceComponent implements OnInit {
     const toast = await this.toastController.create({
       message: text,
       duration: timer,
-      position: 'bottom',
-      positionAnchor: 'footer',
+      position: 'top',
+      positionAnchor: 'header',
       icon: 'alert-circle-outline',
-      cssClass:'text-white bg-toast-orange'
+      cssClass:'text-orange bg-toast-white'
     });
     await toast.present();
   }
@@ -33,10 +33,10 @@ export class NotificationServiceComponent implements OnInit {
     const toast = await this.toastController.create({
       message: text,
       duration: timer,
-      position: 'bottom',
-      positionAnchor: 'footer',
+      position: 'top',
+      positionAnchor: 'header',
       icon: 'checkmark-circle-outline',
-      cssClass:'text-white bg-toast-default'
+      cssClass:'text-primary-default bg-toast-white'
     });
     await toast.present();
   }

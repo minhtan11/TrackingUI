@@ -1,8 +1,5 @@
 <ion-header class="ion-no-border">
   <ion-toolbar mode="ios" class="bg-default">
-    <ion-button slot="start" (click)="onback()" fill="clear">
-      <ion-icon style="color: white !important;" class="text-dark" name="chevron-back-outline"></ion-icon>
-    </ion-button>
     <ion-title style="color: white !important;" class="dynamic-font text-dark">Danh sách đơn hàng</ion-title>
   </ion-toolbar>
   <ion-toolbar class="p-2" class="bg-default">
@@ -13,31 +10,56 @@
     </div>
   </ion-toolbar>
   <ion-toolbar style="--background:white !important;">
-    <ion-segment  mode="md" [scrollable]="true" [value]="status">
-      <ion-segment-button  (click)=" sortData(0)" [value]="0">
-        <ion-text class="text-segment dynamic-font font-weight-bold">
-          <span>Tất cả</span>
-        </ion-text>
+    <ion-segment style="height: 3rem !important;min-height: unset !important;border-bottom: 1px solid #e3e3e3 !important;" mode="md" [scrollable]="true" [value]="status">
+      <ion-segment-button  (click)="sortData(0)" [value]="0">
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <span>Tất cả</span>
+          </ion-text>
+          <ion-text *ngIf="total0 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+            <span>{{'('+(total0 | number)+')'}}</span>
+          </ion-text>
+        </div>
       </ion-segment-button>
       <ion-segment-button  (click)=" sortData(1)" [value]="1">
-        <ion-text class="text-segment dynamic-font font-weight-bold">
-          <span>Chờ thanh toán</span>
-        </ion-text>
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <span>Chờ thanh toán</span>
+          </ion-text>
+          <ion-text *ngIf="total1 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+            <span>{{'('+(total1 | number)+')'}}</span>
+          </ion-text>
+        </div>
       </ion-segment-button>
-      <ion-segment-button  (click)=" sortData(2)" [value]="2">
-        <ion-text class="text-segment dynamic-font font-weight-bold">
-          <span>Đã thanh toán</span>
-        </ion-text>
+      <ion-segment-button  (click)="sortData(2)" [value]="2">
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <span>Đã thanh toán</span>
+          </ion-text>
+          <ion-text *ngIf="total2 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+            <span>{{'('+(total2 | number)+')'}}</span>
+          </ion-text>
+        </div>
       </ion-segment-button>
-      <ion-segment-button  (click)=" sortData(3)" [value]="3">
-        <ion-text class="text-segment dynamic-font font-weight-bold">
-          <span>Đã hủy</span>
-        </ion-text>
+      <ion-segment-button  (click)="sortData(3)" [value]="3">
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <span>Đã hủy</span>
+          </ion-text>
+          <ion-text *ngIf="total3 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+            <span>{{'('+(total3 | number)+')'}}</span>
+          </ion-text>
+        </div>
       </ion-segment-button>
-      <ion-segment-button  (click)=" sortData(4)" [value]="4">
-        <ion-text class="text-segment dynamic-font font-weight-bold">
-          <span>Khác</span>
-        </ion-text>
+      <ion-segment-button  (click)="sortData(4)" [value]="4">
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <span>Khác</span>
+          </ion-text>
+          <ion-text *ngIf="total4 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+            <span>{{'('+(total4 | number)+')'}}</span>
+          </ion-text>
+        </div>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -53,7 +75,7 @@
   </ng-container>
   <div class="w-100 mt-2">
     <ion-list *ngIf="lstData && lstData.length" class="m-0" style="background-color:white !important;">
-      <div *ngIf="status == 1" class="w-100 p-2 pt-0">
+      <div *ngIf="status == 1 && lstData.length" class="w-100 pl-2 pb-2 pt-0">
         <ion-text class="dynamic-font" color="medium">
           <span>Tổng đơn: </span>
         </ion-text>
@@ -73,16 +95,16 @@
       <ng-container *ngFor="let item of lstData">
         <ion-item lines="none" style="--background:white !important">
           <ion-card class="mx-1 my-1 mb-4 w-100"
-            style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;">
+            style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;font-size: unset !important;">
             <ion-card-header class="p-3">
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div class="d-flex align-items-center">
-                  <ion-text style="font-size: 1rem;" class="dynamic-font text-dark font-weight-bold pr-2">
+                  <ion-text class="dynamic-font text-dark font-weight-bold pr-2">
                     Mã đơn hàng
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text class="dynamic-font pr-2" style="font-size: 1rem;">
+                  <ion-text class="dynamic-font pr-2">
                     {{item.shippingOrderCode}}
                   </ion-text>
                   <ion-icon [cdkCopyToClipboard]="item.shippingOrderCode" (click)="onCopy()" style="font-size: 2rem;"
@@ -203,7 +225,7 @@
             <span>{{itemSelected?.shippingOrderCode}}</span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
-            <span>? </span>
+            <span> không? </span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
             <span>Tổng thanh toán cho đơn hàng là </span>

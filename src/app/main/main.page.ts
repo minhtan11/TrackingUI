@@ -21,7 +21,6 @@ register();
   selector: 'app-main',
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainPage implements OnInit {
   //#region Contructor
@@ -51,16 +50,27 @@ export class MainPage implements OnInit {
         if (event && event.urlAfterRedirects.includes('/main/mainpage')) {
           if(this.selected != 0){
             this.selected = 0;
-            dt.detectChanges();
+            //dt.detectChanges();
           }
           return;
         }
         if (event && event.urlAfterRedirects.includes('/main/package')) {
-          if(this.selected != 1){
-            this.selected = 1;
-            dt.detectChanges();
+          if((!event.urlAfterRedirects.includes('main/package/create')) && (!event.urlAfterRedirects.includes('main/package/detail')) && (!event.urlAfterRedirects.includes('main/package/orderstatus'))){
+            if(this.selected != 1){
+              this.selected = 1;
+              //dt.detectChanges();
+            }
+            return;
           }
-          return;
+        }
+        if (event && event.urlAfterRedirects.includes('/main/order')) {
+          if((!event.urlAfterRedirects.includes('main/order/detail'))){
+            if(this.selected != 2){
+              this.selected = 2;
+              //dt.detectChanges();
+            }
+            return;
+          }
         }
       };
     });
@@ -82,7 +92,7 @@ export class MainPage implements OnInit {
               let value = clipboardRead?.value;
               this.textCopy = value.replace(/(\r\n\s|\r|\n|\s)/g, ',');
               this.isOpenCopy = true;
-              this.dt.detectChanges();
+              
               return;
             }
           });
@@ -92,39 +102,35 @@ export class MainPage implements OnInit {
   }
 
   async ngAfterViewInit() {
-    await PushNotifications.addListener('pushNotificationReceived',
-      (notification: PushNotificationSchema) => {
-        //this.refreshNoti();
-      }
-    );
     this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
-      if ((this.router.url.includes('main/history')) ||  (this.router.url.includes('main/notification')) ||  (this.router.url.includes('main/setting'))) {
-        this.navCtrl.navigateBack('main');
+      let array = this.router.url.split('?');
+      let url = array[0];
+      console.log('url ne:'+url);
+      if ((url.includes('main/notification'))) {
+        this.navCtrl.navigateBack('main/mainpage');
         return;
       }
-      if((this.router.url.includes('main/package'))){
-        if((!this.router.url.includes('main/package/create')) && (!this.router.url.includes('main/package/detail')) && (!this.router.url.includes('main/package/orderstatus'))){
-          this.navCtrl.navigateBack('main');
+      if((url.includes('main/package'))){
+        if((!url.includes('main/package/create')) && (!url.includes('main/package/detail')) && (!url.includes('main/package/orderstatus'))){
+          this.navCtrl.navigateBack('main/mainpage');
           return;
         }
       }
-      // if((this.router.url.includes('main/order'))){
-      //   if((!this.router.url.includes('main/package/create')) || (!this.router.url.includes('main/package/detail')) || (!this.router.url.includes('main/package/orderstatus'))){
-      //     this.navCtrl.navigateBack('main');
-      //   }
-      //   return;
-      // }
-      // if((this.router.url.includes('main/setting'))){
-      //   if((!this.router.url.includes('main/package/information')) || (!this.router.url.includes('main/package/withdraw')) || (!this.router.url.includes('main/package/changepassword'))
-      //     || (!this.router.url.includes('main/package/report'))){
-      //     this.navCtrl.navigateBack('main');
-      //   }
-      //   return;
-      // }
-      if((this.router.url.includes('main/mainpage'))){
+      if((url.includes('main/order'))){
+        if((!url.includes('main/order/detail'))){
+          this.navCtrl.navigateBack('main/mainpage');
+          return;
+        }
+      }
+      if((url.includes('main/setting'))){
+        if((!url.includes('main/setting/information')) && (!url.includes('main/setting/withdraw')) && (!url.includes('main/setting/changepassword')) && (!url.includes('main/setting/report'))){
+          this.navCtrl.navigateBack('main/mainpage');
+          return;
+        }
+      }
+      if((url.includes('main/mainpage'))){
         if (Date.now() - this.lastBack < 500) { // logic for double tap: delay of 500ms between two clicks of back button
           this.isOpenExit = true;
-          this.dt.detectChanges();
         }
         this.lastBack= Date.now();
         return;
@@ -140,19 +146,8 @@ export class MainPage implements OnInit {
 
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
-    this.dt.detectChanges();
-    // let selected = this.rt.snapshot.queryParams["selected"];
-    // if (selected != null) {
-    //   this.selected = selected;
-    //   switch(selected){
-    //     case 0:
-    //     case 3:
-    //       break;
-    //   }
-    //   this.dt.detectChanges();
-    // }
-    this.routerOutlet.swipeGesture = false; 
     
+    this.routerOutlet.swipeGesture = false; 
   } 
   //#endregion
 
@@ -162,46 +157,34 @@ export class MainPage implements OnInit {
     if (tab) {
       switch(tab){
         case 'home':
-          if(this.selected == 1 || this.selected == 2 || this.selected == 3 || this.selected == 4)
-            this.navCtrl.navigateBack('main');
-          else
-            this.navCtrl.navigateForward('main');
+          this.navCtrl.navigateForward('main/mainpage');
           this.selected = 0;
           break;
         case 'package':
-          if(this.selected == 0)
-            this.navCtrl.navigateForward('main/package');
-          else
-            this.navCtrl.navigateBack('main/package');
+          this.navCtrl.navigateForward('main/package');
           this.selected = 1;
+          
           break;
-        case 'history':
-          if(this.selected == 0 || this.selected == 1)
-            this.navCtrl.navigateForward('main/history');
-          else
-            this.navCtrl.navigateBack('main/history');
+        case 'order':
+          this.navCtrl.navigateForward('main/order');
           this.selected = 2;
           break;
         case 'notification':
-          if(this.selected == 0 || this.selected == 1 || this.selected == 2)
-            this.navCtrl.navigateForward('main/notification');
-          else
-            this.navCtrl.navigateBack('main/notification');
+          this.navCtrl.navigateForward('main/notification');
           this.selected = 3;
           break;
         case 'setting':
-          if(this.selected == 0 || this.selected == 1 || this.selected == 2 || this.selected == 3)
-            this.navCtrl.navigateForward('main/setting');
-          else
-            this.navCtrl.navigateBack('main/setting');
+          this.navCtrl.navigateForward('main/setting');
           this.selected = 4;
           break;
       }
+      
     }
   }
   //#endregion
 
   //#region Function
+
   onCopy(){
     this.cancelCopy();
     this.navCtrl.navigateForward('main/package/create',{queryParams:{code:this.textCopy}});
@@ -209,10 +192,11 @@ export class MainPage implements OnInit {
 
   cancelCopy(){
     this.isOpenCopy = false;
+    this.dt.detectChanges();
     Clipboard.write({
       string: ""
     });
-    this.dt.detectChanges();
+    
   }
 
   async onCheckLogin(){
@@ -231,13 +215,14 @@ export class MainPage implements OnInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'checklogin', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+    this.api.execByBody('Authencation', 'checklogin', messageBody).pipe(takeUntil(this.destroy$)).subscribe(async (res:any)=>{
       if (res && res?.isError) {
         this.isOpenCopy = false;
         this.storage.remove('isLogin');
         this.navCtrl.navigateBack('home',{queryParams:{loginError:JSON.stringify(res)}});
-        this.dt.detectChanges();
         this.onDestroy();
+      }else{
+        await this.storage.setAccount(username);
       }
     })
   }

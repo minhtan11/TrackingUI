@@ -16,61 +16,134 @@ import { PreviousRouterServiceService } from 'src/app/previous-router-service/pr
 @Component({
   selector: 'app-package-page',
   templateUrl: './package-page.component.html',
-  styleUrls: ['./package-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./package-page.component.scss']
 })
-export class PackagePageComponent  implements OnInit,AfterViewInit {
+export class PackagePageComponent implements OnInit, AfterViewInit {
   //#region Contrucstor
   @ViewChild(IonContent) content: IonContent;
-  isReview:any;
-  pageNum:any = 1;
-  pageSize:any = 20;
-  fromDate:any = '';
-  toDate:any = '';
-  username:any;
-  status:any = 0;
-  id:any='';
-  lstData:any = [];
-  isEmpty:any = false;
-  total:any = 0;
-  isload:any=true;
-  isconnected:any = true;
-  isHideFooter:any=false;
-  isOpenEditPackage:any = false;
-  isOpenCheckPackage:any = false;
-  isOpenCheckPackage2:any = false;
-  isOpenCancelPackage:any = false;
-  isOpenRestorePackage:any = false;
-  isOpenDeletePackage:any = false;
-  isOpenFilter:any = false;
-  itemSelected:any;
-  firstLoad:any = true;
+  isReview: any;
+  pageNum: any = 1;
+  pageSize: any = 20;
+  fromDate: any = '';
+  toDate: any = '';
+  username: any;
+  status: any = 0;
+  id: any = '';
+  lstData: any = [];
+  isEmpty: any = false;
+  total: any = 0;
+  isload: any = true;
+  isconnected: any = true;
+  isHideFooter: any = false;
+  isOpenEditPackage: any = false;
+  isOpenCheckPackage: any = false;
+  isOpenCheckPackage2: any = false;
+  isOpenCancelPackage: any = false;
+  isOpenRestorePackage: any = false;
+  isOpenDeletePackage: any = false;
+  isOpenFilter: any = false;
+  itemSelected: any;
+  firstLoad: any = true;
+  total0: any;
+  total1: any;
+  total2: any;
+  total3: any;
+  total4: any;
+  total5: any;
+  total9: any;
+  total10: any;
+  total11: any;
   private destroy$ = new Subject<void>();
   formGroup!: FormGroup;
   constructor(
-    private dt : ChangeDetectorRef,
-    private api : ApiserviceComponent,
-    private rt : ActivatedRoute,
+    private dt: ChangeDetectorRef,
+    private api: ApiserviceComponent,
+    private rt: ActivatedRoute,
     private notification: NotificationServiceComponent,
     private navCtrl: NavController,
     private storage: StorageService,
     private router: Router,
     private platform: Platform,
     private formBuilder: FormBuilder,
-    private previous:PreviousRouterServiceService
-  ) { 
+    private previous: PreviousRouterServiceService
+  ) {
     router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {        
+      if (event instanceof NavigationEnd) {
         if (event && !(event.urlAfterRedirects.includes('/main/package/create')) && !(event.urlAfterRedirects.includes('/main/package/detail'))
           && !(event.urlAfterRedirects.includes('/main/package/orderstatus'))) {
           let type = this.rt.snapshot.queryParams['type'];
-          switch(type){
+          switch (type) {
             case 'add':
               this.isload = true;
               this.pageNum = 1;
               this.isEmpty = false;
               this.content.scrollToTop();
               this.loadData();
+              this.getTotal();
+              break;
+            case 'change':
+              let data = JSON.parse(this.rt.snapshot.queryParams['dataUpdate']);
+              if (data) {
+                let index = this.lstData.findIndex((x: any) => x.id == data.id);
+                if (index > -1) {
+                  this.lstData[index] = data;
+                }
+              }
+              break;
+            case 'cancel':
+              let dataCancel = JSON.parse(this.rt.snapshot.queryParams['dataCancel']);
+              if (dataCancel) {
+                if (this.status == 0) {
+                  let index = this.lstData.findIndex((x: any) => x.id == dataCancel.id);
+                  if (index > -1) {
+                    this.lstData[index] = dataCancel;
+                  }
+                  this.getTotal();
+                  return;
+                }
+                if (this.status == 1) {
+                  let index = this.lstData.findIndex((x: any) => x.id == dataCancel.id);
+                  if (index > -1) {
+                    this.lstData.splice(index, 1);
+                    if (this.lstData.length == 0) this.isEmpty = true;
+                  }
+                  this.getTotal();
+                  return;
+                }
+              }
+              break;
+            case 'restore':
+              let dataRestore = JSON.parse(this.rt.snapshot.queryParams['dataRestore']);
+              if (dataRestore) {
+                if (this.status == 0) {
+                  let index = this.lstData.findIndex((x: any) => x.id == dataRestore.id);
+                  if (index > -1) {
+                    this.lstData[index] = dataRestore;
+                  }
+                  this.getTotal();
+                  return;
+                }
+                if (this.status == 9) {
+                  let index = this.lstData.findIndex((x: any) => x.id == dataRestore.id);
+                  if (index > -1) {
+                    this.lstData.splice(index, 1);
+                    if (this.lstData.length == 0) this.isEmpty = true;
+                  }
+                  this.getTotal();
+                  return;
+                }
+              }
+              break;
+            case 'delete':
+              let datas = JSON.parse(this.rt.snapshot.queryParams['dataDelete']);
+              if (datas) {
+                let index = this.lstData.findIndex((x: any) => x.id == datas.id);
+                if (index > -1) {
+                  this.lstData.splice(index, 1);
+                  if (this.lstData.length == 0) this.isEmpty = true;
+                }
+              }
+              this.getTotal();
               break;
           }
         }
@@ -87,21 +160,22 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     });
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
+    
     Keyboard.addListener('keyboardWillShow', info => {
       this.isHideFooter = true;
-      this.dt.detectChanges();
+
     });
 
     Keyboard.addListener('keyboardWillHide', () => {
       this.isHideFooter = false;
-      this.dt.detectChanges();
+
     });
     // Network.addListener('networkStatusChange', status => {
     //   this.isconnected = status.connected;
     //   if (status.connected && status.connectionType != 'none') {
     //     this.isloadpage = true;
-    //     this.dt.detectChanges();
+    //     
     //     setTimeout(() => {
     //       this.loadData();
     //     }, 500);  
@@ -111,23 +185,21 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     //     this.isload = true;
     //     this.pageNum = 1;
     //     this.isEmpty = false;
-    //     this.dt.detectChanges();
+    //     
     //   }
     // });
   }
 
-  async ionViewWillEnter(){
+  async ionViewWillEnter() {
     this.isReview = await this.storage.get('isReview');
     let status = this.rt.snapshot.queryParams["status"];
     if (status) {
       this.status = status;
-      this.dt.detectChanges();
     }
     this.init();
-    this.dt.detectChanges();
   }
 
-  ionViewWillLeave(){
+  ionViewWillLeave() {
     this.onDestroy();
   }
   //#endregion 
@@ -138,24 +210,25 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   //   return index; 
   // }
 
-  onDestroy(){
+  onDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  sortData(status:any){
-    if(this.status == status) return;
+  sortData(status: any) {
+    if (this.status == status) return;
     this.status = status;
-    if(!this.isconnected) return;
+    if (!this.isconnected) return;
     this.isload = true;
     this.pageNum = 1;
     this.lstData = [];
     this.isEmpty = false;
-    this.dt.detectChanges();
+    this.content.scrollToTop();
     this.loadData();
   }
 
-  loadData(){
+  async loadData() {
+    let username = await this.storage.get('username');
     let data = {
       status: this.status,
       id: this.id,
@@ -163,47 +236,61 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
       toDate: this.formGroup.value.toDate,
       pageNum: this.pageNum,
       pageSize: this.pageSize,
+      userName: username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'package', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      } else {
+        let oData = res[1];
+        this.lstData = oData[0];
+        if (this.lstData.length == 0) this.isEmpty = true;
+        if (this.lstData.length == oData[1]) this.isload = false;
+        if (this.firstLoad) this.firstLoad = false;
+
+      }
+    })
+  }
+
+  getTotal() {
+    let data = {
       userName: this.username
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.isLoad(true);
-    setTimeout(() => {
-      this.api.execByBody('Authencation', 'package', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res: any) =>{
-          if (res[0]) {
-            this.notification.showNotiError('', res[1].message);
-          }else{
-            let oData = res[1];
-            this.lstData = oData[0];
-            if (this.lstData.length == 0) this.isEmpty = true;
-            if (this.lstData.length == oData[1]) this.isload = false;
-            if(this.firstLoad) this.firstLoad = false;
-            this.dt.detectChanges();
-          }
-        },
-        complete:()=>{
-          this.api.isLoad(false);
-        }
-      })
-    }, 1000);
+    this.api.execByBody('Authencation', 'gettotalpackage', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+      } else {
+        this.total0 = res[1];
+        this.total1 = res[2];
+        this.total2 = res[3];
+        this.total3 = res[4];
+        this.total4 = res[5];
+        this.total5 = res[6];
+        this.total9 = res[7];
+        this.total10 = res[8];
+        this.total11 = res[9];
+      }
+    })
   }
 
-  createPackage(){
-    this.onDestroy();
+  createPackage() {
     this.navCtrl.navigateForward('main/package/create');
   }
 
-  onCopy(){
-    this.notification.showNotiSuccess('','Đã Sao chép',1000);
+  onCopy() {
+    this.notification.showNotiSuccess('', 'Đã Sao chép', 1000);
   }
 
-  viewDetail(data:any){
-    this.navCtrl.navigateForward('main/package/detail',{queryParams:{data:JSON.stringify(data)}});
+  viewDetail(data: any) {
+    this.navCtrl.navigateForward('main/package/detail', { queryParams: { id: data.packageCode } });
   }
 
-  onIonInfinite(event:any){ 
+  onIonInfinite(event: any) {
     if (this.isload) {
       this.pageNum += 1;
       let data = {
@@ -221,29 +308,25 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
       this.api.execByBody('Authencation', 'package', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
         if (res[0]) {
           this.notification.showNotiError('', res[1].message);
-        }else{
+        } else {
           let oData = res[1];
-          oData[0].forEach((data:any) => {
+          oData[0].forEach((data: any) => {
             this.lstData.push(data);
           });
-          if(this.lstData.length == oData[1]) this.isload = false;
+          if (this.lstData.length == oData[1]) this.isload = false;
           this.onDestroy();
           setTimeout(() => {
             (event as InfiniteScrollCustomEvent).target.complete();
-            this.dt.detectChanges();
+
           }, 500);
         }
       })
     }
   }
 
-  onback(){
-    this.navCtrl.navigateBack('main',{queryParams:{selected:0}});
-  }
-
-  ionChange(event:any){
+  ionChange(event: any) {
     this.id = event?.detail?.value;
-    if(this.id == null || this.id == '') this.id = '';
+    if (this.id == null || this.id == '') this.id = '';
     this.lstData = [];
     this.pageNum = 1;
     this.isload = true;
@@ -253,9 +336,11 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     this.loadData();
   }
 
-  async init(){
-    if(!this.username) this.username = await this.storage.get('username');
+  async init() {
+    this.lstData = [];
+    this.username = await this.storage.get('username');
     this.loadData();
+    this.getTotal();
     // let type = this.rt.snapshot.queryParams['type'];
     // switch(type){
     //   case 'add':
@@ -265,34 +350,9 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     //     this.content.scrollToTop();
     //     this.loadData();
     //     break;
-    //   // case 'change':
-    //   //   let data = JSON.parse(this.rt.snapshot.queryParams['dataUpdate']);
-    //   //   if(data){
-    //   //     let index = this.lstData.findIndex((x:any) => x.id == data.id);
-    //   //     if(index > -1){
-    //   //       this.lstData[index] = data;
-    //   //       this.dt.detectChanges();
-    //   //     } 
-    //   //   }
-    //   //   break;
-    //   // case 'delete':
-    //   //   let datas = JSON.parse(this.rt.snapshot.queryParams['dataDelete']);
-    //   //   if(datas){
-    //   //     let index = this.lstData.findIndex((x:any) => x.id == datas.id);
-    //   //     if(index > -1){
-    //   //       this.lstData.splice(index,1);
-    //   //       if(this.lstData.length == 0) this.isEmpty = true;
-    //   //       this.dt.detectChanges();
-    //   //     } 
-    //   //   }
-    //   //   break;
+
+
     //   default:
-    //     // if (this.lstData && this.lstData.length == 0 && this.firstLoad) {
-    //     //   this.isload = true;
-    //     //   this.pageNum = 1;
-    //     //   this.isEmpty = false;
-    //     //   this.loadData();
-    //     // }
     //     this.isload = true;
     //     this.pageNum = 1;
     //     this.isEmpty = false;
@@ -302,113 +362,99 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
   }
 
   //#region Edit package
-  openPopPackage(item:any){
-    this.itemSelected = {...item};
+  openPopPackage(item: any) {
+    this.itemSelected = { ...item };
     this.isOpenEditPackage = true;
   }
 
-  cancelEdit(){
+  cancelEdit() {
     this.isOpenEditPackage = false;
     this.dt.detectChanges();
   }
 
-  editPackage(item:any){
+  editPackage(item: any) {
     this.cancelEdit();
     let data = JSON.stringify(item);
-    this.navCtrl.navigateForward('main/package/create',{queryParams:{data:data,isEdit:true}});
+    this.navCtrl.navigateForward('main/package/create', { queryParams: { data: data, isEdit: true } });
   }
 
   //#endregion Edit package
 
   //#region CheckPackage
-  openPopCheckPackage(item:any){
-    this.itemSelected = {...item};
+  openPopCheckPackage(item: any) {
+    this.itemSelected = { ...item };
     this.isOpenCheckPackage = true;
   }
 
-  cancelCheck(){
+  cancelCheck() {
     this.isOpenCheckPackage = false;
     this.dt.detectChanges();
   }
 
-  openPopCheckPackage2(item:any){
-    this.itemSelected = {...item};
+  openPopCheckPackage2(item: any) {
+    this.itemSelected = { ...item };
     this.isOpenCheckPackage2 = true;
-    this.dt.detectChanges();
+
   }
 
-  cancelCheck2(){
+  cancelCheck2() {
     this.isOpenCheckPackage2 = false;
     this.dt.detectChanges();
   }
 
-  continuteCheck(item:any){
+  continuteCheck(item: any) {
     this.cancelCheck();
-    this.dt.detectChanges();
     let data = {
       id: item.packageCode,
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.isLoad(true);
-    setTimeout(() => {
-      this.api.execByBody('Authencation', 'checkavailable', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
-        if (res[0]) {
-          this.notification.showNotiError('', res[1].message);
-          this.api.isLoad(false);
+    this.api.execByBody('Authencation', 'checkavailable', messageBody, true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      } else {
+        if (res[1] == 0) {
+          this.openPopCheckPackage2(item);
         } else {
-          if (res[1] == 0) {
-            this.api.isLoad(false);
-            this.openPopCheckPackage2(item);
-          }else{
-            this.checkPackage(item);
-          }
+          this.checkPackage(item);
         }
-      })
-    }, 500);
+      }
+    })
   }
 
-  checkPackage(item:any){
+  checkPackage(item: any) {
     this.cancelCheck2();
-    this.api.isLoad(true);
-    setTimeout(() => {
-      let data = {
-        id: item.packageCode,
-        userName: this.username
+    let data = {
+      id: item.packageCode,
+      userName: this.username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'checkstatus', messageBody, true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      } else {
+        this.navCtrl.navigateForward('main/package/orderstatus', { queryParams: { data: JSON.stringify(res[1]) } });
       }
-      let messageBody = {
-        dataRequest: JSON.stringify(data)
-      };
-      this.api.execByBody('Authencation', 'checkstatus', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res:any)=>{
-          if (res[0]) {
-            this.notification.showNotiError('', res[1].message);
-          } else {
-            this.navCtrl.navigateForward('main/package/orderstatus',{ queryParams: {data: JSON.stringify(res[1])}});
-          }
-        },
-        complete:()=>{
-          this.api.isLoad(false);
-          this.onDestroy();
-        }
-      })
-    }, 500);
+      this.onDestroy();
+    })
   }
   //#endregion CheckPackage
 
   //#region CancelPackage
-  openPopCancelPackage(item:any){
-    this.itemSelected = {...item};
+  openPopCancelPackage(item: any) {
+    this.itemSelected = { ...item };
     this.isOpenCancelPackage = true;
   }
 
-  cancelPopPackage(){
+  cancelPopPackage() {
     this.isOpenCancelPackage = false;
     this.dt.detectChanges();
   }
 
-  cancelPackage(item:any){
+  cancelPackage(item: any) {
     this.cancelPopPackage();
     let data = {
       id: item.id,
@@ -417,48 +463,52 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.isLoad(true);
-    setTimeout(() => {
-      this.api.execByBody('Authencation', 'cancel', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res:any)=>{
-          if (res[0]) {
-            this.notification.showNotiError('', res[1].message);
-          }else{
-            if (!res[1].isError) {
-              this.notification.showNotiSuccess('', res[1].message);
-              if(res[2]){
-                let index = this.lstData.findIndex((x: any) => x.id == res[2].id);
-                if (index > -1) {
-                  this.lstData[index] = res[2];
-                  this.dt.detectChanges();
-                } 
+    this.api.execByBody('Authencation', 'cancel', messageBody, true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      } else {
+        if (!res[1].isError) {
+          this.notification.showNotiSuccess('', res[1].message);
+          if (res[2]) {
+            if (this.status == 0) {
+              let index = this.lstData.findIndex((x: any) => x.id == res[2].id);
+              if (index > -1) {
+                this.lstData[index] = res[2];
               }
-            } else {
-              this.notification.showNotiError('', res[1].message);
+              this.getTotal();
+              return;
+            }
+            if (this.status == 1) {
+              let index = this.lstData.findIndex((x: any) => x.id == res[2].id);
+              if (index > -1) {
+                this.lstData.splice(index, 1);
+                if (this.lstData.length == 0) this.isEmpty = true;
+              }
+              this.getTotal();
+              return;
             }
           }
-        },
-        complete:()=>{
-          this.api.isLoad(false);
-          this.onDestroy();
+        } else {
+          this.notification.showNotiError('', res[1].message);
         }
-      })
-    }, 1000);
+      }
+      this.onDestroy();
+    })
   }
   //#endregion
 
   //#region restorePackage
-  openPopRestorePackage(item:any){
-    this.itemSelected = {...item};
+  openPopRestorePackage(item: any) {
+    this.itemSelected = { ...item };
     this.isOpenRestorePackage = true;
   }
 
-  cancelRestorePackage(){
+  cancelRestorePackage() {
     this.isOpenRestorePackage = false;
     this.dt.detectChanges();
   }
 
-  restorePackage(item:any){
+  restorePackage(item: any) {
     this.cancelRestorePackage();
     let data = {
       id: item.id,
@@ -467,48 +517,52 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.isLoad(true);
-    setTimeout(() => {
-      this.api.execByBody('Authencation', 'restorepackage', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res:any)=>{
-          if (res[0]) {
-            this.notification.showNotiError('', res[1].message);
-          }else{
-            if (!res[1].isError) {
-              this.notification.showNotiSuccess('', res[1].message);
-              if(res[2]){
-                let index = this.lstData.findIndex((x: any) => x.id == res[2].id);
-                if (index > -1) {
-                  this.lstData[index] = res[2];
-                  this.dt.detectChanges();
-                } 
+    this.api.execByBody('Authencation', 'restorepackage', messageBody, true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      } else {
+        if (!res[1].isError) {
+          this.notification.showNotiSuccess('', res[1].message);
+          if (res[2]) {
+            if (this.status == 0) {
+              let index = this.lstData.findIndex((x: any) => x.id == res[2].id);
+              if (index > -1) {
+                this.lstData[index] = res[2];
               }
-            } else {
-              this.notification.showNotiError('', res[1].message);
+              this.getTotal();
+              return;
+            }
+            if (this.status == 9) {
+              let index = this.lstData.findIndex((x: any) => x.id == res[2].id);
+              if (index > -1) {
+                this.lstData.splice(index, 1);
+                if (this.lstData.length == 0) this.isEmpty = true;
+              }
+              this.getTotal();
+              return;
             }
           }
-        },
-        complete:()=>{
-          this.api.isLoad(false);
-          this.onDestroy();
+        } else {
+          this.notification.showNotiError('', res[1].message);
         }
-      })
-    }, 1000);
+      }
+      this.onDestroy();
+    })
   }
   //#endregion
 
   //#region DeletePackage
-  openPopDeletePackage(item:any){
-    this.itemSelected = {...item};
+  openPopDeletePackage(item: any) {
+    this.itemSelected = { ...item };
     this.isOpenDeletePackage = true;
   }
 
-  cancelDeletePackage(){
+  cancelDeletePackage() {
     this.isOpenDeletePackage = false;
     this.dt.detectChanges();
   }
 
-  deletePackage(item:any){
+  deletePackage(item: any) {
     this.cancelDeletePackage();
     let data = {
       id: item.id,
@@ -516,59 +570,51 @@ export class PackagePageComponent  implements OnInit,AfterViewInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.isLoad(true);
-    setTimeout(() => {
-      this.api.execByBody('Authencation', 'deletepackage', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res:any)=>{
-          if (res[0]) {
-            this.notification.showNotiError('', res[1].message);
-          }else{
-            if (!res[1].isError) {
-              this.notification.showNotiSuccess('', res[1].message);
-              let index = this.lstData.findIndex((x: any) => x.id == item.id);
-              if (index > -1) {
-                this.lstData.splice(index,1);
-                if(this.lstData.length == 0) this.isEmpty = true;
-                this.dt.detectChanges();
-              } 
-            } else {
-              this.notification.showNotiError('', res[1].message);
-            }
+    this.api.execByBody('Authencation', 'deletepackage', messageBody, true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      } else {
+        if (!res[1].isError) {
+          this.notification.showNotiSuccess('', res[1].message);
+          let index = this.lstData.findIndex((x: any) => x.id == item.id);
+          if (index > -1) {
+            this.lstData.splice(index, 1);
+            if (this.lstData.length == 0) this.isEmpty = true;
           }
-        },
-        complete:()=>{
-          this.api.isLoad(false);
-          this.onDestroy();
+          this.getTotal();
+        } else {
+          this.notification.showNotiError('', res[1].message);
         }
-      })
-    }, 1000);
+      }
+      this.onDestroy();
+    })
   }
   //#endregion
   //#endregion
 
   //#region FilterPackage
-  openPopFilter(){
+  openPopFilter() {
     this.isOpenFilter = true;
   }
 
-  cancelFilter(){
+  cancelFilter() {
     this.isOpenFilter = false;
     this.dt.detectChanges();
   }
 
-  onFilter(){
+  onFilter() {
     this.isload = true;
     this.pageNum = 1;
     this.lstData = [];
     this.isEmpty = false;
-    this.dt.detectChanges();
+    this.content.scrollToTop();
     this.loadData();
     this.cancelFilter();
   }
 
-  clearFilter(){
+  clearFilter() {
     this.formGroup.reset();
-    this.dt.detectChanges();
+
   }
   //#endregion
 }

@@ -15,7 +15,6 @@ import { App } from '@capacitor/app';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
   isload: any = true;
@@ -31,8 +30,12 @@ export class AppComponent implements OnInit {
     private fcmService: FcmService,
   ) { }
 
-  ngOnInit() {
-    
+  async ngOnInit() {
+    let lstUser = await this.storage.get('lstUser');
+    if (!lstUser) {
+      let lstUser:any = '';
+      this.storage.set('lstUser', lstUser);
+    }
   }
 
   ngAfterViewInit() {
@@ -51,14 +54,14 @@ export class AppComponent implements OnInit {
   async loadFlashScreen() {
     let isLogin = await this.storage.get('isLogin');
     if (isLogin) {
-      this.navCtrl.navigateForward('main',{queryParams:{checklogin:true}});
+      this.navCtrl.navigateForward('main/mainpage',{queryParams:{checklogin:true}});
     }else{
       this.navCtrl.navigateForward('home');
     }
     setTimeout(() => {
       this.isload = false;
-      this.dt.detectChanges();
-    }, 4000);
+      //this.dt.detectChanges();
+    }, 3000);
   }
 
   getConfig(){

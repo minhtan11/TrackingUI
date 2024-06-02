@@ -1,23 +1,26 @@
 import { HttpParams } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, OnInit } from '@angular/core';
 import {ActivatedRoute, Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
+import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 import { StorageService } from 'src/app/storage-service/storage.service';
 
 @Component({
   selector: 'app-order-page-detail',
   templateUrl: './order-page-detail.component.html',
   styleUrls: ['./order-page-detail.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderPageDetailComponent  implements OnInit,DoCheck {
+export class OrderPageDetailComponent {
+  id:any;
   oData:any;
   username:any;
   lstPackage:any;
   isOpenPayment:any = false;
+  previousUrl:any;
+  isChange:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
@@ -26,21 +29,39 @@ export class OrderPageDetailComponent  implements OnInit,DoCheck {
     private storage: StorageService,
     private api : ApiserviceComponent,
     private notification: NotificationServiceComponent,
+    private previous:PreviousRouterServiceService,
+    private platform : Platform,
+    private router:Router,
   ) { 
-    this.oData = JSON.parse(this.rt.snapshot.queryParams['data']);
   }
 
   async ngOnInit() {
-    this.username = await this.storage.get('username');
+    
   }
 
-  ngDoCheck(): void {
-    //this.dt.detectChanges();
+  ngAfterViewInit() {
+    this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+      if((this.router.url.includes('main/order/detail'))){
+        this.onback();
+        return;
+      }
+      processNextHandler();
+    })
   }
   
 
-  ionViewWillEnter(){
-    this.getDetailPackage();
+  async ionViewWillEnter(){
+    this.username = await this.storage.get('username');
+    let id = this.rt.snapshot.queryParams['id'];
+    if(id) this.id = id;
+    this.getDetail();
+    if (!this.previousUrl) {
+      let url = this.previous.getPreviousUrl();
+      if (url) {
+        let array = url.split('?');
+        this.previousUrl = array[0];
+      }
+    } 
   }
 
   ionViewWillLeave(){
@@ -51,38 +72,6 @@ export class OrderPageDetailComponent  implements OnInit,DoCheck {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
-  // async onPayment(){
-  //   let token = await this.storage.get('token');
-  //   let data = {
-  //     id: this.oData.id,
-  //     userName: this.username,
-  //     token:token
-  //   }
-  //   let messageBody = {
-  //     dataRequest: JSON.stringify(data)
-  //   };
-  //   this.api.isLoad(true);
-  //   setTimeout(() => {
-  //     this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe({
-  //       next:(res:any)=>{
-  //         if (res && !res.isError) {
-  //           this.oData = res.data;
-  //           this.arrayChange.push(res.data);
-  //           this.notification.showNotiSuccess('',res.message);
-  //           this.navCtrl.navigateBack('main/order',{queryParams:{type:'change',lstdata:JSON.stringify(this.arrayChange)}});
-  //           this.dt.detectChanges();
-  //         }else{
-  //           this.notification.showNotiError('',res.message);
-  //         }
-  //       },
-  //       complete:()=>{
-  //         this.api.isLoad(false);
-  //         this.onDestroy();
-  //       }
-  //     })
-  //   }, 1000);
-  // }
 
   openPayment(item:any){
     this.isOpenPayment = true;
@@ -102,44 +91,45 @@ export class OrderPageDetailComponent  implements OnInit,DoCheck {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.isLoad(true);
-    setTimeout(() => {
-      this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res:any)=>{
-          if (res && !res.isError) {
-            this.notification.showNotiSuccess('',res.message);
-            this.navCtrl.navigateBack('main/order',{queryParams:{type:'change',dataUpdate:JSON.stringify(res?.data)}});
-          }else{
-            this.notification.showNotiError('',res.message);
-          }
-        },
-        complete:()=>{
-          this.api.isLoad(false);
-          this.onDestroy();
-        }
-      })
-    }, 1000);
+    this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      if (res && !res.isError) {
+        this.notification.showNotiSuccess('',res.message);
+        this.oData = res?.data;
+        this.isChange = true;
+      }else{
+        this.notification.showNotiError('',res.message);
+      }
+      this.onDestroy();
+    })
   }
 
   onback(){
-    this.navCtrl.navigateBack('main/order');
+    if(this.previousUrl.includes('/main/order')){
+      if(this.isChange){
+        this.navCtrl.navigateBack(this.previousUrl,{queryParams:{type:'change',dataUpdate:JSON.stringify(this.oData)}});
+      }else{
+        this.navCtrl.navigateBack(this.previousUrl);
+      }
+    }else{
+      this.navCtrl.navigateBack(this.previousUrl);
+    }
   }
 
-  getDetailPackage(){
+  getDetail(){
     let data = {
-      recID: this.oData.recID,
+      recID: this.id,
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'getlistpackage', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+    this.api.execByBody('Authencation', 'getdetail', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res[0]) {
         this.notification.showNotiError('', res[1].message);
       }else{
-        this.lstPackage = res[1];
-        this.dt.detectChanges();
-        this.onDestroy();
+        this.oData = res[1];
+        this.lstPackage = res[2];
       }
+      this.onDestroy();
     })
   }
 

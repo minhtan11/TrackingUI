@@ -1,18 +1,18 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Keyboard } from '@capacitor/keyboard';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
+import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 import { StorageService } from 'src/app/storage-service/storage.service';
 
 @Component({
   selector: 'app-report-page',
   templateUrl: './report-page.component.html',
   styleUrls: ['./report-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReportPageComponent  implements OnInit {
   @ViewChild('eleType') eleType: any;
@@ -20,6 +20,7 @@ export class ReportPageComponent  implements OnInit {
   @ViewChild('eleContext') eleContext: any;
   isHideFooter:any=false;
   formGroup!: FormGroup;
+  previousUrl:any;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -29,6 +30,9 @@ export class ReportPageComponent  implements OnInit {
     private navCtrl: NavController,
     private storage: StorageService,
     private formBuilder: FormBuilder,
+    private previous:PreviousRouterServiceService,
+    private platform : Platform,
+    private router:Router,
   ) { 
   }
 
@@ -47,17 +51,32 @@ export class ReportPageComponent  implements OnInit {
   async ngAfterViewInit() {
     Keyboard.addListener('keyboardWillShow', info => {
       this.isHideFooter = true;
-      this.dt.detectChanges();
     });
 
     Keyboard.addListener('keyboardWillHide', () => {
       this.isHideFooter = false;
-      this.dt.detectChanges();
     });
+    this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+      if((this.router.url.includes('main/setting/report'))){
+        this.onback();
+        return;
+      }
+      processNextHandler();
+    })
+  }
+
+  ionViewWillEnter(){
+    if (!this.previousUrl) {
+      let url = this.previous.getPreviousUrl();
+      if (url) {
+        let array = url.split('?');
+        this.previousUrl = array[0];
+      }
+    } 
   }
 
   onback(){
-    this.navCtrl.navigateBack('main');
+    this.navCtrl.navigateBack(this.previousUrl);
   }
 
   onReport(){
@@ -76,24 +95,14 @@ export class ReportPageComponent  implements OnInit {
       this.eleContext.nativeElement.focus();
       return;
     }
-    this.api.isLoad(true);
-    setTimeout(async () => {
-      this.api.execByBody('Authencation','createcomplain',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res:any)=>{
-          if (res && !res?.isError) {
-            this.notification.showNotiSuccess('', res.message);
-            this.navCtrl.navigateBack('main/setting');
-            this.dt.detectChanges();
-          }else{
-            this.notification.showNotiError('',res?.message);
-            this.dt.detectChanges();
-          }
-        },
-        complete:()=>{
-          this.api.isLoad(false);
-        }
-      })
-    }, 1000);
+    this.api.execByBody('Authencation','createcomplain',this.formGroup.value,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      if (res && !res?.isError) {
+        this.notification.showNotiSuccess('', res.message);
+        this.navCtrl.navigateBack(this.previousUrl);
+        
+      }else{
+        this.notification.showNotiError('',res?.message);
+      }
+    })
   }
-
 }

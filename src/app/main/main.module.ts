@@ -37,6 +37,7 @@ import { ChangepasswordPageComponent } from './setting-page/changepassword-page/
 import { FormatdatePipe } from '../pipe/format-date/formatdate.pipe';
 import { ReportPageComponent } from './setting-page/report-page/report-page.component';
 import { PreviousRouterServiceService } from '../previous-router-service/previous-router-service.service';
+import { RelulationPageComponent } from './relulation-page/relulation-page.component';
 
 @NgModule({
   imports: [
@@ -54,10 +55,11 @@ import { PreviousRouterServiceService } from '../previous-router-service/previou
     ReactiveFormsModule,
     MatSelectModule,
     MatCheckboxModule,
-    ClipboardModule
+    ClipboardModule,
+    DecodeVNPipe,
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
-  ,DecodeVNPipe,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent,FormatdatePipe,ReportPageComponent],
+  ,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent,FormatdatePipe,ReportPageComponent,RelulationPageComponent],
   providers:[NotificationServiceComponent,DatePipe,PreviousRouterServiceService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

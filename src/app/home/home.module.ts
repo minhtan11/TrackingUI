@@ -14,6 +14,7 @@ import { ApiserviceComponent } from '../apiservice/apiservice.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
 import {MatSelectModule} from '@angular/material/select';
+import { DecodeVNPipe } from '../pipe/decode-VN/decode-vn.pipe';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatButtonModule,
     ReactiveFormsModule,
     MatSelectModule,
-    HttpClientModule 
+    HttpClientModule, 
+    DecodeVNPipe
   ],
   declarations: [HomePage,SignUpComponent],
   providers: [
@@ -37,6 +39,5 @@ import {MatSelectModule} from '@angular/material/select';
     NotificationServiceComponent,
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
   ]
-  
 })
 export class HomePageModule {}

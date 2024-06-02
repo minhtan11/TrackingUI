@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { Keyboard } from '@capacitor/keyboard';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,6 +9,7 @@ import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { Subject, takeUntil } from 'rxjs';
 import { StorageService } from 'src/app/storage-service/storage.service';
 import { Device } from '@capacitor/device';
+import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -30,6 +31,7 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
   formGroup!: FormGroup;
   image:any;
   isOpen:any = false;
+  previousUrl:any;
   private destroy$ = new Subject<void>();
   constructor(
     private dt : ChangeDetectorRef,
@@ -39,6 +41,8 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
     private notification: NotificationServiceComponent,
     private api: ApiserviceComponent,
     private storage: StorageService,
+    private previous:PreviousRouterServiceService,
+    private platform : Platform,
   ) { }
   //#endregion
 
@@ -70,6 +74,13 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
       this.isHideFooter = false;
       this.dt.detectChanges();
     });
+    this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+      if((this.router.url.includes('home/signup'))){
+        this.onback();
+        return;
+      }
+      processNextHandler();
+    })
   }
 
   ngOnDestroy(): void {
@@ -79,6 +90,16 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
   onDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  ionViewWillEnter(){
+    if (!this.previousUrl) {
+      let url = this.previous.getPreviousUrl();
+      if (url) {
+        let array = url.split('?');
+        this.previousUrl = array[0];
+      }
+    } 
   }
   
   ionViewWillLeave(){
@@ -143,21 +164,17 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
     if (token) {
       this.formGroup.patchValue({ tokenDevice: token });
     }
-    this.api.isLoad(true);
-    setTimeout(() => {
-      this.api.execByBody('Authencation','register',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res:any)=>{
-          if (res && !res?.isError) {
-            this.storage.set('username', this.formGroup.value.username);
-            this.navCtrl.navigateForward('main');
-          }else{
-            this.notification.showNotiError('',res?.message);
-          }
-        },complete : ()=>{
-          this.api.isLoad(false);
-        }
-      })
-    }, 1000);
+    this.api.execByBody('Authencation','register',this.formGroup.value,true).pipe(takeUntil(this.destroy$)).subscribe(async (res:any)=>{
+      if (res && !res?.isError) {
+        this.storage.set('username', this.formGroup.value.username.trim());
+        this.storage.set('password', this.formGroup.value.password.trim());
+        this.storage.set('isLogin', true);
+        await this.storage.setAccount(this.formGroup.value.username);
+        this.navCtrl.navigateForward('main/mainpage', { queryParams: { checklogin: false} });
+      }else{
+        this.notification.showNotiError('',res?.message);
+      }
+    })
   }
 
   async uploadImage(type:any){
@@ -187,7 +204,7 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
   }
 
   onback(){
-    this.navCtrl.navigateBack('home');
+    this.navCtrl.navigateBack(this.previousUrl);
   }
 
   onOpen(){

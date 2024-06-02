@@ -1,28 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Capacitor } from '@capacitor/core';
 import { NavController, Platform } from '@ionic/angular';
 import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 
 @Component({
-  selector: 'app-recharge-page',
-  templateUrl: './recharge-page.component.html',
-  styleUrls: ['./recharge-page.component.scss'],
+  selector: 'app-relulation-page',
+  templateUrl: './relulation-page.component.html',
+  styleUrls: ['./relulation-page.component.scss'],
 })
-export class RechargePageComponent  implements OnInit {
+export class RelulationPageComponent  implements OnInit {
   previousUrl:any;
   constructor(
     private navCtrl: NavController,
     private platform: Platform,
     private router: Router,
     private previous:PreviousRouterServiceService,
-  ) { 
+  ) { }
 
-  }
-
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
   async ionViewWillEnter(){
     if (!this.previousUrl) {
@@ -36,7 +31,7 @@ export class RechargePageComponent  implements OnInit {
 
   ngAfterViewInit() {
     this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
-      if((this.router.url.includes('main/recharge'))){
+      if((this.router.url.includes('main/regulation'))){
         this.onback();
         return;
       }
@@ -47,4 +42,5 @@ export class RechargePageComponent  implements OnInit {
   onback(){
     this.navCtrl.navigateBack(this.previousUrl);
   }
+
 }

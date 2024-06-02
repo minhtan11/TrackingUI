@@ -19,6 +19,7 @@ import { InfomationPageComponent } from './setting-page/infomation-page/infomati
 import { WithdrawPageComponent } from './setting-page/withdraw-page/withdraw-page.component';
 import { ChangepasswordPageComponent } from './setting-page/changepassword-page/changepassword-page.component';
 import { ReportPageComponent } from './setting-page/report-page/report-page.component';
+import { RelulationPageComponent } from './relulation-page/relulation-page.component';
 
 const routes: Routes = [
   {
@@ -30,8 +31,8 @@ const routes: Routes = [
         component: HomePageComponent,
       },
       {
-        path: 'history',
-        component: HistoryPageComponent,
+        path: 'order',
+        component: OrderPageComponent,
       },
       {
         path: 'notification',
@@ -45,12 +46,20 @@ const routes: Routes = [
         path: 'package',
         component: PackagePageComponent,
       },
-      {
-        path: '',
-        redirectTo: 'mainpage',
-        pathMatch: 'full'
-      },
+      // {
+      //   path: '',
+      //   redirectTo: 'mainpage',
+      //   pathMatch: 'full'
+      // },
     ]
+  },
+  {
+    path: 'history',
+    component: HistoryPageComponent,
+  },
+  {
+    path: 'regulation',
+    component: RelulationPageComponent,
   },
   {
     path: 'package/create',

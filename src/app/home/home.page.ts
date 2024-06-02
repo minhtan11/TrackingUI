@@ -12,12 +12,13 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { environment } from 'src/environments/environment';
 import { BiometricAuthError, BiometryType, NativeBiometric } from "capacitor-native-biometric";
 import { Device } from '@capacitor/device';
+import { PreviousRouterServiceService } from '../previous-router-service/previous-router-service.service';
+import { App } from '@capacitor/app';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage implements OnInit, AfterViewInit {
   //#region Contrucstor
@@ -31,8 +32,15 @@ export class HomePage implements OnInit, AfterViewInit {
   isLogin: any = true;
   userName:any;
   isAuthen:any = false;
+  isChangeAccount:any = false;
   dataLoginError:any;
   isOpenLoginError:any=false;
+  isOpenDeleteAccount:any=false;
+  oUser:any;
+  listUser:any = [];
+  lastBack:any = Date.now();
+  accountSelected:any;
+  isOpenExit:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -44,7 +52,8 @@ export class HomePage implements OnInit, AfterViewInit {
     private rt: ActivatedRoute,
     private navCtrl: NavController,
     private platform : Platform,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private previous:PreviousRouterServiceService,
   ) {
     
   }
@@ -62,19 +71,31 @@ export class HomePage implements OnInit, AfterViewInit {
     //   this.userName = username;
     //   this.formGroup.patchValue({userName:this.userName});
     //   this.isAuthen = true;
-    //   this.dt.detectChanges();
+    //  
     // } 
   }
 
   async ngAfterViewInit() {
     Keyboard.addListener('keyboardWillShow', info => {
       this.isHideFooter = true;
-      this.dt.detectChanges();
     });
 
     Keyboard.addListener('keyboardWillHide', () => {
       this.isHideFooter = false;
-      this.dt.detectChanges();
+    });
+    this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+      let array = this.router.url.split('?');
+      let url = array[0];
+      if((url.includes('home'))){
+        if((!url.includes('home/signup'))){
+          if (Date.now() - this.lastBack < 500) { // logic for double tap: delay of 500ms between two clicks of back button
+            this.isOpenExit = true;
+          }
+          this.lastBack= Date.now();
+          return;
+        }
+      }
+      processNextHandler();
     });
   }
 
@@ -84,13 +105,14 @@ export class HomePage implements OnInit, AfterViewInit {
       this.userName = username;
       this.formGroup.patchValue({userName:this.userName});
       this.isAuthen = true;
-      this.dt.detectChanges();
+      //this.getUser();
+      this.getlstUser();
     } 
     let loginError = this.rt.snapshot.queryParams["loginError"];
     if (loginError) {
       this.dataLoginError = JSON.parse(loginError);
       this.isOpenLoginError = true;
-      this.dt.detectChanges();
+     
     }
   }
 
@@ -132,24 +154,17 @@ export class HomePage implements OnInit, AfterViewInit {
     let messageBody = {
       dataRequest:JSON.stringify(data)
     };
-    this.api.isLoad(true);
-    setTimeout(() => {
-      this.api.execByBody('Authencation', 'login', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res:any)=>{
-          if (res && !res?.isError) {
-            this.storage.set('username', this.formGroup.value.userName);
-            this.storage.set('password', this.formGroup.value.passWord);
-            this.storage.set('isLogin', true);
-            this.navCtrl.navigateForward('main',{queryParams:{checklogin:false}});
-          } else {
-            this.notification.showNotiError('', res?.message);
-          }
-        },
-        complete : ()=>{
-          this.api.isLoad(false);
-        }
-      })
-    }, 1000);
+    this.api.execByBody('Authencation', 'login', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe(async (res:any)=>{
+      if (res && !res?.isError) {
+        this.storage.set('username', this.formGroup.value.userName.trim());
+        this.storage.set('password', this.formGroup.value.passWord.trim());
+        this.storage.set('isLogin', true);
+        await this.storage.setAccount(this.formGroup.value.userName);
+        this.navCtrl.navigateForward('main/mainpage',{queryParams:{checklogin:false}});
+      } else {
+        this.notification.showNotiError('', res?.message);
+      }
+    })
   }
 
   goSignUpPage() {
@@ -157,7 +172,17 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   changeAuthen(isAuthen:any){
+    this.cancelChangeAccount();
     this.isAuthen = isAuthen;
+    this.formGroup.patchValue({userName:''});
+  }
+
+  openChangeAccount(){
+    this.isChangeAccount = true;
+  }
+  
+  cancelChangeAccount(){
+    this.isChangeAccount = false;
     this.dt.detectChanges();
   }
 
@@ -238,29 +263,115 @@ export class HomePage implements OnInit, AfterViewInit {
       let messageBody = {
         dataRequest: JSON.stringify(data)
       };
-      this.api.isLoad(true);
-      setTimeout(() => {
-        this.api.execByBody('Authencation', 'login', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-          next: (res: any) => {
-            if (res && !res?.isError) {
-              this.storage.set('isLogin', true);
-              this.navCtrl.navigateForward('main', { queryParams: { checklogin: false } });
-            } else {
-              this.notification.showNotiError('', res?.message);
-            }
-          },
-          complete: () => {
-            this.api.isLoad(false);
-          }
-        })
-      }, 1000);
+      this.api.execByBody('Authencation', 'login', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+        if (res && !res?.isError) {
+          this.storage.set('isLogin', true);
+          this.navCtrl.navigateForward('main/mainpage', { queryParams: { checklogin: false} });
+        } else {
+          this.notification.showNotiError('', res?.message);
+        }
+      })
     }
+  }
+
+  async onChangeAccount(item:any){
+    this.cancelChangeAccount();
+    let username = item?.username;
+    let password = item?.password;
+    let token = await this.storage.get('token');
+    const info = await Device.getInfo();
+    const infoID = await Device.getId();
+    let deviceName = info.manufacturer + ' ' + info.model;
+    let deviceID = infoID.identifier;
+    let data = {
+      userName: username,
+      passWord: password,
+      token: token,
+      deviceName: deviceName,
+      deviceID: deviceID
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    }; 
+    this.api.execByBody('Authencation', 'login', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res && !res?.isError) {
+        this.storage.set('isLogin', true);
+        this.storage.set('username', item?.username);
+        this.storage.set('password', item?.password);
+        this.navCtrl.navigateForward('main/mainpage', { queryParams: { checklogin: false} });
+      } else {
+        this.notification.showNotiError('', res?.message);
+      }
+    })
   }
 
   cancelError(){
     this.isOpenLoginError = false;
     this.dt.detectChanges();
   }
+  
+  async getlstUser(){
+    let lstUser = await this.storage.get('lstUser');
+    let data = {
+      lstUser:lstUser,
+    }
+    let messageBody = {
+      dataRequest:JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'getlistuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+      }else{
+        this.listUser = res[1];
+        let index = this.listUser.findIndex((x:any) => x.username == this.userName)
+        if (index > -1) {
+          this.oUser = this.listUser[index];
+        }
+      }
+    })
+  }
 
+  openDeleteAccount(item:any){
+    this.accountSelected = {...item};
+    this.isOpenDeleteAccount = true;
+  }
+
+  cancelDeleteAccount(){
+    this.isOpenDeleteAccount = false;
+    this.dt.detectChanges();
+  }
+
+  async deleteAccountSession(item:any){
+    this.cancelDeleteAccount();
+    this.cancelChangeAccount();
+    let lstUser = await this.storage.get('lstUser');
+    let array = lstUser.split(';');
+    let index = array.findIndex((x:any) => x == item.username);
+    if (index > -1) {
+      array.splice(index, 1);
+      if (array.length == 1) {
+        let value = array[0];
+        lstUser = value;
+      }else if(array.length == 0){
+        lstUser = "";
+      }else{
+        lstUser = array.join(';');
+      }
+      this.storage.set('lstUser', lstUser);
+    }
+    let index2 = this.listUser.findIndex((x:any) => x.username == item.username);
+    if (index2 > -1) {
+      this.listUser.splice(index2, 1);
+    }
+  }
+
+  onExit(){
+    this.cancelExit();
+    App.exitApp();
+  }
+
+  cancelExit(){
+    this.isOpenExit = false;
+    this.dt.detectChanges();
+  }
   //#endregion
 }

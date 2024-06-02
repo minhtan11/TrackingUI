@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { Subject, filter, pairwise, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
+import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 
 @Component({
   selector: 'app-servicecharge-page',
@@ -13,7 +14,6 @@ import { NotificationServiceComponent } from 'src/app/notification-service/notif
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ServicechargePageComponent  implements OnInit {
-  platform:any = "";
   lst1:any;
   lst2:any;
   lst3:any;
@@ -25,22 +25,34 @@ export class ServicechargePageComponent  implements OnInit {
     private api: ApiserviceComponent,
     private notification: NotificationServiceComponent,
     private dt : ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private platform : Platform,
+    private previous:PreviousRouterServiceService,
   ) { 
-    router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
-        console.log('prev:', event.url);
-        this.previousUrl = event.url;
-      });
-    this.platform = Capacitor.getPlatform();
   }
 
   ngOnInit() {
     this.getFeeWeight();
   }
 
-  async ionViewWillEnter(){
+  ngAfterViewInit() {
+    this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+      if((this.router.url.includes('main/service-charge'))){
+        this.onback();
+        return;
+      }
+      processNextHandler();
+    })
+  }
+
+  ionViewWillEnter(){
+    if (!this.previousUrl) {
+      let url = this.previous.getPreviousUrl();
+      if (url) {
+        let array = url.split('?');
+        this.previousUrl = array[0];
+      }
+    } 
   }
 
   onDestroy() {
@@ -49,7 +61,7 @@ export class ServicechargePageComponent  implements OnInit {
   }
 
   onback(){
-    this.navCtrl.navigateBack('main');
+    this.navCtrl.navigateBack(this.previousUrl);
   }
 
   getFeeWeight(){

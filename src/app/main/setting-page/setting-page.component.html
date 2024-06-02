@@ -3,8 +3,8 @@
     <ion-title style="color: white !important;" class="dynamic-font text-dark">Tài khoản</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content style="--background:white !important;">
-  <div style="background-color: var(--ion-color-mat-accent) !important" class="w-100 h-100">
+<ion-content style="--background:var(--ion-color-mat-accent) !important;">
+  <div class="w-100 h-100">
     <div *ngIf="oUser == undefined" class="w-100 p-3 d-flex align-items-center" style="background-color: var(--ion-color-mat-primary) !important;">
       <ion-avatar style="padding: 0.2rem;background-color: white !important;">
         <ion-skeleton-text [animated]="true"></ion-skeleton-text>
@@ -153,14 +153,26 @@
                 </div>
                 <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
               </ion-item>
-              <ion-item class="p-2" (click)="onOpenLogout()" lines="none" [button]="true" detail="false" style="--background:white !important">
+              <!-- <ion-item class="p-2" (click)="onOpenLogout()" lines="none" [button]="true" detail="false" style="--background:white !important">
                 <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Đăng xuất</ion-text>
                 <img slot="end"  style="width: 2rem;height: 2rem;"  src="../../assets/image/icon-logout-setting.png" alt="">
-              </ion-item>
+              </ion-item> -->
             </ion-list>
           </ion-card-content>
         </ion-card>
       </ion-item-group>
+      <div class="w-100 d-flex align-items-center justify-content-center">
+        <ion-button (click)="onOpenLogout()" class="w-100 pr-2" style="--background: white !important;
+        --background-activated: white !important;">
+          <ion-text color="danger" mode="ios" class="font-weight-normal dynamic-font mr-2">Đăng xuất</ion-text>
+          <img slot="end"  style="width: 2rem;height: 2rem;"  src="../../assets/image/icon-logout-setting.png" alt="">
+        </ion-button>
+        <ion-button (click)="onOpenChangeAccount()" class="w-100" style="--background: white !important;
+        --background-activated: white !important;">
+          <ion-text style="color:orange !important" mode="ios" class="font-weight-normal dynamic-font mr-2">Đổi tài khoản</ion-text>
+          <img slot="end"  style="width: 2rem;height: 2rem;"  src="../../assets/image/icon-change-setting.png" alt="">
+        </ion-button>
+      </div>
     </div>
   </div>
   <!-- logout-->
@@ -178,7 +190,7 @@
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="onLogout()" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="onLogout()" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -209,7 +221,7 @@
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="onDelete()" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="onDelete()" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -273,4 +285,116 @@
     </ng-template>
   </ion-modal>
   <!-- support -->
+
+  <!-- changeaccount -->
+  <ion-modal style="--background:white !important" (willDismiss)="cancelChangeAccount()" [isOpen]="isOpenChangeAccount" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <ion-text class="dynamic-font text-center" style="color: var(--ion-color-mat-primary);">
+          <h3 class="font-weight-bold">Chuyển tài khoản</h3>
+        </ion-text>
+        <ion-list [inset]="true" style="background-color:white !important;">
+          <ng-container *ngFor="let item of listUser">
+            <ion-item *ngIf="item?.username != userName" class="pb-3" lines="none" style="background-color:white !important;">
+              <div (click)="onChangeAccount(item)"  class="w-100 d-flex align-items-center">
+                <ion-avatar style="width: 3rem;height: 3rem;"  class="mr-3" aria-hidden="true" slot="start">
+                  <img [src]="item?.img ? 'data:image/jpeg;base64,'+item?.img : '../../../assets/image/logo-user.png'" />
+                </ion-avatar>
+                <ion-text class="dynamic-font text-dark font-weight-bold">
+                  <span>{{(item?.fullName ? item?.fullName : item?.username) | decodeVN | uppercase}}</span>
+                </ion-text>
+              </div>
+              <ion-button shape="round" slot="end" (click)="openDeleteAccount(item)" mode="ios" size="default" class="ion-btn-orange">
+                <ion-text style="color: white !important;" class="dynamic-font">
+                  Gỡ
+                </ion-text>
+              </ion-button>
+            </ion-item>
+          </ng-container>
+          <ion-item lines="none" style="background-color:white !important;">
+            <div (click)="onOpenAddAccount()"  class="w-100 d-flex align-items-center">
+              <ion-avatar style="width: 3rem;height: 3rem;"  class="mr-3" aria-hidden="true" slot="start">
+                <img alt="" src="../../assets/image/plus.png" />
+              </ion-avatar>
+              <ion-text>
+                <span class="dynamic-font font-weight-bold" style="color: var(--ion-color-mat-primary) !important">Thêm tài khoản</span>
+              </ion-text>
+            </div>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- changeaccount -->
+
+  <!-- addaccount -->
+  <ion-modal style="--background:white !important" (willDismiss)="cancelAddAccount()" [isOpen]="isOpenAddAccount" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <ion-text class="dynamic-font text-center" style="color: var(--ion-color-mat-primary);">
+          <h3 class="font-weight-bold">Đăng nhập tài khoản sẵn có</h3>
+        </ion-text>
+        <div [formGroup]="formGroup">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label class="dynamic-font">Tài khoản</mat-label>
+            <input #eleUserName formControlName="userName"  matInput>
+          </mat-form-field>
+          <div class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label class="dynamic-font">Mật khẩu</mat-label>
+              <input #elePassword formControlName="passWord" matInput [type]="!showPass ? 'password' : 'text'">
+              <button class="d-flex align-items-center justify-content-center" mat-icon-button matSuffix (click)="showPass = !showPass">
+                <ion-icon style="color:black !important" [name]="!showPass ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+              </button>
+            </mat-form-field>
+          </div> 
+        </div>
+        <div style="margin-bottom: var(--ion-safe-area-bottom, 0);" class="w-100 d-flex align-items-center justify-content-center mt-3">
+          <ion-button mode="ios" (click)="onSignIn()" class="ion-btn-default w-100" expand="block">
+            <ion-text>
+              <span class="dynamic-font">ĐĂNG NHẬP</span>
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- addaccount -->
+
+  <!-- deleteaccount -->
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelDeleteAccount()" [isOpen]="isOpenDeleteAccount">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Gỡ tài khoản</h3>
+          </ion-text>
+        </div>
+        <div class="w-100 text-center">
+          <ion-text class="dynamic-font text-dark">
+            <span>Bạn có muốn gỡ tài khoản </span>
+          </ion-text>
+          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
+            <span>{{accountSelected?.username | uppercase}}</span>
+          </ion-text>
+          <ion-text class="dynamic-font text-dark">
+            <span> không?</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="deleteAccountSession(accountSelected)" mode="ios" size="default" class="ion-btn-default pr-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelDeleteAccount()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- deleteaccount -->
 </ion-content>

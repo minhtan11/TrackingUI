@@ -11,16 +11,16 @@
   <div class="w-100">
     <ion-list *ngIf="oData" class="m-0" style="background-color:white !important;">
       <ion-item lines="none" style="--background:white !important">
-        <ion-card class="w-100 mx-1 my-2" mode="ios" style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;">
+        <ion-card class="w-100 mx-1 my-2" mode="ios" style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;font-size: unset !important;">
           <ion-card-header style="padding-bottom: 0em;">
             <div style="justify-content: space-between;" class="d-flex align-items-center">
               <div>
-                <ion-text style="font-size: 1rem;" class="dynamic-font text-dark font-weight-bold">
+                <ion-text class="dynamic-font text-dark font-weight-bold">
                   Mã Kiện
                 </ion-text>
               </div>
               <div class="d-flex align-items-center">
-                <ion-text class="dynamic-font" style="font-size: 1rem;">
+                <ion-text class="dynamic-font pr-2">
                   {{oData.packageCode}}
                 </ion-text>
                 <ion-icon [cdkCopyToClipboard]="oData.packageCode" (click)="onCopy()" style="font-size: 2rem;"
@@ -429,7 +429,7 @@
                   </ion-button>
                 </ng-container>
                 <ng-container *ngIf="oData.status == 9 && oData?.canceledBy == username">
-                  <ion-button (click)="openPopRestorePackage(oData)" mode="ios" class="mb-5" size="default" color="success">
+                  <ion-button (click)="openPopRestorePackage(oData)" mode="ios" size="default" color="success">
                     <ion-icon style="color: white !important;" slot="start" name="sync-circle-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
                       Khôi phục
@@ -459,11 +459,11 @@
             <span>{{oData?.packageCode}}</span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
-            <span>?</span>
+            <span> không?</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="editPackage(oData)" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="editPackage(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -537,7 +537,7 @@
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="checkPackage(oData)" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="checkPackage(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -570,11 +570,11 @@
             <span>{{oData?.packageCode}}</span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
-            <span>?</span>
+            <span> không?</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="cancelPackage(oData)" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="cancelPackage(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -607,11 +607,11 @@
             <span>{{oData?.packageCode}}</span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
-            <span>?</span>
+            <span> không?</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="restorePackage(oData)" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="restorePackage(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -644,11 +644,11 @@
             <span>{{oData?.packageCode}}</span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
-            <span>?</span>
+            <span> không?</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="deletePackage(oData)" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="deletePackage(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>

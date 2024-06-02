@@ -1,18 +1,18 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Keyboard } from '@capacitor/keyboard';
-import { IonContent, NavController } from '@ionic/angular';
+import { IonContent, NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
+import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 import { StorageService } from 'src/app/storage-service/storage.service';
 
 @Component({
   selector: 'app-withdraw-page',
   templateUrl: './withdraw-page.component.html',
   styleUrls: ['./withdraw-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WithdrawPageComponent  implements OnInit {
   @ViewChild('elepaymentMethod') elepaymentMethod: any;
@@ -25,6 +25,7 @@ export class WithdrawPageComponent  implements OnInit {
   type:any;
   isHideFooter:any=false;
   formGroup!: FormGroup;
+  previousUrl:any;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -34,6 +35,9 @@ export class WithdrawPageComponent  implements OnInit {
     private navCtrl: NavController,
     private storage: StorageService,
     private formBuilder: FormBuilder,
+    private previous:PreviousRouterServiceService,
+    private platform : Platform,
+    private router:Router,
   ) { 
     this.type = this.rt.snapshot.queryParams['type'];
   }
@@ -56,17 +60,32 @@ export class WithdrawPageComponent  implements OnInit {
   async ngAfterViewInit() {
     Keyboard.addListener('keyboardWillShow', info => {
       this.isHideFooter = true;
-      this.dt.detectChanges();
     });
 
     Keyboard.addListener('keyboardWillHide', () => {
       this.isHideFooter = false;
-      this.dt.detectChanges();
     });
+    this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+      if((this.router.url.includes('main/setting/withdraw'))){
+        this.onback();
+        return;
+      }
+      processNextHandler();
+    })
+  }
+
+  ionViewWillEnter(){
+    if (!this.previousUrl) {
+      let url = this.previous.getPreviousUrl();
+      if (url) {
+        let array = url.split('?');
+        this.previousUrl = array[0];
+      }
+    } 
   }
 
   onback(){
-    this.navCtrl.navigateBack('main');
+    this.navCtrl.navigateBack(this.previousUrl);
   }
 
   onWithDraw(){
@@ -105,35 +124,24 @@ export class WithdrawPageComponent  implements OnInit {
       this.eleNote.nativeElement.focus();
       return;
     }
-    this.api.isLoad(true);
-    setTimeout(async () => {
-      let oData = {...this.formGroup.value};
+    let oData = {...this.formGroup.value};
       oData.amount = oData?.amount.replace(/,/g, '');
-      let token = await this.storage.get('token');
       let data = {
         data: JSON.stringify(oData),
-        token: token
       }
       let messageBody = {
         dataRequest: JSON.stringify(data)
       };
-      this.api.execByBody('Authencation','createwithdraw',messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res:any)=>{
-          if (res && !res?.isError) {
-            this.notification.showNotiSuccess('', res.message);
-            this.navCtrl.navigateBack('main/setting');
-            this.dt.detectChanges();
-          }else{
-            this.notification.showNotiError('',res?.message);
-            this.dt.detectChanges();
-          }
-        },
-        complete:()=>{
-          this.api.isLoad(false);
+      this.api.execByBody('Authencation','createwithdraw',messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+        if (res && !res?.isError) {
+          this.notification.showNotiSuccess('', res.message);
+          this.navCtrl.navigateBack(this.previousUrl);
+          
+        }else{
+          this.notification.showNotiError('',res?.message);
+          
         }
       })
-    }, 1000);
-    
   }
 
   valueChange(event:any,field:any){

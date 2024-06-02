@@ -10,56 +10,96 @@
     </div>
   </ion-toolbar>
   <ion-toolbar *ngIf="!isReview" style="--background:white !important;">
-    <ion-segment mode="md" [scrollable]="true" [value]="status">
+    <ion-segment style="height: 3rem !important;min-height: unset !important;border-bottom: 1px solid #e3e3e3 !important;" mode="md" [scrollable]="true" [value]="status">
       <ion-segment-button (click)=" sortData(0)" [value]="0">
-        <div class="d-flex align-items-center">
-          <ion-text class="text-segment dynamic-font font-weight-bold pr-2">
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
             <span>Tất cả</span>
           </ion-text>
-          <ion-text style="color: orange;" class="dynamic-font">
-            <span>(22)</span>
+          <ion-text *ngIf="total0 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+            <span>{{'('+(total0 | number)+')'}}</span>
           </ion-text>
         </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(1)" [value]="1">
-        <ion-text class="text-segment dynamic-font font-weight-bold">
-          <span>Chưa xác nhận</span>
-        </ion-text>
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <span>Chưa xác nhận</span>
+          </ion-text>
+          <ion-text *ngIf="total1 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+            <span>{{'('+(total1 | number)+')'}}</span>
+          </ion-text>
+        </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(2)" [value]="2">
-        <ion-text class="text-segment dynamic-font font-weight-bold">
-          <span>Hàng về kho TQ</span>
-        </ion-text>
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <span>Hàng về kho TQ</span>
+          </ion-text>
+          <ion-text *ngIf="total2 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+            <span><span>{{'('+(total2 | number)+')'}}</span></span>
+          </ion-text>
+        </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(3)" [value]="3">
-        <ion-text class="text-segment dynamic-font font-weight-bold">
-          <span>Đang trên đường về HCM</span>
-        </ion-text>
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <span>Đang trên đường về HCM</span>
+          </ion-text>
+          <ion-text *ngIf="total3 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+            <span><span>{{'('+(total3 | number)+')'}}</span></span>
+          </ion-text>
+        </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(4)" [value]="4">
-        <ion-text class="text-segment dynamic-font font-weight-bold">
-          <span>Hàng về tới HCM</span>
-        </ion-text>
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <span>Hàng về tới HCM</span>
+          </ion-text>
+          <ion-text *ngIf="total4 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+            <span><span>{{'('+(total4 | number)+')'}}</span></span>
+          </ion-text>
+        </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(5)" [value]="5">
-        <ion-text class="text-segment dynamic-font font-weight-bold">
-          <span>Đã nhận hàng</span>
-        </ion-text>
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <span>Đã nhận hàng</span>
+          </ion-text>
+          <ion-text *ngIf="total5 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+            <span><span>{{'('+(total5 | number)+')'}}</span></span>
+          </ion-text>
+        </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(9)" [value]="9">
-        <ion-text class="text-segment dynamic-font font-weight-bold">
-          <span>Đã hủy</span>
-        </ion-text>
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <span>Đã hủy</span>
+          </ion-text>
+          <ion-text *ngIf="total9 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+            <span><span>{{'('+(total9 | number)+')'}}</span></span>
+          </ion-text>
+        </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(10)" [value]="10">
-        <ion-text class="text-segment dynamic-font font-weight-bold">
-          <span>Thất lạc</span>
-        </ion-text>
+        <div class="d-flex align-items-center text-center">
+          <ion-text *ngIf="total10 != undefined" class="text-segment dynamic-font font-weight-bold pr-1">
+            <span>Thất lạc</span>
+          </ion-text>
+          <ion-text style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+            <span><span>{{'('+(total10 | number)+')'}}</span></span>
+          </ion-text>
+        </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(11)" [value]="11">
-        <ion-text class="text-segment dynamic-font font-weight-bold">
-          <span>Không nhận được hàng</span>
-        </ion-text>
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <span>Không nhận được hàng</span>
+          </ion-text>
+          <ion-text *ngIf="total11 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+            <span><span>{{'('+(total11 | number)+')'}}</span></span>
+          </ion-text>
+        </div>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -83,16 +123,16 @@
       <ng-container *ngFor="let item of lstData">
         <ion-item lines="none" style="--background:white !important">
           <ion-card class="mx-1 my-1 mb-4 w-100"
-            style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;">
+            style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;font-size: unset !important;">
             <ion-card-header class="p-3">
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div class="d-flex align-items-center">
-                  <ion-text style="font-size: 1rem;" class="dynamic-font text-dark font-weight-bold pr-2">
+                  <ion-text class="dynamic-font text-dark font-weight-bold pr-2">
                     Mã kiện hàng
                   </ion-text>
                 </div>
                 <div class="d-flex align-items-center">
-                  <ion-text class="dynamic-font pr-2" style="font-size: 1rem;">
+                  <ion-text class="dynamic-font pr-2">
                     {{item.packageCode}}
                   </ion-text>
                   <ion-icon [cdkCopyToClipboard]="item.packageCode" (click)="onCopy()" style="font-size: 2rem;"
@@ -376,7 +416,7 @@
                   </ion-button>
                 </ng-container>
                 <ng-container *ngIf="item.status == 9 && item?.canceledBy == username">
-                  <ion-button (click)="openPopRestorePackage(item)" mode="ios" class="mb-5" size="default" color="success">
+                  <ion-button (click)="openPopRestorePackage(item)" mode="ios" size="default" color="success">
                     <ion-icon style="color: white !important;" slot="start" name="sync-circle-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
                       Khôi phục
@@ -469,7 +509,7 @@
             <span>{{itemSelected?.packageCode}}</span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
-            <span>?</span>
+            <span> không?</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
@@ -580,7 +620,7 @@
             <span>{{itemSelected?.packageCode}}</span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
-            <span>?</span>
+            <span> không?</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
@@ -617,7 +657,7 @@
             <span>{{itemSelected?.packageCode}}</span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
-            <span>?</span>
+            <span> không?</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
@@ -654,7 +694,7 @@
             <span>{{itemSelected?.packageCode}}</span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
-            <span>?</span>
+            <span> không?</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
@@ -719,13 +759,3 @@
   <!-- FilterPackkage -->
 
 </ion-content>
-<!-- <ion-footer *ngIf="!isHideFooter" class="ion-no-border"
-  style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
-  <ion-toolbar mode="ios" style="--background:white !important">
-    <ion-button mode="ios" (click)="createPackage()" class="ion-btn-orange" expand="block">
-      <ion-text class="dynamic-font font-weight-bold" style="color: white !important;">
-        <span>THÊM KIỆN HÀNG</span>
-      </ion-text>
-    </ion-button>
-  </ion-toolbar>
-</ion-footer> -->

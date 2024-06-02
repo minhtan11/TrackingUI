@@ -47,6 +47,17 @@ export class ApiserviceComponent implements OnInit {
     }
   }
 
+  isLoad2(type: any = false) {
+    let loader = document.getElementById('loader-icon2');
+    if (loader) {
+      if (type) {
+        loader.style.visibility = 'visible';
+      } else {
+        loader.style.visibility = 'hidden';
+      }
+    }
+  }
+
   private async handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       const toast = await this.toastController.create({

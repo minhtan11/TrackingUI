@@ -1,12 +1,8 @@
 <ion-header class="ion-no-border">
   <ion-toolbar mode="ios" class="bg-default">
-    <!-- <ion-button slot="start" (click)="onback()" fill="clear">
+    <ion-button slot="start" (click)="onback()" fill="clear">
       <ion-icon style="color: white !important;" class="text-dark" name="chevron-back-outline"></ion-icon>
-    </ion-button> -->
-    <ion-buttons class="pl-3" slot="start">
-      <!-- <ion-back-button style="--color:white !important;--color-focused:white !important;" text="" icon="chevron-back-outline"></ion-back-button> -->
-      <ion-icon (click)="onback()" style="color: white !important;" name="chevron-back-outline"></ion-icon>
-    </ion-buttons>
+    </ion-button>
     <ion-title style="color: white !important;" *ngIf="!isEdit" class="dynamic-font text-dark">Tạo kiện ký gửi</ion-title>
     <ion-title style="color: white !important;" *ngIf="isEdit" class="dynamic-font text-dark">Cập nhật kiện ký gửi</ion-title>
   </ion-toolbar>

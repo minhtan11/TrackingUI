@@ -18,7 +18,7 @@ import { PreviousRouterServiceService } from './previous-router-service/previous
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot({mode:'ios',innerHTMLTemplatesEnabled:true}), AppRoutingModule, BrowserAnimationsModule,HttpClientModule,IonicStorageModule,IonicStorageModule.forRoot()],
+  imports: [BrowserModule, IonicModule.forRoot({mode:'ios',innerHTMLTemplatesEnabled:true,swipeBackEnabled:false}), AppRoutingModule, BrowserAnimationsModule,HttpClientModule,IonicStorageModule,IonicStorageModule.forRoot()],
   providers: [
     ApiserviceComponent,
     AuthguardGuard,

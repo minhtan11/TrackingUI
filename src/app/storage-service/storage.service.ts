@@ -33,4 +33,18 @@ export class StorageService {
     await this.storage.remove(key);
   }
 
+  public async setAccount(username:any) {
+    let sUser = username.trim();
+    let lstUser = await this.storage.get('lstUser');
+    if (lstUser == '' || lstUser == null) {
+      lstUser += sUser;
+      this.storage.set('lstUser', lstUser);
+    }else{
+      let array = lstUser.split(';');
+      if (!array.includes(sUser)) {
+        lstUser += `;${sUser}`;
+        this.storage.set('lstUser', lstUser);
+      }
+    }
+  }
 }

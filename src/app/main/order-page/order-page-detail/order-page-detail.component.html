@@ -10,16 +10,16 @@
   <div class="w-100">
     <ion-list *ngIf="oData" class="m-0" style="background-color:white !important;">
       <ion-item lines="none" style="--background:white !important">
-        <ion-card class="w-100 mx-1 my-2" mode="ios" style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;">
+        <ion-card class="w-100 mx-1 my-2" mode="ios" style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;font-size: unset !important;">
           <ion-card-header style="padding-bottom: 0em;">
             <div style="justify-content: space-between;" class="d-flex align-items-center">
               <div>
-                <ion-text style="font-size: 1rem;" class="dynamic-font font-weight-bold text-dark me-2">
+                <ion-text class="dynamic-font font-weight-bold text-dark">
                   Mã đơn hàng
                 </ion-text>
               </div>
               <div class="d-flex align-items-center">
-                <ion-text class="dynamic-font me-2" style="font-size: 1rem;">
+                <ion-text class="dynamic-font pr-2">
                   {{oData.shippingOrderCode}}
                 </ion-text>
                 <ion-icon [cdkCopyToClipboard]="oData.shippingOrderCode" (click)="onCopy()" style="font-size: 2rem;" name="copy-outline"></ion-icon>
@@ -29,12 +29,12 @@
           <ion-card-content>
             <ng-container *ngIf="lstPackage && lstPackage.length">
               <div style="padding-top: 1em;">
-                <ion-text color="primary" class="dynamic-font font-weight-bold">
+                <ion-text style="color: var(--ion-color-mat-primary);" class="dynamic-font font-weight-bold">
                   DANH SÁCH KIỆN
                 </ion-text>
               </div>
               <ng-container *ngFor="let item of lstPackage">
-                <div style="justify-content: space-between;" class="d-flex align-items-center">
+                <div style="justify-content: space-between;" class="d-flex align-items-center pt-3">
                   <div>
                     <ion-text class="dynamic-font text-dark">
                       Mã Kiện
@@ -352,7 +352,7 @@
               </ng-container>
             </ng-container>
             <div style="padding-top: 1em;">
-              <ion-text color="primary" class="dynamic-font font-weight-bold">
+              <ion-text style="color: var(--ion-color-mat-primary);" class="dynamic-font font-weight-bold">
                 CHI TIẾT ĐƠN
               </ion-text>
             </div>
@@ -484,7 +484,7 @@
               </ion-row>
             </ion-grid>
             <div *ngIf="oData.status == 1" class="d-flex align-items-center justify-content-center text-center pt-3">
-              <ion-button (click)="openPayment(oData)" mode="ios" size="default" color="success">
+              <ion-button (click)="openPayment(oData)" mode="ios" size="default" class="ion-btn-default">
                 <ion-icon style="color: white !important;" slot="start" name="wallet-outline"></ion-icon>
                 <ion-text style="color: white !important;" class="dynamic-font">
                   Thanh toán
@@ -513,7 +513,7 @@
             <span>{{oData?.shippingOrderCode}}</span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
-            <span>? </span>
+            <span> không? </span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
             <span>Tổng thanh toán cho đơn hàng là </span>
@@ -523,7 +523,7 @@
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="onPayment(oData)" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="onPayment(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>

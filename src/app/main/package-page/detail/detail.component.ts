@@ -1,10 +1,11 @@
 import { HttpParams } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
+import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 import { StorageService } from 'src/app/storage-service/storage.service';
 import Swal from 'sweetalert2'
 
@@ -12,10 +13,10 @@ import Swal from 'sweetalert2'
   selector: 'app-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailComponent  implements OnInit {
   oData:any;
+  id:any;
   username:any;
   isOpenEditPackage:any = false;
   isOpenCheckPackage:any = false;
@@ -23,6 +24,10 @@ export class DetailComponent  implements OnInit {
   isOpenCancelPackage:any = false;
   isOpenRestorePackage:any = false;
   isOpenDeletePackage:any = false;
+  previousUrl:any;
+  isChange:any=false;
+  isCancel:any=false;
+  isRestore:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private rt : ActivatedRoute,
@@ -31,12 +36,40 @@ export class DetailComponent  implements OnInit {
     private notification: NotificationServiceComponent,
     private navCtrl: NavController,
     private storage: StorageService,
+    private previous:PreviousRouterServiceService,
+    private platform : Platform,
+    private router:Router,
   ) { 
-    
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {        
+        if (event && (event.urlAfterRedirects.includes('/main/package/detail'))) {
+          let type = this.rt.snapshot.queryParams['type'];
+          switch(type){
+            case 'change':
+              this.isChange = true;
+              let data = JSON.parse(this.rt.snapshot.queryParams['dataUpdate']);
+              if (data) {
+                this.oData = {...data};
+              }
+              break;
+          }
+        }
+      };
+    });
   }
 
   async ngOnInit() {
     
+  }
+
+  ngAfterViewInit() {
+    this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+      if((this.router.url.includes('main/package/detail'))){
+        this.onback();
+        return;
+      }
+      processNextHandler();
+    })
   }
 
   onDestroy(){
@@ -45,21 +78,63 @@ export class DetailComponent  implements OnInit {
   }
 
   async ionViewWillEnter(){
-    this.oData = JSON.parse(this.rt.snapshot.queryParams['data']);
+    let id = this.rt.snapshot.queryParams['id'];
+    if(id) this.id = id;
     this.username = await this.storage.get('username');
-    this.dt.detectChanges();
+    this.getPackage();
+    if (!this.previousUrl) {
+      let url = this.previous.getPreviousUrl();
+      if (url) {
+        let array = url.split('?');
+        this.previousUrl = array[0];
+      }
+    } 
   }
 
   ionViewWillLeave(){
-    this.onDestroy();
+    //this.onDestroy();
   }
 
   onback(){
-    this.navCtrl.navigateBack('main/package');
+    if(this.previousUrl.includes('/main/package')){
+      if (this.isCancel) {
+        this.navCtrl.navigateBack(this.previousUrl,{queryParams:{type:'cancel',dataCancel:JSON.stringify(this.oData)}});
+        return;
+      }
+      if (this.isRestore) {
+        this.navCtrl.navigateBack(this.previousUrl,{queryParams:{type:'restore',dataRestore:JSON.stringify(this.oData)}});
+        return;
+      }
+      if(this.isChange){
+        this.navCtrl.navigateBack(this.previousUrl,{queryParams:{type:'change',dataUpdate:JSON.stringify(this.oData)}});
+        return;
+      }
+      this.navCtrl.navigateBack(this.previousUrl);
+    }else{
+      this.navCtrl.navigateBack(this.previousUrl);
+    }
   }
 
   onCopy(){
     this.notification.showNotiSuccess('','Đã Sao chép',1000);
+  }
+
+  getPackage(){
+    let data = {
+      id: this.id,
+      userName: this.username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'getonepackage', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      if (res[0]) {
+      } else {
+        if(res[1]) this.oData = res[1];
+        
+      }
+      this.onDestroy();
+    })
   }
 
   //#region Edit package
@@ -91,7 +166,6 @@ export class DetailComponent  implements OnInit {
 
   openPopCheckPackage2(item:any){
     this.isOpenCheckPackage2 = true;
-    this.dt.detectChanges();
   }
 
   cancelCheck2(){
@@ -101,56 +175,44 @@ export class DetailComponent  implements OnInit {
 
   continuteCheck(item:any){
     this.cancelCheck();
-    this.dt.detectChanges();
+    
     let data = {
       id: item.packageCode,
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.isLoad(true);
-    setTimeout(() => {
-      this.api.execByBody('Authencation', 'checkavailable', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
-        if (res[0]) {
-          this.notification.showNotiError('', res[1].message);
-          this.api.isLoad(false);
-        } else {
-          if (res[1] == 0) {
-            this.api.isLoad(false);
-            this.openPopCheckPackage2(item);
-          }else{
-            this.checkPackage(item);
-          }
+    this.api.execByBody('Authencation', 'checkavailable', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      } else {
+        if (res[1] == 0) {
+          this.openPopCheckPackage2(item);
+        }else{
+          this.checkPackage(item);
         }
-      })
-    }, 500);
+      }
+      this.onDestroy();
+    })
   }
 
   checkPackage(item:any){
     this.cancelCheck2();
-    this.api.isLoad(true);
-    setTimeout(() => {
-      let data = {
-        id: item.packageCode,
-        userName: this.username
+    let data = {
+      id: item.packageCode,
+      userName: this.username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'checkstatus', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      } else {
+        this.navCtrl.navigateForward('main/package/orderstatus',{ queryParams: {data: JSON.stringify(res[1])}});
       }
-      let messageBody = {
-        dataRequest: JSON.stringify(data)
-      };
-      this.api.execByBody('Authencation', 'checkstatus', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res:any)=>{
-          if (res[0]) {
-            this.notification.showNotiError('', res[1].message);
-          } else {
-            this.navCtrl.navigateForward('main/package/orderstatus',{ queryParams: {data: JSON.stringify(res[1])}});
-          }
-        },
-        complete:()=>{
-          this.api.isLoad(false);
-          this.onDestroy();
-        }
-      })
-    }, 500);
+      this.onDestroy();
+    })
   }
   //#endregion CheckPackage
 
@@ -173,27 +235,22 @@ export class DetailComponent  implements OnInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.isLoad(true);
-    setTimeout(() => {
-      this.api.execByBody('Authencation', 'cancel', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res:any)=>{
-          if (res[0]) {
-            this.notification.showNotiError('', res[1].message);
-          }else{
-            if (!res[1].isError) {
-              this.notification.showNotiSuccess('', res[1].message);
-              this.navCtrl.navigateBack('main/package',{queryParams:{type:'change',dataUpdate:JSON.stringify(res[2])}});
-            } else {
-              this.notification.showNotiError('', res[1].message);
-            }
-          }
-        },
-        complete:()=>{
-          this.api.isLoad(false);
-          this.onDestroy();
+    this.api.execByBody('Authencation', 'cancel', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        if (!res[1].isError) {
+          this.notification.showNotiSuccess('', res[1].message);
+          this.oData = res[2];
+          this.isCancel = true;
+          this.isChange = false;
+          this.isRestore = false;
+        } else {
+          this.notification.showNotiError('', res[1].message);
         }
-      })
-    }, 1000);
+      }
+      this.onDestroy();
+    })
   }
   //#endregion
 
@@ -216,27 +273,22 @@ export class DetailComponent  implements OnInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.isLoad(true);
-    setTimeout(() => {
-      this.api.execByBody('Authencation', 'restorepackage', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res:any)=>{
-          if (res[0]) {
-            this.notification.showNotiError('', res[1].message);
-          }else{
-            if (!res[1].isError) {
-              this.notification.showNotiSuccess('', res[1].message);
-              this.navCtrl.navigateBack('main/package',{queryParams:{type:'change',dataUpdate:JSON.stringify(res[2])}});
-            } else {
-              this.notification.showNotiError('', res[1].message);
-            }
-          }
-        },
-        complete:()=>{
-          this.api.isLoad(false);
-          this.onDestroy();
+    this.api.execByBody('Authencation', 'restorepackage', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        if (!res[1].isError) {
+          this.notification.showNotiSuccess('', res[1].message);
+          this.oData = res[2];
+          this.isRestore = true;
+          this.isChange = false;
+          this.isCancel = false;
+        } else {
+          this.notification.showNotiError('', res[1].message);
         }
-      })
-    }, 1000);
+      }
+      this.onDestroy();
+    })
   }
   //#endregion
 
@@ -258,27 +310,22 @@ export class DetailComponent  implements OnInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.isLoad(true);
-    setTimeout(() => {
-      this.api.execByBody('Authencation', 'deletepackage', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res:any)=>{
-          if (res[0]) {
-            this.notification.showNotiError('', res[1].message);
+    this.api.execByBody('Authencation', 'deletepackage', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        if (!res[1].isError) {
+          this.notification.showNotiSuccess('', res[1].message);
+          if(this.previousUrl.includes('/main/package')){
+            this.navCtrl.navigateBack(this.previousUrl,{queryParams:{type:'delete',dataDelete:JSON.stringify(this.oData)}});
           }else{
-            if (!res[1].isError) {
-              this.notification.showNotiSuccess('', res[1].message);
-              this.navCtrl.navigateBack('main/package',{queryParams:{type:'delete',dataDelete:JSON.stringify(this.oData)}});
-            } else {
-              this.notification.showNotiError('', res[1].message);
-            }
+            this.navCtrl.navigateBack(this.previousUrl);
           }
-        },
-        complete:()=>{
-          this.api.isLoad(false);
-          this.onDestroy();
+        } else {
+          this.notification.showNotiError('', res[1].message);
         }
-      })
-    }, 1000);
+      }
+    })
   }
   //#endregion
 }

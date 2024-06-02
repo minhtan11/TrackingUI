@@ -1,18 +1,18 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Keyboard } from '@capacitor/keyboard';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
+import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 import { StorageService } from 'src/app/storage-service/storage.service';
 
 @Component({
   selector: 'app-changepassword-page',
   templateUrl: './changepassword-page.component.html',
   styleUrls: ['./changepassword-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChangepasswordPageComponent  implements OnInit {
   @ViewChild('eleOldPassword') eleOldPassword: any;
@@ -23,6 +23,7 @@ export class ChangepasswordPageComponent  implements OnInit {
   showPass1:any=false;
   showPass2:any=false;
   showPass3:any=false;
+  previousUrl:any;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -32,6 +33,9 @@ export class ChangepasswordPageComponent  implements OnInit {
     private navCtrl: NavController,
     private storage: StorageService,
     private formBuilder: FormBuilder,
+    private previous:PreviousRouterServiceService,
+    private platform : Platform,
+    private router:Router,
   ) { }
 
   async ngOnInit() {
@@ -48,17 +52,33 @@ export class ChangepasswordPageComponent  implements OnInit {
   async ngAfterViewInit() {
     Keyboard.addListener('keyboardWillShow', info => {
       this.isHideFooter = true;
-      this.dt.detectChanges();
+      
     });
-
     Keyboard.addListener('keyboardWillHide', () => {
       this.isHideFooter = false;
-      this.dt.detectChanges();
+      
     });
+    this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+      if((this.router.url.includes('main/setting/changepassword'))){
+        this.onback();
+        return;
+      }
+      processNextHandler();
+    })
+  }
+
+  ionViewWillEnter(){
+    if (!this.previousUrl) {
+      let url = this.previous.getPreviousUrl();
+      if (url) {
+        let array = url.split('?');
+        this.previousUrl = array[0];
+      }
+    } 
   }
 
   onback(){
-    this.navCtrl.navigateBack('main/setting');
+    this.navCtrl.navigateBack(this.previousUrl);
   }
 
   onChange(){
@@ -82,22 +102,13 @@ export class ChangepasswordPageComponent  implements OnInit {
       this.eleConfirmPassword.nativeElement.focus();
       return;
     }
-    this.api.isLoad(true);
-    setTimeout(() => {
-      this.api.execByBody('Authencation','changepassword',this.formGroup.value).pipe(takeUntil(this.destroy$)).subscribe({
-        next:(res:any)=>{
-          if (res && !res?.isError) {
-            this.notification.showNotiSuccess('', res.message);
-            this.navCtrl.navigateBack('main/setting');
-          }else{
-            this.notification.showNotiError('',res?.message);
-          }
-        },
-        complete:()=>{
-          this.api.isLoad(false);
-        }
-      })
-    }, 1000);
-    
+    this.api.execByBody('Authencation','changepassword',this.formGroup.value,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      if (res && !res?.isError) {
+        this.notification.showNotiSuccess('', res.message);
+        this.navCtrl.navigateBack(this.previousUrl);
+      }else{
+        this.notification.showNotiError('',res?.message);
+      }
+    })
   }
 }

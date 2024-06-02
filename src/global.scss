@@ -132,8 +132,16 @@ html{
     font-family: Tahoma, sans-serif !important;
 }
 
+.text-orange{
+    color: orange !important;
+}
+
 .text-dark{
     color: black !important;
+}
+
+.text-primary-default{
+    color: var(--ion-color-mat-primary) !important;
 }
 
 .ion-btn-default{
@@ -400,6 +408,12 @@ ion-toast::part(icon) {
 
 .bg-toast-orange{
     --background:orange !important;
+}
+
+.bg-toast-white{
+    --background:white !important;
+    //--box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    --box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .bg-default-2{

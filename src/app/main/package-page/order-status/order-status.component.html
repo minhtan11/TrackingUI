@@ -1,5 +1,8 @@
 <ion-header class="ion-no-border" style="--background:white !important;">
   <ion-toolbar mode="ios" class="bg-default">
+    <ion-button slot="start" (click)="onBack()" fill="clear">
+      <ion-icon style="color: white !important;" class="text-dark" name="chevron-back-outline"></ion-icon>
+    </ion-button>
     <ion-title style="color: white !important;" class="dynamic-font text-dark">Trạng thái vận chuyển đơn hàng</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -102,20 +105,7 @@
       </ion-item>
     </ion-list>
   </div>
-  <div class="w-100 d-flex align-items-center justify-content-center" style="position: absolute;bottom: 0;padding-bottom:  var(--ion-safe-area-bottom, 0) !important;">
-    <ion-button *ngIf="oPack && oPack?.autoQuery" (click)="changeAutoQuery(false)" mode="ios" size="default" class="ion-btn-orange">
-      <ion-icon style="color: white !important;" slot="start" name="checkbox-outline"></ion-icon>
-      <ion-text style="color: white !important;" class="dynamic-font">
-        Hủy đăng ký gửi thông báo các trạng thái kiện hàng
-      </ion-text>
-    </ion-button>
-    <ion-button *ngIf="oPack && !oPack?.autoQuery" (click)="changeAutoQuery(true)" mode="ios" size="default" color="medium">
-      <ion-icon style="color: white !important;" slot="start" name="square-outline"></ion-icon>
-      <ion-text style="color: white !important;" class="dynamic-font">
-        Đăng ký gửi thông báo các trạng thái kiện hàng
-      </ion-text>
-    </ion-button>
-  </div>
+  
   <!-- change auto -->
   <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelPopupAuto()" [isOpen]="isOpenPopupAuto">
     <ng-template>
@@ -137,7 +127,7 @@
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="changeAutoQuery(true)" mode="ios" size="default" class="ion-btn-default me-3">
+          <ion-button (click)="changeAutoQuery(true)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -156,10 +146,19 @@
 <ion-footer class="ion-no-border"
   style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
   <ion-toolbar mode="ios" style="--background:white !important">
-    <ion-button mode="ios" (click)="onBack()" class="ion-btn-orange" expand="block">
-      <ion-text class="dynamic-font font-weight-bold" style="color: white !important;">
-        <span>QUAY VỀ MÀN HÌNH CHÍNH</span>
-      </ion-text>
-    </ion-button>
+    <div class="w-100 d-flex align-items-center justify-content-center">
+      <ion-button *ngIf="oPack && oPack?.autoQuery" (click)="changeAutoQuery(false)" mode="ios" size="default" class="ion-btn-orange">
+        <ion-icon style="color: white !important;" slot="start" name="checkbox-outline"></ion-icon>
+        <ion-text style="color: white !important;" class="dynamic-font">
+          Hủy đăng ký gửi thông báo các trạng thái kiện hàng
+        </ion-text>
+      </ion-button>
+      <ion-button *ngIf="oPack && !oPack?.autoQuery" (click)="changeAutoQuery(true)" mode="ios" size="default" color="medium">
+        <ion-icon style="color: white !important;" slot="start" name="square-outline"></ion-icon>
+        <ion-text style="color: white !important;" class="dynamic-font">
+          Đăng ký gửi thông báo các trạng thái kiện hàng
+        </ion-text>
+      </ion-button>
+    </div>
   </ion-toolbar>
 </ion-footer>

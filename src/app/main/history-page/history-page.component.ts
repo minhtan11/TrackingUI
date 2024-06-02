@@ -1,21 +1,23 @@
 import { HttpParams } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Network } from '@capacitor/network';
-import { InfiniteScrollCustomEvent, IonRouterOutlet, NavController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, IonContent, IonRouterOutlet, NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
+import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 import { StorageService } from 'src/app/storage-service/storage.service';
 
 @Component({
   selector: 'app-history-page',
   templateUrl: './history-page.component.html',
   styleUrls: ['./history-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HistoryPageComponent {
   //#region Contrucstor
+  @ViewChild(IonContent) content: IonContent;
   pageSize: any = 20;
   lstData: any;
   pageNum: any = 1;
@@ -25,7 +27,9 @@ export class HistoryPageComponent {
   id: any;
   isEmpty: any = false;
   isload: any = true;
-  firstLoad:any = true;
+  formGroup!: FormGroup;
+  isOpenFilter:any = false;
+  previousUrl:any;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -34,20 +38,35 @@ export class HistoryPageComponent {
     private notification: NotificationServiceComponent,
     private navCtrl: NavController,
     private storage: StorageService,
-    private routerOutlet: IonRouterOutlet
+    private routerOutlet: IonRouterOutlet,
+    private formBuilder: FormBuilder,
+    private previous:PreviousRouterServiceService,
+    private platform : Platform,
+    private router:Router,
   ) { }
   //#endregion
 
   //#region Init
   ngOnInit() {
+    this.formGroup = this.formBuilder.group({
+      fromDate: [null],
+      toDate: [null],
+    });
   }
 
   ngAfterViewInit(){
+    this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+      if((this.router.url.includes('main/history'))){
+        this.onback();
+        return;
+      }
+      processNextHandler();
+    })
     // Network.addListener('networkStatusChange', status => {
     //   this.isconnected = status.connected;
     //   if (status.connected && status.connectionType != 'none') {
     //     this.isloadpage = true;
-    //     this.dt.detectChanges();
+    //     
     //     setTimeout(() => {
     //       this.loadData();
     //     }, 500);  
@@ -57,13 +76,20 @@ export class HistoryPageComponent {
     //     this.isload = true;
     //     this.pageNum = 1;
     //     this.isEmpty = false;
-    //     this.dt.detectChanges();
+    //     
     //   }
     // });
   }
 
   async ionViewWillEnter(){
     this.init();
+    if (!this.previousUrl) {
+      let url = this.previous.getPreviousUrl();
+      if (url) {
+        let array = url.split('?');
+        this.previousUrl = array[0];
+      }
+    } 
   }
 
   ionViewDidEnter() {
@@ -81,19 +107,17 @@ export class HistoryPageComponent {
 
   //#region Function
   init(){
-    if(!this.firstLoad) return;
     this.lstData = [];
-    this.dt.detectChanges();
-    this.loadDataHis();
+    this.loadData();
   }
 
-  async loadDataHis(isShowLoad:any=true){
+  async loadData(isShowLoad:any=true){
     let username = await this.storage.get('username');
     let data = {
       status: this.status,
       id: this.id,
-      //fromDate: this.fromDate,
-      //toDate: this.toDate,
+      fromDate: this.formGroup.value.fromDate,
+      toDate: this.formGroup.value.toDate,
       pageNum: this.pageNum,
       pageSize: this.pageSize,
       userName: username
@@ -102,63 +126,47 @@ export class HistoryPageComponent {
       dataRequest: JSON.stringify(data)
     };
     if (isShowLoad) {
-      this.api.isLoad(true);
-      setTimeout(() => {
-        this.api.execByBody('Authencation', 'historywallet', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-          next: (res: any) => {
-            if (res[0]) {
-              this.notification.showNotiError('', res[1].message);
-            } else {
-              let oData = res[1];
-              this.lstData = oData[0];
-              if (this.lstData.length == 0) this.isEmpty = true;
-              let total = 0;
-              this.lstData.forEach((item: any) => {
-                total += item.datas.length;
-              });
-              if (total == oData[1]) this.isload = false;
-              if (this.firstLoad) this.firstLoad = false;
-            }
-          },
-          complete: () => {
-            this.dt.detectChanges();
-            this.api.isLoad(false);
-          }
-        })
-      }, 1000);
+      this.api.execByBody('Authencation', 'historywallet', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+        if (res[0]) {
+          this.notification.showNotiError('', res[1].message);
+        } else {
+          let oData = res[1];
+          this.lstData = oData[0];
+          if (this.lstData.length == 0) this.isEmpty = true;
+          let total = 0;
+          this.lstData.forEach((item: any) => {
+            total += item.datas.length;
+          });
+          if (total == oData[1]) this.isload = false;
+        }
+      })
     }else{
-      this.api.execByBody('Authencation', 'historywallet', messageBody).pipe(takeUntil(this.destroy$)).subscribe({
-        next: (res: any) => {
-          if (res[0]) {
-            this.notification.showNotiError('', res[1].message);
-          } else {
-            let oData = res[1];
-            this.lstData = oData[0];
-            if (this.lstData.length == 0) this.isEmpty = true;
-            let total = 0;
-            this.lstData.forEach((item: any) => {
-              total += item.datas.length;
-            });
-            if (total == oData[1]) this.isload = false;
-            if (this.firstLoad) this.firstLoad = false;
-          }
-        },
-        complete: () => {
-          this.dt.detectChanges();
+      this.api.execByBody('Authencation', 'historywallet', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+        if (res[0]) {
+          this.notification.showNotiError('', res[1].message);
+        } else {
+          let oData = res[1];
+          this.lstData = oData[0];
+          if (this.lstData.length == 0) this.isEmpty = true;
+          let total = 0;
+          this.lstData.forEach((item: any) => {
+            total += item.datas.length;
+          });
+          if (total == oData[1]) this.isload = false;
         }
       })
     }
   }
 
-  sortDataHis(status: any) {
+  sortData(status: any) {
     if(this.status == status) return;
     this.status = status;
     this.isload = true;
     this.pageNum = 1;
     this.lstData = [];
     this.isEmpty = false;
-    this.dt.detectChanges();
-    this.loadDataHis();
+    this.content.scrollToTop();
+    this.loadData();
   }
 
   async onIonInfiniteHis(event: any) {
@@ -168,8 +176,8 @@ export class HistoryPageComponent {
       let data = {
         status: this.status,
         id: this.id,
-        //fromDate: this.fromDate,
-        //toDate: this.toDate,
+        fromDate: this.formGroup.value.fromDate,
+        toDate: this.formGroup.value.toDate,
         pageNum: this.pageNum,
         pageSize: this.pageSize,
         userName: username
@@ -200,12 +208,42 @@ export class HistoryPageComponent {
           this.onDestroy();
           setTimeout(() => {
             (event as InfiniteScrollCustomEvent).target.complete();
-            this.dt.detectChanges();
+            
           }, 500);
         }
       })
     }
   }
+
+  //#region FilterPackage
+  openPopFilter(){
+    this.isOpenFilter = true;
+  }
+
+  cancelFilter(){
+    this.isOpenFilter = false;
+    this.dt.detectChanges();
+  }
+
+  onFilter(){
+    this.isload = true;
+    this.pageNum = 1;
+    this.lstData = [];
+    this.isEmpty = false;
+    this.content.scrollToTop();
+    this.loadData();
+    this.cancelFilter();
+  }
+
+  clearFilter(){
+    this.formGroup.reset();
+  }
+  //#endregion
+
+  onback(){
+    this.navCtrl.navigateBack(this.previousUrl);
+  }
+
   //#endregion
 
 }

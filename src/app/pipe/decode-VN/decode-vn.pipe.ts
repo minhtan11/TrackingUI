@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'decodeVN'
+  name: 'decodeVN',
+  standalone:true
 })
 export class DecodeVNPipe implements PipeTransform {
 
