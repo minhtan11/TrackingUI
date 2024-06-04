@@ -241,7 +241,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'package', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+    this.api.execByBody('Authencation', 'package', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res[0]) {
         this.notification.showNotiError('', res[1].message);
       } else {

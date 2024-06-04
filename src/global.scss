@@ -28,60 +28,38 @@
 // css for all screen
 html{
     //font-family: 'Comic Sans MS' !important;
-    font-size: 16px !important;
+    //font-size: 16px !important;
     font-family: Tahoma, sans-serif !important;
     @media (min-width: 320px) {
         font-size: 10px !important;
-        ion-back-button{
-            font-size: 10px !important;
-        }
     }
 
     @media (min-width: 360px) {
-        font-size: 10px !important;
-        ion-back-button{
-            font-size: 10px !important;
-        }
+        font-size: 11px !important;
     }
 
     @media (min-width: 375px) {
         font-size: 11px !important;
-        font-size: 10px !important;
-        ion-back-button{
-            font-size: 11px !important;
-        }
     }
 
     @media (min-width: 390px) {
-        font-size: 11.5px !important;
-        ion-back-button{
-            font-size: 11.5px !important;
-        }
+        font-size: 12px !important;
     }
 
     @media (min-width: 393px) {
         font-size: 12px !important;
-        ion-back-button{
-            font-size: 12px !important;
-        }
     }
 
     @media (min-width: 400px) {
         font-size: 13px !important;
-        ion-back-button{
-            font-size: 13px !important;
-        }
     }
 
     @media (min-width: 411px) {
-        font-size: 13.5px !important;
-        ion-back-button{
-            font-size: 13.5px !important;
-        }
+        font-size: 13px !important;
     }
 
     @media (min-width: 428px) {
-        font-size: 13.8px !important;
+        font-size: 13.5px !important;
         ion-back-button{
             font-size: 13.8px !important;
         }
@@ -185,8 +163,8 @@ ion-segment-button {
     font-family: Tahoma, sans-serif !important;
     text-transform: none !important;
     font-size: unset !important;
-    min-height: unset !important;
-    height: 3rem !important;
+    //min-height: unset !important;
+    //height: 3rem !important;
 }
 
 // ion-segment-button#custom::part(indicator-background) {
@@ -362,12 +340,12 @@ ul.timeline>.active:before {
 }
 
 ion-searchbar#custom-search {
-    --background: white !important;
-    --color: grey !important;
-    --placeholder-color: grey !important;
-    --icon-color: grey !important;
-    --clear-button-color: grey !important;
-    font-size: var(--ion-dynamic-font) !important;
+    // --background: white !important;
+    // --color: grey !important;
+    // --placeholder-color: grey !important;
+    // --icon-color: grey !important;
+    // --clear-button-color: grey !important;
+    // font-size: var(--ion-dynamic-font) !important;
 }
 
 .block {
@@ -400,6 +378,10 @@ ion-toast::part(icon) {
 
 .bg-default{
     --background:var(--ion-color-mat-primary) !important;
+}
+
+.bg-white{
+    --background:white !important;
 }
 
 .bg-toast-default{

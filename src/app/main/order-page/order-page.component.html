@@ -1,22 +1,25 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar mode="ios" class="bg-default">
-    <ion-title style="color: white !important;" class="dynamic-font text-dark">Danh sách đơn hàng</ion-title>
+  <ion-toolbar mode="ios" class="bg-white pr-2 pl-2">
+    <ion-title mode="md" class="dynamic-font text-dark pl-3 pr-0">
+      <h3 class="my-0 mx-0 font-weight-bold">Đơn hàng</h3>
+    </ion-title>
+    <!-- <ion-icon (click)="openPopFilter()" class="pr-2 text-dark" slot="end" style="font-size: 2rem;" name="funnel-outline"></ion-icon>   -->
+    <img (click)="openPopFilter()" slot="end" style="width: 1.5rem;height: 1.5rem;" src="../../../assets/image/funnel-tool.png" alt="">
   </ion-toolbar>
-  <ion-toolbar class="p-2" class="bg-default">
+  <ion-toolbar class="bg-white pr-2 pl-2">
     <div class="w-100 d-flex align-items-center">
       <ion-searchbar class="pb-0 pl-0 pl-2 pr-2" style="--border-radius:20px !important" id='custom-search' placeholder="Tìm kiếm đơn hàng" (ionChange)="ionChange($event)"
       enterkeyhint="search" mode="ios" show-clear-button="always"></ion-searchbar>
-      <ion-icon (click)="openPopFilter()" class="pr-2" style="color: white !important;font-size: 2rem;" name="funnel-outline"></ion-icon>  
     </div>
   </ion-toolbar>
   <ion-toolbar style="--background:white !important;">
-    <ion-segment style="height: 3rem !important;min-height: unset !important;border-bottom: 1px solid #e3e3e3 !important;" mode="md" [scrollable]="true" [value]="status">
+    <ion-segment style="border-bottom: 1px solid #e3e3e3 !important;" mode="md" [scrollable]="true" [value]="status">
       <ion-segment-button  (click)="sortData(0)" [value]="0">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
             <span>Tất cả</span>
           </ion-text>
-          <ion-text *ngIf="total0 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+          <ion-text *ngIf="total0 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
             <span>{{'('+(total0 | number)+')'}}</span>
           </ion-text>
         </div>
@@ -26,7 +29,7 @@
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
             <span>Chờ thanh toán</span>
           </ion-text>
-          <ion-text *ngIf="total1 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+          <ion-text *ngIf="total1 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
             <span>{{'('+(total1 | number)+')'}}</span>
           </ion-text>
         </div>
@@ -46,7 +49,7 @@
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
             <span>Đã hủy</span>
           </ion-text>
-          <ion-text *ngIf="total3 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+          <ion-text *ngIf="total3 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
             <span>{{'('+(total3 | number)+')'}}</span>
           </ion-text>
         </div>
@@ -56,7 +59,7 @@
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
             <span>Khác</span>
           </ion-text>
-          <ion-text *ngIf="total4 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
+          <ion-text *ngIf="total4 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
             <span>{{'('+(total4 | number)+')'}}</span>
           </ion-text>
         </div>

@@ -1,9 +1,10 @@
 <ion-header class="ion-no-border" style="--background:white !important;">
-  <ion-toolbar mode="ios" class="bg-default">
-    <ion-title style="color: white !important;" class="dynamic-font text-dark">Thông báo</ion-title>
-    <ion-button (click)="openPopFilter()" slot="end" fill="clear">
-      <ion-icon style="color: white !important;" class="text-dark" name="funnel-outline"></ion-icon>
-    </ion-button>
+  <ion-toolbar mode="ios" class="bg-white pr-2 pl-2">
+    <ion-title mode="md" class="dynamic-font text-dark pl-3 pr-0">
+      <h3 class="my-0 mx-0 font-weight-bold">Thông báo</h3>
+    </ion-title>
+    <!-- <ion-icon (click)="openPopFilter()" class="pr-2 text-dark" slot="end" style="font-size: 2rem;" name="funnel-outline"></ion-icon>   -->
+    <img (click)="openPopFilter()" slot="end" style="width: 1.5rem;height: 1.5rem;" src="../../../assets/image/funnel-tool.png" alt="">
   </ion-toolbar>
 </ion-header>
 <ion-content style="--background:white !important;">
@@ -17,7 +18,7 @@
     <ion-list *ngIf="lstData && lstData.length" class="m-0" style="background-color:white !important;">
       <ng-container *ngFor="let item of lstData">
         <ion-item lines="none" style="--background:white !important">
-          <ion-card class="mx-1 my-3 w-100" style="--background:white !important;box-shadow: none !important;">
+          <ion-card class="mx-1 my-0  pb-3 w-100" style="--background:white !important;box-shadow: none !important;font-size: unset !important;">
             <ion-card-header class="p-2 pb-1">
               <div class="d-flex align-items-center">
                 <ion-icon style="font-size: 1rem;" class="pr-2" name="checkmark-done-outline"></ion-icon>
