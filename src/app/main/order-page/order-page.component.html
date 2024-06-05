@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar mode="ios" class="bg-white pr-2 pl-2">
     <ion-title mode="md" class="dynamic-font text-dark pl-3 pr-0">
-      <h3 class="my-0 mx-0 font-weight-bold">Đơn hàng</h3>
+      <h2 class="my-0 mx-0 font-weight-bold">Danh sách đơn hàng</h2>
     </ion-title>
     <!-- <ion-icon (click)="openPopFilter()" class="pr-2 text-dark" slot="end" style="font-size: 2rem;" name="funnel-outline"></ion-icon>   -->
     <img (click)="openPopFilter()" slot="end" style="width: 1.5rem;height: 1.5rem;" src="../../../assets/image/funnel-tool.png" alt="">
@@ -13,54 +13,54 @@
     </div>
   </ion-toolbar>
   <ion-toolbar style="--background:white !important;">
-    <ion-segment style="border-bottom: 1px solid #e3e3e3 !important;" mode="md" [scrollable]="true" [value]="status">
+    <ion-segment style="border-bottom: 1px solid #e3e3e3 !important;min-height: unset !important;height: 4rem !important;" mode="md" [scrollable]="true" [value]="status">
       <ion-segment-button  (click)="sortData(0)" [value]="0">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <span>Tất cả</span>
+            <h4 class="my-0 mx-0 font-weight-bold">Tất cả</h4>
           </ion-text>
           <ion-text *ngIf="total0 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
-            <span>{{'('+(total0 | number)+')'}}</span>
+            <h5 class="my-0 mx-0">{{'('+(total0 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
       <ion-segment-button  (click)=" sortData(1)" [value]="1">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <span>Chờ thanh toán</span>
+            <h4 class="my-0 mx-0 font-weight-bold">Chờ thanh toán</h4>
           </ion-text>
           <ion-text *ngIf="total1 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
-            <span>{{'('+(total1 | number)+')'}}</span>
+            <h5 class="my-0 mx-0">{{'('+(total1 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
       <ion-segment-button  (click)="sortData(2)" [value]="2">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <span>Đã thanh toán</span>
+            <h4 class="my-0 mx-0 font-weight-bold">Đã thanh toán</h4>
           </ion-text>
-          <ion-text *ngIf="total2 != undefined" style="color: orange !important;" class="text-segment dynamic-font font-weight-bold">
-            <span>{{'('+(total2 | number)+')'}}</span>
+          <ion-text *ngIf="total2 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
+            <h5 class="my-0 mx-0">{{'('+(total2 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
       <ion-segment-button  (click)="sortData(3)" [value]="3">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <span>Đã hủy</span>
+            <h4 class="my-0 mx-0 font-weight-bold">Đã hủy</h4>
           </ion-text>
           <ion-text *ngIf="total3 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
-            <span>{{'('+(total3 | number)+')'}}</span>
+            <h4 class="my-0 mx-0">{{'('+(total3 | number)+')'}}</h4>
           </ion-text>
         </div>
       </ion-segment-button>
       <ion-segment-button  (click)="sortData(4)" [value]="4">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <span>Khác</span>
+            <h4 class="my-0 mx-0 font-weight-bold">Khác</h4>
           </ion-text>
           <ion-text *ngIf="total4 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
-            <span>{{'('+(total4 | number)+')'}}</span>
+            <h5 class="my-0 mx-0">{{'('+(total4 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
@@ -77,6 +77,44 @@
     </div>
   </ng-container>
   <div class="w-100 mt-2">
+    <ion-list *ngIf="!lstData" class="m-0" style="background-color:white !important;">
+      <ng-container *ngFor="let item of [0,1,2,3,4,5,6,7,8,9]">
+        <ion-item lines="none" style="--background:white !important">
+          <ion-card class="mx-1 my-1 mb-4 w-100"
+            style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;font-size: unset !important;">
+            <ion-card-header class="p-3">
+              <div style="justify-content: space-between;" class="d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                  <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
+                </div>
+                <div class="d-flex align-items-center">
+                  <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
+                </div>
+              </div>
+            </ion-card-header>
+            <ion-card-content class="p-3" >
+              <div class="w-100">
+                <div class="d-flex align-items-center">
+                  <ion-skeleton-text [animated]="true" style="width: 4em;height: 4em;
+                    margin-right: 1rem;"></ion-skeleton-text>
+                  <div>
+                    <ion-skeleton-text [animated]="true" style="width: 200px"></ion-skeleton-text>
+                    <br>
+                    <ion-skeleton-text [animated]="true" style="width: 200px"></ion-skeleton-text>
+                    <br>
+                    <ion-skeleton-text [animated]="true" style="width: 200px"></ion-skeleton-text>
+                    <br>
+                    <ion-skeleton-text [animated]="true" style="width: 200px"></ion-skeleton-text>
+                    <br>
+                    <ion-skeleton-text [animated]="true" style="width: 200px"></ion-skeleton-text>
+                  </div>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+      </ng-container>
+    </ion-list>
     <ion-list *ngIf="lstData && lstData.length" class="m-0" style="background-color:white !important;">
       <div *ngIf="status == 1 && lstData.length" class="w-100 pl-2 pb-2 pt-0">
         <ion-text class="dynamic-font" color="medium">

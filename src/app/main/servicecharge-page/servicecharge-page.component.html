@@ -1,17 +1,28 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar mode="ios" class="bg-white">
-    <ion-button slot="start" (click)="onback()" fill="clear">
-      <ion-icon class="text-dark" name="chevron-back-outline"></ion-icon>
-    </ion-button>
-    <ion-title mode="md" class="dynamic-font text-dark pl-0 pr-0">
-      <h3 class="my-0 mx-0 font-weight-bold">Phí vận chuyển</h3>
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar mode="ios" class="bg-default" style="border-radius: 0px 0px 15px 15px;">
+    <ion-buttons [collapse]="true" slot="start">
+      <ion-button (click)="onback()" fill="clear">
+        <ion-icon class="text-white" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title mode="ios" class="dynamic-font text-white pl-0 pr-0">
+      Phí vận chuyển
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content [forceOverscroll]="true" style="--background:white !important">
-  <ion-refresher mode="ios" slot="fixed" (ionRefresh)="onRefresh($event)">
-    <ion-refresher-content refreshingSpinner="dots"></ion-refresher-content>
-  </ion-refresher>
+<ion-content [forceOverscroll]="true" style="--background:white !important" [fullscreen]="true">
+  <ion-header class="ion-no-border" collapse="condense">
+    <ion-toolbar mode="ios" class="bg-white">
+      <ion-buttons [collapse]="true" slot="start">
+        <ion-button (click)="onback()" fill="clear">
+          <ion-icon class="text-dark" name="chevron-back-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title mode="md" class="dynamic-font text-dark pl-0 pr-0">
+        <h2 class="my-0 mx-0 font-weight-bold">Phí vận chuyển</h2>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
   <div class="w-100 mb-5" style="margin: auto;max-width: 1000px;">
     <ion-card mode="ios" style="--background:white !important">
       <ion-card-header class="text-center">

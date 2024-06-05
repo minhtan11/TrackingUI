@@ -31,72 +31,93 @@ html{
     //font-size: 16px !important;
     font-family: Tahoma, sans-serif !important;
     @media (min-width: 320px) {
-        font-size: 10px !important;
+        font-size: 10.5px !important;
+        .icon-menu{
+            font-size: 20px !important;
+        }
     }
 
     @media (min-width: 360px) {
         font-size: 11px !important;
+        .icon-menu{
+            font-size: 20px !important;
+        }
     }
 
     @media (min-width: 375px) {
         font-size: 11px !important;
+        .icon-menu{
+            font-size: 21px !important;
+        }
     }
 
     @media (min-width: 390px) {
         font-size: 12px !important;
+        .icon-menu{
+            font-size: 21.5px !important;
+        }
     }
 
     @media (min-width: 393px) {
         font-size: 12px !important;
+        .icon-menu{
+            font-size: 21.5px !important;
+        }
     }
 
     @media (min-width: 400px) {
         font-size: 13px !important;
+        .icon-menu{
+            font-size: 22px !important;
+        }
     }
 
     @media (min-width: 411px) {
         font-size: 13px !important;
+        .icon-menu{
+            font-size: 22px !important;
+        }
     }
 
     @media (min-width: 428px) {
         font-size: 13.5px !important;
-        ion-back-button{
-            font-size: 13.8px !important;
+        .icon-menu{
+            font-size: 22px !important;
         }
     }
 
     @media (min-width: 430px) {
         font-size: 14px !important;
-        ion-back-button{
-            font-size: 14px !important;
+        .icon-menu{
+            font-size: 22.5px !important;
         }
     }
 
     @media (min-width: 448px) {
         font-size: 14.8px !important;
-        ion-back-button{
-            font-size: 14.8px !important;
+        .icon-menu{
+            font-size: 22.5px !important;
         }
     }
 
     @media (min-width: 500px) {
         font-size: 15px !important;
-        ion-back-button{
-            font-size: 15px !important;
+        .icon-menu{
+            font-size: 23px !important;
         }
     }
 
     @media (min-width: 720px) {
         font-size: 15.5px !important;
-        ion-back-button{
-            font-size: 15.5px !important;
+        .icon-menu{
+            font-size: 24px !important;
         }
     }
 
     @media (min-width: 1000px) {
         font-size: 16px !important;
-        ion-back-button{
-            font-size: 16px !important;
+        .icon-menu{
+            font-size: 25px !important;
         }
     }
 }
@@ -163,8 +184,8 @@ ion-segment-button {
     font-family: Tahoma, sans-serif !important;
     text-transform: none !important;
     font-size: unset !important;
-    //min-height: unset !important;
-    //height: 3rem !important;
+    min-height: unset !important;
+    height: 4rem !important;
 }
 
 // ion-segment-button#custom::part(indicator-background) {
