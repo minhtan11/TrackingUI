@@ -107,7 +107,6 @@ export class HistoryPageComponent {
 
   //#region Function
   init(){
-    this.lstData = [];
     this.loadData();
   }
 
@@ -126,7 +125,7 @@ export class HistoryPageComponent {
       dataRequest: JSON.stringify(data)
     };
     if (isShowLoad) {
-      this.api.execByBody('Authencation', 'historywallet', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      this.api.execByBody('Authencation', 'historywallet', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
         if (res[0]) {
           this.notification.showNotiError('', res[1].message);
         } else {

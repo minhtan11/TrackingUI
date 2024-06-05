@@ -85,7 +85,6 @@ export class NotificationPageComponent {
   }
 
   init(){
-    this.lstData = [];
     this.loadData();
   }
 

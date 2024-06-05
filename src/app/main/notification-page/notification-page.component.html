@@ -4,7 +4,7 @@
       <h2 class="my-0 mx-0 font-weight-bold">Thông báo</h2>
     </ion-title>
     <!-- <ion-icon (click)="openPopFilter()" class="pr-2 text-dark" slot="end" style="font-size: 2rem;" name="funnel-outline"></ion-icon>   -->
-    <img (click)="openPopFilter()" slot="end" style="width: 1.5rem;height: 1.5rem;" src="../../../assets/image/funnel-tool.png" alt="">
+    <img (click)="openPopFilter()" slot="end" style="width: 2rem;height: 2rem;" src="../../../assets/image/funnel-tool.png" alt="">
   </ion-toolbar>
 </ion-header>
 <ion-content style="--background:white !important;">
@@ -15,6 +15,30 @@
     </ion-text>
   </div>
   <div class="w-100">
+    <ion-list *ngIf="!lstData" class="m-0" style="background-color:white !important;">
+      <ng-container *ngFor="let item of [0,1,2,3,4,5,6,7,8,9]">
+        <ion-item lines="none" style="--background:white !important">
+          <ion-card class="mx-1 my-0  pb-3 w-100" style="--background:white !important;box-shadow: none !important;font-size: unset !important;">
+            <ion-card-header class="p-2 pb-1">
+              <div class="d-flex align-items-center">
+                <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
+              </div>
+              <ion-text class="text-dark dynamic-font">
+                <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
+              </ion-text>
+            </ion-card-header>
+            <ion-card-content style="background-color: #e7f6ff !important;
+            border-radius: 15px;" class="p-3">
+              <div class="d-flex align-items-center">
+                <div class="w-100">
+                  <ion-skeleton-text [animated]="true" class="w-100" style="height: 250px;"></ion-skeleton-text>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+      </ng-container>
+    </ion-list>
     <ion-list *ngIf="lstData && lstData.length" class="m-0" style="background-color:white !important;">
       <ng-container *ngFor="let item of lstData">
         <ion-item lines="none" style="--background:white !important">
@@ -66,8 +90,8 @@
   <ion-modal style="--background:white !important" (willDismiss)="cancelFilter()" [isOpen]="isOpenFilter" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
     <ng-template>
       <div class="p-3 w-100 h-100">
-        <ion-text class="dynamic-font text-center" style="color: var(--ion-color-mat-primary);">
-          <h3 class="font-weight-bold">Bộ lọc</h3>
+        <ion-text class="text-center">
+          <h3 class="font-weight-bold dynamic-font text-dark">Bộ lọc</h3>
         </ion-text>
         <div [formGroup]="formGroup">
           <ion-text>

@@ -29,7 +29,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   username: any;
   status: any = 0;
   id: any = '';
-  lstData: any = [];
+  lstData: any;
   isEmpty: any = false;
   total: any = 0;
   isload: any = true;
@@ -337,7 +337,6 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   }
 
   async init() {
-    this.lstData = [];
     this.username = await this.storage.get('username');
     this.loadData();
     this.getTotal();

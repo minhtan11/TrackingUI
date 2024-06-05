@@ -1,28 +1,16 @@
-<ion-header class="ion-no-border" [translucent]="true">
-  <ion-toolbar mode="ios" class="bg-default" style="border-radius: 0px 0px 15px 15px;">
-    <ion-buttons [collapse]="true" slot="start">
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios" style="--background:white !important">
+    <ion-buttons slot="start">
       <ion-button (click)="onback()" fill="clear">
-        <ion-icon class="text-white" name="chevron-back-outline"></ion-icon>
+        <ion-icon class="text-dark" name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title mode="ios" class="dynamic-font text-white pl-0 pr-0">
-      Nạp tiền
+    <ion-title mode="md" class="dynamic-font text-dark pl-0 pr-0">
+      <h2 class="my-0 mx-0 font-weight-bold">Nạp tiền</h2>
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content style="--background:white !important" [fullscreen]="true">
-  <ion-header class="ion-no-border" collapse="condense">
-    <ion-toolbar mode="ios" class="bg-white">
-      <ion-buttons [collapse]="true" slot="start">
-        <ion-button (click)="onback()" fill="clear">
-          <ion-icon class="text-dark" name="chevron-back-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-title mode="md" class="dynamic-font text-dark pl-0 pr-0">
-        <h2 class="my-0 mx-0 font-weight-bold">Nạp tiền</h2>
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content style="--background:white !important">
   <div class="d-flex align-items-center justify-content-center h-100 w-100">
     <div style="margin: auto;max-width: 850px;">
       <ion-card mode="ios" style="--background:white !important">

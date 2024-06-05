@@ -405,6 +405,10 @@ ion-toast::part(icon) {
     --background:white !important;
 }
 
+.bg-none{
+    --background:none !important;
+}
+
 .bg-toast-default{
     --background:var(--ion-color-mat-primary) !important;
 }

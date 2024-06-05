@@ -4,7 +4,7 @@
       <h2 class="my-0 mx-0 font-weight-bold">Danh sách đơn hàng</h2>
     </ion-title>
     <!-- <ion-icon (click)="openPopFilter()" class="pr-2 text-dark" slot="end" style="font-size: 2rem;" name="funnel-outline"></ion-icon>   -->
-    <img (click)="openPopFilter()" slot="end" style="width: 1.5rem;height: 1.5rem;" src="../../../assets/image/funnel-tool.png" alt="">
+    <img (click)="openPopFilter()" slot="end" style="width: 2rem;height: 2rem;" src="../../../assets/image/funnel-tool.png" alt="">
   </ion-toolbar>
   <ion-toolbar class="bg-white pr-2 pl-2">
     <div class="w-100 d-flex align-items-center">
@@ -296,8 +296,8 @@
   <ion-modal style="--background:white !important" (willDismiss)="cancelFilter()" [isOpen]="isOpenFilter" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
     <ng-template>
       <div class="p-3 w-100 h-100">
-        <ion-text class="dynamic-font text-center" style="color: var(--ion-color-mat-primary);">
-          <h3 class="font-weight-bold">Bộ lọc</h3>
+        <ion-text class="text-center">
+          <h3 class="font-weight-bold dynamic-font text-dark">Bộ lọc</h3>
         </ion-text>
         <div [formGroup]="formGroup">
           <ion-text>

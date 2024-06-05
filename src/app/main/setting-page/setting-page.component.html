@@ -1,11 +1,13 @@
-<ion-header class="ion-no-border" style="--background:white !important;">
-  <ion-toolbar mode="ios" class="bg-default">
-    <ion-title style="color: white !important;" class="dynamic-font text-dark">Tài khoản</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios" class="pr-2 pl-2" style="--background:#F0F2F5 !important">
+    <ion-title mode="md" class="dynamic-font text-dark pl-3 pr-0">
+      <h2 class="my-0 mx-0 font-weight-bold">Tài khoản</h2>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content style="--background:var(--ion-color-mat-accent) !important;">
+<ion-content style="--background:#F0F2F5 !important;">
   <div class="w-100 h-100">
-    <div *ngIf="oUser == undefined" class="w-100 p-3 d-flex align-items-center" style="background-color: var(--ion-color-mat-primary) !important;">
+    <div *ngIf="oUser == undefined" class="w-100 p-3 d-flex align-items-center">
       <ion-avatar style="padding: 0.2rem;background-color: white !important;">
         <ion-skeleton-text [animated]="true"></ion-skeleton-text>
       </ion-avatar>
@@ -14,22 +16,22 @@
         <ion-skeleton-text style="width: 80px;" [animated]="true"></ion-skeleton-text>
       </div>
     </div>
-    <div *ngIf="oUser != undefined" class="w-100 p-3 d-flex align-items-center" style="background-color: var(--ion-color-mat-primary) !important;">
-      <ion-avatar (click)="goInformation()" style="padding: 0.2rem;background-color: white !important;">
+    <div *ngIf="oUser != undefined" class="w-100 p-3 d-flex align-items-center">
+      <ion-avatar (click)="goInformation()">
         <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="">
       </ion-avatar>
       <div class="d-flex justify-content-center pr-2 pl-2" style="flex-direction: column;">
-        <ion-text class="dynamic-font text-white">
+        <ion-text class="dynamic-font text-dark">
           <span>{{titleTime}}</span>
         </ion-text>
-        <ion-text class="dynamic-font text-white font-weight-bold ion-text-nowrap">
+        <ion-text class="dynamic-font text-dark font-weight-bold ion-text-nowrap">
           <span>{{(oUser?.fullName ? oUser?.fullName : oUser?.username) | decodeVN | uppercase}}</span>
         </ion-text>
       </div>
     </div>
     <div class="w-100 p-3 d-flex align-items-center justify-content-center">
       <div style="width: 50%;">
-        <ion-card class="mx-1 my-1" style="border-radius: 20px;box-shadow: none !important;--background: white;font-size: unset;">
+        <ion-card class="mx-1 my-1" style="border-radius: 15px;box-shadow: none !important;--background: white;font-size: unset;">
           <ion-card-header class="p-1 p-2">
             <div class="w-100 d-flex align-items-center justify-content-center">
               <img class="mr-2" style="width: 2rem;height: 2rem;" src="../../assets/image/wallet.png" alt="">
@@ -53,7 +55,7 @@
         </ion-card>
       </div>
       <div style="width: 50%;">
-        <ion-card class="mx-1 my-1" style="border-radius: 20px;box-shadow: none !important;--background: white;font-size: unset;">
+        <ion-card class="mx-1 my-1" style="border-radius: 15px;box-shadow: none !important;--background: white;font-size: unset;">
           <ion-card-header class="p-1 p-2">
             <div class="w-100 d-flex align-items-center justify-content-center">
               <img class="mr-2" style="width: 2rem;height: 2rem;" src="../../assets/image/star.png" alt="">
@@ -77,12 +79,12 @@
     </div>
     <div class="w-100 p-3">
       <ion-item-group>
-        <ion-item-divider class="pl-1" mode="ios" style="background-color: var(--ion-color-mat-accent) !important">
+        <ion-item-divider class="pl-1" mode="ios" style="background-color: #F0F2F5 !important">
           <ion-text class="dynamic-font text-dark">
             <span>Quản lý tài chính</span>
           </ion-text>
         </ion-item-divider>
-        <ion-card mode="ios" class="mx-1 my-4 mt-2" style="--background:white !important;box-shadow: none !important;border-radius: 20px;">
+        <ion-card mode="ios" class="mx-1 my-4 mt-2" style="--background:white !important;box-shadow: none !important;border-radius: 15px;">
           <ion-card-content class="p-0">
             <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
               <ion-item class="p-2" (click)="goWithdraw(1)" lines="none" [button]="true" detail="false" style="--background:white !important">
@@ -104,12 +106,12 @@
         </ion-card>
       </ion-item-group>
       <ion-item-group>
-        <ion-item-divider class="pl-1" mode="ios" style="background-color: var(--ion-color-mat-accent) !important">
+        <ion-item-divider class="pl-1" mode="ios" style="background-color: #F0F2F5 !important">
           <ion-text class="dynamic-font text-dark">
             <span>Hỗ trợ</span>
           </ion-text>
         </ion-item-divider>
-        <ion-card mode="ios" class="mx-1 my-4 mt-2" style="--background:white !important;box-shadow: none !important;border-radius: 20px;">
+        <ion-card mode="ios" class="mx-1 my-4 mt-2" style="--background:white !important;box-shadow: none !important;border-radius: 15px;">
           <ion-card-content class="p-0">
             <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
               <ion-item class="p-2" (click)="goReport()" lines="none" [button]="true" detail="false" style="--background:white !important">
@@ -131,12 +133,12 @@
         </ion-card>
       </ion-item-group>
       <ion-item-group style="padding-bottom: 1rem;">
-        <ion-item-divider class="pl-1"  mode="ios" style="background-color: var(--ion-color-mat-accent) !important">
+        <ion-item-divider class="pl-1"  mode="ios" style="background-color: #F0F2F5 !important">
           <ion-text class="dynamic-font text-dark">
             <span>Tài khoản</span>
           </ion-text>
         </ion-item-divider>
-        <ion-card mode="ios" class="mx-1 my-4 mt-2" style="--background:white !important;box-shadow: none !important;border-radius: 20px;">
+        <ion-card mode="ios" class="mx-1 my-4 mt-2" style="--background:white !important;box-shadow: none !important;border-radius: 15px;">
           <ion-card-content class="p-0">
             <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
               <ion-item class="p-2" (click)="goInformation()" lines="none" [button]="true" detail="false" style="--background:white !important">
@@ -164,13 +166,13 @@
       <div class="w-100 d-flex align-items-center justify-content-center">
         <ion-button (click)="onOpenLogout()" class="w-100 pr-2" style="--background: white !important;
         --background-activated: white !important;">
-          <ion-text color="danger" mode="ios" class="font-weight-normal dynamic-font mr-2">Đăng xuất</ion-text>
-          <img slot="end"  style="width: 2rem;height: 2rem;"  src="../../assets/image/icon-logout-setting.png" alt="">
+          <ion-text mode="ios" class="font-weight-normal dynamic-font text-dark">Đăng xuất</ion-text>
+          <!-- <img slot="end"  style="width: 2rem;height: 2rem;"  src="../../assets/image/icon-logout-setting.png" alt=""> -->
         </ion-button>
         <ion-button (click)="onOpenChangeAccount()" class="w-100" style="--background: white !important;
         --background-activated: white !important;">
-          <ion-text style="color:orange !important" mode="ios" class="font-weight-normal dynamic-font mr-2">Đổi tài khoản</ion-text>
-          <img slot="end"  style="width: 2rem;height: 2rem;"  src="../../assets/image/icon-change-setting.png" alt="">
+          <ion-text mode="ios" class="font-weight-normal dynamic-font text-dark">Đổi tài khoản</ion-text>
+          <!-- <img slot="end"  style="width: 2rem;height: 2rem;"  src="../../assets/image/icon-change-setting.png" alt=""> -->
         </ion-button>
       </div>
     </div>
@@ -290,8 +292,8 @@
   <ion-modal style="--background:white !important" (willDismiss)="cancelChangeAccount()" [isOpen]="isOpenChangeAccount" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
     <ng-template>
       <div class="p-3 w-100 h-100">
-        <ion-text class="dynamic-font text-center" style="color: var(--ion-color-mat-primary);">
-          <h3 class="font-weight-bold">Chuyển tài khoản</h3>
+        <ion-text class="text-center">
+          <h3 class="font-weight-bold dynamic-font text-dark">Chuyển tài khoản</h3>
         </ion-text>
         <ion-list [inset]="true" style="background-color:white !important;">
           <ng-container *ngFor="let item of listUser">
@@ -331,8 +333,8 @@
   <ion-modal style="--background:white !important" (willDismiss)="cancelAddAccount()" [isOpen]="isOpenAddAccount" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
     <ng-template>
       <div class="p-3 w-100 h-100">
-        <ion-text class="dynamic-font text-center" style="color: var(--ion-color-mat-primary);">
-          <h3 class="font-weight-bold">Đăng nhập tài khoản sẵn có</h3>
+        <ion-text class="text-center">
+          <h3 class="font-weight-bold text-dark dynamic-font ">Đăng nhập tài khoản sẵn có</h3>
         </ion-text>
         <div [formGroup]="formGroup">
           <mat-form-field appearance="outline" class="w-100">
