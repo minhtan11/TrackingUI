@@ -1,12 +1,12 @@
 <ion-header class="ion-no-border" style="--background:white !important;">
-  <ion-toolbar mode="ios" class="pr-2 pl-2" style="--background:white !important">
-    <ion-title mode="md" class="dynamic-font text-dark pl-3 pr-0">
+  <ion-toolbar mode="ios" class="pr-2 pl-2" style="--background:white !important;">
+    <ion-title mode="md" class="dynamic-font text-primary-default pl-3 pr-0">
       <h2 class="my-0 mx-0 font-weight-bold">Danh sách kiện hàng</h2>
     </ion-title>
     <!-- <ion-icon (click)="openPopFilter()" class="pr-2 text-dark" slot="end" style="font-size: 2rem;" name="funnel-outline"></ion-icon>   -->
     <img (click)="openPopFilter()" slot="end" style="width: 2rem;height: 2rem;" src="../../../assets/image/funnel-tool.png" alt="">
   </ion-toolbar>
-  <ion-toolbar class="bg-white pr-2 pl-2">
+  <ion-toolbar style="--background:white !important;border-radius: 0 0 10px 10px;" class="pr-2 pl-2 pb-2">
     <div class="w-100 d-flex align-items-center">
       <ion-searchbar class="pb-0 pl-0 pl-2 pr-2" style="--border-radius:20px !important" id='custom-search' placeholder="Tìm kiếm kiện hàng" (ionChange)="ionChange($event)"
       enterkeyhint="search" mode="ios" show-clear-button="always"></ion-searchbar>
@@ -17,90 +17,90 @@
       <ion-segment-button (click)=" sortData(0)" [value]="0">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <h4 class="my-0 mx-0 font-weight-bold">Tất cả</h4>
+            <h5 class="my-0 mx-0 font-weight-bold">Tất cả</h5>
           </ion-text>
           <ion-text *ngIf="total0 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
-            <h4 class="my-0 mx-0">{{'('+(total0 | number)+')'}}</h4>
+            <h5 class="my-0 mx-0">{{'('+(total0 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(1)" [value]="1">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <h4 class="my-0 mx-0 font-weight-bold">Chưa xác nhận</h4>
+            <h5 class="my-0 mx-0 font-weight-bold">Chưa xác nhận</h5>
           </ion-text>
           <ion-text *ngIf="total1 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
-            <h4 class="my-0 mx-0">{{'('+(total1 | number)+')'}}</h4>
+            <h5 class="my-0 mx-0">{{'('+(total1 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(2)" [value]="2">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <h4 class="my-0 mx-0 font-weight-bold">Hàng về kho TQ</h4>
+            <h5 class="my-0 mx-0 font-weight-bold">Hàng về kho TQ</h5>
           </ion-text>
           <ion-text *ngIf="total2 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
-            <h4 class="my-0 mx-0">{{'('+(total2 | number)+')'}}</h4>
+            <h5 class="my-0 mx-0">{{'('+(total2 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(3)" [value]="3">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <h4 class="my-0 mx-0 font-weight-bold">Đang trên đường về HCM</h4>
+            <h5 class="my-0 mx-0 font-weight-bold">Đang trên đường về HCM</h5>
           </ion-text>
           <ion-text *ngIf="total3 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
-            <h4 class="my-0 mx-0">{{'('+(total3 | number)+')'}}</h4>
+            <h5 class="my-0 mx-0">{{'('+(total3 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(4)" [value]="4">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <h4 class="my-0 mx-0 font-weight-bold">Hàng về tới HCM</h4>
+            <h5 class="my-0 mx-0 font-weight-bold">Hàng về tới HCM</h5>
           </ion-text>
           <ion-text *ngIf="total4 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
-            <h4 class="my-0 mx-0">{{'('+(total4 | number)+')'}}</h4>
+            <h5 class="my-0 mx-0">{{'('+(total4 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(5)" [value]="5">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <h4 class="my-0 mx-0 font-weight-bold">Đã nhận hàng</h4>
+            <h5 class="my-0 mx-0 font-weight-bold">Đã nhận hàng</h5>
           </ion-text>
           <ion-text *ngIf="total5 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
-            <h4 class="my-0 mx-0">{{'('+(total5 | number)+')'}}</h4>
+            <h5 class="my-0 mx-0">{{'('+(total5 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(9)" [value]="9">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <h4 class="my-0 mx-0 font-weight-bold">Đã hủy</h4>
+            <h5 class="my-0 mx-0 font-weight-bold">Đã hủy</h5>
           </ion-text>
           <ion-text *ngIf="total9 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
-            <h4 class="my-0 mx-0">{{'('+(total9 | number)+')'}}</h4>
+            <h5 class="my-0 mx-0">{{'('+(total9 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(10)" [value]="10">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <h4 class="my-0 mx-0 font-weight-bold">Thất lạc</h4>
+            <h5 class="my-0 mx-0 font-weight-bold">Thất lạc</h5>
           </ion-text>
           <ion-text *ngIf="total10 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
-            <h4 class="my-0 mx-0">{{'('+(total10 | number)+')'}}</h4>
+            <h5 class="my-0 mx-0">{{'('+(total10 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
       <ion-segment-button (click)=" sortData(11)" [value]="11">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <h4 class="my-0 mx-0 font-weight-bold">Không nhận được hàng</h4>
+            <h5 class="my-0 mx-0 font-weight-bold">Không nhận được hàng</h5>
           </ion-text>
           <ion-text *ngIf="total11 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
-            <h4 class="my-0 mx-0">{{'('+(total11 | number)+')'}}</h4>
+            <h5 class="my-0 mx-0">{{'('+(total11 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
@@ -764,7 +764,7 @@
         </ion-text>
         <div [formGroup]="formGroup">
           <ion-text>
-            <h4 class="mt-0 font-weight-bold dynamic-font text-dark">Từ ngày</h4>
+            <h5 class="mt-0 font-weight-bold dynamic-font text-dark">Từ ngày</h5>
           </ion-text>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Chọn từ ngày</mat-label>
@@ -773,7 +773,7 @@
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
           <ion-text>
-            <h4 class="mt-0 font-weight-bold dynamic-font text-dark">Đến ngày</h4>
+            <h5 class="mt-0 font-weight-bold dynamic-font text-dark">Đến ngày</h5>
           </ion-text>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Chọn đến ngày</mat-label>
