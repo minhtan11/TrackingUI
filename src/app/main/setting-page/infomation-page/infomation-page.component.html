@@ -71,24 +71,30 @@
   <ion-modal style="--background:white !important" [isOpen]="isOpen" (willDismiss)="onDismiss()" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
     <ng-template>
       <div class="p-3 w-100 h-100">
-        <ion-text class="dynamic-fontr" style="color: var(--ion-color-mat-primary);">
+        <ion-text class="dynamic-fontr">
           <h3>Chọn ảnh</h3>
         </ion-text>
         <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
           <ion-item class="p-2" (click)="uploadImage('1')" lines="none" [button]="true" detail="false" style="--background:white !important">
             <!-- <ion-icon class="text-dark me-2" mode="ios" name="camera-outline"></ion-icon> -->
-            <img style="width: 2rem;height: 2rem;" src="../../../../assets/image/icon-camera.png" alt="">
-            <ion-text style="font-weight: bold;" mode="ios" class="dynamic-font text-dark pl-2">Chụp ảnh</ion-text>
+             <ion-avatar>
+              <img src="../../../../assets/image/icon-camera.png" alt="">
+             </ion-avatar>
+            <ion-text mode="ios" class="dynamic-font text-dark pl-3">Chụp ảnh</ion-text>
           </ion-item>
           <ion-item class="p-2" (click)="uploadImage('2')" lines="none" [button]="true" detail="false" style="--background:white !important">
             <!-- <ion-icon class="text-dark me-2" mode="ios" name="image-outline"></ion-icon> -->
-            <img style="width: 2rem;height: 2rem;" src="../../../../assets/image/icon-picture.png" alt="">
-            <ion-text style="font-weight: bold;" mode="ios" class="dynamic-font text-dark pl-2">Chọn từ thư viện</ion-text>
+            <ion-avatar>
+              <img src="../../../../assets/image/icon-picture.png" alt="">
+             </ion-avatar>
+            <ion-text mode="ios" class="dynamic-font text-dark pl-3">Chọn từ thư viện</ion-text>
           </ion-item>
           <ion-item class="p-2" (click)="onDismiss()" lines="none" [button]="true" detail="false" style="--background:white !important">
             <!-- <ion-icon class="text-dark me-2" mode="ios"  name="close-outline"></ion-icon> -->
-            <img style="width: 2rem;height: 2rem;" src="../../../../assets/image/icon-close.png" alt="">
-            <ion-text style="font-weight: bold;" mode="ios" class="dynamic-font text-dark pl-2">Hủy</ion-text>
+            <ion-avatar>
+              <img src="../../../../assets/image/icon-close.png" alt="">
+             </ion-avatar>
+            <ion-text mode="ios" class="dynamic-font text-dark pl-3">Hủy</ion-text>
           </ion-item>
         </ion-list>
       </div>
