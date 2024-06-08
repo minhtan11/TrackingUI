@@ -53,6 +53,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   total9: any;
   total10: any;
   total11: any;
+  isSke:any=false;
   private destroy$ = new Subject<void>();
   formGroup!: FormGroup;
   constructor(
@@ -223,6 +224,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
     this.pageNum = 1;
     this.lstData = [];
     this.isEmpty = false;
+    this.isSke = true;
     this.content.scrollToTop();
     this.loadData();
   }
@@ -250,7 +252,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
         if (this.lstData.length == 0) this.isEmpty = true;
         if (this.lstData.length == oData[1]) this.isload = false;
         if (this.firstLoad) this.firstLoad = false;
-
+        this.isSke = false;
       }
     })
   }
@@ -332,12 +334,15 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
     this.isload = true;
     this.isEmpty = false;
     this.lstData = [];
+    this.isSke = true;
     this.content.scrollToTop();
     this.loadData();
   }
 
   async init() {
     this.username = await this.storage.get('username');
+    this.isSke = true;
+    this.lstData = [];
     this.loadData();
     this.getTotal();
     // let type = this.rt.snapshot.queryParams['type'];

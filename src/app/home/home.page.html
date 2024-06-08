@@ -67,9 +67,22 @@
           <!-- <ion-button mode="ios" (click)="onAuthen()" class="ion-btn-default">
             <ion-icon style="font-size: 1.5rem !important;" slot="icon-only" name="finger-print-outline"></ion-icon>
           </ion-button> -->
-          <img (click)="onAuthen()" style="width: 4rem;height: 4rem;"  src="../../assets/image/fingerprint.png" alt="">
-          
-          
+          <div class="d-flex align-items-center w-100 justify-content-center">
+            <ion-button mode="ios" (click)="openSigin()" class="ion-btn-default w-100 pr-1" expand="block">
+              <ion-text>
+                <span class="dynamic-font">ĐĂNG NHẬP</span>
+              </ion-text>
+            </ion-button>
+            <img *ngIf="!faceID" (click)="onAuthen()" style="width: 3.5rem;height: 3.5rem;"  src="../../assets/image/fingerprint.png" alt="">
+            <img *ngIf="faceID" (click)="onAuthen()" style="width: 3rem;height: 3rem;"  src="../../assets/image/face-recognition.png" alt="">
+          </div>
+          <div class="d-flex align-items-center w-100 justify-content-center">
+            <ion-button style="--border-color: var(--ion-color-mat-primary) !important;--background-activated: unset !important;" (click)="openChangeAccount()" class="w-100" fill="outline">
+              <ion-text>
+                <span class="dynamic-font text-primary-default">Đăng nhập bằng tài khoản khác</span>
+              </ion-text>
+            </ion-button>
+          </div>
           <!-- <mat-form-field appearance="outline" class="w-100">
             <mat-label class="dynamic-font">Tên đăng nhập</mat-label>
             <input [value]="userName" [disabled]="true" matInput>
@@ -78,12 +91,12 @@
             <ion-icon style="font-size: 1.5rem !important;" slot="icon-only" name="finger-print-outline"></ion-icon>
           </ion-button> -->
         </ion-col>
-        <ion-col size="12" class="pr-0 pl-0">
+        <!-- <ion-col size="12" class="pr-0 pl-0">
           <ion-text>
             <span class="dynamic-font" (click)="openChangeAccount()" style="color: var(--ion-color-mat-primary) !important"><u>Đăng nhập bằng tài khoản khác</u></span>
           </ion-text>
           <br>
-        </ion-col>
+        </ion-col> -->
       </ng-container>
       
       <ion-col size="12" class="pr-0 pl-0">
@@ -130,7 +143,7 @@
   <ion-modal style="--background:white !important" (willDismiss)="cancelChangeAccount()" [isOpen]="isChangeAccount" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
     <ng-template>
       <div class="p-3 w-100 h-100">
-        <ion-text class="dynamic-font text-center" style="color: var(--ion-color-mat-primary);">
+        <ion-text class="dynamic-font text-center">
           <h3 class="font-weight-bold">Chuyển tài khoản</h3>
         </ion-text>
         <ion-list [inset]="true" style="background-color:white !important;">
@@ -235,5 +248,39 @@
     </ng-template>
   </ion-modal>
   <!-- Exit App  -->
+
+  <!-- addaccount -->
+  <ion-modal style="--background:white !important" (willDismiss)="cancelSigin()" [isOpen]="isOpenSigin" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <ion-text class="text-center">
+          <h3 class="font-weight-bold text-dark dynamic-font ">Đăng nhập</h3>
+        </ion-text>
+        <div [formGroup]="formGroup">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label class="dynamic-font">Tài khoản</mat-label>
+            <input #eleUserName formControlName="userName"  matInput>
+          </mat-form-field>
+          <div class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label class="dynamic-font">Mật khẩu</mat-label>
+              <input #elePassword formControlName="passWord" matInput [type]="!showPass ? 'password' : 'text'">
+              <button class="d-flex align-items-center justify-content-center" mat-icon-button matSuffix (click)="showPass = !showPass">
+                <ion-icon style="color:black !important" [name]="!showPass ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+              </button>
+            </mat-form-field>
+          </div> 
+        </div>
+        <div style="margin-bottom: var(--ion-safe-area-bottom, 0);" class="w-100 d-flex align-items-center justify-content-center mt-3">
+          <ion-button mode="ios" (click)="onSignIn()" class="ion-btn-default w-100" expand="block">
+            <ion-text>
+              <span class="dynamic-font">ĐĂNG NHẬP</span>
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- addaccount -->
 </ion-content>
 

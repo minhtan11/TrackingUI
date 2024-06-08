@@ -36,6 +36,8 @@ export class HomePage implements OnInit, AfterViewInit {
   dataLoginError:any;
   isOpenLoginError:any=false;
   isOpenDeleteAccount:any=false;
+  isOpenSigin:any=false;
+  faceID:any;
   oUser:any;
   listUser:any = [];
   lastBack:any = Date.now();
@@ -112,7 +114,19 @@ export class HomePage implements OnInit, AfterViewInit {
     if (loginError) {
       this.dataLoginError = JSON.parse(loginError);
       this.isOpenLoginError = true;
-     
+    }
+    const result = await NativeBiometric.isAvailable();
+    if (result) {
+      switch (result.biometryType) {
+        case BiometryType.FINGERPRINT:
+        case BiometryType.TOUCH_ID:
+          this.faceID = false;
+          break;
+        case BiometryType.FACE_AUTHENTICATION:
+        case BiometryType.FACE_ID:
+          this.faceID = true;
+          break;
+      }
     }
   }
 
@@ -139,14 +153,20 @@ export class HomePage implements OnInit, AfterViewInit {
       this.elePassword.nativeElement.focus();
       return;
     }
+    if(this.isOpenSigin){
+      this.cancelSigin();
+    }
+    let oData = this.formGroup.getRawValue();
+    let userName = oData?.userName;
+    let passWord = oData?.passWord;
     let token = await this.storage.get('token');
     const info = await Device.getInfo();
     const infoID = await Device.getId();
     let deviceName = info.manufacturer+' '+info.model;
     let deviceID = infoID.identifier;
     let data = {
-      userName:this.formGroup.value?.userName,
-      passWord:this.formGroup.value?.passWord,
+      userName:userName,
+      passWord:passWord,
       token:token,
       deviceName:deviceName,
       deviceID:deviceID
@@ -156,10 +176,10 @@ export class HomePage implements OnInit, AfterViewInit {
     };
     this.api.execByBody('Authencation', 'login', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe(async (res:any)=>{
       if (res && !res?.isError) {
-        this.storage.set('username', this.formGroup.value.userName.trim());
-        this.storage.set('password', this.formGroup.value.passWord.trim());
+        this.storage.set('username', userName.trim());
+        this.storage.set('password', passWord.trim());
         this.storage.set('isLogin', true);
-        await this.storage.setAccount(this.formGroup.value.userName);
+        await this.storage.setAccount(userName);
         this.navCtrl.navigateForward('main/mainpage',{queryParams:{checklogin:false}});
       } else {
         this.notification.showNotiError('', res?.message);
@@ -371,6 +391,17 @@ export class HomePage implements OnInit, AfterViewInit {
 
   cancelExit(){
     this.isOpenExit = false;
+    this.dt.detectChanges();
+  }
+
+  openSigin(){
+    this.formGroup.patchValue({userName:this.userName});
+    this.formGroup.controls['userName'].disable();
+    this.isOpenSigin = true;
+  }
+
+  cancelSigin(){
+    this.isOpenSigin = false;
     this.dt.detectChanges();
   }
   //#endregion

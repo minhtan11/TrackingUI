@@ -43,6 +43,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   total2:any;
   total3:any;
   total4:any;
+  isSke:any=false;
   constructor(
     private dt : ChangeDetectorRef,
     private api : ApiserviceComponent,
@@ -161,6 +162,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     this.pageNum = 1;
     this.lstData = [];
     this.isEmpty = false;
+    this.isSke = true;
     this.content.scrollToTop();
     this.loadData();
   }
@@ -190,6 +192,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
         if (this.lstData.length == oData[1]) this.isload = false;
         this.totalOrder = oData[1];
         this.totalPay = this?.lstData.reduce((sum:any, data:any) => sum + parseFloat(data?.totalPrice),0);
+        this.isSke = false;
       }
     })
   }
@@ -267,12 +270,15 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     this.isload = true;
     this.isEmpty = false;
     this.lstData = [];
+    this.isSke = true;
     this.content.scrollToTop();
     this.loadData();
   }
 
   async init(){
     this.username = await this.storage.get('username');
+    this.isSke = true;
+    this.lstData = [];
     this.loadData();
     this.getTotal();
     // let type = this.rt.snapshot.queryParams['type'];

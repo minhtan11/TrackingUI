@@ -24,7 +24,7 @@ export class NotificationServiceComponent implements OnInit {
       position: 'top',
       positionAnchor: 'header',
       icon: 'alert-circle-outline',
-      cssClass:'text-orange bg-toast-white'
+      cssClass:'text-white bg-toast-orange'
     });
     await toast.present();
   }
@@ -36,7 +36,7 @@ export class NotificationServiceComponent implements OnInit {
       position: 'top',
       positionAnchor: 'header',
       icon: 'checkmark-circle-outline',
-      cssClass:'text-primary-default bg-toast-white'
+      cssClass:'text-white bg-toast-default'
     });
     await toast.present();
   }

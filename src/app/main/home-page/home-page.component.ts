@@ -87,19 +87,21 @@ export class HomePageComponent{
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
     this.animationInProgress = false;
-    this.startAnimation();
+    setTimeout(() => {
+      this.startAnimation();
+    }, 500);
   }
 
   ionViewDidLeave(){
-    //this.swiper.disable();
+    this.swiper.disable();
     clearTimeout(this.animation);
   }
 
   startAnimation() {
     this.swiper = this.swiperRef?.nativeElement?.swiper;
-    // if(this.swiper){
-    //   this.swiper?.enable();
-    // } 
+    if(this.swiper){
+      this.swiper?.enable();
+    } 
     if(this.animationInProgress) return;
     this.animationInProgress = true;
     this.animation = setTimeout(() => {

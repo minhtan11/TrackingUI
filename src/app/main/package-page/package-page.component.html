@@ -121,45 +121,12 @@
       </ion-text>
     </div>
   </ng-container>
+  <ng-container *ngIf="isSke">
+    <div class="d-flex align-items-center justify-content-center h-100">
+      <ion-spinner style="color: var(--ion-color-mat-primary) !important;" mode="ios" name="crescent"></ion-spinner>
+    </div>
+  </ng-container>
   <div class="w-100 mt-2">
-    <ion-list *ngIf="!lstData" class="m-0" style="background-color:white !important;">
-      <ng-container *ngFor="let item of [0,1,2,3,4,5,6,7,8,9]">
-        <ion-item lines="none" style="--background:white !important">
-          <ion-card class="mx-1 my-1 mb-4 w-100"
-            style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;font-size: unset !important;">
-            <ion-card-header class="p-3">
-              <div style="justify-content: space-between;" class="d-flex align-items-center">
-                <div class="d-flex align-items-center">
-                  <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
-                </div>
-                <div class="d-flex align-items-center">
-                  <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
-                </div>
-              </div>
-            </ion-card-header>
-            <ion-card-content class="p-3" >
-              <div class="w-100">
-                <div class="d-flex align-items-center">
-                  <ion-skeleton-text [animated]="true" style="width: 4em;height: 4em;
-                    margin-right: 1rem;"></ion-skeleton-text>
-                  <div>
-                    <ion-skeleton-text [animated]="true" style="width: 200px"></ion-skeleton-text>
-                    <br>
-                    <ion-skeleton-text [animated]="true" style="width: 200px"></ion-skeleton-text>
-                    <br>
-                    <ion-skeleton-text [animated]="true" style="width: 200px"></ion-skeleton-text>
-                    <br>
-                    <ion-skeleton-text [animated]="true" style="width: 200px"></ion-skeleton-text>
-                    <br>
-                    <ion-skeleton-text [animated]="true" style="width: 200px"></ion-skeleton-text>
-                  </div>
-                </div>
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-item>
-      </ng-container>
-    </ion-list>
     <ion-list *ngIf="lstData && lstData.length" class="m-0" style="background-color:white !important;">
       <ng-container *ngFor="let item of lstData">
         <ion-item lines="none" style="--background:white !important">

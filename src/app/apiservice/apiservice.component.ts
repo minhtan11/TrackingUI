@@ -5,6 +5,7 @@ import { Observable, Subject, catchError, debounceTime, map, of, switchMap, take
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { Network } from '@capacitor/network';
+import { NotificationServiceComponent } from '../notification-service/notification-service.component';
 
 @Component({
   selector: 'app-apiservice',
@@ -18,6 +19,7 @@ export class ApiserviceComponent implements OnInit {
   constructor(
     private toastController: ToastController,
     private http: HttpClient,
+    private notification: NotificationServiceComponent,
   ) { }
   //#endregion Constructor
 
@@ -60,15 +62,16 @@ export class ApiserviceComponent implements OnInit {
 
   private async handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
-      const toast = await this.toastController.create({
-        message: 'Trakuaidi hiện đang gặp lỗi.Vui lòng thử lại!',
-        duration: 3000,
-        position: 'bottom',
-        positionAnchor: 'footer',
-        color: 'danger',
-        icon: 'alert-circle-outline',
-      });
-      await toast.present();
+      this.notification.showNotiError('','Trakuaidi hiện đang gặp lỗi.Vui lòng thử lại!')
+      // const toast = await this.toastController.create({
+      //   message: 'Trakuaidi hiện đang gặp lỗi.Vui lòng thử lại!',
+      //   duration: 3000,
+      //   position: 'bottom',
+      //   positionAnchor: 'footer',
+      //   color: 'danger',
+      //   icon: 'alert-circle-outline',
+      // });
+      // await toast.present();
       // A client-side or network error occurred. Handle it accordingly.
       // Swal.mixin({
       //   toast: true,
@@ -84,15 +87,16 @@ export class ApiserviceComponent implements OnInit {
       //   heightAuto: false
       // });
     } else {
-      const toast = await this.toastController.create({
-        message: 'Đã có lỗi xảy ra trong quá trình thực thi hệ thống!',
-        duration: 3000,
-        position: 'bottom',
-        positionAnchor: 'footer',
-        color: 'danger',
-        icon: 'alert-circle-outline',
-      });
-      await toast.present();
+      this.notification.showNotiError('','Đã có lỗi xảy ra trong quá trình thực thi hệ thống!')
+      // const toast = await this.toastController.create({
+      //   message: 'Đã có lỗi xảy ra trong quá trình thực thi hệ thống!',
+      //   duration: 3000,
+      //   position: 'bottom',
+      //   positionAnchor: 'footer',
+      //   color: 'danger',
+      //   icon: 'alert-circle-outline',
+      // });
+      // await toast.present();
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
       // console.error(
@@ -111,10 +115,11 @@ export class ApiserviceComponent implements OnInit {
       //   heightAuto: false
       // });
     }
-    let loader = document.getElementById('loader');
-    if (loader) {
-      loader.style.visibility = 'hidden';
-    }
+    this.isLoad(false);
+    // let loader = document.getElementById('loader');
+    // if (loader) {
+    //   loader.style.visibility = 'hidden';
+    // }
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }

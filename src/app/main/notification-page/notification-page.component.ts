@@ -28,6 +28,7 @@ export class NotificationPageComponent {
   isload: any = true;
   formGroup!: FormGroup;
   isOpenFilter:any = false;
+  isSke:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -85,10 +86,12 @@ export class NotificationPageComponent {
   }
 
   init(){
+    this.isSke = true;
+    this.lstData = [];
     this.loadData();
   }
 
-  async loadData(isShowLoad:any=true){
+  async loadData(){
     let username = await this.storage.get('username');
     let data = {
       status: this.status,
@@ -101,30 +104,17 @@ export class NotificationPageComponent {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    if (isShowLoad) {
-      this.api.execByBody('Authencation', 'notification', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res[0]) {
-          this.notification.showNotiError('', res[1].message);
-        } else {
-          let oData = res[1];
-          this.lstData = oData[0];
-          if (this.lstData.length == 0) this.isEmpty = true;
-          if (this.lstData.length == oData[1]) this.isload = false;
-        }
-      })
-    }else{
-      this.api.execByBody('Authencation', 'notification', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        if (res[0]) {
-          this.notification.showNotiError('', res[1].message);
-        } else {
-          let oData = res[1];
-          this.lstData = oData[0];
-          if (this.lstData.length == 0) this.isEmpty = true;
-          if (this.lstData.length == oData[1]) this.isload = false;
-        }
-      })
-    }
-    
+    this.api.execByBody('Authencation', 'notification', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      } else {
+        let oData = res[1];
+        this.lstData = oData[0];
+        if (this.lstData.length == 0) this.isEmpty = true;
+        if (this.lstData.length == oData[1]) this.isload = false;
+        this.isSke = false;
+      }
+    })
   }
 
   async onIonInfinite(event: any) {
