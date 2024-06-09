@@ -429,7 +429,7 @@ ion-toast::part(icon) {
 }
 
 .padding-statusbar-ios{
-    padding-top: var(--ion-safe-area-top, 0);
+    padding-top: var(--ion-safe-area-top, 0) !important;
 }
 
 .text-white{
