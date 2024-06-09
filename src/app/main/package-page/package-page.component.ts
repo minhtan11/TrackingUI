@@ -41,6 +41,8 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   isOpenCancelPackage: any = false;
   isOpenRestorePackage: any = false;
   isOpenDeletePackage: any = false;
+  isOpenQueryPackage: any = false;
+  isOpenNoQueryPackage: any = false;
   isOpenFilter: any = false;
   itemSelected: any;
   firstLoad: any = true;
@@ -54,6 +56,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   total10: any;
   total11: any;
   isSke:any=false;
+  isSearchFocus:any=false;
   private destroy$ = new Subject<void>();
   formGroup!: FormGroup;
   constructor(
@@ -339,6 +342,14 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
     this.loadData();
   }
 
+  ionFocus(event:any){
+    this.isSearchFocus = true;
+  }
+
+  ionBlur(event:any){
+    this.isSearchFocus = false;
+  }
+
   async init() {
     this.username = await this.storage.get('username');
     this.isSke = true;
@@ -398,7 +409,6 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   openPopCheckPackage2(item: any) {
     this.itemSelected = { ...item };
     this.isOpenCheckPackage2 = true;
-
   }
 
   cancelCheck2() {
@@ -429,6 +439,38 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
 
   checkPackage(item: any) {
     this.cancelCheck2();
+    if (item?.searchBaiduTimes == 0) {
+      this.onCheckPage(item);
+    }else{
+      if (item?.autoQuery) {
+        this.openPopQueryPackage();
+      }else{
+        this.openPopNoQueryPackage();
+      }
+    }
+  }
+
+  openPopQueryPackage() {
+    this.isOpenQueryPackage = true;
+  }
+
+  cancelQueryPackage() {
+    this.isOpenQueryPackage = false;
+    this.dt.detectChanges();
+  }
+
+  openPopNoQueryPackage() {
+    this.isOpenNoQueryPackage = true;
+  }
+
+  cancelNoQueryPackage() {
+    this.isOpenNoQueryPackage = false;
+    this.dt.detectChanges();
+  }
+
+  onCheckPage(item: any){
+    this.cancelQueryPackage();
+    this.cancelNoQueryPackage();
     let data = {
       id: item.packageCode,
       userName: this.username

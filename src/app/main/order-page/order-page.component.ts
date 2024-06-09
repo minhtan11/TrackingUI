@@ -3,6 +3,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, D
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
+import { Keyboard } from '@capacitor/keyboard';
 import { Network } from '@capacitor/network';
 import { InfiniteScrollCustomEvent, IonContent, NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
@@ -44,6 +45,12 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   total3:any;
   total4:any;
   isSke:any=false;
+  isHideFooter:any=false;
+  isSearchFocus:any=false;
+  arrOrderSelected:any=[];
+  isCheckAll:any=false;
+  totalAllOrder:any=0;
+  isPayment:any=false;
   constructor(
     private dt : ChangeDetectorRef,
     private api : ApiserviceComponent,
@@ -76,8 +83,24 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
                   let index = this.lstData.findIndex((x: any) => x.id == data.id);
                   if (index > -1) {
                     this.lstData.splice(index, 1);
-                    if (this.lstData.length == 0) this.isEmpty = true;
                   }
+                  if (this.lstData.length == 0){
+                    this.isEmpty = true;
+                    let array = this.lstData.filter((x: any) => x.status == 1);
+                    if (array.length > 0) {
+                      this.isPayment = true;
+                    } else {
+                      this.isPayment = false;
+                    } 
+                  }else{
+                    this.totalPay = this?.lstData.reduce((sum:any, data:any) => sum + parseFloat(data?.totalPrice),0);
+                    let array = this.lstData.filter((x: any) => x.status == 1);
+                    if (array.length > 0) {
+                      this.isPayment = true;
+                    } else {
+                      this.isPayment = false;
+                    } 
+                  } 
                   this.getTotal();
                   return;
                 }
@@ -97,7 +120,6 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
       fromDate: [null],
       toDate: [null],
     });
-    
   }
 
   async ionViewWillEnter(){
@@ -116,6 +138,14 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   }
 
   ngAfterViewInit() {
+    Keyboard.addListener('keyboardWillShow', info => {
+      this.isHideFooter = true;
+    });
+
+    Keyboard.addListener('keyboardWillHide', () => {
+      this.isHideFooter = false;
+      
+    });
     // this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
     //   if((this.router.url.includes('main/order'))){
     //     this.onback();
@@ -163,6 +193,9 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     this.lstData = [];
     this.isEmpty = false;
     this.isSke = true;
+    this.totalAllOrder = 0;
+    this.arrOrderSelected = [];
+    this.isCheckAll = false;
     this.content.scrollToTop();
     this.loadData();
   }
@@ -190,9 +223,14 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
         this.lstData = oData[0];
         if (this.lstData.length == 0) this.isEmpty = true;
         if (this.lstData.length == oData[1]) this.isload = false;
-        this.totalOrder = oData[1];
         this.totalPay = this?.lstData.reduce((sum:any, data:any) => sum + parseFloat(data?.totalPrice),0);
         this.isSke = false;
+        let array = this.lstData.filter((x:any) => x.status == 1);
+        if(array.length > 0){
+          this.isPayment = true;
+        }else{
+          this.isPayment = false;
+        } 
       }
     })
   }
@@ -275,6 +313,14 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     this.loadData();
   }
 
+  ionFocus(event:any){
+    this.isSearchFocus = true;
+  }
+
+  ionBlur(event:any){
+    this.isSearchFocus = false;
+  }
+
   async init(){
     this.username = await this.storage.get('username');
     this.isSke = true;
@@ -304,8 +350,8 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     // }
   }
 
-  openPayment(item:any){
-    this.itemSelected = {...item};
+  openPayment(){
+    //this.itemSelected = {...item};
     this.isOpenPayment = true;
   }
 
@@ -314,36 +360,42 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     this.dt.detectChanges();
   }
 
-  onPayment(item:any){
+  onPayment(){
     this.cancelPayment();
+    let sArray = this.arrOrderSelected.map((x:any) => x.recID).join(',');
     let data = {
-      id: item.id,
+      id: sArray,
       userName: this.username,
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+    this.api.execByBody('Authencation', 'paymentselected', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
       if (res && !res.isError) {
         this.notification.showNotiSuccess('',res.message);
-        if(res?.data){
+        this.isCheckAll = false;
+        this.arrOrderSelected = [];
+        this.totalAllOrder = 0;
+        this.api.callBackOrder(true);
+        if(res?.data && res?.data?.length){
           if(this.status == 0){
-            let index = this.lstData.findIndex((x: any) => x.id == res?.data?.id);
-            if (index > -1) {
-              this.lstData[index] = res?.data;
+            res.data.forEach((item:any) => {
+              let index = this.lstData.findIndex((x: any) => x.id == item.id);
+              if (index > -1) {
+                this.lstData[index] = item;
+              } 
+            });
+            let array = this.lstData.filter((x: any) => x.status == 1);
+            if (array.length > 0) {
+              this.isPayment = true;
+            } else {
+              this.isPayment = false;
             } 
-            this.getTotal();
-            return;
           }
           if(this.status == 1){
-            let index = this.lstData.findIndex((x: any) => x.id == res?.data?.id);
-            if (index > -1) {
-              this.lstData.splice(index, 1);
-              if (this.lstData.length == 0) this.isEmpty = true;
-            } 
-            this.getTotal();
-            return;
+            this.loadData();
           }
+          this.getTotal();
         }
       }else{
         this.notification.showNotiError('',res.message);
@@ -374,6 +426,39 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
 
   clearFilter(){
     this.formGroup.reset();
+  }
+
+  onSelected(event:any,item:any){
+    if (event) {
+      this.arrOrderSelected.push(item);
+    }else{
+      let index = this.arrOrderSelected.findIndex((x: any) => x.id == item.id);
+      if (index > -1) {
+        this.arrOrderSelected.splice(index, 1);
+        if(this.arrOrderSelected.length == 0){
+          this.isCheckAll = false;
+        }
+      } 
+    }
+    this.totalAllOrder = this?.arrOrderSelected.reduce((sum:any, data:any) => sum + parseFloat(data?.totalPrice),0);
+  }
+
+  onSelectedAll(event:any){
+    if (event) {
+      if (this.status == 0) {
+        let lst = this.lstData.filter((x:any) => x.status == 1);
+        this.arrOrderSelected = lst;
+        this.isCheckAll = event;
+      }
+      if(this.status == 1){
+        this.arrOrderSelected = this.lstData;
+      }
+      this.totalAllOrder = this?.arrOrderSelected.reduce((sum:any, data:any) => sum + parseFloat(data?.totalPrice),0);
+    }else{
+      this.arrOrderSelected = [];
+      this.isCheckAll = false;
+      this.totalAllOrder = 0;
+    }
   }
   //#endregion
 }

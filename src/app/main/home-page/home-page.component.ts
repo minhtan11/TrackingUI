@@ -87,9 +87,7 @@ export class HomePageComponent{
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
     this.animationInProgress = false;
-    setTimeout(() => {
-      this.startAnimation();
-    }, 500);
+    this.startAnimation();
   }
 
   ionViewDidLeave(){

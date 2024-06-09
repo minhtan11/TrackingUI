@@ -3,10 +3,10 @@
   <ion-toolbar mode="ios" style="--background:white !important">
     <ion-buttons slot="start">
       <ion-button (click)="onback()" fill="clear">
-        <ion-icon class="text-dark" name="chevron-back-outline"></ion-icon>
+        <ion-icon class="text-primary-default" name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title mode="md" class="dynamic-font text-dark pl-0 pr-0">
+    <ion-title mode="md" class="dynamic-font text-primary-default pl-0 pr-0">
       <h2 class="my-0 mx-0 font-weight-bold">Chi tiết kiện hàng</h2>
     </ion-title>
   </ion-toolbar>
@@ -142,42 +142,37 @@
                       </div>
                       <div class="d-flex align-items-center">
                         <ng-container [ngSwitch]="oData.status">
-                          <ion-badge mode="ios" *ngSwitchDefault color="medium">
+                          <ion-badge mode="md" *ngSwitchDefault color="medium">
                             <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                               <span>Chưa xác nhận</span>
                             </ion-text>
                           </ion-badge>
-                          <ion-badge mode="ios" *ngSwitchCase="2" color="tertiary">
+                          <ion-badge mode="md" *ngSwitchCase="2" color="tertiary">
                             <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                               <span>Hàng về kho TQ</span>
                             </ion-text>
                           </ion-badge>
-                          <ion-badge mode="ios" *ngSwitchCase="3" color="secondary">
+                          <ion-badge mode="md" *ngSwitchCase="3" color="secondary">
                             <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                               <span>Đang về HCM</span>
                             </ion-text>
                           </ion-badge>
-                          <ion-badge mode="ios" *ngSwitchCase="4" color="primary">
+                          <ion-badge mode="md" *ngSwitchCase="4" color="primary">
                             <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                               <span>Hàng về tới HCM</span>
                             </ion-text>
                           </ion-badge>
-                          <ion-badge mode="ios" *ngSwitchCase="5" color="success">
+                          <ion-badge mode="md" *ngSwitchCase="5" style="--background	: var(--ion-color-mat-primary) !important;">
                             <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                               <span>Đã nhận hàng</span>
                             </ion-text>
                           </ion-badge>
-                          <ion-badge mode="ios" *ngSwitchCase="9" color="dark">
+                          <ion-badge mode="md" *ngSwitchCase="9" color="dark">
                             <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                               <span>Đã hủy</span>
                             </ion-text>
                           </ion-badge>
-                          <ion-badge mode="ios" *ngSwitchCase="10" color="warning">
-                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                              <span>Thất lạc</span>
-                            </ion-text>
-                          </ion-badge>
-                          <ion-badge mode="ios" *ngSwitchCase="11" color="danger">
+                          <ion-badge mode="md" *ngSwitchCase="11" style="--background	: orange !important;">
                             <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                               <span>Không nhận được hàng</span>
                             </ion-text>
@@ -211,7 +206,7 @@
                       <div class="d-flex align-items-center">
                         <ng-container [ngSwitch]="oData.movingMethod">
                           <ion-text *ngSwitchCase="2" class="dynamic-font">
-                            Chậm
+                            Thường
                           </ion-text>
                           <ion-text *ngSwitchCase="3" class="dynamic-font">
                             Bộ
@@ -404,7 +399,45 @@
                 </swiper-slide>
               </swiper-container>
             </div> -->
-            <div [ngClass]="oData?.status < 2 ? 'justify-content-start' : 'justify-content-center'" class="w-100 pt-3 d-flex align-items-center scroll-hidden" style="
+            <div class="w-100 pt-3 d-flex align-items-center justify-content-end">
+              <ion-button (click)="openPopPackage(oData)" mode="ios" size="default" class="ion-btn-default">
+                <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
+                <ion-text style="color: white !important;" class="dynamic-font">
+                  Nhập mô tả
+                </ion-text>
+              </ion-button>
+              <ion-button *ngIf="oData?.status < 2" (click)="openPopCancelPackage(oData)" mode="ios" size="default" color="medium">
+                <ion-icon style="color: white !important;" slot="start" name="stop-circle-outline"></ion-icon>
+                <ion-text style="color: white !important;" class="dynamic-font">
+                  Hủy kiện
+                </ion-text>
+              </ion-button>
+            </div>
+            <div class="w-100 d-flex align-items-center justify-content-end">
+              <ng-container *ngIf="oData?.status < 2">
+                <ion-button (click)="openPopCheckPackage(oData)" mode="ios" size="default" class="ion-btn-orange">
+                  <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
+                  <ion-text style="color: white !important;" class="dynamic-font">
+                    Kiểm tra hàng
+                  </ion-text>
+                </ion-button>
+                <ion-button (click)="openPopDeletePackage(oData)" mode="ios" size="default" color="danger">
+                  <ion-icon style="color: white !important;" slot="start" name="trash-outline"></ion-icon>
+                  <ion-text style="color: white !important;" class="dynamic-font">
+                    Xóa kiện
+                  </ion-text>
+                </ion-button>
+                <ng-container *ngIf="oData.status == 9 && oData?.canceledBy == username">
+                  <ion-button (click)="openPopRestorePackage(oData)" mode="ios" size="default" color="success">
+                    <ion-icon style="color: white !important;" slot="start" name="sync-circle-outline"></ion-icon>
+                    <ion-text style="color: white !important;" class="dynamic-font">
+                      Khôi phục
+                    </ion-text>
+                  </ion-button>
+                </ng-container>
+              </ng-container>
+            </div>
+            <!-- <div [ngClass]="oData?.status < 2 ? 'justify-content-start' : 'justify-content-center'" class="w-100 pt-3 d-flex align-items-center scroll-hidden" style="
               overflow: scroll;">
                 <ion-button (click)="openPopPackage(oData)" mode="ios" size="default" class="ion-btn-default">
                   <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
@@ -422,13 +455,13 @@
                   <ion-button (click)="openPopCancelPackage(oData)" mode="ios" size="default" color="medium">
                     <ion-icon style="color: white !important;" slot="start" name="stop-circle-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
-                      Hủy đơn
+                      Hủy kiện
                     </ion-text>
                   </ion-button>
                   <ion-button (click)="openPopDeletePackage(oData)" mode="ios" size="default" color="danger">
                     <ion-icon style="color: white !important;" slot="start" name="trash-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
-                      Xóa đơn
+                      Xóa kiện
                     </ion-text>
                   </ion-button>
                 </ng-container>
@@ -440,7 +473,7 @@
                     </ion-text>
                   </ion-button>
                 </ng-container>
-              </div>
+              </div> -->
           </ion-card-content>
         </ion-card>
       </ion-item>
@@ -547,6 +580,63 @@
             </ion-text>
           </ion-button>
           <ion-button (click)="cancelCheck2()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelQueryPackage()" [isOpen]="isOpenQueryPackage">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Kiểm tra kiện hàng</h3>
+          </ion-text>
+        </div>
+        <div class="w-100" text-center>
+          <ion-text class="dynamic-font text-dark">
+            <span>Bạn đã đăng ký theo sát trạng thái kiện hàng, hãy yên tâm chờ thông báo nhé, hoặc bạn có thể bấm đồng ý để vẫn có thể kiểm tra lại!</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="onCheckPage(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelQueryPackage()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelNoQueryPackage()" [isOpen]="isOpenNoQueryPackage">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Kiểm tra kiện hàng</h3>
+          </ion-text>
+        </div>
+        <div class="w-100" text-center>
+          <ion-text class="dynamic-font text-dark">
+            <span>Bạn nhớ đăng ký gửi thông báo các trạng thái kiện hàng để theo dõi sát hơn nhé!</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="onCheckPage(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelNoQueryPackage()" mode="ios" size="default" color="medium">
             <ion-text style="color: white !important;" class="dynamic-font">
               Hủy bỏ
             </ion-text>

@@ -199,6 +199,8 @@ export class HomePage implements OnInit, AfterViewInit {
 
   openChangeAccount(){
     this.isChangeAccount = true;
+    this.formGroup.controls['userName'].enable();
+    this.formGroup.patchValue({userName:''});
   }
   
   cancelChangeAccount(){
@@ -209,6 +211,10 @@ export class HomePage implements OnInit, AfterViewInit {
   async onAuthen(){
     if (!this.userName) {
       this.notification.showNotiError('', 'Vui lòng đăng nhập tài khoản và mật khẩu trước khi sử dụng xác thực!');
+      return;
+    }
+    if(!this.oUser.isBiometrics){
+      this.notification.showNotiError('', 'Vui lòng đăng nhập vào ứng dụng để thiết lập tính năng đăng nhập bằng sinh trắc học!');
       return;
     }
     const result = await NativeBiometric.isAvailable();
@@ -296,33 +302,34 @@ export class HomePage implements OnInit, AfterViewInit {
 
   async onChangeAccount(item:any){
     this.cancelChangeAccount();
-    let username = item?.username;
-    let password = item?.password;
-    let token = await this.storage.get('token');
-    const info = await Device.getInfo();
-    const infoID = await Device.getId();
-    let deviceName = info.manufacturer + ' ' + info.model;
-    let deviceID = infoID.identifier;
-    let data = {
-      userName: username,
-      passWord: password,
-      token: token,
-      deviceName: deviceName,
-      deviceID: deviceID
-    }
-    let messageBody = {
-      dataRequest: JSON.stringify(data)
-    }; 
-    this.api.execByBody('Authencation', 'login', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res && !res?.isError) {
-        this.storage.set('isLogin', true);
-        this.storage.set('username', item?.username);
-        this.storage.set('password', item?.password);
-        this.navCtrl.navigateForward('main/mainpage', { queryParams: { checklogin: false} });
-      } else {
-        this.notification.showNotiError('', res?.message);
-      }
-    })
+    this.openSigin(item?.username);
+    // let username = item?.username;
+    // let password = item?.password;
+    // let token = await this.storage.get('token');
+    // const info = await Device.getInfo();
+    // const infoID = await Device.getId();
+    // let deviceName = info.manufacturer + ' ' + info.model;
+    // let deviceID = infoID.identifier;
+    // let data = {
+    //   userName: username,
+    //   passWord: password,
+    //   token: token,
+    //   deviceName: deviceName,
+    //   deviceID: deviceID
+    // }
+    // let messageBody = {
+    //   dataRequest: JSON.stringify(data)
+    // }; 
+    // this.api.execByBody('Authencation', 'login', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+    //   if (res && !res?.isError) {
+    //     this.storage.set('isLogin', true);
+    //     this.storage.set('username', item?.username);
+    //     this.storage.set('password', item?.password);
+    //     this.navCtrl.navigateForward('main/mainpage', { queryParams: { checklogin: false} });
+    //   } else {
+    //     this.notification.showNotiError('', res?.message);
+    //   }
+    // })
   }
 
   cancelError(){
@@ -394,8 +401,8 @@ export class HomePage implements OnInit, AfterViewInit {
     this.dt.detectChanges();
   }
 
-  openSigin(){
-    this.formGroup.patchValue({userName:this.userName});
+  openSigin(userName:any){
+    this.formGroup.patchValue({userName:userName});
     this.formGroup.controls['userName'].disable();
     this.isOpenSigin = true;
   }

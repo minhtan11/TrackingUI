@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar mode="ios" class="pr-2 pl-2" style="--background:#F0F2F5 !important">
-    <ion-title mode="md" class="dynamic-font text-dark pl-3 pr-0">
+    <ion-title mode="md" class="dynamic-font text-primary-default pl-3 pr-0">
       <h2 class="my-0 mx-0 font-weight-bold">Tài khoản</h2>
     </ion-title>
   </ion-toolbar>
@@ -62,7 +62,11 @@
               <ion-text class="dynamic-font font-weight-bold text-dark">
                 <span>Điểm tra cứu</span>
               </ion-text>
-              
+              <div (click)="openRule()" style="background-color: grey !important" class="ion-badge-noti d-flex align-items-center justify-content-center">
+                <ion-text class="dynamic-font font-weight-bold">
+                  <span>?</span>
+                </ion-text>
+              </div>
             </div>
           </ion-card-header>
           <ion-card-content class="text-center p-2">
@@ -89,15 +93,22 @@
             <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
               <ion-item class="p-2" (click)="goWithdraw(1)" lines="none" [button]="true" detail="false" style="--background:white !important">
                 <div class="d-flex align-items-center justify-content-center">
-                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-money-setting.png" alt="">
+                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../../assets/image/icon-money-setting.png" alt="">
                   <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Nạp tiền</ion-text>
                 </div>
                 <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
               </ion-item>
               <ion-item class="p-2" (click)="goWithdraw(2)" lines="none" [button]="true" detail="false" style="--background:white !important">
                 <div class="d-flex align-items-center justify-content-center">
-                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-request-setting.png" alt="">
+                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../../assets/image/icon-request-setting.png" alt="">
                   <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Rút tiền</ion-text>
+                </div>
+                <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
+              </ion-item>
+              <ion-item class="p-2" (click)="goExchange()" lines="none" [button]="true" detail="false" style="--background:white !important">
+                <div class="d-flex align-items-center justify-content-center">
+                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../../assets/image/exchange.png" alt="">
+                  <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Đổi điểm tra cứu</ion-text>
                 </div>
                 <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
               </ion-item>
@@ -114,16 +125,23 @@
         <ion-card mode="ios" class="mx-1 my-4 mt-2" style="--background:white !important;box-shadow: none !important;border-radius: 15px;">
           <ion-card-content class="p-0">
             <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
+              <ion-item class="p-2" (click)="goFAQ()" lines="none" [button]="true" detail="false" style="--background:white !important">
+                <div class="d-flex align-items-center justify-content-center">
+                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../../assets/image/request.png" alt="">
+                  <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Câu hỏi thường gặp</ion-text>
+                </div>
+                <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
+              </ion-item>
               <ion-item class="p-2" (click)="goReport()" lines="none" [button]="true" detail="false" style="--background:white !important">
                 <div class="d-flex align-items-center justify-content-center">
-                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-report-setting.png" alt="">
+                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../../assets/image/icon-report-setting.png" alt="">
                   <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Khiếu nại</ion-text>
                 </div>
                 <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
               </ion-item>
               <ion-item class="p-2" (click)="onOpenSupport()" lines="none" [button]="true" detail="false" style="--background:white !important">
                 <div class="d-flex align-items-center justify-content-center">
-                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-support-setting.png" alt="">
+                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../../assets/image/icon-support-setting.png" alt="">
                   <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Trung tâm hỗ trợ</ion-text>
                 </div>
                 <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
@@ -143,17 +161,24 @@
             <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
               <ion-item class="p-2" (click)="goInformation()" lines="none" [button]="true" detail="false" style="--background:white !important">
                 <div class="d-flex align-items-center justify-content-center">
-                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-account-setting.png" alt="">
+                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../../assets/image/icon-account-setting.png" alt="">
                   <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Thông tin tài khoản</ion-text>
                 </div>
                 <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
               </ion-item>
               <ion-item class="p-2" class="p-2" (click)="goChangePassword()" lines="none" [button]="true" detail="false" style="--background:white !important">
                 <div class="d-flex align-items-center justify-content-center">
-                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../assets/image/icon-password-setting.png" alt="">
+                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../../assets/image/icon-password-setting.png" alt="">
                   <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Đổi mật khẩu</ion-text>
                 </div>
                 <ion-icon slot="end" color="medium" name="chevron-forward"></ion-icon>
+              </ion-item>
+              <ion-item class="p-2" class="p-2" lines="none" [button]="true" detail="false" style="--background:white !important">
+                <div class="d-flex align-items-center justify-content-center">
+                  <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../../assets/image/biometric-data.png" alt="">
+                  <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Đăng nhập bằng sinh trắc học</ion-text>
+                </div>
+                <ion-toggle [checked]="oUser?.isBiometrics" (ionChange)="changeBiometrics($event.detail.checked)" style="--track-background-checked	:orange !important" slot="end"></ion-toggle>
               </ion-item>
               <!-- <ion-item class="p-2" (click)="onOpenLogout()" lines="none" [button]="true" detail="false" style="--background:white !important">
                 <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Đăng xuất</ion-text>
@@ -279,7 +304,7 @@
           </ion-button> -->
           <ion-button (click)="cancelSupport()" mode="ios" size="default" color="medium">
             <ion-text style="color: white !important;" class="dynamic-font">
-              Hủy bỏ
+              Đóng
             </ion-text>
           </ion-button>
         </div>
@@ -334,12 +359,12 @@
     <ng-template>
       <div class="p-3 w-100 h-100">
         <ion-text class="text-center">
-          <h3 class="font-weight-bold text-dark dynamic-font ">Đăng nhập tài khoản sẵn có</h3>
+          <h3 class="font-weight-bold text-dark dynamic-font ">Đăng nhập</h3>
         </ion-text>
         <div [formGroup]="formGroup">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label class="dynamic-font">Tài khoản</mat-label>
-            <input #eleUserName formControlName="userName"  matInput>
+            <input formControlName="userName"  matInput>
           </mat-form-field>
           <div class="w-100">
             <mat-form-field appearance="outline" class="w-100">
@@ -399,4 +424,59 @@
     </ng-template>
   </ion-modal>
   <!-- deleteaccount -->
+
+  <!-- rule-->
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelRule()" [isOpen]="isOpenRule">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Điểm tra cứu</h3>
+          </ion-text>
+        </div>
+        <div class="w-100">
+          <div class="w-100 text-center ">
+            <ion-text class="dynamic-font text-primary-default font-weight-bold">
+              <span>Điểm này dùng để tra cứu quá trình vận chuyển của kiện trên trang baidu.</span>
+            </ion-text>
+          </div>
+          <ion-text class="dynamic-font text-orange font-weight-bold">
+            <span>** Quy tắc tính điểm tra cứu:</span>
+          </ion-text>
+          <br>
+          <ion-text class="dynamic-font text-dark">
+            <span>+ Khi tạo tài khoản sẽ có 20 lượt.</span>
+          </ion-text>
+          <br>
+          <ion-text class="dynamic-font text-dark">
+            <span>+ Khi ký gửi thành công 1 kiện sẽ được + 1 điểm.</span>
+          </ion-text>
+          <br>
+          <ion-text class="dynamic-font text-dark">
+            <span>+ Có thể đổi bằng tiền 500đ/lượt.</span>
+          </ion-text>
+          <br>
+          <ion-text class="dynamic-font text-dark">
+            <span>+ Có thể được cộng bởi các chương trình khuyến mãi, chương trình ưu đãi do hệ thống tracking.nhanshiphang.vn đưa ra.</span>
+          </ion-text>
+          <br>
+          <ion-text class="dynamic-font text-orange font-weight-bold">
+            <span>** Quy tắc trừ điểm:</span>
+          </ion-text>
+          <br>
+          <ion-text class="dynamic-font text-dark">
+            <span>+ Lần đầu tiên tra cứu sẽ bị trừ 1 điểm/kiện. Những lần sau miễn phí cho kiện đó.</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="cancelRule()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đóng
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- rule -->
 </ion-content>

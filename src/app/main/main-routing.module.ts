@@ -20,6 +20,8 @@ import { WithdrawPageComponent } from './setting-page/withdraw-page/withdraw-pag
 import { ChangepasswordPageComponent } from './setting-page/changepassword-page/changepassword-page.component';
 import { ReportPageComponent } from './setting-page/report-page/report-page.component';
 import { RelulationPageComponent } from './relulation-page/relulation-page.component';
+import { FaqPageComponent } from './setting-page/faq-page/faq-page.component';
+import { ExchangePageComponent } from './setting-page/exchange-page/exchange-page.component';
 
 const routes: Routes = [
   {
@@ -104,6 +106,14 @@ const routes: Routes = [
   {
     path: 'setting/report',
     component: ReportPageComponent,
+  },
+  {
+    path: 'setting/faq',
+    component: FaqPageComponent,
+  },
+  {
+    path: 'setting/exchange',
+    component: ExchangePageComponent,
   },
   // {
   //   path: 'home',

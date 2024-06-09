@@ -1,19 +1,19 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar mode="ios" class="bg-white pr-2 pl-2">
-    <ion-title mode="md" class="dynamic-font text-dark pl-3 pr-0">
+  <ion-toolbar mode="ios" class="pr-2 pl-2" style="--background:white !important">
+    <ion-title mode="md" class="dynamic-font text-primary-default pl-3 pr-0">
       <h2 class="my-0 mx-0 font-weight-bold">Danh sách đơn hàng</h2>
     </ion-title>
     <!-- <ion-icon (click)="openPopFilter()" class="pr-2 text-dark" slot="end" style="font-size: 2rem;" name="funnel-outline"></ion-icon>   -->
     <img (click)="openPopFilter()" slot="end" style="width: 2rem;height: 2rem;" src="../../../assets/image/funnel-tool.png" alt="">
   </ion-toolbar>
-  <ion-toolbar class="bg-white pr-2 pl-2">
+  <ion-toolbar class="pr-2 pl-2 pb-2" style="--background:white !important">
     <div class="w-100 d-flex align-items-center">
-      <ion-searchbar class="pb-0 pl-0 pl-2 pr-2" style="--border-radius:20px !important" id='custom-search' placeholder="Tìm kiếm đơn hàng" (ionChange)="ionChange($event)"
+      <ion-searchbar [style]="isSearchFocus ? '--icon-color: orange' : ''" animated="true" class="pb-0 pl-0 pl-2 pr-2" id='custom-search' placeholder="Tìm kiếm đơn hàng / mô tả" (ionFocus)="ionFocus($event)" (ionBlur)="ionBlur($event)" (ionChange)="ionChange($event)"
       enterkeyhint="search" mode="ios" show-clear-button="always"></ion-searchbar>
     </div>
   </ion-toolbar>
   <ion-toolbar style="--background:white !important;">
-    <ion-segment style="border-bottom: 1px solid #e3e3e3 !important;min-height: unset !important;height: 3rem !important;" mode="md" [scrollable]="true" [value]="status">
+    <ion-segment style="min-height: unset !important;height: 3rem !important;" mode="md" [scrollable]="true" [value]="status">
       <ion-segment-button  (click)="sortData(0)" [value]="0">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
@@ -82,135 +82,144 @@
     </div>
   </ng-container>
   <div class="w-100 mt-2">
+    <div *ngIf="status == 1 && lstData.length" class="w-100 pl-2 pb-2 pt-0">
+      <ion-text class="dynamic-font" color="medium">
+        <span>Tổng đơn: </span>
+      </ion-text>
+      <ion-text class="dynamic-font text-dark font-weight-bold">
+        {{total1}}
+      </ion-text>
+      <ion-text class="dynamic-font text-dark">
+        |
+      </ion-text>
+      <ion-text class="dynamic-font" color="medium">
+        <span>Tổng tiền chưa thanh toán: </span>
+      </ion-text>
+      <ion-text class="dynamic-font text-orange font-weight-bold">
+        {{(totalPay | number)+'đ'}}
+      </ion-text>
+    </div>
     <ion-list *ngIf="lstData && lstData.length" class="m-0" style="background-color:white !important;">
-      <div *ngIf="status == 1 && lstData.length" class="w-100 pl-2 pb-2 pt-0">
-        <ion-text class="dynamic-font" color="medium">
-          <span>Tổng đơn: </span>
-        </ion-text>
-        <ion-text class="dynamic-font text-dark font-weight-bold">
-          {{totalOrder}}
-        </ion-text>
-        <ion-text class="dynamic-font text-dark">
-          |
-        </ion-text>
-        <ion-text class="dynamic-font" color="medium">
-          <span>Tổng tiền chưa thanh toán: </span>
-        </ion-text>
-        <ion-text class="dynamic-font text-dark font-weight-bold">
-          {{(totalPay | number)+'đ'}}
-        </ion-text>
-      </div>
       <ng-container *ngFor="let item of lstData">
         <ion-item lines="none" style="--background:white !important">
           <ion-card class="mx-1 my-1 mb-4 w-100"
             style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;font-size: unset !important;">
-            <ion-card-header class="p-3">
-              <div style="justify-content: space-between;" class="d-flex align-items-center">
-                <div class="d-flex align-items-center">
-                  <ion-text class="dynamic-font text-dark font-weight-bold pr-2">
-                    Mã đơn hàng
-                  </ion-text>
-                </div>
-                <div class="d-flex align-items-center">
-                  <ion-text class="dynamic-font pr-2">
-                    {{item.shippingOrderCode}}
-                  </ion-text>
-                  <ion-icon [cdkCopyToClipboard]="item.shippingOrderCode" (click)="onCopy()" style="font-size: 2rem;"
-                    name="copy-outline"></ion-icon>
-                </div>
+            <div class="d-flex align-items-center justify-content-between w-100">
+              <div *ngIf="item?.status == 0 || item?.status == 1">
+                <mat-checkbox [checked]="isCheckAll" color="warn" (change)="onSelected($event.checked,item)"></mat-checkbox>
               </div>
-            </ion-card-header>
-            <ion-card-content class="p-3">
-              <div class="w-100" (click)="viewDetail(item)" >
-                <div class="d-flex align-items-center">
-                  <ng-container *ngIf="item.status == 1">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/wait-order.png" alt="">
-                  </ng-container>
-                  <ng-container *ngIf="item.status == 2">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/done-order.png" alt="">
-                  </ng-container>
-                  <ng-container *ngIf="item.status == 3">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/ship-cancel.png" alt="">
-                  </ng-container>
-                  <ng-container *ngIf="item.status == 4">
-                    <img  style="width: 4em;height: 4em;
-                    margin-right: 1rem;" src="../../../assets/image/ship-other.png" alt="">
-                  </ng-container>
-                  <div>
-                    <ion-text mode="ios" class="dynamic-font">
-                      <span class="font-weight-bold text-dark"> Vận chuyển: </span>
-                      <span>{{item.shippingMethodName}}</span>
-                    </ion-text>
-                    <br>
-                    <ion-text class="dynamic-font">
-                      <span class="font-weight-bold text-dark">Ngày tạo: </span>
-                      <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
-                    </ion-text>
-                    <br>
-                    <ion-text class="dynamic-font">
-                      <span class="font-weight-bold text-dark">Người tạo: </span>
-                      <span>{{item.lastName}}</span>
-                    </ion-text>
-                    <br>
-                    <ion-text class="dynamic-font">
-                      <span class="font-weight-bold text-dark">Dịch vụ phụ: </span>
-                      <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
-                      <span *ngIf="item.isWoodPackage && item.isAirPackage">-</span>
-                      <span *ngIf="item.isAirPackage">Bọt khí</span>
-                      <span *ngIf="item.isAirPackage && item.isInsurance">-</span>
-                      <span *ngIf="item.isInsurance">Bảo hiểm</span>
-                      <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
-                    </ion-text>
-                    <ion-text>
-                    </ion-text>
+              <div class="w-100">
+                <ion-card-header class="p-3">
+                  <div style="justify-content: space-between;" class="d-flex align-items-center">
+                    <div class="d-flex align-items-center">
+                      <ion-text class="dynamic-font text-dark font-weight-bold pr-2">
+                        Mã đơn hàng
+                      </ion-text>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <ion-text class="dynamic-font pr-2">
+                        {{item.shippingOrderCode}}
+                      </ion-text>
+                      <ion-icon [cdkCopyToClipboard]="item.shippingOrderCode" (click)="onCopy()" style="font-size: 2rem;"
+                        name="copy-outline"></ion-icon>
+                    </div>
                   </div>
-                </div>
-                <div class="d-flex justify-content-end mb-2">
-                  <ng-container [ngSwitch]="item.status">
-                    <ion-badge  mode="ios" *ngSwitchCase="1" color="warning">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Chờ thanh toán</span>
+                </ion-card-header>
+                <ion-card-content class="p-3">
+                  <div class="w-100" (click)="viewDetail(item)" >
+                    <div class="d-flex align-items-center">
+                      <ng-container *ngIf="item.status == 1">
+                        <img  style="width: 4em;height: 4em;
+                        margin-right: 1rem;" src="../../../assets/image/wait-order.png" alt="">
+                      </ng-container>
+                      <ng-container *ngIf="item.status == 2">
+                        <img  style="width: 4em;height: 4em;
+                        margin-right: 1rem;" src="../../../assets/image/icon-order.png" alt="">
+                      </ng-container>
+                      <ng-container *ngIf="item.status == 3">
+                        <img  style="width: 4em;height: 4em;
+                        margin-right: 1rem;" src="../../../assets/image/ship-cancel.png" alt="">
+                      </ng-container>
+                      <ng-container *ngIf="item.status == 4">
+                        <img  style="width: 4em;height: 4em;
+                        margin-right: 1rem;" src="../../../assets/image/ship-other.png" alt="">
+                      </ng-container>
+                      <div>
+                        <ion-text mode="ios" class="dynamic-font">
+                          <span class="font-weight-bold text-dark"> Vận chuyển: </span>
+                          <span>{{item.shippingMethodName}}</span>
+                        </ion-text>
+                        <br>
+                        <ion-text class="dynamic-font">
+                          <span class="font-weight-bold text-dark">Ngày tạo: </span>
+                          <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                        </ion-text>
+                        <br>
+                        <ion-text class="dynamic-font">
+                          <span class="font-weight-bold text-dark">Người tạo: </span>
+                          <span>{{item.lastName}}</span>
+                        </ion-text>
+                        <br>
+                        <ion-text class="dynamic-font">
+                          <span class="font-weight-bold text-dark">Dịch vụ phụ: </span>
+                          <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
+                          <span *ngIf="item.isWoodPackage && item.isAirPackage">-</span>
+                          <span *ngIf="item.isAirPackage">Bọt khí</span>
+                          <span *ngIf="item.isAirPackage && item.isInsurance">-</span>
+                          <span *ngIf="item.isInsurance">Bảo hiểm</span>
+                          <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
+                        </ion-text>
+                        <ion-text>
+                        </ion-text>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between pt-2">
+                      <div class="d-flex justify-content-start">
+                        <ion-text class="dynamic-font font-weight-bold text-dark">
+                          Tổng tiền:
+                        </ion-text>
+                        &nbsp;
+                        <ion-text class="dynamic-font text-orange">
+                          {{(item.totalPrice | number)+'đ'}}
+                        </ion-text>
+                      </div>
+                      <div class="d-flex justify-content-end mb-2">
+                        <ng-container [ngSwitch]="item.status">
+                          <ion-badge mode="md" *ngSwitchCase="1" color="warning">
+                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                              <span>Chờ thanh toán</span>
+                            </ion-text>
+                          </ion-badge>
+                          <ion-badge mode="md" *ngSwitchCase="2" style="--background:var(--ion-color-mat-primary) !important">
+                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                              <span>Đã thanh toán</span>
+                            </ion-text>
+                          </ion-badge>
+                          <ion-badge mode="md" *ngSwitchCase="3" style="--background	: orange !important;">
+                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                              <span>Đã hủy</span>
+                            </ion-text>
+                          </ion-badge>
+                          <ion-badge mode="md" *ngSwitchCase="4" color="medium">
+                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                              <span>Khác</span>
+                            </ion-text>
+                          </ion-badge>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div *ngIf="item.status == 1" class="d-flex align-items-center justify-content-between text-center pt-3">
+                    <ion-button (click)="openPayment(item)" mode="ios" size="default" class="ion-btn-default">
+                      <ion-icon style="color: white !important;" slot="start" name="wallet-outline"></ion-icon>
+                      <ion-text style="color: white !important;" class="dynamic-font">
+                        Thanh toán
                       </ion-text>
-                    </ion-badge>
-                    <ion-badge  mode="ios" *ngSwitchCase="2" style="--background:var(--ion-color-mat-primary) !important">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Đã thanh toán</span>
-                      </ion-text>
-                    </ion-badge>
-                    <ion-badge  mode="ios" *ngSwitchCase="3" color="danger">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Đã hủy</span>
-                      </ion-text>
-                    </ion-badge>
-                    <ion-badge  mode="ios" *ngSwitchCase="4" color="medium">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Khác</span>
-                      </ion-text>
-                    </ion-badge>
-                  </ng-container>
-                </div>
-                <div class="d-flex justify-content-end">
-                  <ion-text class="dynamic-font font-weight-bold text-dark">
-                    Tổng tiền:
-                  </ion-text>
-                  &nbsp;
-                  <ion-text class="dynamic-font">
-                    {{(item.totalPrice | number)+'đ'}}
-                  </ion-text>
-                </div>
+                    </ion-button>
+                  </div> -->
+                </ion-card-content>
               </div>
-              <div *ngIf="item.status == 1" class="d-flex align-items-center justify-content-center text-center pt-3">
-                <ion-button (click)="openPayment(item)" mode="ios" size="default" class="ion-btn-default">
-                  <ion-icon style="color: white !important;" slot="start" name="wallet-outline"></ion-icon>
-                  <ion-text style="color: white !important;" class="dynamic-font">
-                    Thanh toán
-                  </ion-text>
-                </ion-button>
-              </div>
-            </ion-card-content>
+            </div>
           </ion-card>
         </ion-item>
       </ng-container>
@@ -227,23 +236,17 @@
         </div>
         <div class="w-100 text-center">
           <ion-text class="dynamic-font text-dark">
-            <span>Bạn có muốn thanh toán cho đơn hàng </span>
-          </ion-text>
-          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
-            <span>{{itemSelected?.shippingOrderCode}}</span>
+            <span>Bạn có muốn thanh toán cho đơn hàng đã chọn không? </span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
-            <span> không? </span>
+            <span>Tổng thanh toán là </span>
           </ion-text>
-          <ion-text class="dynamic-font text-dark">
-            <span>Tổng thanh toán cho đơn hàng là </span>
-          </ion-text>
-          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
-            <span>{{(itemSelected.totalPrice | number)+'đ'}}</span>
+          <ion-text class="dynamic-font text-orange font-weight-bold">
+            <span>{{(totalAllOrder | number)+'đ'}}</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="onPayment(itemSelected)" mode="ios" size="default" class="ion-btn-default pr-3">
+          <ion-button (click)="onPayment()" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -303,3 +306,35 @@
   </ion-modal>
   <!-- Filter -->
 </ion-content>
+<ion-footer *ngIf="!isHideFooter && (status == 0 || status == 1)" class="ion-no-border"
+  style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+  <ion-toolbar mode="ios" style="--background:white !important">
+    <div class="row">
+      <div class="col-4 d-flex align-items-center">
+        <mat-checkbox *ngIf="isPayment" [checked]="isCheckAll" color="warn" (change)="onSelectedAll($event.checked)">
+        </mat-checkbox>
+        <mat-checkbox *ngIf="!isPayment" [disabled]="true" color="warn">
+        </mat-checkbox>
+        <ion-text class="dynamic-font text-dark font-weight-bold">
+          Tất cả
+         </ion-text>
+      </div>
+      <div class="col-4 d-flex align-items-center" style="flex-direction: column;">
+        <ion-text class="dynamic-font" color="medium">
+          <span>Tổng thanh toán</span>
+        </ion-text>
+        <ion-text class="dynamic-font text-orange font-weight-bold">
+          {{(totalAllOrder | number)+'đ'}}
+        </ion-text>
+      </div>
+      <div class="col-4 pl-0">
+        <ion-button (click)="openPayment()" [disabled]="arrOrderSelected.length == 0 ? true : false" mode="ios" size="default" class="ion-btn-orange pr-3">
+          <ion-text style="color: white !important;" class="dynamic-font">
+            <span>Thanh toán </span>
+            <span>{{'('+arrOrderSelected.length+')'}}</span>
+          </ion-text>
+        </ion-button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-footer>

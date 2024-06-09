@@ -9,6 +9,7 @@ import { PreviousRouterServiceService } from 'src/app/previous-router-service/pr
 import { StorageService } from 'src/app/storage-service/storage.service';
 import { Device } from '@capacitor/device';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
 
 @Component({
   selector: 'app-setting-page',
@@ -17,6 +18,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class SettingPageComponent {
   @ViewChild(IonContent) content: IonContent;
+  @ViewChild('elePassword') elePassword: any;
   oUser:any;
   isReview:any;
   titleTime:any = '';
@@ -26,6 +28,7 @@ export class SettingPageComponent {
   isOpenChangeAccount:any=false;
   isOpenAddAccount:any=false;
   isOpenDeleteAccount:any=false;
+  isOpenRule:any=false;
   listUser:any;
   userName:any;
   accountSelected:any;
@@ -60,6 +63,35 @@ export class SettingPageComponent {
       userName: ['', Validators.required],
       passWord: ['', Validators.required]
     });
+  }
+
+  async ngAfterViewInit() {
+    await PushNotifications.addListener('pushNotificationReceived',
+      (notification: PushNotificationSchema) => {
+        let array = this.router.url.split('?');
+        let url = array[0];
+        if ((url.includes('main/setting'))) {
+          this.getUser();
+        }
+      }
+    );
+    // Network.addListener('networkStatusChange', status => {
+    //   this.isconnected = status.connected;
+    //   if (status.connected && status.connectionType != 'none') {
+    //     this.isloadpage = true;
+    //     
+    //     setTimeout(() => {
+    //       this.loadData();
+    //     }, 500);
+    //   }
+    //   if (!status.connected && status.connectionType == 'none') {
+    //     this.lstData = [];
+    //     this.isload = true;
+    //     this.pageNum = 1;
+    //     this.isEmpty = false;
+    //     
+    //   }
+    // });
   }
 
   onDestroy() {
@@ -108,11 +140,10 @@ export class SettingPageComponent {
     this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res[0]) {
         this.notification.showNotiError('', res[1].message);
-        this.storage.remove('password');
-        this.navCtrl.navigateBack('home');
       }else{
         this.oUser = res[1];
       }
+      this.dt.detectChanges();
     })
   }
 
@@ -148,6 +179,14 @@ export class SettingPageComponent {
 
   goReport(){
     this.navCtrl.navigateForward('main/setting/report');
+  }
+
+  goFAQ(){
+    this.navCtrl.navigateForward('main/setting/faq');
+  }
+
+  goExchange(){
+    this.navCtrl.navigateForward('main/setting/exchange');
   }
 
   //#region Logout
@@ -242,62 +281,76 @@ export class SettingPageComponent {
   }
 
   async onChangeAccount(item:any){
-    let username = item?.username;
-    let password = item?.password;
-    let token = await this.storage.get('token');
-    const info = await Device.getInfo();
-    const infoID = await Device.getId();
-    let deviceName = info.manufacturer+' '+info.model;
-    let deviceID = infoID.identifier;
-    let data = {
-      userName:username,
-      passWord:password,
-      token:token,
-      deviceName:deviceName,
-      deviceID:deviceID,
-      currUsername:this.userName
-    }
-    let messageBody = {
-      dataRequest:JSON.stringify(data)
-    };
-    this.api.execByBody('Authencation', 'changeaccount', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if (res && !res?.isError) {
-        this.storage.set('username', item?.username);
-        this.storage.set('password', item?.password);
-        this.userName = item?.username;
-        this.cancelChangeAccount();
-        setTimeout(() => {
-          this.getUser();
-          this.content.scrollToTop();
-        }, 500);
+    this.cancelChangeAccount();
+    this.onOpenAddAccount(item?.username,false);
+    // let username = item?.username;
+    // let password = item?.password;
+    // let token = await this.storage.get('token');
+    // const info = await Device.getInfo();
+    // const infoID = await Device.getId();
+    // let deviceName = info.manufacturer+' '+info.model;
+    // let deviceID = infoID.identifier;
+    // let data = {
+    //   userName:username,
+    //   passWord:password,
+    //   token:token,
+    //   deviceName:deviceName,
+    //   deviceID:deviceID,
+    //   currUsername:this.userName
+    // }
+    // let messageBody = {
+    //   dataRequest:JSON.stringify(data)
+    // };
+    // this.api.execByBody('Authencation', 'changeaccount', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+    //   if (res && !res?.isError) {
+    //     this.storage.set('username', item?.username);
+    //     this.storage.set('password', item?.password);
+    //     this.userName = item?.username;
+    //     this.cancelChangeAccount();
+    //     setTimeout(() => {
+    //       this.getUser();
+    //       this.content.scrollToTop();
+    //     }, 500);
         
-      } else {
-        this.notification.showNotiError('', res?.message);
-      }
-    })
+    //   } else {
+    //     this.notification.showNotiError('', res?.message);
+    //   }
+    // })
   }
 
-  onOpenAddAccount(){
+  onOpenAddAccount(userName:any = '',isEnable:any = true){
     this.cancelChangeAccount();
     this.isOpenAddAccount = true;
+    if(isEnable)
+      this.formGroup.controls['userName'].enable();
+    else
+      this.formGroup.controls['userName'].disable();
+    this.formGroup.patchValue({userName:userName});
   }
 
   cancelAddAccount(){
     this.isOpenAddAccount = false;
+    this.formGroup.reset();
     this.dt.detectChanges();
   }
 
   async onSignIn(){
-    let username = this.formGroup.value?.userName;
-    let password = this.formGroup.value?.passWord;
+    if (this.formGroup.controls['passWord'].invalid) {
+      this.notification.showNotiError('', 'Mật khẩu không được bỏ trống');
+      this.elePassword.nativeElement.focus();
+      return;
+    }
+    let oData = this.formGroup.getRawValue();
+    let userName = oData?.userName;
+    let passWord = oData?.passWord;
     let token = await this.storage.get('token');
     const info = await Device.getInfo();
     const infoID = await Device.getId();
     let deviceName = info.manufacturer+' '+info.model;
     let deviceID = infoID.identifier;
     let data = {
-      userName:username,
-      passWord:password,
+      userName:userName,
+      passWord:passWord,
       token:token,
       deviceName:deviceName,
       deviceID:deviceID,
@@ -308,15 +361,18 @@ export class SettingPageComponent {
     };
     this.api.execByBody('Authencation', 'changeaccount', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe(async (res: any) => {
       if (res && !res?.isError) {
-        this.storage.set('username', username);
-        this.storage.set('password', password);
-        this.userName = username;
-        await this.storage.setAccount(username);
+        this.storage.set('username', userName);
+        this.storage.set('password', passWord);
+        this.userName = userName;
+        await this.storage.setAccount(userName);
         this.formGroup.reset();
         this.cancelAddAccount();
         setTimeout(() => {
           this.getUser();
           this.getlstUser();
+          this.api.callBackPackage(true);
+          this.api.callBackNoti(true);
+          this.api.callBackOrder(true);
           this.content.scrollToTop();
         }, 500);
       } else {
@@ -357,6 +413,36 @@ export class SettingPageComponent {
     if (index2 > -1) {
       this.listUser.splice(index2, 1);
     }
+  }
+  //#endregion
+
+  //#region Rule
+  openRule(){
+    this.isOpenRule = true;
+  }
+
+  cancelRule(){
+    this.isOpenRule = false;
+    this.dt.detectChanges();
+  }
+  //#endregion
+
+  //#region ChangeBiometrics
+  changeBiometrics(event:any){
+    let data = {
+      userName:this.oUser?.username,
+      check:event
+    }
+    let messageBody = {
+      dataRequest:JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'updatebiometrics', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res && !res?.isError) {
+        this.oUser.isBiometrics = event;
+      } else {
+        this.notification.showNotiError('', res?.message);
+      }
+    })
   }
   //#endregion
 }

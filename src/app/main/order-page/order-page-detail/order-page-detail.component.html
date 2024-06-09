@@ -1,9 +1,19 @@
 <ion-header class="ion-no-border" style="--background:white !important;">
-  <ion-toolbar mode="ios" class="bg-default">
+  <!-- <ion-toolbar mode="ios" class="bg-default">
     <ion-button slot="start" (click)="onback()" fill="clear">
       <ion-icon style="color: white !important;" class="text-dark" name="chevron-back-outline"></ion-icon>
     </ion-button>
     <ion-title style="color: white !important;" class="dynamic-font text-dark font-weight-bold">Chi tiết đơn hàng</ion-title>
+  </ion-toolbar> -->
+  <ion-toolbar mode="ios" style="--background:white !important">
+    <ion-buttons slot="start">
+      <ion-button (click)="onback()" fill="clear">
+        <ion-icon class="text-primary-default" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title mode="md" class="dynamic-font text-primary-default pl-0 pr-0">
+      <h2 class="my-0 mx-0 font-weight-bold">Chi tiết đơn hàng</h2>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content style="--background:white !important;">
@@ -155,42 +165,37 @@
                           </div>
                           <div class="d-flex align-items-center">
                             <ng-container [ngSwitch]="item.status">
-                              <ion-badge mode="ios" *ngSwitchDefault color="medium">
+                              <ion-badge mode="md" *ngSwitchDefault color="medium">
                                 <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                                   <span>Chưa xác nhận</span>
                                 </ion-text>
                               </ion-badge>
-                              <ion-badge mode="ios" *ngSwitchCase="2" color="tertiary">
+                              <ion-badge mode="md" *ngSwitchCase="2" color="tertiary">
                                 <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                                   <span>Hàng về kho TQ</span>
                                 </ion-text>
                               </ion-badge>
-                              <ion-badge mode="ios" *ngSwitchCase="3" color="secondary">
+                              <ion-badge mode="md" *ngSwitchCase="3" color="secondary">
                                 <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                                   <span>Đang về HCM</span>
                                 </ion-text>
                               </ion-badge>
-                              <ion-badge mode="ios" *ngSwitchCase="4" color="primary">
+                              <ion-badge mode="md" *ngSwitchCase="4" color="primary">
                                 <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                                   <span>Hàng về tới HCM</span>
                                 </ion-text>
                               </ion-badge>
-                              <ion-badge mode="ios" *ngSwitchCase="5" color="success">
+                              <ion-badge mode="md" *ngSwitchCase="5" style="--background	: var(--ion-color-mat-primary) !important;">
                                 <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                                   <span>Đã nhận hàng</span>
                                 </ion-text>
                               </ion-badge>
-                              <ion-badge mode="ios" *ngSwitchCase="9" color="dark">
+                              <ion-badge mode="md" *ngSwitchCase="9" color="dark">
                                 <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                                   <span>Đã hủy</span>
                                 </ion-text>
                               </ion-badge>
-                              <ion-badge mode="ios" *ngSwitchCase="10" color="warning">
-                                <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                                  <span>Thất lạc</span>
-                                </ion-text>
-                              </ion-badge>
-                              <ion-badge mode="ios" *ngSwitchCase="11" color="danger">
+                              <ion-badge mode="md" *ngSwitchCase="11" style="--background	: orange !important;">
                                 <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                                   <span>Không nhận được hàng</span>
                                 </ion-text>
@@ -367,22 +372,22 @@
                     </div>
                     <div class="d-flex align-items-center">
                       <ng-container [ngSwitch]="oData.status">
-                        <ion-badge  mode="ios" *ngSwitchCase="1" color="warning">
+                        <ion-badge mode="md" *ngSwitchCase="1" color="warning">
                           <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                             <span>Chờ thanh toán</span>
                           </ion-text>
                         </ion-badge>
-                        <ion-badge  mode="ios" *ngSwitchCase="2" color="success">
+                        <ion-badge mode="md" *ngSwitchCase="2" style="--background:var(--ion-color-mat-primary) !important">
                           <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                             <span>Đã thanh toán</span>
                           </ion-text>
                         </ion-badge>
-                        <ion-badge  mode="ios" *ngSwitchCase="3" color="danger">
+                        <ion-badge mode="md" *ngSwitchCase="3" style="--background	: orange !important;">
                           <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                             <span>Đã hủy</span>
                           </ion-text>
                         </ion-badge>
-                        <ion-badge  mode="ios" *ngSwitchCase="4" color="medium">
+                        <ion-badge mode="md" *ngSwitchCase="4" color="medium">
                           <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                             <span>Khác</span>
                           </ion-text>
@@ -483,14 +488,6 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <div *ngIf="oData.status == 1" class="d-flex align-items-center justify-content-center text-center pt-3">
-              <ion-button (click)="openPayment(oData)" mode="ios" size="default" class="ion-btn-default">
-                <ion-icon style="color: white !important;" slot="start" name="wallet-outline"></ion-icon>
-                <ion-text style="color: white !important;" class="dynamic-font">
-                  Thanh toán
-                </ion-text>
-              </ion-button>
-            </div>
           </ion-card-content>
         </ion-card>
       </ion-item>
@@ -518,7 +515,7 @@
           <ion-text class="dynamic-font text-dark">
             <span>Tổng thanh toán cho đơn hàng là </span>
           </ion-text>
-          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
+          <ion-text class="dynamic-font text-orange font-weight-bold">
             <span>{{(oData.totalPrice | number)+'đ'}}</span>
           </ion-text>
         </div>
@@ -539,3 +536,15 @@
   </ion-modal>
   <!-- payment -->
 </ion-content>
+<ion-footer *ngIf="oData?.status == 1" class="ion-no-border"
+  style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+  <ion-toolbar mode="ios" style="--background:white !important">
+    <div class="w-100 d-flex align-items-center justify-content-center">
+      <ion-button (click)="openPayment(oData)" mode="ios" size="default" class="ion-btn-default w-100">
+        <ion-text style="color: white !important;" class="dynamic-font">
+          Thanh toán
+        </ion-text>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

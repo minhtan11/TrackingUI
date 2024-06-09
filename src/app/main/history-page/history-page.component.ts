@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChil
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Network } from '@capacitor/network';
+import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
 import { InfiniteScrollCustomEvent, IonContent, IonRouterOutlet, NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
@@ -55,7 +56,7 @@ export class HistoryPageComponent {
     });
   }
 
-  ngAfterViewInit(){
+  async ngAfterViewInit(){
     this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
       if((this.router.url.includes('main/history'))){
         this.onback();
@@ -63,6 +64,15 @@ export class HistoryPageComponent {
       }
       processNextHandler();
     })
+    await PushNotifications.addListener('pushNotificationReceived',
+      (notification: PushNotificationSchema) => {
+        let array = this.router.url.split('?');
+        let url = array[0];
+        if ((url.includes('main/history'))) {
+          this.refresh();
+        }
+      }
+    );
     // Network.addListener('networkStatusChange', status => {
     //   this.isconnected = status.connected;
     //   if (status.connected && status.connectionType != 'none') {
@@ -113,6 +123,14 @@ export class HistoryPageComponent {
     this.loadData();
   }
 
+  refresh(){
+    this.isload = true;
+    this.pageNum = 1;
+    this.isEmpty = false;
+    this.content.scrollToTop();
+    this.loadData();
+  }
+
   async loadData(){
     let username = await this.storage.get('username');
     let data = {
@@ -141,6 +159,7 @@ export class HistoryPageComponent {
         if (total == oData[1]) this.isload = false;
         this.isSke = false;
       }
+      this.dt.detectChanges();
     })
   }
 

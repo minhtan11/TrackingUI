@@ -22,7 +22,6 @@ export class NotificationServiceComponent implements OnInit {
       message: text,
       duration: timer,
       position: 'top',
-      positionAnchor: 'header',
       icon: 'alert-circle-outline',
       cssClass:'text-white bg-toast-orange'
     });
@@ -34,7 +33,6 @@ export class NotificationServiceComponent implements OnInit {
       message: text,
       duration: timer,
       position: 'top',
-      positionAnchor: 'header',
       icon: 'checkmark-circle-outline',
       cssClass:'text-white bg-toast-default'
     });

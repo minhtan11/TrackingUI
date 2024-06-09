@@ -2,25 +2,16 @@
   <ion-toolbar mode="ios" style="--background:white !important">
     <ion-buttons slot="start">
       <ion-button (click)="onback()" fill="clear">
-        <ion-icon class="text-dark" name="chevron-back-outline"></ion-icon>
+        <ion-icon class="text-primary-default" name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title mode="md" class="dynamic-font text-dark pl-0 pr-0">
+    <ion-title mode="md" class="dynamic-font text-primary-default pl-0 pr-0">
       <h2 class="my-0 mx-0 font-weight-bold">Lịch sử giao dịch</h2>
     </ion-title>
     <img (click)="openPopFilter()" slot="end" style="width: 2rem;height: 2rem;" src="../../../assets/image/funnel-tool.png" alt="">
   </ion-toolbar>
-  <!-- <ion-toolbar mode="ios" class="bg-default">
-    <ion-button slot="start" (click)="onback()" fill="clear">
-      <ion-icon style="color: white !important;" class="text-dark" name="chevron-back-outline"></ion-icon>
-    </ion-button>
-    <ion-title style="color: white !important;" class="dynamic-font text-dark">Lịch sử giao dịch</ion-title>
-    <ion-button (click)="openPopFilter()" slot="end" fill="clear">
-      <ion-icon style="color: white !important;" class="text-dark" name="funnel-outline"></ion-icon>
-    </ion-button>
-  </ion-toolbar> -->
   <ion-toolbar style="--background:white !important;">
-    <ion-segment style="border-bottom: 1px solid #e3e3e3 !important;min-height: unset !important;height: 3rem !important;"  [scrollable]="true" [value]="status" mode="md">
+    <ion-segment style="min-height: unset !important;height: 3rem !important;"  [scrollable]="true" [value]="status" mode="md">
       <ion-segment-button (click)=" sortData(0)" [value]="0">
         <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
           <h5 class="my-0 mx-0 font-weight-bold">Tất cả</h5>
@@ -46,6 +37,11 @@
           <h5 class="my-0 mx-0 font-weight-bold">Rút tiền</h5>
         </ion-text>
       </ion-segment-button>
+      <ion-segment-button (click)=" sortData(6)" [value]="6">
+        <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+          <h5 class="my-0 mx-0 font-weight-bold">Đổi điểm Baidu</h5>
+        </ion-text>
+      </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </ion-header>
@@ -65,12 +61,12 @@
         <ion-item-group>
           <ion-item-divider style="background-color: white !important;" mode="ios">
             <ion-text>
-              <h5 class="mx-0 my-0 font-weight-bold text-dark dynamic-font">Tháng {{item?.key}}</h5>
+              <h5 class="mx-0 my-0 font-weight-bold text-primary-default dynamic-font">Tháng {{item?.key}}</h5>
             </ion-text>
           </ion-item-divider>
           <ng-container *ngFor="let item2 of item?.datas">
             <ion-item lines="none" style="--background:white !important">
-              <ion-card class="mx-1 my-1 w-100" style="--background:white !important;box-shadow: none !important;border-bottom: 1px solid #E3E3E3;border-radius: unset !important;">
+              <ion-card class="mx-1 my-1 w-100" style="--background:white !important;box-shadow: none !important;border-bottom: 1px solid #E3E3E3;border-radius: unset !important;font-size: unset !important;">
                 <ion-card-header class="p-2 pb-1">
                   <div class="d-flex align-items-center">
                     <ion-icon style="font-size: 1rem;" class="pr-2" name="time-outline"></ion-icon>
@@ -85,10 +81,11 @@
                 </ion-card-header>
                 <ion-card-content class="pl-1 pr-1 pb-3" style="background-color: white !important">
                   <div class="d-flex align-items-center">
-                    <img class="mr-2" style="width: 4em;height: 4em;" *ngIf="item2?.data?.tradeType == 1" src="../../assets/image/icon-payment-order.png" alt="">
-                    <img class="mr-2" style="width: 4em;height: 4em;" *ngIf="item2?.data?.tradeType == 2" src="../../assets/image/icon-refund.png" alt="">
-                    <img class="mr-2" style="width: 4em;height: 4em;" *ngIf="item2?.data?.tradeType == 3" src="../../assets/image/icon-add-dolla.png" alt="">
-                    <img class="mr-2" style="width: 4em;height: 4em;" *ngIf="item2?.data?.tradeType == 4" src="../../assets/image/icon-withdraw.png" alt="">
+                    <img class="mr-2" style="width: 4em;height: 4em;" *ngIf="item2?.data?.tradeType == 1" src="../../../assets/image/icon-payment-order.png" alt="">
+                    <img class="mr-2" style="width: 4em;height: 4em;" *ngIf="item2?.data?.tradeType == 2" src="../../../assets/image/icon-refund.png" alt="">
+                    <img class="mr-2" style="width: 4em;height: 4em;" *ngIf="item2?.data?.tradeType == 3" src="../../../assets/image/icon-add-dolla.png" alt="">
+                    <img class="mr-2" style="width: 4em;height: 4em;" *ngIf="item2?.data?.tradeType == 4" src="../../../assets/image/icon-withdraw.png" alt="">
+                    <img class="mr-2" style="width: 4em;height: 4em;" *ngIf="item2?.data?.tradeType == 6" src="../../../assets/image/star.png" alt="">
                     <div class="w-100">
                       <ng-container [ngSwitch]="item2?.data?.tradeType">
                         <ion-text class="text-dark font-weight-bold dynamic-font" *ngSwitchCase="1">
@@ -102,6 +99,9 @@
                         </ion-text>
                         <ion-text class="text-dark font-weight-bold dynamic-font" *ngSwitchCase="4">
                           Rút tiền từ ví
+                        </ion-text> 
+                        <ion-text class="text-dark font-weight-bold dynamic-font" *ngSwitchCase="6">
+                          Đổi điểm Baidu
                         </ion-text> 
                       </ng-container>
                       <br>
@@ -120,13 +120,13 @@
                           </ion-text>
                         </div>
                         <div class="d-flex align-items-center">
-                          <ng-container *ngIf="item2?.data?.tradeType == 1 || item2?.data?.tradeType == 4">
-                            <ion-text color="danger" class="font-weight-bold dynamic-font">
+                          <ng-container *ngIf="item2?.data?.tradeType == 1 || item2?.data?.tradeType == 4 || item2?.data?.tradeType == 6">
+                            <ion-text class="font-weight-bold dynamic-font text-orange">
                               {{'-'+(item2?.data?.amount)+'đ'}}
                             </ion-text>
                           </ng-container>
                           <ng-container *ngIf="item2?.data?.tradeType == 2 || item2?.data?.tradeType == 3">
-                            <ion-text color="success" class="font-weight-bold dynamic-font">
+                            <ion-text class="font-weight-bold dynamic-font text-primary-default">
                               {{'+'+item2?.data?.amount+'đ'}}
                             </ion-text>
                           </ng-container>

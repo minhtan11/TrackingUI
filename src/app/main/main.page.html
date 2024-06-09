@@ -114,7 +114,7 @@
   </ion-modal>
   <!-- Exit App  -->
 </ion-content> 
-<ion-footer class="ion-no-border mobile-toolbar" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+<ion-footer *ngIf="!isHideFooter" class="ion-no-border mobile-toolbar" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
   <ng-container *ngIf="isReview">
     <ion-toolbar style="--background:white !important;">
       <mat-tab-group [selectedIndex]="selected" (selectedTabChange)="selectedTabChange($event)" headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
@@ -159,7 +159,17 @@
           <ng-template mat-tab-label>
             <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
               <!-- <ion-icon class="mb-1" style="font-size: 20px" name="cube-outline"></ion-icon> -->
-              <i class="bi bi-box-seam mb-1 icon-menu"></i>
+               <div class="d-flex align-items-center">
+                <i class="bi bi-box-seam mb-1 icon-menu"></i>
+                <ng-container *ngIf="totalPackage > 0">
+                  <div class="ion-badge-noti d-flex align-items-center justify-content-center">
+                    <ion-text class="dynamic-font font-weight-bold">
+                      <span *ngIf="totalPackage <=99">{{totalPackage}}</span>
+                      <span *ngIf="totalPackage >99">99+</span>
+                    </ion-text>
+                  </div>
+                </ng-container>
+               </div>
               <ion-text style="font-size: 0.7rem;" class="dynamic-font">
                 <span>Kiện hàng</span>
               </ion-text>
@@ -170,7 +180,17 @@
           <ng-template mat-tab-label>
             <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
               <!-- <ion-icon class="mb-1" style="font-size: 20px" name="time-outline"></ion-icon> -->
-              <i class="bi bi-receipt-cutoff mb-1 icon-menu"></i>
+              <div class="d-flex align-items-center">
+                <i class="bi bi-receipt-cutoff mb-1 icon-menu"></i>
+                <ng-container *ngIf="totalOrder > 0">
+                  <div class="ion-badge-noti d-flex align-items-center justify-content-center">
+                    <ion-text class="dynamic-font font-weight-bold">
+                      <span *ngIf="totalOrder <=99">{{totalOrder}}</span>
+                      <span *ngIf="totalOrder >99">99+</span>
+                    </ion-text>
+                  </div>
+                </ng-container>
+               </div>
               <ion-text style="font-size: 0.7rem;" class="dynamic-font">
                 <span>Đơn hàng</span>
               </ion-text>
@@ -181,7 +201,17 @@
           <ng-template mat-tab-label>
             <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
               <!-- <ion-icon class="mb-1" style="font-size: 20px" name="notifications-outline"></ion-icon> -->
-              <i class="bi bi-bell mb-1 icon-menu"></i>
+              <div class="d-flex align-items-center">
+                <i [ngClass]="totalNoti > 0 ? 'animation-bell' : ''" class="bi bi-bell mb-1 icon-menu "></i>
+                <ng-container *ngIf="totalNoti > 0">
+                  <div class="ion-badge-noti d-flex align-items-center justify-content-center">
+                    <ion-text class="dynamic-font font-weight-bold">
+                      <span *ngIf="totalNoti <=99">{{totalNoti}}</span>
+                      <span *ngIf="totalNoti >99">99+</span>
+                    </ion-text>
+                  </div>
+                </ng-container>
+               </div>
               <ion-text style="font-size: 0.7rem;" class="dynamic-font">
                 <span>Thông báo</span>
               </ion-text>

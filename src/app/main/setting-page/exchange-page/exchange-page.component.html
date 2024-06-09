@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title mode="md" class="dynamic-font text-primary-default pl-0 pr-0">
-      <h2 class="my-0 mx-0 font-weight-bold">Phiếu khiếu nại</h2>
+      <h2 class="my-0 mx-0 font-weight-bold">Đổi điểm tra cứu</h2>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -17,7 +17,7 @@
         <img style="width: 100px;
             height: 100px;
             display: block;
-            margin: auto;" src="../../../../assets/image/complain.png" alt="">
+            margin: auto;" src="../../../../assets/image/exchange.png" alt="">
       </ion-card-header>
       <ion-card-content>
         <div class="alert alert-warning d-flex" role="alert">
@@ -28,8 +28,7 @@
             </ion-text>
             <br>
             <ion-text class="mb-0 dynamic-font text-dark">
-              Hãy tạo phiếu khiếu nại với vấn đề của bạn! Với những đơn ngoài giờ hành chính. Thời gian hệ thống xử lý có thể chậm hơn bình thường.
-              Mong quý khách hàng thông cảm!
+              Hệ thống quy đổi lượt tìm kiếm đơn hàng trên kênh Baidu với mức phí 500đ/1lượt!
             </ion-text>
           </div>
         </div>
@@ -37,22 +36,12 @@
     </ion-card>
     <div class="w-100" [formGroup]="formGroup">
       <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Hình thức khiếu nại</mat-label>
-        <mat-select #eleType
-          formControlName="type">
-          <mat-option [value]="0">Khiếu nại thiếu hàng</mat-option>
-          <mat-option [value]="1">Khiếu nại sai mẫu (bồi thường)</mat-option>
-          <mat-option [value]="2">Khiếu nại sai mẫu (trả hàng)</mat-option>
-          <mat-option [value]="3">Lỗi hệ thống</mat-option>
-        </mat-select>
+        <mat-label>Số dư ví</mat-label>
+        <input #eleTransId formControlName="wallet" matInput>
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Mã đơn hàng</mat-label>
-        <input #eleTransId formControlName="transId" matInput>
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Nội dung</mat-label>
-        <input #eleContext formControlName="context" matInput>
+        <mat-label>Số lượt</mat-label>
+        <input type="number" #eleAmount formControlName="amount" matInput>
       </mat-form-field>
     </div>
   </div>
@@ -60,9 +49,9 @@
 <ion-footer *ngIf="!isHideFooter" class="ion-no-border"
   style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
   <ion-toolbar mode="ios" style="--background:white !important">
-    <ion-button mode="ios" (click)="onReport()" class="ion-btn-default" expand="block">
+    <ion-button mode="ios" (click)="onExchange()" class="ion-btn-default" expand="block">
       <ion-text class="dynamic-font font-weight-bold" style="color: white !important;">
-        <span>TẠO PHIẾU KHIẾU NẠI</span>
+        <span>ĐỔI LƯỢT</span>
       </ion-text>
     </ion-button>
   </ion-toolbar>

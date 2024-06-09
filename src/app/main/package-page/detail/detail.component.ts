@@ -24,6 +24,8 @@ export class DetailComponent  implements OnInit {
   isOpenCancelPackage:any = false;
   isOpenRestorePackage:any = false;
   isOpenDeletePackage:any = false;
+  isOpenQueryPackage: any = false;
+  isOpenNoQueryPackage: any = false;
   previousUrl:any;
   isChange:any=false;
   isCancel:any=false;
@@ -173,31 +175,61 @@ export class DetailComponent  implements OnInit {
     this.dt.detectChanges();
   }
 
-  continuteCheck(item:any){
+  continuteCheck(item: any) {
     this.cancelCheck();
-    
     let data = {
       id: item.packageCode,
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'checkavailable', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+    this.api.execByBody('Authencation', 'checkavailable', messageBody, true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res[0]) {
         this.notification.showNotiError('', res[1].message);
       } else {
         if (res[1] == 0) {
           this.openPopCheckPackage2(item);
-        }else{
+        } else {
           this.checkPackage(item);
         }
       }
-      this.onDestroy();
     })
   }
 
-  checkPackage(item:any){
+  checkPackage(item: any) {
     this.cancelCheck2();
+    if (item?.searchBaiduTimes == 0) {
+      this.onCheckPage(item);
+    }else{
+      if (item?.autoQuery) {
+        this.openPopQueryPackage();
+      }else{
+        this.openPopNoQueryPackage();
+      }
+    }
+  }
+
+  openPopQueryPackage() {
+    this.isOpenQueryPackage = true;
+  }
+
+  cancelQueryPackage() {
+    this.isOpenQueryPackage = false;
+    this.dt.detectChanges();
+  }
+
+  openPopNoQueryPackage() {
+    this.isOpenNoQueryPackage = true;
+  }
+
+  cancelNoQueryPackage() {
+    this.isOpenNoQueryPackage = false;
+    this.dt.detectChanges();
+  }
+
+  onCheckPage(item: any){
+    this.cancelQueryPackage();
+    this.cancelNoQueryPackage();
     let data = {
       id: item.packageCode,
       userName: this.username
@@ -205,11 +237,11 @@ export class DetailComponent  implements OnInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'checkstatus', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+    this.api.execByBody('Authencation', 'checkstatus', messageBody, true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res[0]) {
         this.notification.showNotiError('', res[1].message);
       } else {
-        this.navCtrl.navigateForward('main/package/orderstatus',{ queryParams: {data: JSON.stringify(res[1])}});
+        this.navCtrl.navigateForward('main/package/orderstatus', { queryParams: { data: JSON.stringify(res[1]) } });
       }
       this.onDestroy();
     })

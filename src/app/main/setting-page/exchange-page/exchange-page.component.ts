@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Keyboard } from '@capacitor/keyboard';
 import { NavController, Platform } from '@ionic/angular';
@@ -10,14 +10,12 @@ import { PreviousRouterServiceService } from 'src/app/previous-router-service/pr
 import { StorageService } from 'src/app/storage-service/storage.service';
 
 @Component({
-  selector: 'app-report-page',
-  templateUrl: './report-page.component.html',
-  styleUrls: ['./report-page.component.scss'],
+  selector: 'app-exchange-page',
+  templateUrl: './exchange-page.component.html',
+  styleUrls: ['./exchange-page.component.scss'],
 })
-export class ReportPageComponent {
-  @ViewChild('eleType') eleType: any;
-  @ViewChild('eleTransId') eleTransId: any;
-  @ViewChild('eleContext') eleContext: any;
+export class ExchangePageComponent  implements OnInit {
+  @ViewChild('eleAmount') eleAmount: any;
   isHideFooter:any=false;
   formGroup!: FormGroup;
   previousUrl:any;
@@ -38,14 +36,9 @@ export class ReportPageComponent {
 
   async ngOnInit() {
     this.formGroup = this.formBuilder.group({
-      type: ['',Validators.required],
-      transId: ['', Validators.required],
-      context: ['', Validators.required],
-      status: [1],
-      createdBy:[''],
+      wallet: [{ value: '', disabled: true },Validators.required],
+      amount: new FormControl("", [Validators.required,Validators.max(9999), Validators.min(1)]),
     });
-    let username = await this.storage.get('username');
-    this.formGroup.patchValue({createdBy:username});
   }
 
   async ngAfterViewInit() {
@@ -57,7 +50,7 @@ export class ReportPageComponent {
       this.isHideFooter = false;
     });
     this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
-      if((this.router.url.includes('main/setting/report'))){
+      if((this.router.url.includes('main/setting/exchange'))){
         this.onback();
         return;
       }
@@ -73,35 +66,60 @@ export class ReportPageComponent {
         this.previousUrl = array[0];
       }
     } 
+    this.getUser();
   }
 
   onback(){
     this.navCtrl.navigateBack(this.previousUrl);
   }
 
-  onReport(){
-    if (this.formGroup.controls['type'].invalid) {
-      this.notification.showNotiError('', 'Vui lòng chọn hình thức khiếu nại!');
-      this.eleType.nativeElement.focus();
+  async onExchange(){
+    if (this.formGroup.controls['amount'].invalid) {
+      if ((this.formGroup.controls['amount'] as any).errors.required) {
+        this.notification.showNotiError('', 'Số lượt không được bỏ trống!');
+        return;
+      }
+      if ((this.formGroup.controls['amount'] as any).errors.min) {
+        this.notification.showNotiError('', 'Số lượt không được nhỏ hơn 1!');
+        return;
+      }
+      if ((this.formGroup.controls['amount'] as any).errors.max) {
+        this.notification.showNotiError('', 'Số lượt quá lớn!');
+        return;
+      }
       return;
     }
-    if (this.formGroup.controls['transId'].invalid) {
-      this.notification.showNotiError('', 'Mã đơn hàng không được bỏ trống!');
-      this.eleTransId.nativeElement.focus();
-      return;
+    let username = await this.storage.get('username');
+    let data = {
+      userName:username,
+      amount:this.formGroup.value.amount
     }
-    if (this.formGroup.controls['context'].invalid) {
-      this.notification.showNotiError('', 'Nội dung không được bỏ trống!');
-      this.eleContext.nativeElement.focus();
-      return;
-    }
-    this.api.execByBody('Authencation','createcomplain',this.formGroup.value,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+    let messageBody = {
+      dataRequest:JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation','exchange',messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
       if (res && !res?.isError) {
         this.notification.showNotiSuccess('', res.message);
         this.navCtrl.navigateBack(this.previousUrl);
-        
       }else{
         this.notification.showNotiError('',res?.message);
+      }
+    })
+  }
+
+  async getUser(){
+    let username = await this.storage.get('username');
+    let data = {
+      userName:username,
+    }
+    let messageBody = {
+      dataRequest:JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        this.formGroup.patchValue({wallet:res[1]?.wallet});
       }
     })
   }

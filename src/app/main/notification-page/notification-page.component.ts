@@ -1,8 +1,9 @@
 import { HttpParams } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Network } from '@capacitor/network';
+import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
 import { InfiniteScrollCustomEvent, IonContent, IonRouterOutlet, NavController } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
@@ -40,6 +41,7 @@ export class NotificationPageComponent {
     private routerOutlet: IonRouterOutlet,
     private formBuilder: FormBuilder,
     private previous:PreviousRouterServiceService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -49,7 +51,16 @@ export class NotificationPageComponent {
     });
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
+    await PushNotifications.addListener('pushNotificationReceived',
+      (notification: PushNotificationSchema) => {
+        let array = this.router.url.split('?');
+        let url = array[0];
+        if ((url.includes('main/notification'))) {
+          this.refresh();
+        }
+      }
+    );
     // Network.addListener('networkStatusChange', status => {
     //   this.isconnected = status.connected;
     //   if (status.connected && status.connectionType != 'none') {
@@ -71,6 +82,7 @@ export class NotificationPageComponent {
 
   async ionViewWillEnter() {
     this.init();
+    this.updateTotalNoti();
   }
 
   ionViewDidEnter() {
@@ -114,7 +126,17 @@ export class NotificationPageComponent {
         if (this.lstData.length == oData[1]) this.isload = false;
         this.isSke = false;
       }
+      this.dt.detectChanges();
     })
+  }
+
+  refresh(){
+    this.isload = true;
+    this.pageNum = 1;
+    this.isEmpty = false;
+    this.content.scrollToTop();
+    this.loadData();
+    this.updateTotalNoti();
   }
 
   async onIonInfinite(event: any) {
@@ -177,6 +199,19 @@ export class NotificationPageComponent {
 
   async goPackageDetail(orderCode:any){
     this.navCtrl.navigateForward('main/package/detail', { queryParams: { id: orderCode } });
+  }
+
+  async updateTotalNoti(){
+    let username = await this.storage.get('username');
+    let data = {
+      userName: username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'updatenotification', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      this.api.callBackNoti(true);
+    })
   }
   //#endregion
 }

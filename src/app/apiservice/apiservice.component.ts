@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Config, ToastController } from '@ionic/angular';
-import { Observable, Subject, catchError, debounceTime, map, of, switchMap, takeUntil, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, catchError, debounceTime, map, of, switchMap, takeUntil, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { Network } from '@capacitor/network';
@@ -16,6 +16,9 @@ export class ApiserviceComponent implements OnInit {
   //#region Constructor
   private destroy$ = new Subject<void>();
   private subject = new Subject<any>();
+  private getTotalPackage$: BehaviorSubject<any> = new BehaviorSubject(null);
+  private getTotalOrder$: BehaviorSubject<any> = new BehaviorSubject(null);
+  private getTotalNoti$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(
     private toastController: ToastController,
     private http: HttpClient,
@@ -26,7 +29,37 @@ export class ApiserviceComponent implements OnInit {
   //#region Init
   ngOnInit() {
 
+  }
+
+  getTotalPackage(): Observable<any> {
+    return this.getTotalPackage$.asObservable();
+  }
+
+  callBackPackage(isNext:boolean){
+    if (isNext) {
+      this.getTotalPackage$.next(isNext);
     }
+  }
+
+  getTotalOrder(): Observable<any> {
+    return this.getTotalOrder$.asObservable();
+  }
+
+  callBackOrder(isNext:boolean){
+    if (isNext) {
+      this.getTotalOrder$.next(isNext);
+    }
+  }
+
+  getTotalNoti(): Observable<any> {
+    return this.getTotalNoti$.asObservable();
+  }
+
+  callBackNoti(isNext:boolean){
+    if (isNext) {
+      this.getTotalNoti$.next(isNext);
+    }
+  }
   //#endregion Init
 
   //#region Function

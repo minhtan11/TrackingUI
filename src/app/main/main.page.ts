@@ -10,11 +10,12 @@ import { Device } from '@capacitor/device';
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
 import { register } from 'swiper/element/bundle';
 import Swiper from 'swiper';
-import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
+import { ActionPerformed, PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
 import { HttpClient } from '@angular/common/http';
 import { App } from '@capacitor/app';
 import { PreviousRouterServiceService } from '../previous-router-service/previous-router-service.service';
+import { Keyboard } from '@capacitor/keyboard';
 register();
 
 @Component({
@@ -31,6 +32,10 @@ export class MainPage implements OnInit {
   selected:any = 0;
   isOpenExit:any=false;
   lastBack:any = Date.now();
+  totalPackage:any=0;
+  totalOrder:any=0;
+  totalNoti:any=0;
+  isHideFooter:any = false;
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
@@ -72,13 +77,20 @@ export class MainPage implements OnInit {
             return;
           }
         }
+        if (event && event.urlAfterRedirects.includes('/main/notification')) {
+          if(this.selected != 3){
+            this.selected = 3;
+            //dt.detectChanges();
+          }
+          return;
+        }
       };
     });
    }
   //#endregion
   
   //#region Init
-  ngOnInit() {
+  async ngOnInit() {
     this.platform.ready().then(async () => {
       let checklogin = this.rt.snapshot.queryParams["checklogin"];
       if (checklogin) {
@@ -92,20 +104,44 @@ export class MainPage implements OnInit {
               let value = clipboardRead?.value;
               this.textCopy = value.replace(/(\r\n\s|\r|\n|\s)/g, ',');
               this.isOpenCopy = true;
-              
               return;
             }
           });
         }
       });
     })
+    await PushNotifications.addListener('pushNotificationReceived',
+      (notification: PushNotificationSchema) => {
+        this.getTotalPackage();
+        this.getTotalOrder();
+        let array = this.router.url.split('?');
+        let url = array[0];
+        if (!(url.includes('main/notification'))) {
+          this.getTotalNoti();
+        }
+      }
+    );
+    await PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification: ActionPerformed) => {
+        this.navCtrl.navigateForward('main/notification');
+        this.selected = 3;
+      }
+    );
   }
 
-  async ngAfterViewInit() {
+  ngAfterViewInit() {
+    Keyboard.addListener('keyboardWillShow', info => {
+      this.isHideFooter = true;
+    });
+
+    Keyboard.addListener('keyboardWillHide', () => {
+      this.isHideFooter = false;
+      
+    });
+    
     this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
       let array = this.router.url.split('?');
       let url = array[0];
-      console.log('url ne:'+url);
       if ((url.includes('main/notification'))) {
         this.navCtrl.navigateBack('main/mainpage');
         return;
@@ -137,6 +173,24 @@ export class MainPage implements OnInit {
       }
       processNextHandler();
     });
+
+    this.api.getTotalPackage().subscribe((res: any) => {
+      if (res && res != null) {
+        this.getTotalPackage();
+      }
+    })
+
+    this.api.getTotalOrder().subscribe((res: any) => {
+      if (res && res != null) {
+        this.getTotalOrder();
+      }
+    })
+
+    this.api.getTotalNoti().subscribe((res: any) => {
+      if (res && res != null) {
+        this.getTotalNoti();
+      }
+    })
   }
 
   onDestroy() {
@@ -146,8 +200,10 @@ export class MainPage implements OnInit {
 
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
-    
     this.routerOutlet.swipeGesture = false; 
+    this.getTotalPackage();
+    this.getTotalOrder();
+    this.getTotalNoti();
   } 
   //#endregion
 
@@ -178,7 +234,7 @@ export class MainPage implements OnInit {
           this.selected = 4;
           break;
       }
-      
+      this.content.scrollToTop();
     }
   }
   //#endregion
@@ -235,6 +291,57 @@ export class MainPage implements OnInit {
   cancelExit(){
     this.isOpenExit = false;
     this.dt.detectChanges();
+  }
+
+  async getTotalPackage() {
+    let username = await this.storage.get('username');
+    let data = {
+      userName: username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'gettotalpackage', messageBody).subscribe((res: any) => {
+      if (res[0]) {
+      } else {
+        this.totalPackage = res[5];
+        this.dt.detectChanges();
+      }
+    })
+  }
+
+  async getTotalOrder(){
+    let username = await this.storage.get('username');
+    let data = {
+      userName: username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'gettotalorder', messageBody).subscribe((res:any)=>{
+      if (res[0]) {
+      } else {
+        this.totalOrder = res[2];
+        this.dt.detectChanges();
+      }
+    })
+  }
+
+  async getTotalNoti(){
+    let username = await this.storage.get('username');
+    let data = {
+      userName: username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'gettotalnotification', messageBody).subscribe((res:any)=>{
+      if (res[0]) {
+      } else {
+        this.totalNoti = res[1];
+        this.dt.detectChanges();
+      }
+    })
   }
 
   // refreshNoti(){
