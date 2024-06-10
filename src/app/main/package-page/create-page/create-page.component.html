@@ -2,10 +2,10 @@
   <ion-toolbar mode="ios" style="--background:white !important">
     <ion-buttons slot="start">
       <ion-button (click)="onback()" fill="clear">
-        <ion-icon class="text-dark" name="chevron-back-outline"></ion-icon>
+        <ion-icon class="text-primary-default" name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title mode="md" class="dynamic-font text-dark pl-0 pr-0">
+    <ion-title mode="md" class="dynamic-font text-primary-default pl-0 pr-0">
       <h2 class="my-0 mx-0 font-weight-bold">Tạo kiện ký gửi</h2>
     </ion-title>
   </ion-toolbar>
@@ -62,10 +62,29 @@
         <ion-text color="primary">
           <span class="font-weight-bold">Dịch vụ</span>
         </ion-text>
-        <div class="d-flex align-items-center justify-content-between">
-          <mat-checkbox formControlName="isWoodPackage">Đóng gỗ</mat-checkbox>
-          <mat-checkbox formControlName = "isAirPackage">Túi khí</mat-checkbox>
-          <mat-checkbox *ngIf="!isReview" formControlName="isInsurance">Bảo hiểm</mat-checkbox>
+        <div class="d-flex align-items-center">
+          <mat-checkbox formControlName="isWoodPackage"></mat-checkbox>
+          <ion-text class="dynamic-font text-dark font-weight-bold">
+            <span>Đóng gỗ</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center">
+          <mat-checkbox formControlName="isAirPackage"></mat-checkbox>
+          <ion-text class="dynamic-font text-dark font-weight-bold">
+            <span>Túi khí</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center">
+          <mat-checkbox *ngIf="!isReview" formControlName="isInsurance"></mat-checkbox>
+          <ion-text class="dynamic-font text-dark font-weight-bold">
+            <span>Bảo hiểm</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center">
+          <mat-checkbox formControlName="isBrand"></mat-checkbox>
+          <ion-text class="dynamic-font text-dark font-weight-bold">
+            <span>Hàng hiệu</span>
+          </ion-text>
         </div>
         <ng-container *ngIf="formGroup.value.isInsurance">
           <ion-text color="primary" class="mb-3">

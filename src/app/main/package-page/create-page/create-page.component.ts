@@ -62,6 +62,7 @@ export class CreatePageComponent  implements OnInit {
       isWoodPackage: [false],
       isAirPackage: [false],
       isInsurance: [false],
+      isBrand: [false],
       declaration: ['',Validators.required],
       declarePrice: ['',Validators.required],
       note: ['', Validators.maxLength(70)],

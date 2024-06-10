@@ -339,6 +339,18 @@
                         </div>
                       </div> 
                     </ng-container>
+                    <ng-container *ngIf="oData.isBrand">
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Hàng hiệu
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <i class="bi bi-check2-circle"></i>
+                        </div>
+                      </div> 
+                    </ng-container>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -399,45 +411,7 @@
                 </swiper-slide>
               </swiper-container>
             </div> -->
-            <div class="w-100 pt-3 d-flex align-items-center justify-content-end">
-              <ion-button (click)="openPopPackage(oData)" mode="ios" size="default" class="ion-btn-default">
-                <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
-                <ion-text style="color: white !important;" class="dynamic-font">
-                  Nhập mô tả
-                </ion-text>
-              </ion-button>
-              <ion-button *ngIf="oData?.status < 2" (click)="openPopCancelPackage(oData)" mode="ios" size="default" color="medium">
-                <ion-icon style="color: white !important;" slot="start" name="stop-circle-outline"></ion-icon>
-                <ion-text style="color: white !important;" class="dynamic-font">
-                  Hủy kiện
-                </ion-text>
-              </ion-button>
-            </div>
-            <div class="w-100 d-flex align-items-center justify-content-end">
-              <ng-container *ngIf="oData?.status < 2">
-                <ion-button (click)="openPopCheckPackage(oData)" mode="ios" size="default" class="ion-btn-orange">
-                  <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
-                  <ion-text style="color: white !important;" class="dynamic-font">
-                    Kiểm tra hàng
-                  </ion-text>
-                </ion-button>
-                <ion-button (click)="openPopDeletePackage(oData)" mode="ios" size="default" color="danger">
-                  <ion-icon style="color: white !important;" slot="start" name="trash-outline"></ion-icon>
-                  <ion-text style="color: white !important;" class="dynamic-font">
-                    Xóa kiện
-                  </ion-text>
-                </ion-button>
-                <ng-container *ngIf="oData.status == 9 && oData?.canceledBy == username">
-                  <ion-button (click)="openPopRestorePackage(oData)" mode="ios" size="default" color="success">
-                    <ion-icon style="color: white !important;" slot="start" name="sync-circle-outline"></ion-icon>
-                    <ion-text style="color: white !important;" class="dynamic-font">
-                      Khôi phục
-                    </ion-text>
-                  </ion-button>
-                </ng-container>
-              </ng-container>
-            </div>
-            <!-- <div [ngClass]="oData?.status < 2 ? 'justify-content-start' : 'justify-content-center'" class="w-100 pt-3 d-flex align-items-center scroll-hidden" style="
+            <div [ngClass]="oData?.status < 2 ? 'justify-content-start' : 'justify-content-center'" class="w-100 pt-3 d-flex align-items-center scroll-hidden" style="
               overflow: scroll;">
                 <ion-button (click)="openPopPackage(oData)" mode="ios" size="default" class="ion-btn-default">
                   <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
@@ -473,7 +447,7 @@
                     </ion-text>
                   </ion-button>
                 </ng-container>
-              </div> -->
+              </div>
           </ion-card-content>
         </ion-card>
       </ion-item>

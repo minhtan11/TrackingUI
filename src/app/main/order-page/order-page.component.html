@@ -311,9 +311,9 @@
   <ion-toolbar mode="ios" style="--background:white !important">
     <div class="row">
       <div class="col-4 d-flex align-items-center">
-        <mat-checkbox *ngIf="isPayment" [checked]="isCheckAll" color="warn" (change)="onSelectedAll($event.checked)">
+        <mat-checkbox *ngIf="isPayment" [checked]="isCheckAll" (change)="onSelectedAll($event.checked)">
         </mat-checkbox>
-        <mat-checkbox *ngIf="!isPayment" [disabled]="true" color="warn">
+        <mat-checkbox *ngIf="!isPayment" [disabled]="true">
         </mat-checkbox>
         <ion-text class="dynamic-font text-dark font-weight-bold">
           Tất cả

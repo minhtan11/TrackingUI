@@ -203,7 +203,9 @@
                       <span *ngIf="item.isAirPackage">Bọt khí</span>
                       <span *ngIf="item.isAirPackage && item.isInsurance">-</span>
                       <span *ngIf="item.isInsurance">Bảo hiểm</span>
-                      <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
+                      <span *ngIf="item.isInsurance && item.isBrand">-</span>
+                      <span *ngIf="item.isBrand">Hàng hiệu</span>
+                      <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance && !item.isBrand">Không có</span>
                     </ion-text>
                     <br>
                     <ng-container *ngIf="item?.note">
@@ -323,10 +325,9 @@
                     <ion-text>
                       <span class="dynamic-font text-dark font-weight-bold">Dịch vụ phụ: </span>
                       <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
-                      <span *ngIf="item.isWoodPackage && item.isAirPackage">-</span>
-                      <span *ngIf="item.isAirPackage">Bọt khí</span>
-                      <span *ngIf="item.isAirPackage && item.isInsurance">-</span>
-                      <span *ngIf="item.isInsurance">Bảo hiểm</span>
+                      <span *ngIf="item.isAirPackage">,Bọt khí</span>
+                      <span *ngIf="item.isInsurance">,Bảo hiểm</span>
+                      <span *ngIf="item.isBrand">,Hàng hiệu</span>
                       <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
                     </ion-text>
                     <br>
@@ -380,21 +381,14 @@
                   </ng-container>
                 </div>
               </div>
-              <div class="w-100 pt-3 d-flex align-items-center justify-content-end">
+              <div [ngClass]="item?.status < 2 ? 'justify-content-start' : 'justify-content-center'" class="w-100 pt-3 d-flex align-items-center scroll-hidden" style="
+              overflow: scroll;">
                 <ion-button (click)="openPopPackage(item)" mode="ios" size="default" class="ion-btn-default">
                   <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
                   <ion-text style="color: white !important;" class="dynamic-font">
                     Nhập mô tả
                   </ion-text>
                 </ion-button>
-                <ion-button *ngIf="item?.status < 2" (click)="openPopCancelPackage(item)" mode="ios" size="default" color="medium">
-                  <ion-icon style="color: white !important;" slot="start" name="stop-circle-outline"></ion-icon>
-                  <ion-text style="color: white !important;" class="dynamic-font">
-                    Hủy kiện
-                  </ion-text>
-                </ion-button>
-              </div>
-              <div class="w-100 d-flex align-items-center justify-content-end">
                 <ng-container *ngIf="item?.status < 2">
                   <ion-button (click)="openPopCheckPackage(item)" mode="ios" size="default" class="ion-btn-orange">
                     <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
@@ -402,20 +396,26 @@
                       Kiểm tra hàng
                     </ion-text>
                   </ion-button>
+                  <ion-button (click)="openPopCancelPackage(item)" mode="ios" size="default" color="medium">
+                    <ion-icon style="color: white !important;" slot="start" name="stop-circle-outline"></ion-icon>
+                    <ion-text style="color: white !important;" class="dynamic-font">
+                      Hủy đơn
+                    </ion-text>
+                  </ion-button>
                   <ion-button (click)="openPopDeletePackage(item)" mode="ios" size="default" color="danger">
                     <ion-icon style="color: white !important;" slot="start" name="trash-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
-                      Xóa kiện
+                      Xóa đơn
                     </ion-text>
                   </ion-button>
-                  <ng-container *ngIf="item.status == 9 && item?.canceledBy == username">
-                    <ion-button (click)="openPopRestorePackage(item)" mode="ios" size="default" color="success">
-                      <ion-icon style="color: white !important;" slot="start" name="sync-circle-outline"></ion-icon>
-                      <ion-text style="color: white !important;" class="dynamic-font">
-                        Khôi phục
-                      </ion-text>
-                    </ion-button>
-                  </ng-container>
+                </ng-container>
+                <ng-container *ngIf="item.status == 9 && item?.canceledBy == username">
+                  <ion-button (click)="openPopRestorePackage(item)" mode="ios" size="default" color="success">
+                    <ion-icon style="color: white !important;" slot="start" name="sync-circle-outline"></ion-icon>
+                    <ion-text style="color: white !important;" class="dynamic-font">
+                      Khôi phục
+                    </ion-text>
+                  </ion-button>
                 </ng-container>
               </div>
               <!-- <div [ngClass]="item?.status < 2 ? 'justify-content-start' : 'justify-content-center'" class="w-100 pt-3 d-flex align-items-center scroll-hidden" style="
