@@ -121,9 +121,31 @@
         <mat-tab label="home">
           <ng-template mat-tab-label>
             <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
-              <ion-icon style="font-size: 20px" name="home-outline"></ion-icon>
-              <ion-text class="dynamic-font">
+              <!-- <ion-icon class="mb-1" style="font-size: 20px" name="home-outline"></ion-icon> -->
+              <i class="bi bi-house mb-1 icon-menu"></i>
+              <ion-text style="font-size: 0.7rem;" class="dynamic-font">
                 <span>Trang chủ</span>
+              </ion-text>
+            </div>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="package">
+          <ng-template mat-tab-label>
+            <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
+              <!-- <ion-icon class="mb-1" style="font-size: 20px" name="cube-outline"></ion-icon> -->
+               <div class="d-flex align-items-center">
+                <i class="bi bi-box-seam mb-1 icon-menu"></i>
+                <ng-container *ngIf="totalPackage > 0">
+                  <div class="ion-badge-noti d-flex align-items-center justify-content-center">
+                    <ion-text class="dynamic-font font-weight-bold">
+                      <span *ngIf="totalPackage <=99">{{totalPackage}}</span>
+                      <span *ngIf="totalPackage >99">99+</span>
+                    </ion-text>
+                  </div>
+                </ng-container>
+               </div>
+              <ion-text style="font-size: 0.7rem;" class="dynamic-font">
+                <span>Kiện hàng</span>
               </ion-text>
             </div>
           </ng-template>
@@ -131,8 +153,9 @@
         <mat-tab label="setting">
           <ng-template mat-tab-label>
             <div style="flex-direction: column;" class="w-100 p-3 d-flex align-items-center justify-content-center">
-              <ion-icon style="font-size: 20px" name="person-outline"></ion-icon>
-              <ion-text class="dynamic-font">
+              <!-- <ion-icon class="mb-1" style="font-size: 20px" name="person-outline"></ion-icon> -->
+              <i class="bi bi-person-circle mb-1 icon-menu"></i>
+              <ion-text style="font-size: 0.7rem;" class="dynamic-font">
                 <span>Tài khoản</span>
               </ion-text>
             </div>

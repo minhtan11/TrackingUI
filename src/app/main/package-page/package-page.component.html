@@ -162,7 +162,7 @@
                       <span class="dynamic-font text-dark font-weight-bold"> Loại vận chuyển:</span>
                       <ng-container [ngSwitch]="item.movingMethod">
                         <span *ngSwitchCase="2">
-                          Chậm
+                          Thường
                         </span>
                         <span *ngSwitchCase="3">
                           Bộ
@@ -199,13 +199,10 @@
                     <ion-text>
                       <span class="dynamic-font text-dark font-weight-bold">Dịch vụ phụ: </span>
                       <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
-                      <span *ngIf="item.isWoodPackage && item.isAirPackage">-</span>
-                      <span *ngIf="item.isAirPackage">Bọt khí</span>
-                      <span *ngIf="item.isAirPackage && item.isInsurance">-</span>
-                      <span *ngIf="item.isInsurance">Bảo hiểm</span>
-                      <span *ngIf="item.isInsurance && item.isBrand">-</span>
-                      <span *ngIf="item.isBrand">Hàng hiệu</span>
-                      <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance && !item.isBrand">Không có</span>
+                      <span *ngIf="item.isAirPackage">,Bọt khí</span>
+                      <span *ngIf="item.isInsurance">,Bảo hiểm</span>
+                      <span *ngIf="item.isBrand">,Hàng hiệu</span>
+                      <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
                     </ion-text>
                     <br>
                     <ng-container *ngIf="item?.note">
@@ -235,7 +232,7 @@
                         <span>Đang về HCM</span>
                       </ion-text>
                     </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="4" style="--background	: var(--ion-color-mat-accent) !important;">
+                    <ion-badge mode="md" *ngSwitchCase="4" color="primary">
                       <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                         <span>Hàng về tới HCM</span>
                       </ion-text>
@@ -248,11 +245,6 @@
                     <ion-badge mode="md" *ngSwitchCase="9" color="dark">
                       <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                         <span>Đã hủy</span>
-                      </ion-text>
-                    </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="10" color="warning" style="border-radius: 5px !important;">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Thất lạc</span>
                       </ion-text>
                     </ion-badge>
                     <ion-badge mode="md" *ngSwitchCase="11" style="--background	: orange !important;">
