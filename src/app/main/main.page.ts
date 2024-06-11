@@ -16,6 +16,7 @@ import { HttpClient } from '@angular/common/http';
 import { App } from '@capacitor/app';
 import { PreviousRouterServiceService } from '../previous-router-service/previous-router-service.service';
 import { Keyboard } from '@capacitor/keyboard';
+import { Badge } from '@capawesome/capacitor-badge';
 register();
 
 @Component({
@@ -335,10 +336,11 @@ export class MainPage implements OnInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'gettotalnotification', messageBody).subscribe((res:any)=>{
+    this.api.execByBody('Authencation', 'gettotalnotification', messageBody).subscribe(async (res:any)=>{
       if (res[0]) {
       } else {
         this.totalNoti = res[1];
+        await Badge.set({ count:1 });
         this.dt.detectChanges();
       }
     })

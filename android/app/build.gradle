@@ -13,8 +13,8 @@ android {
         applicationId "com.trakuaidi.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
-        versionName "1.4"
+        versionCode 10
+        versionName "1.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -50,6 +50,7 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging-directboot:20.2.0")
     implementation("com.google.firebase:firebase-messaging:23.1.2")
     implementation("com.google.firebase:firebase-analytics")
+    implementation "me.leolin:ShortcutBadger:$shortcutBadgerVersion@aar"
 }
 
 apply from: 'capacitor.build.gradle'

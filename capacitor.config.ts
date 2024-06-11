@@ -16,7 +16,11 @@ const config: CapacitorConfig = {
       launchShowDuration:2000,
       splashFullScreen:true,
       splashImmersive:true,
-    }
+    },
+    Badge: {
+      persist: false,
+      autoClear: false,
+    },
   },
   server: {
     androidScheme: 'https',
