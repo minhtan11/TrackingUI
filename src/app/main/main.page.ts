@@ -340,7 +340,7 @@ export class MainPage implements OnInit {
       if (res[0]) {
       } else {
         this.totalNoti = res[1];
-        await Badge.set({ count:1 });
+        await Badge.set({ count:this.totalNoti });
         this.dt.detectChanges();
       }
     })
