@@ -30,6 +30,7 @@ export class HomePageComponent{
   isReview:any;
   animationInProgress = false;
   animation:any;
+  lstImg:any;
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -88,6 +89,7 @@ export class HomePageComponent{
     this.isReview = await this.storage.get('isReview');
     this.animationInProgress = false;
     this.startAnimation();
+    this.getSlide();
   }
 
   ionViewDidLeave(){
@@ -167,6 +169,16 @@ export class HomePageComponent{
         this.ship1 = res[2][0];
         this.ship2 = res[2][1];
         
+      }
+    })
+  }
+  getSlide(){
+    this.api.execByBody('Authencation', 'getslide', null).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if(res && !res?.isError){
+        this.lstImg = res?.data;
+        console.log(this.lstImg);
+      }else{
+        this.lstImg = [];
       }
     })
   }

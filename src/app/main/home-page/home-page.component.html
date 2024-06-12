@@ -151,7 +151,20 @@
     <div class="w-100">
       <div class="w-100 padding-statusbar-ios">
         <swiper-container #swiper mode="ios" [slidesPerView]="1" [loop]="true" [pagination]="true">
-          <swiper-slide>
+          <ng-container *ngIf="lstImg && lstImg.length == 0">
+            <div class="w-100">
+              <ion-skeleton-text class="w-100" style="height: 200px;" [animated]="true"></ion-skeleton-text>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="lstImg && lstImg.length > 0">
+            <swiper-slide *ngFor="let item of lstImg">
+              <div>
+                <img class="w-100" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;" [src]="'data:image/jpeg;base64,'+item?.imageSrc"
+                alt="">
+              </div>
+            </swiper-slide>
+          </ng-container>
+          <!-- <swiper-slide>
             <div>
               <img class="w-100" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;" src="../../assets/image/anh-slide-1.jpg"
               alt="">
@@ -174,7 +187,7 @@
               <img class="w-100" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;" src="../../assets/image/anh-slide-1.jpg"
               alt="">
             </div>
-          </swiper-slide>
+          </swiper-slide> -->
         </swiper-container>
       </div>
       <div class="pl-3 pt-3 w-100">
