@@ -73,7 +73,6 @@ export class FcmService {
     // Show us the notification payload if the app is open on our device
     await PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotificationSchema) => {
-        Badge.set({ count:10});
         console.log('Push received: ' + JSON.parse(notification.data['data']));
         if (notification) {
           let data = JSON.parse(notification.data['data']);

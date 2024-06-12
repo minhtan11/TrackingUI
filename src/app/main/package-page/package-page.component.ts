@@ -88,11 +88,25 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
             case 'change':
               let data = JSON.parse(this.rt.snapshot.queryParams['dataUpdate']);
               if (data) {
-                let index = this.lstData.findIndex((x: any) => x.id == data.id);
-                if (index > -1) {
-                  this.lstData[index] = data;
+                if (this.status == 0) {
+                  let index = this.lstData.findIndex((x: any) => x.id == data.id);
+                  if (index > -1) {
+                    this.lstData[index] = data;
+                  }
+                  this.getTotal();
+                  return;
+                }
+                if (this.status != data.status) {
+                  let index = this.lstData.findIndex((x: any) => x.id == data.id);
+                  if (index > -1) {
+                    this.lstData.splice(index, 1);
+                    if (this.lstData.length == 0) this.isEmpty = true;
+                  }
+                  this.getTotal();
+                  return;
                 }
               }
+              
               break;
             case 'cancel':
               let dataCancel = JSON.parse(this.rt.snapshot.queryParams['dataCancel']);
