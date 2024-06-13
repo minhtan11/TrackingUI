@@ -138,9 +138,9 @@
         <ion-avatar (click)="goInformation()">
           <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="">
         </ion-avatar>
-        <div class="d-flex justify-content-center pr-2 pl-2" style="flex-direction: column;">
+        <div class="d-flex justify-content-center pr-2 pl-2">
           <ion-text class="dynamic-font text-dark">
-            <span>{{titleTime}}</span>
+            <span>{{titleTime}}</span>,
           </ion-text>
           <ion-text class="dynamic-font text-dark font-weight-bold ion-text-nowrap">
             <span>{{(oUser?.fullName ? oUser?.fullName : oUser?.username) | decodeVN | uppercase}}</span>

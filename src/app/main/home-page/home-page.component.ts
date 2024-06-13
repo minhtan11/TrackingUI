@@ -87,31 +87,31 @@ export class HomePageComponent{
 
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
-    this.animationInProgress = false;
-    this.startAnimation();
+    // this.animationInProgress = false;
+    // this.startAnimation();
     this.getSlide();
   }
 
   ionViewDidLeave(){
-    this.swiper.disable();
-    clearTimeout(this.animation);
+    //this.swiper.disable();
+    //clearTimeout(this.animation);
   }
 
-  startAnimation() {
-    this.swiper = this.swiperRef?.nativeElement?.swiper;
-    if(this.swiper){
-      this.swiper?.enable();
-    } 
-    if(this.animationInProgress) return;
-    this.animationInProgress = true;
-    this.animation = setTimeout(() => {
-      if (this.swiper) {
-        this.swiper.slideNext(1000,false);
-      }
-      this.animationInProgress = false;
-      this.startAnimation();
-    }, 5000);
-  }
+  // startAnimation() {
+  //   this.swiper = this.swiperRef?.nativeElement?.swiper;
+  //   if(this.swiper){
+  //     this.swiper?.enable();
+  //   } 
+  //   if(this.animationInProgress) return;
+  //   this.animationInProgress = true;
+  //   this.animation = setTimeout(() => {
+  //     if (this.swiper) {
+  //       this.swiper.slideNext(1000,false);
+  //     }
+  //     this.animationInProgress = false;
+  //     this.startAnimation();
+  //   }, 5000);
+  // }
   //#endregion
 
   //#region Function

@@ -188,9 +188,9 @@ export class CreatePageComponent  implements OnInit {
         }else{
           if (!res[1].isError) {
             this.notification.showNotiSuccess('', res[1].message);
-            // this.navCtrl.navigateForward('main/package',{queryParams:{type:'add'}});
-            this.reset();
-            this.numAdd++;
+            this.navCtrl.navigateForward('main/package',{queryParams:{type:'add'}});
+            ///this.reset();
+            //this.numAdd++;
           }else{
             this.notification.showNotiError('',res[1].message);
           }
@@ -263,15 +263,7 @@ export class CreatePageComponent  implements OnInit {
   }
 
   onback(){
-    if(this.previousUrl.includes('/main/package')){
-      if(this.numAdd > 0){
-        this.navCtrl.navigateBack(this.previousUrl,{queryParams:{type:'add'}});
-      }else{
-        this.navCtrl.navigateBack(this.previousUrl);
-      }
-    }else{
-      this.navCtrl.navigateBack(this.previousUrl);
-    }
+    this.navCtrl.navigateBack(this.previousUrl);
   }
 
   onCopy(){

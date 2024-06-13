@@ -120,11 +120,11 @@ export class SettingPageComponent {
     let time = null;
 
     if (curHr < 12) {
-      this.titleTime = "Chào buổi sáng!";
+      this.titleTime = "Chào buổi sáng";
     } else if (curHr < 18) {
-      this.titleTime = "Chào buổi chiều!";
+      this.titleTime = "Chào buổi chiều";
     } else {
-      this.titleTime = "Chào buổi tối!";
+      this.titleTime = "Chào buổi tối";
     }
     
   }
