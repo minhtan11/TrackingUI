@@ -57,8 +57,8 @@ export class CreatePageComponent  implements OnInit {
     this.formGroup = this.formBuilder.group({
       id:[0],
       packageCode: ['',Validators.required],
-      movingMethod: [Validators.required],
-      wareHouse: [Validators.required],
+      movingMethod: [''],
+      wareHouse: [''],
       isWoodPackage: [false],
       isAirPackage: [false],
       isInsurance: [false],
@@ -156,16 +156,16 @@ export class CreatePageComponent  implements OnInit {
       this.elePackageCode.nativeElement.focus();
       return;
     }
-    if (this.formGroup.controls['movingMethod'].invalid) {
-      this.notification.showNotiError('', 'Hãy chọn loại vận chuyển!');
-      this.eleMovingMethod.focus();
-      return;
-    }
-    if (this.formGroup.controls['wareHouse'].invalid) {
-      this.notification.showNotiError('', 'Hãy chọn kho TQ nhập hàng!');
-      this.eleWareHouse.focus();
-      return;
-    }
+    // if (this.formGroup.controls['movingMethod'].invalid) {
+    //   this.notification.showNotiError('', 'Hãy chọn loại vận chuyển!');
+    //   this.eleMovingMethod.focus();
+    //   return;
+    // }
+    // if (this.formGroup.controls['wareHouse'].invalid) {
+    //   this.notification.showNotiError('', 'Hãy chọn kho TQ nhập hàng!');
+    //   this.eleWareHouse.focus();
+    //   return;
+    // }
     if(this.formGroup.value.isInsurance){
       if (this.formGroup.controls['declaration'].invalid) {
         this.notification.showNotiError('', 'Vui lòng kê khai thông tin để tính phí bảo hiểm!');

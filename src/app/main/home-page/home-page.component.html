@@ -149,7 +149,7 @@
   </ng-container>
   <ng-container *ngIf="!isReview">
     <div class="w-100">
-      <div class="w-100 padding-statusbar-ios">
+      <!-- <div class="w-100 padding-statusbar-ios">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="3000">
             <ol class="carousel-indicators">
               <ng-container *ngFor="let item of lstImg; index as i">
@@ -168,6 +168,58 @@
             </ng-container>
           </div>
         </div>
+      </div> -->
+      <!-- <div class="w-100 padding-statusbar-ios">
+        <div id="carouselExampleIndicators" class="carousel slide" data-interval="3000">
+            <ol class="carousel-indicators">
+              <li data-target="#carouselExampleIndicators" class="active"></li>
+              <li data-target="#carouselExampleIndicators"></li>
+              <li data-target="#carouselExampleIndicators"></li>
+              <li data-target="#carouselExampleIndicators"></li>
+              <li data-target="#carouselExampleIndicators"></li>
+            </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img class="d-block w-100" src="../../../assets/image/banner-slide-1.png">
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" src="../../../assets/image/banner-slide-2.png">
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" src="../../../assets/image/banner-slide-3.png">
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" src="../../../assets/image/banner-slide-4.png">
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" src="../../../assets/image/banner-slide-5.png">
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="slideshow-container w-100 mb-2">
+        <div class="mySlides fade">
+          <img class="w-100" src="../../../assets/image/banner-slide-1.png">
+        </div>
+        <div class="mySlides fade">
+          <img class="w-100" src="../../../assets/image/banner-slide-2.png">
+        </div>
+        <div class="mySlides fade">
+          <img class="w-100" src="../../../assets/image/banner-slide-3.png">
+        </div>
+        <div class="mySlides fade">
+          <img class="w-100" src="../../../assets/image/banner-slide-4.png">
+        </div>
+        <div class="mySlides fade">
+          <img class="w-100" src="../../../assets/image/banner-slide-5.png">
+        </div>
+      </div>
+      <div style="text-align:center">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
       </div>
       <div class="pl-3 pt-3 w-100">
         <ion-text>
@@ -317,5 +369,24 @@
       </div>
     </div>
   </ng-container>
+  <ion-fab style="margin-bottom: var(--ion-safe-area-bottom, 0);" slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button style="--background: none !important;
+    --box-shadow: none !important;">
+      <img src="../../../assets/image/sticket-float.png" alt="">
+    </ion-fab-button>
+  </ion-fab>
   <!-- Home Page -->
+  <ion-modal id="modal-dialog" style="--background:none !important;--box-shadow: none !important" (willDismiss)="cancelPopup()" [isOpen]="isPopup">
+    <ng-template>
+      <div class="w-100">
+        <img style="border-radius: 20px;" src="../../../assets/image/popup.png">
+      </div>
+      <div class="d-flex align-items-center justify-content-center w-100 mt-3">
+        <!-- <ion-button style="--border-radius:50px" (click)="cancelPopup()" mode="ios" size="small" class="ion-btn-orange">
+          <ion-icon class="text-white" name="close-outline"></ion-icon>
+        </ion-button> -->
+        <ion-icon (click)="cancelPopup()" style="font-size: 2rem;" class="text-white" name="close-circle-outline"></ion-icon>
+      </div>
+    </ng-template>
+  </ion-modal>
 </ion-content>

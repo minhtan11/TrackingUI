@@ -30,7 +30,9 @@ export class HomePageComponent{
   isReview:any;
   animationInProgress = false;
   animation:any;
-  lstImg:any;
+  lstImgSlide:any;
+  slideIndex:any = 0;
+  isPopup:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -64,6 +66,9 @@ export class HomePageComponent{
 
   //#region Init
   ngOnInit() {
+    setTimeout(() => {
+      this.isPopup = true;
+    }, 3000);
     // let isload = this.rt.snapshot.queryParams["isload"];
     // if (isload) {
     //   this.api.isLoad2(true);
@@ -89,7 +94,36 @@ export class HomePageComponent{
     this.isReview = await this.storage.get('isReview');
     // this.animationInProgress = false;
     // this.startAnimation();
-    this.getSlide();
+    //this.getSlide();
+    this.showSlides();
+  }
+
+  showSlides(){
+    let i;
+    let slides = document.getElementsByClassName("mySlides");
+    let dots = document.getElementsByClassName("dot");
+    if (slides && slides.length > 0) {
+      for (i = 0; i < slides.length; i++) {
+        (slides[i] as any).style.display = "none";
+      }
+      this.slideIndex++;
+      if (this.slideIndex > slides.length) { this.slideIndex = 1 }
+      if (dots && dots.length > 0) {
+        for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+        }
+      }
+      (slides[this.slideIndex - 1] as any).style.display = "block";
+      dots[this.slideIndex - 1].className += " active";
+    }
+    setTimeout(() => {
+      this.showSlides();
+    }, 5000);
+  }
+
+  cancelPopup(){
+    this.isPopup = false;
+    this.dt.detectChanges();
   }
 
   ionViewDidLeave(){
@@ -174,11 +208,9 @@ export class HomePageComponent{
   }
   getSlide(){
     this.api.execByBody('Authencation', 'getslide', null).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if(res && !res?.isError){
-        this.lstImg = res?.data;
-        console.log(this.lstImg);
+      if(!res[0]){
+        this.lstImgSlide = res?.data;
       }else{
-        this.lstImg = [];
       }
     })
   }

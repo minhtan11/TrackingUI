@@ -31,12 +31,12 @@
         </div>
       </ion-col>
       <ion-col size="12">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Mã vận đơn</mat-label>
+        <mat-form-field appearance="outline" class="w-100 mb-2">
+          <mat-label>Mã vận đơn (bắt buộc)</mat-label>
           <input #elePackageCode formControlName="packageCode" matInput>
         </mat-form-field>
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Phương thức vận chuyển</mat-label>
+          <mat-label>Phương thức vận chuyển (không bắt buộc)</mat-label>
           <mat-select #eleMovingMethod formControlName="movingMethod">
             <mat-option [value]="1">Nhanh</mat-option>
             <mat-option [value]="2">Thường</mat-option>
@@ -46,7 +46,7 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Kho</mat-label>
+          <mat-label>Kho (không bắt buộc)</mat-label>
           <mat-select #eleWareHouse formControlName="wareHouse">
             <mat-option [value]="'1'">Đông quản</mat-option>
             <mat-option [value]="'2'">Phật sơn</mat-option>
