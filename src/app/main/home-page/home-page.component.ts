@@ -32,7 +32,7 @@ export class HomePageComponent{
   animation:any;
   lstImgSlide:any;
   slideIndex:any = 0;
-  isPopup:any=false;
+  
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -66,9 +66,6 @@ export class HomePageComponent{
 
   //#region Init
   ngOnInit() {
-    setTimeout(() => {
-      this.isPopup = true;
-    }, 3000);
     // let isload = this.rt.snapshot.queryParams["isload"];
     // if (isload) {
     //   this.api.isLoad2(true);
@@ -121,10 +118,7 @@ export class HomePageComponent{
     }, 5000);
   }
 
-  cancelPopup(){
-    this.isPopup = false;
-    this.dt.detectChanges();
-  }
+  
 
   ionViewDidLeave(){
     //this.swiper.disable();

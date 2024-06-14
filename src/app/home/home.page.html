@@ -68,13 +68,15 @@
             <ion-icon style="font-size: 1.5rem !important;" slot="icon-only" name="finger-print-outline"></ion-icon>
           </ion-button> -->
           <div class="d-flex align-items-center w-100 justify-content-center">
+            <img *ngIf="!faceID" (click)="onAuthen()" style="width: 4rem;height: 4rem;"  src="../../assets/image/fingerprint.png" alt="">
+            <img *ngIf="faceID" (click)="onAuthen()" style="width: 4rem;height: 4rem;"  src="../../assets/image/face-recognition.png" alt="">
+          </div>
+          <div class="d-flex align-items-center w-100 justify-content-center">
             <ion-button mode="ios" (click)="openSigin(oUser?.username)" class="ion-btn-default w-100 pr-1" expand="block">
               <ion-text>
-                <span class="dynamic-font">ĐĂNG NHẬP</span>
+                <span class="dynamic-font">Đăng nhập bằng mật khẩu</span>
               </ion-text>
             </ion-button>
-            <img *ngIf="!faceID" (click)="onAuthen()" style="width: 3.5rem;height: 3.5rem;"  src="../../assets/image/fingerprint.png" alt="">
-            <img *ngIf="faceID" (click)="onAuthen()" style="width: 3rem;height: 3rem;"  src="../../assets/image/face-recognition.png" alt="">
           </div>
           <div class="d-flex align-items-center w-100 justify-content-center">
             <ion-button style="--border-color: var(--ion-color-mat-primary) !important;--background-activated: unset !important;" (click)="openChangeAccount()" class="w-100" fill="outline">

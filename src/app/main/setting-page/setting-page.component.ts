@@ -18,6 +18,7 @@ import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notif
 })
 export class SettingPageComponent {
   @ViewChild(IonContent) content: IonContent;
+  @ViewChild('eleUserName') eleUserName: any;
   @ViewChild('elePassword') elePassword: any;
   oUser:any;
   isReview:any;
@@ -281,51 +282,45 @@ export class SettingPageComponent {
   }
 
   async onChangeAccount(item:any){
-    this.cancelChangeAccount();
-    this.onOpenAddAccount(item?.username,false);
-    // let username = item?.username;
-    // let password = item?.password;
-    // let token = await this.storage.get('token');
-    // const info = await Device.getInfo();
-    // const infoID = await Device.getId();
-    // let deviceName = info.manufacturer+' '+info.model;
-    // let deviceID = infoID.identifier;
-    // let data = {
-    //   userName:username,
-    //   passWord:password,
-    //   token:token,
-    //   deviceName:deviceName,
-    //   deviceID:deviceID,
-    //   currUsername:this.userName
-    // }
-    // let messageBody = {
-    //   dataRequest:JSON.stringify(data)
-    // };
-    // this.api.execByBody('Authencation', 'changeaccount', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-    //   if (res && !res?.isError) {
-    //     this.storage.set('username', item?.username);
-    //     this.storage.set('password', item?.password);
-    //     this.userName = item?.username;
-    //     this.cancelChangeAccount();
-    //     setTimeout(() => {
-    //       this.getUser();
-    //       this.content.scrollToTop();
-    //     }, 500);
+    let username = item?.username;
+    let password = item?.password;
+    let token = await this.storage.get('token');
+    const info = await Device.getInfo();
+    const infoID = await Device.getId();
+    let deviceName = info.manufacturer+' '+info.model;
+    let deviceID = infoID.identifier;
+    let data = {
+      userName:username,
+      passWord:password,
+      token:token,
+      deviceName:deviceName,
+      deviceID:deviceID,
+      currUsername:this.userName
+    }
+    let messageBody = {
+      dataRequest:JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'changeaccount', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res && !res?.isError) {
+        this.storage.set('username', username);
+        this.storage.set('password', password);
+        this.userName = item?.username;
+        this.cancelChangeAccount();
+        setTimeout(() => {
+          this.getUser();
+          this.content.scrollToTop();
+        }, 500);
         
-    //   } else {
-    //     this.notification.showNotiError('', res?.message);
-    //   }
-    // })
+      } else {
+        this.notification.showNotiError('', res?.message);
+      }
+    })
   }
 
-  onOpenAddAccount(userName:any = '',isEnable:any = true){
+  onOpenAddAccount(){
     this.cancelChangeAccount();
     this.isOpenAddAccount = true;
-    if(isEnable)
-      this.formGroup.controls['userName'].enable();
-    else
-      this.formGroup.controls['userName'].disable();
-    this.formGroup.patchValue({userName:userName});
+    this.formGroup.patchValue({userName:''});
   }
 
   cancelAddAccount(){
@@ -335,6 +330,11 @@ export class SettingPageComponent {
   }
 
   async onSignIn(){
+    if (this.formGroup.controls['userName'].invalid) {
+      this.notification.showNotiError('', 'Tài khoản không được bỏ trống');
+      this.eleUserName.nativeElement.focus();
+      return;
+    }
     if (this.formGroup.controls['passWord'].invalid) {
       this.notification.showNotiError('', 'Mật khẩu không được bỏ trống');
       this.elePassword.nativeElement.focus();

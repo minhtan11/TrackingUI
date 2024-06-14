@@ -410,6 +410,17 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   //#endregion Edit package
 
   //#region CheckPackage
+  checkQuery(item: any){
+    if (item?.searchBaiduTimes == 0) {
+      this.openPopCheckPackage(item);
+    }else{
+      if (item?.autoQuery) {
+        this.openPopQueryPackage(item);
+      }else{
+        this.openPopNoQueryPackage(item);
+      }
+    }
+  }
   openPopCheckPackage(item: any) {
     this.itemSelected = { ...item };
     this.isOpenCheckPackage = true;
@@ -445,26 +456,14 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
         if (res[1] == 0) {
           this.openPopCheckPackage2(item);
         } else {
-          this.checkPackage(item);
+          this.onCheckPackage(item);
         }
       }
     })
   }
 
-  checkPackage(item: any) {
-    this.cancelCheck2();
-    if (item?.searchBaiduTimes == 0) {
-      this.onCheckPage(item);
-    }else{
-      if (item?.autoQuery) {
-        this.openPopQueryPackage();
-      }else{
-        this.openPopNoQueryPackage();
-      }
-    }
-  }
-
-  openPopQueryPackage() {
+  openPopQueryPackage(item:any) {
+    this.itemSelected = { ...item };
     this.isOpenQueryPackage = true;
   }
 
@@ -473,7 +472,8 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
     this.dt.detectChanges();
   }
 
-  openPopNoQueryPackage() {
+  openPopNoQueryPackage(item:any) {
+    this.itemSelected = { ...item };
     this.isOpenNoQueryPackage = true;
   }
 
@@ -482,7 +482,8 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
     this.dt.detectChanges();
   }
 
-  onCheckPage(item: any){
+  onCheckPackage(item: any){
+    this.cancelCheck2();
     this.cancelQueryPackage();
     this.cancelNoQueryPackage();
     let data = {

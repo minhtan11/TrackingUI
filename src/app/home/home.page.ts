@@ -107,7 +107,7 @@ export class HomePage implements OnInit, AfterViewInit {
       this.userName = username;
       this.formGroup.patchValue({userName:this.userName});
       this.isAuthen = true;
-      //this.getUser();
+      this.getUser();
       this.getlstUser();
     } 
     let loginError = this.rt.snapshot.queryParams["loginError"];
@@ -214,6 +214,7 @@ export class HomePage implements OnInit, AfterViewInit {
       return;
     }
     if(!this.oUser.isBiometrics){
+      
       this.notification.showNotiError('', 'Vui lòng đăng nhập vào ứng dụng để thiết lập tính năng đăng nhập bằng sinh trắc học!');
       return;
     }
@@ -336,6 +337,23 @@ export class HomePage implements OnInit, AfterViewInit {
     this.isOpenLoginError = false;
     this.dt.detectChanges();
   }
+
+  async getUser(){
+    let username = await this.storage.get('username');
+    let data = {
+      userName:username,
+    }
+    let messageBody = {
+      dataRequest:JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'getuser', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        this.oUser = res[1];
+      }
+    })
+  }
   
   async getlstUser(){
     let lstUser = await this.storage.get('lstUser');
@@ -349,10 +367,10 @@ export class HomePage implements OnInit, AfterViewInit {
       if (res[0]) {
       }else{
         this.listUser = res[1];
-        let index = this.listUser.findIndex((x:any) => x.username == this.userName)
-        if (index > -1) {
-          this.oUser = this.listUser[index];
-        }
+        // let index = this.listUser.findIndex((x:any) => x.username == this.userName)
+        // if (index > -1) {
+        //   this.oUser = this.listUser[index];
+        // }
       }
     })
   }

@@ -37,6 +37,7 @@ export class MainPage implements OnInit {
   totalOrder:any=0;
   totalNoti:any=0;
   isHideFooter:any = false;
+  isPopup:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
@@ -96,6 +97,10 @@ export class MainPage implements OnInit {
       let checklogin = this.rt.snapshot.queryParams["checklogin"];
       if (checklogin) {
         this.onCheckLogin();
+      }else{
+        setTimeout(() => {
+          this.isPopup = true;
+        }, 3000);
       }
       this.platform.resume.subscribe(async () => {
         this.onCheckLogin();
@@ -256,6 +261,11 @@ export class MainPage implements OnInit {
     
   }
 
+  cancelPopup(){
+    this.isPopup = false;
+    this.dt.detectChanges();
+  }
+
   async onCheckLogin(){
     let token = await this.storage.get('token');
     const info = await Device.getInfo();
@@ -279,6 +289,9 @@ export class MainPage implements OnInit {
         this.navCtrl.navigateBack('home',{queryParams:{loginError:JSON.stringify(res)}});
         this.onDestroy();
       }else{
+        setTimeout(() => {
+          this.isPopup = true;
+        }, 3000);
         await this.storage.setAccount(username);
       }
     })

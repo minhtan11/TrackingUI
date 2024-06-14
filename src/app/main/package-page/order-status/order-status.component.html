@@ -40,12 +40,12 @@
                 </ion-text>
               </div>
               <div class="d-flex align-items-center">
-                <ion-badge *ngIf="oData?.isError" mode="ios" color="danger">
+                <ion-badge *ngIf="oData?.isError" mode="md" style="--background	: orange !important;">
                   <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                     <span>Thất bại</span>
                   </ion-text>
                 </ion-badge>
-                <ion-badge *ngIf="!oData?.isError" mode="ios" color="success">
+                <ion-badge *ngIf="!oData?.isError" mode="md" style="--background	: var(--ion-color-mat-primary) !important;">
                   <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                     <span>Thành công</span>
                   </ion-text>

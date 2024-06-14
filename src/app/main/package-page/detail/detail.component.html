@@ -420,7 +420,7 @@
                   </ion-text>
                 </ion-button>
                 <ng-container *ngIf="oData?.status < 2">
-                  <ion-button (click)="openPopCheckPackage(oData)" mode="ios" size="default" class="ion-btn-orange">
+                  <ion-button (click)="checkQuery(oData)" mode="ios" size="default" class="ion-btn-orange">
                     <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
                       Kiểm tra hàng
@@ -548,7 +548,7 @@
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="checkPackage(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
+          <ion-button (click)="onCheckPackage(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -576,7 +576,7 @@
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="onCheckPage(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
+          <ion-button (click)="onCheckPackage(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -605,7 +605,7 @@
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="onCheckPage(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
+          <ion-button (click)="onCheckPackage(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
