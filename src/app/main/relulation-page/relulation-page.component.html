@@ -1,4 +1,4 @@
-<ion-header class="ion-no-border">
+<ion-header class="ion-no-border" style="--background:white !important;">
   <ion-toolbar mode="ios" style="--background:white !important">
     <ion-buttons slot="start">
       <ion-button (click)="onback()" fill="clear">
@@ -6,15 +6,159 @@
       </ion-button>
     </ion-buttons>
     <ion-title mode="md" class="dynamic-font text-primary-default pl-0 pr-0">
-      <h2 class="my-0 mx-0 font-weight-bold">Quy định đền bù</h2>
+      <h2 class="my-2 mx-0 font-weight-bold">Lịch sử điểm tra cứu</h2>
     </ion-title>
+    <i (click)="openPopFilter()" [ngClass]="isFilter ? 'text-orange' : 'text-primary-default'" class="pr-2 text-dark" slot="end" class="bi bi-funnel icon-menu"></i>
+  </ion-toolbar>
+  <ion-toolbar style="--background:white !important;">
+    <ion-segment style="min-height: unset !important;height: 3rem !important;"  [scrollable]="true" [value]="status" mode="md">
+      <ion-segment-button (click)=" sortData(-1)" [value]="-1">
+        <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+          <h5 class="my-0 mx-0 font-weight-bold">Tất cả</h5>
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button (click)=" sortData(0)" [value]="0">
+        <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+          <h5 class="my-0 mx-0 font-weight-bold">Điểm cộng</h5>
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button (click)=" sortData(1)" [value]="1">
+        <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+          <h5 class="my-0 mx-0 font-weight-bold">Điểm trừ</h5>
+        </ion-text>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
-<ion-content style="--background:white !important">
-  <div style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
+<ion-content style="--background:white !important;">
+  <div *ngIf="isEmpty" style="flex-direction: column;" class="d-flex align-items-center justify-content-center h-100">
     <img style="width: 40%;" src="../../../assets/image/empty-box.png" alt="">
     <ion-text class="dynamic-font" style="color:black !important">
-      Chưa có quy định
+      Không có lịch sử tra cứu
     </ion-text>
   </div>
+  <div *ngIf="isSke" class="d-flex align-items-center justify-content-center h-100">
+    <ion-spinner style="color: var(--ion-color-mat-primary) !important;" mode="ios" name="crescent"></ion-spinner>
+  </div>
+  <div class="w-100">
+    <ion-list *ngIf="lstData && lstData.length" class="m-0 pt-2" style="background-color:white !important;">
+      <ng-container *ngFor="let item of lstData">
+        <ion-item-group>
+          <ion-item-divider style="background-color: white !important;" mode="ios">
+            <ion-text>
+              <h5 class="mx-0 my-0 font-weight-bold text-primary-default dynamic-font">Tháng {{item?.key}}</h5>
+            </ion-text>
+          </ion-item-divider>
+          <ng-container *ngFor="let item2 of item?.datas">
+            <ion-item lines="none" style="--background:white !important">
+              <ion-card class="mx-1 my-1 w-100" style="--background:white !important;box-shadow: none !important;border-bottom: 1px solid #E3E3E3;border-radius: unset !important;font-size: unset !important;">
+                <ion-card-header class="p-2 pb-1">
+                  <div class="d-flex align-items-center">
+                    <ion-text class="text-dark dynamic-font">
+                      <span>Ngày: </span>
+                      <span>{{(item2?.data?.createdDate | date : 'dd/MM/yyyy')+' - '}}</span>
+                    </ion-text>
+                    <ion-icon style="font-size: 1rem;" class="pl-2 pr-2 text-dark" name="time-outline"></ion-icon>
+                    <ion-text class="text-dark dynamic-font">
+                      <span>{{item2?.data?.createdDate | date : 'hh:mm a'}}</span>
+                    </ion-text>
+                  </div>
+                </ion-card-header>
+                <ion-card-content class="pl-1 pr-1 pb-3" style="background-color: white !important">
+                  <div class="d-flex align-items-center">
+                    <img class="mr-2" style="width: 4em;height: 4em;" src="../../../assets/image/star.png" alt="">
+                    <div class="w-100">
+                      <ng-container [ngSwitch]="item2?.data?.type">
+                        <ion-text class="text-dark font-weight-bold dynamic-font" *ngSwitchCase="0">
+                          Điểm cộng
+                        </ion-text>
+                        <ion-text class="text-dark font-weight-bold dynamic-font" *ngSwitchCase="1">
+                          Điểm trừ
+                        </ion-text>
+                      </ng-container>
+                      <br>
+                      <ng-container *ngIf="item2?.data?.hContent != null && item2?.data?.hContent != ''">
+                        <ion-text class="text-dark dynamic-font">
+                          <span>Nội dung: </span>
+                          {{item2?.data?.hContent}}
+                        </ion-text>
+                        <br>
+                      </ng-container>
+                      <div style="justify-content: space-between;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="text-dark dynamic-font">
+                            <span>Số điểm còn lại: </span>
+                            <span>{{(item2?.data?.pointLeft)}}</span>
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ng-container *ngIf="item2?.data?.type == 1">
+                            <ion-text class="font-weight-bold dynamic-font text-orange">
+                              {{(item2?.data?.point)}}
+                            </ion-text>
+                          </ng-container>
+                          <ng-container *ngIf="item2?.data?.type == 0">
+                            <ion-text class="font-weight-bold dynamic-font text-primary-default">
+                              {{'+'+item2?.data?.point}}
+                            </ion-text>
+                          </ng-container>
+                        </div>
+                      </div>          
+                    </div>
+                  </div>
+                </ion-card-content>
+              </ion-card>
+            </ion-item>
+          </ng-container>
+        </ion-item-group>
+      </ng-container>
+    </ion-list>
+  </div>
+  <ion-infinite-scroll *ngIf="isload" (ionInfinite)="onIonInfiniteHis($event)">
+    <ion-infinite-scroll-content style="--color: black !important;" loadingSpinner="dots"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <!-- Filter -->
+  <ion-modal style="--background:white !important" (willDismiss)="cancelFilter()" [isOpen]="isOpenFilter" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <ion-text class="text-center">
+          <h3 class="font-weight-bold dynamic-font text-dark">Bộ lọc</h3>
+        </ion-text>
+        <div [formGroup]="formGroup">
+          <ion-text>
+            <h5 class="mt-0 font-weight-bold dynamic-font text-dark">Từ ngày</h5>
+          </ion-text>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Chọn từ ngày</mat-label>
+            <input formControlName="fromDate" matInput [matDatepicker]="picker" readonly>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <ion-text>
+            <h5 class="mt-0 font-weight-bold dynamic-font text-dark">Đến ngày</h5>
+          </ion-text>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Chọn đến ngày</mat-label>
+            <input formControlName="toDate" matInput [matDatepicker]="picker2" readonly>
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div style="margin-bottom: var(--ion-safe-area-bottom, 0);" class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button class="w-100" (click)="clearFilter()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Xóa bộ lọc
+            </ion-text>
+          </ion-button> 
+          <ion-button (click)="onFilter()" mode="ios" size="default" class="ion-btn-default w-100">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Áp dụng
+            </ion-text>
+          </ion-button> 
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- Filter -->
 </ion-content>

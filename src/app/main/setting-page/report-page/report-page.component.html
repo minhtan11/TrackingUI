@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title mode="md" class="dynamic-font text-primary-default pl-0 pr-0">
-      <h2 class="my-0 mx-0 font-weight-bold">Phiếu khiếu nại</h2>
+      <h2 class="my-2 mx-0 font-weight-bold">Phiếu khiếu nại</h2>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -48,11 +48,11 @@
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Mã đơn hàng</mat-label>
-        <input #eleTransId formControlName="transId" matInput>
+        <input (focus)="onfocus(eleTransId)" #eleTransId formControlName="transId" matInput>
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Nội dung</mat-label>
-        <input #eleContext formControlName="context" matInput>
+        <input (focus)="onfocus(eleContext)" #eleContext formControlName="context" matInput>
       </mat-form-field>
     </div>
   </div>

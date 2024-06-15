@@ -58,7 +58,7 @@
           </div>
           <div *ngIf="oUser != undefined" class="d-flex align-items-center justify-content-center mb-2" style="flex-direction: column;">
             <ion-avatar class="mb-2 p-1" style="width: 8em;height: 8em;box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px">
-              <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" />
+              <img [src]="oUser?.img ? 'https://tracking.nhanshiphang.vn/'+oUser?.img : '../../../assets/image/logo-user.png'" />
             </ion-avatar>
             <ion-text class="dynamic-font text-dark font-weight-bold ion-text-nowrap">
               <span>{{(oUser?.fullName ? oUser?.fullName : oUser?.username) | decodeVN | uppercase}}</span>
@@ -67,7 +67,7 @@
           <!-- <ion-button mode="ios" (click)="onAuthen()" class="ion-btn-default">
             <ion-icon style="font-size: 1.5rem !important;" slot="icon-only" name="finger-print-outline"></ion-icon>
           </ion-button> -->
-          <div class="d-flex align-items-center w-100 justify-content-center">
+          <div class="d-flex align-items-center w-100 justify-content-center mb-2">
             <img *ngIf="!faceID" (click)="onAuthen()" style="width: 4rem;height: 4rem;"  src="../../assets/image/fingerprint.png" alt="">
             <img *ngIf="faceID" (click)="onAuthen()" style="width: 4rem;height: 4rem;"  src="../../assets/image/face-recognition.png" alt="">
           </div>
@@ -146,14 +146,14 @@
     <ng-template>
       <div class="p-3 w-100 h-100">
         <ion-text class="dynamic-font text-center">
-          <h3 class="font-weight-bold">Chuyển tài khoản</h3>
+          <h3 class="font-weight-bold text-dark">Đổi tài khoản</h3>
         </ion-text>
         <ion-list [inset]="true" style="background-color:white !important;">
           <ng-container *ngFor="let item of listUser">
             <ion-item *ngIf="item.username != userName" class="pb-3" lines="none" style="--background:white !important;">
               <div (click)="onChangeAccount(item)"  class="w-100 d-flex align-items-center">
                 <ion-avatar style="width: 3rem;height: 3rem;"  class="mr-3" aria-hidden="true" slot="start">
-                  <img [src]="item?.img ? 'data:image/jpeg;base64,'+item?.img : '../../../assets/image/logo-user.png'" />
+                  <img [src]="item?.img ? 'https://tracking.nhanshiphang.vn/'+item?.img : '../../../assets/image/logo-user.png'" />
                 </ion-avatar>
                 <ion-text class="dynamic-font text-dark font-weight-bold">
                   <span>{{(item?.fullName ? item?.fullName : item?.username) | decodeVN | uppercase}}</span>

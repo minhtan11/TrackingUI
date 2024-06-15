@@ -51,6 +51,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   isCheckAll:any=false;
   totalAllOrder:any=0;
   isPayment:any=false;
+  isFilter:any=false;
   constructor(
     private dt : ChangeDetectorRef,
     private api : ApiserviceComponent,
@@ -302,8 +303,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
 
   ionChange(event:any){
     this.id = event?.detail?.value;
-    if(this.id == null || this.id == '') this.id = '';
-    this.lstData = [];
+    if (this.id == null || this.id == '') this.id = '';
     this.pageNum = 1;
     this.isload = true;
     this.isEmpty = false;
@@ -311,6 +311,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     this.isSke = true;
     this.content.scrollToTop();
     this.loadData();
+    Keyboard.hide();
   }
 
   ionFocus(event:any){
@@ -414,18 +415,27 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     this.dt.detectChanges();
   }
 
-  onFilter(){
+  onFilter() {
     this.isload = true;
     this.pageNum = 1;
     this.lstData = [];
     this.isEmpty = false;
+    this.isFilter = true;
     this.content.scrollToTop();
     this.loadData();
     this.cancelFilter();
   }
 
-  clearFilter(){
+  clearFilter() {
     this.formGroup.reset();
+    this.isload = true;
+    this.pageNum = 1;
+    this.lstData = [];
+    this.isEmpty = false;
+    this.isFilter = false;
+    this.content.scrollToTop();
+    this.loadData();
+    this.cancelFilter();
   }
 
   onSelected(event:any,item:any){

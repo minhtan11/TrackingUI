@@ -1,14 +1,16 @@
 <ion-header class="ion-no-border">
   <ion-toolbar mode="ios" class="pr-2 pl-2" style="--background:white !important">
-    <ion-title mode="md" class="dynamic-font text-primary-default pl-3 pr-0">
-      <h2 class="my-0 mx-0 font-weight-bold">Danh sách kiện hàng</h2>
+    <ion-title mode="md" class="dynamic-font text-primary-default pl-2 pr-0">
+      <h2 class="my-2 mx-0 font-weight-bold">Danh sách kiện hàng</h2>
     </ion-title>
     <!-- <ion-icon (click)="openPopFilter()" class="pr-2 text-dark" slot="end" style="font-size: 2rem;" name="funnel-outline"></ion-icon>   -->
-    <img (click)="openPopFilter()" slot="end" style="width: 2rem;height: 2rem;" src="../../../assets/image/funnel-tool.png" alt="">
+    <!-- <img (click)="openPopFilter()" slot="end" style="width: 2rem;height: 2rem;" src="../../../assets/image/funnel-tool.png" alt=""> -->
+    <i (click)="openPopFilter()" [ngClass]="isFilter ? 'text-orange' : 'text-primary-default'" class="pr-2 text-dark" slot="end" class="bi bi-funnel icon-menu"></i>
   </ion-toolbar>
   <ion-toolbar class="pr-2 pl-2 pb-2" style="--background:white !important">
     <div class="w-100 d-flex align-items-center">
-      <ion-searchbar [style]="isSearchFocus ? '--icon-color: orange' : ''" animated="true" class="pb-0 pl-0 pl-2 pr-2" id='custom-search' placeholder="Tìm kiếm kiện hàng / mô tả" (ionFocus)="ionFocus($event)" (ionBlur)="ionBlur($event)" (ionChange)="ionChange($event)"
+      <ion-searchbar [style]="isSearchFocus ? '--icon-color: orange' : ''" animated="true" class="pb-0 pl-0 pl-2 pr-2" id='custom-search' placeholder="Tìm kiếm kiện hàng / mô tả" 
+      (ionFocus)="ionFocus($event)" (ionBlur)="ionBlur($event)" (ionChange)="ionChange($event)" (ionClear)="ionChange($event)"
       enterkeyhint="search" mode="ios" show-clear-button="always"></ion-searchbar>
     </div>
   </ion-toolbar>
@@ -381,13 +383,21 @@
                     Nhập mô tả
                   </ion-text>
                 </ion-button>
-                <ng-container *ngIf="item?.status < 2">
+                <div class="d-flex align-items-center">
                   <ion-button (click)="checkQuery(item)" mode="ios" size="default" class="ion-btn-orange">
                     <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
                       Kiểm tra hàng
                     </ion-text>
                   </ion-button>
+                  <div (click)="openPopDescrip()" style="background-color: grey !important;border-radius: 50px;margin-top: -3rem;
+                  left: 2rem;
+                  margin-left: -1rem;
+                  z-index: 1000;" class="d-flex align-items-center justify-content-center">
+                    <ion-icon style="font-size: 1.5rem;" class="text-white" name="information-circle-outline"></ion-icon>
+                  </div>
+                </div>
+                <ng-container *ngIf="item?.status < 2">
                   <ion-button (click)="openPopCancelPackage(item)" mode="ios" size="default" color="medium">
                     <ion-icon style="color: white !important;" slot="start" name="stop-circle-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
@@ -600,7 +610,7 @@
         </div>
         <div class="w-100" text-center>
           <ion-text class="dynamic-font text-dark">
-            <span>Bạn đã hết lượt tra cứu miễn phí, tiếp tục sẽ tốn phí </span>
+            <span>Bạn đã hết điểm tra cứu miễn phí, tiếp tục sẽ tốn phí </span>
           </ion-text>
           <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
             <span>500đ.</span>
@@ -838,5 +848,26 @@
     </ng-template>
   </ion-modal>
   <!-- FilterPackkage -->
+
+  <!-- Descript -->
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelPopDescrip()" [isOpen]="isOpenDescript">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="text-center">
+          <ion-text class="dynamic-font text-dark">
+            <span>Đây là chức năng kiểm tra lịch trình hàng trong nội địa Trung Quốc, dữ liệu được cung cấp bởi Baidu</span>
+          </ion-text>
+        </div>
+        <div style="margin-bottom: var(--ion-safe-area-bottom, 0);" class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="cancelPopDescrip()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đóng
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- Descript -->
 
 </ion-content>

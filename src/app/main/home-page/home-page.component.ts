@@ -31,6 +31,7 @@ export class HomePageComponent{
   animationInProgress = false;
   animation:any;
   lstImgSlide:any;
+  imgSticket:any;
   slideIndex:any = 0;
   
   private destroy$ = new Subject<void>();
@@ -66,6 +67,7 @@ export class HomePageComponent{
 
   //#region Init
   ngOnInit() {
+    this.getSlide();
     // let isload = this.rt.snapshot.queryParams["isload"];
     // if (isload) {
     //   this.api.isLoad2(true);
@@ -91,7 +93,6 @@ export class HomePageComponent{
     this.isReview = await this.storage.get('isReview');
     // this.animationInProgress = false;
     // this.startAnimation();
-    //this.getSlide();
     this.showSlides();
   }
 
@@ -107,15 +108,15 @@ export class HomePageComponent{
       if (this.slideIndex > slides.length) { this.slideIndex = 1 }
       if (dots && dots.length > 0) {
         for (i = 0; i < dots.length; i++) {
-          dots[i].className = dots[i].className.replace(" active", "");
+          dots[i].className = dots[i].className.replace(" active-dots", "");
         }
       }
       (slides[this.slideIndex - 1] as any).style.display = "block";
-      dots[this.slideIndex - 1].className += " active";
+      dots[this.slideIndex - 1].className += " active-dots";
     }
     setTimeout(() => {
       this.showSlides();
-    }, 5000);
+    }, 4000);
   }
 
   
@@ -203,7 +204,8 @@ export class HomePageComponent{
   getSlide(){
     this.api.execByBody('Authencation', 'getslide', null).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if(!res[0]){
-        this.lstImgSlide = res?.data;
+        this.lstImgSlide = res[1].filter((x:any) => x.imgType == 2);
+        this.imgSticket = res[1].filter((x:any) => x.imgType == 4)[0];
       }else{
       }
     })

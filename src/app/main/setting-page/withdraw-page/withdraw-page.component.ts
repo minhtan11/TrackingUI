@@ -178,4 +178,10 @@ export class WithdrawPageComponent  implements OnInit {
         break;
     }
   }
+
+  onfocus(ele:any){
+    if (ele) {
+      ele.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+    }
+  }
 }

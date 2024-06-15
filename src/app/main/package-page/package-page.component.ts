@@ -43,6 +43,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   isOpenDeletePackage: any = false;
   isOpenQueryPackage: any = false;
   isOpenNoQueryPackage: any = false;
+  isOpenDescript: any = false;
   isOpenFilter: any = false;
   itemSelected: any;
   firstLoad: any = true;
@@ -57,6 +58,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   total11: any;
   isSke:any=false;
   isSearchFocus:any=false;
+  isFilter:any=false;
   private destroy$ = new Subject<void>();
   formGroup!: FormGroup;
   constructor(
@@ -346,7 +348,6 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   ionChange(event: any) {
     this.id = event?.detail?.value;
     if (this.id == null || this.id == '') this.id = '';
-    this.lstData = [];
     this.pageNum = 1;
     this.isload = true;
     this.isEmpty = false;
@@ -354,6 +355,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
     this.isSke = true;
     this.content.scrollToTop();
     this.loadData();
+    Keyboard.hide();
   }
 
   ionFocus(event:any){
@@ -668,6 +670,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
     this.pageNum = 1;
     this.lstData = [];
     this.isEmpty = false;
+    this.isFilter = true;
     this.content.scrollToTop();
     this.loadData();
     this.cancelFilter();
@@ -675,7 +678,25 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
 
   clearFilter() {
     this.formGroup.reset();
+    this.isload = true;
+    this.pageNum = 1;
+    this.lstData = [];
+    this.isEmpty = false;
+    this.isFilter = false;
+    this.content.scrollToTop();
+    this.loadData();
+    this.cancelFilter();
+  }
+  //#endregion
 
+  //#region Descipt
+  openPopDescrip() {
+    this.isOpenDescript = true;
+  }
+
+  cancelPopDescrip() {
+    this.isOpenDescript = false;
+    this.dt.detectChanges();
   }
   //#endregion
 }

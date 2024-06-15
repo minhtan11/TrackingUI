@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title mode="md" class="dynamic-font text-primary-default pl-0 pr-0">
-      <h2 class="my-0 mx-0 font-weight-bold">{{type == 1  ? 'Yêu cầu nạp tiền' : 'Yêu cầu rút tiền'}}</h2>
+      <h2 class="my-2 mx-0 font-weight-bold">{{type == 1  ? 'Yêu cầu nạp tiền' : 'Yêu cầu rút tiền'}}</h2>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -50,23 +50,23 @@
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Ngân hàng</mat-label>
-        <input #eleBankName formControlName="bankName" matInput>
+        <input (focus)="onfocus(eleBankName)" #eleBankName formControlName="bankName" matInput>
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Số tài khoản</mat-label>
-        <input #eleAccountNumber formControlName="accountNumber" matInput>
+        <input (focus)="onfocus(eleAccountNumber)" #eleAccountNumber formControlName="accountNumber" matInput>
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Chủ tài khoản</mat-label>
-        <input #eleAccountName formControlName="accountName" matInput>
+        <input (focus)="onfocus(eleAccountName)" #eleAccountName formControlName="accountName" matInput>
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Số tiền</mat-label>
-        <input inputmode="numeric" type="text" (keyup)="valueChange($event,'amount')" #eleAmount formControlName="amount" matInput>
+        <input (focus)="onfocus(eleAmount)" inputmode="numeric" type="text" (keyup)="valueChange($event,'amount')" #eleAmount formControlName="amount" matInput>
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Nội dung</mat-label>
-        <input #eleNote formControlName="note" matInput>
+        <input (focus)="onfocus(eleNote)" #eleNote formControlName="note" matInput>
       </mat-form-field>
     </div>
   </div>

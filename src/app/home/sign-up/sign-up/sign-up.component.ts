@@ -216,6 +216,12 @@ export class SignUpComponent  implements OnInit,AfterViewInit {
     this.isOpen = false;
     this.dt.detectChanges();
   }
+
+  onfocus(ele:any){
+    if (ele) {
+      ele.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+    }
+  }
   //#endregion
 
 }

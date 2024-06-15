@@ -32,6 +32,7 @@ export class HistoryPageComponent {
   isOpenFilter:any = false;
   previousUrl:any;
   isSke:any=false;
+  isFilter:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -231,18 +232,27 @@ export class HistoryPageComponent {
     this.dt.detectChanges();
   }
 
-  onFilter(){
+  onFilter() {
     this.isload = true;
     this.pageNum = 1;
     this.lstData = [];
     this.isEmpty = false;
+    this.isFilter = true;
     this.content.scrollToTop();
     this.loadData();
     this.cancelFilter();
   }
 
-  clearFilter(){
+  clearFilter() {
     this.formGroup.reset();
+    this.isload = true;
+    this.pageNum = 1;
+    this.lstData = [];
+    this.isEmpty = false;
+    this.isFilter = false;
+    this.content.scrollToTop();
+    this.loadData();
+    this.cancelFilter();
   }
   //#endregion
 

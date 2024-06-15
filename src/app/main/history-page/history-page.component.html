@@ -6,9 +6,9 @@
       </ion-button>
     </ion-buttons>
     <ion-title mode="md" class="dynamic-font text-primary-default pl-0 pr-0">
-      <h2 class="my-0 mx-0 font-weight-bold">Lịch sử giao dịch</h2>
+      <h2 class="my-2 mx-0 font-weight-bold">Lịch sử giao dịch</h2>
     </ion-title>
-    <img (click)="openPopFilter()" slot="end" style="width: 2rem;height: 2rem;" src="../../../assets/image/funnel-tool.png" alt="">
+    <i (click)="openPopFilter()" [ngClass]="isFilter ? 'text-orange' : 'text-primary-default'" class="pr-2 text-dark" slot="end" class="bi bi-funnel icon-menu"></i>
   </ion-toolbar>
   <ion-toolbar style="--background:white !important;">
     <ion-segment style="min-height: unset !important;height: 3rem !important;"  [scrollable]="true" [value]="status" mode="md">
@@ -69,15 +69,15 @@
               <ion-card class="mx-1 my-1 w-100" style="--background:white !important;box-shadow: none !important;border-bottom: 1px solid #E3E3E3;border-radius: unset !important;font-size: unset !important;">
                 <ion-card-header class="p-2 pb-1">
                   <div class="d-flex align-items-center">
-                    <ion-icon style="font-size: 1rem;" class="pr-2" name="time-outline"></ion-icon>
+                    <ion-text class="text-dark dynamic-font">
+                      <span>Ngày: </span>
+                      <span>{{(item2?.data?.createdDate | date : 'dd/MM/yyyy')+' - '}}</span>
+                    </ion-text>
+                    <ion-icon style="font-size: 1rem;" class="pl-2 pr-2 text-dark" name="time-outline"></ion-icon>
                     <ion-text class="text-dark dynamic-font">
                       <span>{{item2?.data?.createdDate | date : 'hh:mm a'}}</span>
                     </ion-text>
                   </div>
-                  <ion-text class="text-dark dynamic-font">
-                    <span>Ngày: </span>
-                    <span>{{item2?.data?.createdDate | date : 'dd/MM/yyyy'}}</span>
-                  </ion-text>
                 </ion-card-header>
                 <ion-card-content class="pl-1 pr-1 pb-3" style="background-color: white !important">
                   <div class="d-flex align-items-center">

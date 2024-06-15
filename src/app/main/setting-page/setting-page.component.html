@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar mode="ios" class="pr-2 pl-2" style="--background:#F0F2F5 !important">
-    <ion-title mode="md" class="dynamic-font text-primary-default pl-3 pr-0">
-      <h2 class="my-0 mx-0 font-weight-bold">Tài khoản</h2>
+    <ion-title mode="md" class="dynamic-font text-primary-default pl-2 pr-0">
+      <h2 class="my-2 mx-0 font-weight-bold">Tài khoản</h2>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -136,7 +136,7 @@
       </div>
       <div *ngIf="oUser != undefined" class="w-100 p-3 d-flex align-items-center">
         <ion-avatar (click)="goInformation()">
-          <img [src]="oUser?.img ? 'data:image/jpeg;base64,'+oUser?.img : '../../../assets/image/logo-user.png'" alt="">
+          <img [src]="oUser?.img ? 'https://tracking.nhanshiphang.vn/'+oUser?.img : '../../../assets/image/logo-user.png'">
         </ion-avatar>
         <div class="d-flex justify-content-center pr-2 pl-2">
           <ion-text class="dynamic-font text-dark">
@@ -180,11 +180,14 @@
                 <ion-text class="dynamic-font font-weight-bold text-dark">
                   <span>Điểm tra cứu</span>
                 </ion-text>
-                <div (click)="openRule()" style="background-color: grey !important" class="ion-badge-noti d-flex align-items-center justify-content-center">
+                <div (click)="openRule()" style="background-color: grey !important;border-radius: 50px;
+                position: absolute;
+                right: 0.2rem;
+                top: 0.2rem;" class="d-flex align-items-center justify-content-center">
                   <!-- <ion-text class="dynamic-font font-weight-bold">
                     <span>?</span>
                   </ion-text> -->
-                  <ion-icon class="text-white" name="information-circle-outline"></ion-icon>
+                  <ion-icon style="font-size: 1.5rem;" class="text-white" name="information-circle-outline"></ion-icon>
                 </div>
               </div>
             </ion-card-header>
@@ -439,14 +442,14 @@
     <ng-template>
       <div class="p-3 w-100 h-100">
         <ion-text class="text-center">
-          <h3 class="font-weight-bold dynamic-font text-dark">Chuyển tài khoản</h3>
+          <h3 class="font-weight-bold dynamic-font text-dark">Đổi tài khoản</h3>
         </ion-text>
         <ion-list [inset]="true" style="background-color:white !important;">
           <ng-container *ngFor="let item of listUser">
             <ion-item *ngIf="item?.username != userName" class="pb-3" lines="none" style="--background:white !important;">
               <div (click)="onChangeAccount(item)"  class="w-100 d-flex align-items-center">
                 <ion-avatar style="width: 3rem;height: 3rem;"  class="mr-3" aria-hidden="true" slot="start">
-                  <img [src]="item?.img ? 'data:image/jpeg;base64,'+item?.img : '../../../assets/image/logo-user.png'" />
+                  <img [src]="item?.img ? 'https://tracking.nhanshiphang.vn/'+item?.img : '../../../assets/image/logo-user.png'">
                 </ion-avatar>
                 <ion-text class="dynamic-font text-dark font-weight-bold">
                   <span>{{(item?.fullName ? item?.fullName : item?.username) | decodeVN | uppercase}}</span>
@@ -566,7 +569,7 @@
           </ion-text>
           <br>
           <ion-text class="dynamic-font text-dark">
-            <span>+ Khi tạo tài khoản sẽ có 20 lượt.</span>
+            <span>+ Khi tạo tài khoản sẽ có 20 điểm.</span>
           </ion-text>
           <br>
           <ion-text class="dynamic-font text-dark">
@@ -574,7 +577,7 @@
           </ion-text>
           <br>
           <ion-text class="dynamic-font text-dark">
-            <span>+ Có thể đổi bằng tiền 500đ/lượt.</span>
+            <span>+ Có thể đổi bằng tiền 500đ/điểm.</span>
           </ion-text>
           <br>
           <ion-text class="dynamic-font text-dark">

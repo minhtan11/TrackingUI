@@ -26,6 +26,7 @@ export class DetailComponent  implements OnInit {
   isOpenDeletePackage:any = false;
   isOpenQueryPackage: any = false;
   isOpenNoQueryPackage: any = false;
+  isOpenDescript: any = false;
   previousUrl:any;
   isChange:any=false;
   isCancel:any=false;
@@ -357,6 +358,17 @@ export class DetailComponent  implements OnInit {
         }
       }
     })
+  }
+  //#endregion
+
+  //#region Descipt
+  openPopDescrip() {
+    this.isOpenDescript = true;
+  }
+
+  cancelPopDescrip() {
+    this.isOpenDescript = false;
+    this.dt.detectChanges();
   }
   //#endregion
 }

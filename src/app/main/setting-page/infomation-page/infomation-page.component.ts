@@ -212,4 +212,10 @@ export class InfomationPageComponent  implements OnInit {
   onback(){
     this.navCtrl.navigateBack(this.previousUrl);
   }
+
+  onfocus(ele:any){
+    if (ele) {
+      ele.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+    }
+  }
 }

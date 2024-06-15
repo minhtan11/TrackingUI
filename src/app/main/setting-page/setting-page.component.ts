@@ -307,8 +307,12 @@ export class SettingPageComponent {
         this.userName = item?.username;
         this.cancelChangeAccount();
         setTimeout(() => {
-          this.getUser();
           this.content.scrollToTop();
+          this.getUser();
+          this.getlstUser();
+          this.api.callBackPackage(true);
+          this.api.callBackNoti(true);
+          this.api.callBackOrder(true);
         }, 500);
         
       } else {
@@ -368,12 +372,12 @@ export class SettingPageComponent {
         this.formGroup.reset();
         this.cancelAddAccount();
         setTimeout(() => {
+          this.content.scrollToTop();
           this.getUser();
           this.getlstUser();
           this.api.callBackPackage(true);
           this.api.callBackNoti(true);
           this.api.callBackOrder(true);
-          this.content.scrollToTop();
         }, 500);
       } else {
         this.notification.showNotiError('', res?.message);

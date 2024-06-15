@@ -1,14 +1,16 @@
 <ion-header class="ion-no-border">
   <ion-toolbar mode="ios" class="pr-2 pl-2" style="--background:white !important">
-    <ion-title mode="md" class="dynamic-font text-primary-default pl-3 pr-0">
-      <h2 class="my-0 mx-0 font-weight-bold">Danh sách đơn hàng</h2>
+    <ion-title mode="md" class="dynamic-font text-primary-default pl-2 pr-0">
+      <h2 class="my-2 mx-0 font-weight-bold">Danh sách đơn hàng</h2>
     </ion-title>
     <!-- <ion-icon (click)="openPopFilter()" class="pr-2 text-dark" slot="end" style="font-size: 2rem;" name="funnel-outline"></ion-icon>   -->
-    <img (click)="openPopFilter()" slot="end" style="width: 2rem;height: 2rem;" src="../../../assets/image/funnel-tool.png" alt="">
+    <!-- <img (click)="openPopFilter()" slot="end" style="width: 2rem;height: 2rem;" src="../../../assets/image/funnel-tool.png" alt=""> -->
+    <i (click)="openPopFilter()" [ngClass]="isFilter ? 'text-orange' : 'text-primary-default'" class="pr-2 text-dark" slot="end" class="bi bi-funnel icon-menu"></i>
   </ion-toolbar>
   <ion-toolbar class="pr-2 pl-2 pb-2" style="--background:white !important">
     <div class="w-100 d-flex align-items-center">
-      <ion-searchbar [style]="isSearchFocus ? '--icon-color: orange' : ''" animated="true" class="pb-0 pl-0 pl-2 pr-2" id='custom-search' placeholder="Tìm kiếm đơn hàng / mô tả" (ionFocus)="ionFocus($event)" (ionBlur)="ionBlur($event)" (ionChange)="ionChange($event)"
+      <ion-searchbar [style]="isSearchFocus ? '--icon-color: orange' : ''" animated="true" class="pb-0 pl-0 pl-2 pr-2" id='custom-search' placeholder="Tìm kiếm đơn hàng / kiện hàng" 
+      (ionFocus)="ionFocus($event)" (ionBlur)="ionBlur($event)" (ionChange)="ionChange($event)" (ionClear)="ionChange($event)"
       enterkeyhint="search" mode="ios" show-clear-button="always"></ion-searchbar>
     </div>
   </ion-toolbar>
@@ -163,10 +165,8 @@
                         <ion-text class="dynamic-font">
                           <span class="font-weight-bold text-dark">Dịch vụ phụ: </span>
                           <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
-                          <span *ngIf="item.isWoodPackage && item.isAirPackage">-</span>
-                          <span *ngIf="item.isAirPackage">Bọt khí</span>
-                          <span *ngIf="item.isAirPackage && item.isInsurance">-</span>
-                          <span *ngIf="item.isInsurance">Bảo hiểm</span>
+                          <span *ngIf="item.isAirPackage">,Bọt khí</span>
+                          <span *ngIf="item.isInsurance">,Bảo hiểm</span>
                           <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
                         </ion-text>
                         <ion-text>

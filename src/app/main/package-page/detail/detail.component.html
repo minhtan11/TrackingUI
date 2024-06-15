@@ -7,7 +7,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title mode="md" class="dynamic-font text-primary-default pl-0 pr-0">
-      <h2 class="my-0 mx-0 font-weight-bold">Chi tiết kiện hàng</h2>
+      <h2 class="my-2 mx-0 font-weight-bold">Chi tiết kiện hàng</h2>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -134,6 +134,13 @@
               <ion-grid fixed>
                 <ion-row>
                   <ion-col>
+                    <div style="padding-bottom: 1em;" class="d-flex align-items-center">
+                      <ion-text class="dynamic-font text-orange">
+                        <span style="font-size: 0.8rem;">
+                          Hãy gửi yêu cầu khiếu nại hoặc liên hệ hotline, nếu các dự kiến bị chậm trễ hơn 72 tiếng đồng hồ.
+                        </span>
+                      </ion-text>
+                    </div>
                     <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                       <div>
                         <ion-text class="dynamic-font text-dark font-weight-bold">
@@ -419,13 +426,21 @@
                     Nhập mô tả
                   </ion-text>
                 </ion-button>
-                <ng-container *ngIf="oData?.status < 2">
+                <div class="d-flex align-items-center">
                   <ion-button (click)="checkQuery(oData)" mode="ios" size="default" class="ion-btn-orange">
                     <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
                       Kiểm tra hàng
                     </ion-text>
                   </ion-button>
+                  <div (click)="openPopDescrip()" style="background-color: grey !important;border-radius: 50px;margin-top: -3rem;
+                  left: 2rem;
+                  margin-left: -1rem;
+                  z-index: 1000;" class="d-flex align-items-center justify-content-center">
+                    <ion-icon style="font-size: 1.5rem;" class="text-white" name="information-circle-outline"></ion-icon>
+                  </div>
+                </div>
+                <ng-container *ngIf="oData?.status < 2">
                   <ion-button (click)="openPopCancelPackage(oData)" mode="ios" size="default" color="medium">
                     <ion-icon style="color: white !important;" slot="start" name="stop-circle-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
@@ -731,4 +746,25 @@
     </ng-template>
   </ion-modal>
   <!-- DeletePackkage -->
+
+  <!-- Descript -->
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelPopDescrip()" [isOpen]="isOpenDescript">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="text-center">
+          <ion-text class="dynamic-font text-dark">
+            <span>Đây là chức năng kiểm tra lịch trình hàng trong nội địa Trung Quốc, dữ liệu được cung cấp bởi Baidu</span>
+          </ion-text>
+        </div>
+        <div style="margin-bottom: var(--ion-safe-area-bottom, 0);" class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="cancelPopDescrip()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đóng
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- Descript -->
 </ion-content>

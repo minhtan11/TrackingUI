@@ -38,6 +38,7 @@ export class MainPage implements OnInit {
   totalNoti:any=0;
   isHideFooter:any = false;
   isPopup:any=false;
+  imgPopup:any;
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
@@ -127,12 +128,12 @@ export class MainPage implements OnInit {
         }
       }
     );
-    await PushNotifications.addListener('pushNotificationActionPerformed',
-      (notification: ActionPerformed) => {
-        this.navCtrl.navigateForward('main/notification');
-        this.selected = 3;
-      }
-    );
+    // await PushNotifications.addListener('pushNotificationActionPerformed',
+    //   (notification: ActionPerformed) => {
+    //     this.navCtrl.navigateForward('main/notification');
+    //     this.selected = 3;
+    //   }
+    // );
   }
 
   ngAfterViewInit() {
@@ -210,10 +211,17 @@ export class MainPage implements OnInit {
     this.getTotalPackage();
     this.getTotalOrder();
     this.getTotalNoti();
+    this.getSlide();
   } 
   //#endregion
 
   //#region Event
+  goRechargePage(){
+    this.onDestroy();
+    this.cancelPopup();
+    this.navCtrl.navigateForward('main/recharge');
+  }
+
   selectedTabChange(event:any){
     let tab = event?.tab.textLabel;
     if (tab) {
@@ -255,9 +263,9 @@ export class MainPage implements OnInit {
   cancelCopy(){
     this.isOpenCopy = false;
     this.dt.detectChanges();
-    Clipboard.write({
-      string: ""
-    });
+    // Clipboard.write({
+    //   string: ""
+    // });
     
   }
 
@@ -355,6 +363,15 @@ export class MainPage implements OnInit {
         this.totalNoti = res[1];
         await Badge.set({ count:this.totalNoti });
         this.dt.detectChanges();
+      }
+    })
+  }
+
+  getSlide(){
+    this.api.execByBody('Authencation', 'getslide', null).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if(!res[0]){
+        this.imgPopup = res[1].filter((x:any) => x.imgType == 3)[0];
+      }else{
       }
     })
   }

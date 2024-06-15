@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title mode="md" class="dynamic-font text-primary-default pl-0 pr-0">
-      <h2 class="my-0 mx-0 font-weight-bold">Đổi điểm tra cứu</h2>
+      <h2 class="my-2 mx-0 font-weight-bold">Đổi điểm tra cứu</h2>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -28,7 +28,7 @@
             </ion-text>
             <br>
             <ion-text class="mb-0 dynamic-font text-dark">
-              Hệ thống quy đổi lượt tìm kiếm đơn hàng trên kênh Baidu với mức phí 500đ/1lượt!
+              Hệ thống quy đổi lượt tìm kiếm đơn hàng trên kênh Baidu với mức phí 500đ/1 điểm!
             </ion-text>
           </div>
         </div>
@@ -41,7 +41,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Số lượt</mat-label>
-        <input type="number" #eleAmount formControlName="amount" matInput>
+        <input (focus)="onfocus(eleAmount)" type="number" #eleAmount formControlName="amount" matInput>
       </mat-form-field>
     </div>
   </div>
