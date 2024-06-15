@@ -273,9 +273,9 @@ export class CreatePageComponent  implements OnInit {
 
   cancelCopy(){
     this.isOpenCopy = false;
-    Clipboard.write({
-      string: ""
-    });
+    // Clipboard.write({
+    //   string: ""
+    // });
     
   }
 

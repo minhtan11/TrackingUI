@@ -11,6 +11,7 @@ import { NotificationServiceComponent } from 'src/app/notification-service/notif
 import { App } from '@capacitor/app';
 import Swiper from 'swiper';
 import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
+import { Device } from '@capacitor/device';
 
 @Component({
   selector: 'app-home-page',
@@ -33,7 +34,8 @@ export class HomePageComponent{
   lstImgSlide:any;
   imgSticket:any;
   slideIndex:any = 0;
-  
+  isPopup:any=false;
+  imgPopup:any;
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -67,6 +69,17 @@ export class HomePageComponent{
 
   //#region Init
   ngOnInit() {
+    this.platform.ready().then(async () => {
+      let checklogin = this.rt.snapshot.queryParams["checklogin"];
+      if (checklogin) {
+        this.onCheckLogin();
+      }else{
+        this.isPopup = true;
+      }
+      this.platform.resume.subscribe(async () => {
+        this.onCheckLogin();
+      });
+    })
     this.getSlide();
     // let isload = this.rt.snapshot.queryParams["isload"];
     // if (isload) {
@@ -163,6 +176,7 @@ export class HomePageComponent{
 
   goRechargePage(){
     this.onDestroy();
+    this.cancelPopup();
     this.navCtrl.navigateForward('main/recharge');
   }
 
@@ -205,11 +219,48 @@ export class HomePageComponent{
     this.api.execByBody('Authencation', 'getslide', null).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if(!res[0]){
         this.lstImgSlide = res[1].filter((x:any) => x.imgType == 2);
+        this.imgPopup = res[1].filter((x:any) => x.imgType == 3)[0];
         this.imgSticket = res[1].filter((x:any) => x.imgType == 4)[0];
       }else{
       }
     })
   }
+
+  async onCheckLogin(){
+    let token = await this.storage.get('token');
+    const info = await Device.getInfo();
+    const infoID = await Device.getId();
+    let deviceName = info.manufacturer+' '+info.model;
+    let deviceID = infoID.identifier;
+    let username = await this.storage.get('username');
+    let data = {
+      userName: username,
+      token: token,
+      deviceName: deviceName,
+      deviceID: deviceID
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'checklogin', messageBody).pipe(takeUntil(this.destroy$)).subscribe(async (res:any)=>{
+      if (res && res?.isError) {
+        this.storage.remove('isLogin');
+        this.navCtrl.navigateBack('home',{queryParams:{loginError:JSON.stringify(res)}});
+        this.onDestroy();
+      }else{
+        setTimeout(() => {
+          this.isPopup = true;
+        }, 3000);
+        await this.storage.setAccount(username);
+      }
+    })
+  }
+
+  cancelPopup(){
+    this.isPopup = false;
+    this.dt.detectChanges();
+  }
+
   //#endregion
 
 }

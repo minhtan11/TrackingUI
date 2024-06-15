@@ -37,8 +37,6 @@ export class MainPage implements OnInit {
   totalOrder:any=0;
   totalNoti:any=0;
   isHideFooter:any = false;
-  isPopup:any=false;
-  imgPopup:any;
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
@@ -95,16 +93,7 @@ export class MainPage implements OnInit {
   //#region Init
   async ngOnInit() {
     this.platform.ready().then(async () => {
-      let checklogin = this.rt.snapshot.queryParams["checklogin"];
-      if (checklogin) {
-        this.onCheckLogin();
-      }else{
-        setTimeout(() => {
-          this.isPopup = true;
-        }, 3000);
-      }
       this.platform.resume.subscribe(async () => {
-        this.onCheckLogin();
         if (!(this.router.url.includes('/main/package/create'))) {
           Clipboard.read().then((clipboardRead: ReadResult) => {
             if (clipboardRead?.value) {
@@ -211,16 +200,10 @@ export class MainPage implements OnInit {
     this.getTotalPackage();
     this.getTotalOrder();
     this.getTotalNoti();
-    this.getSlide();
   } 
   //#endregion
 
   //#region Event
-  goRechargePage(){
-    this.onDestroy();
-    this.cancelPopup();
-    this.navCtrl.navigateForward('main/recharge');
-  }
 
   selectedTabChange(event:any){
     let tab = event?.tab.textLabel;
@@ -267,42 +250,6 @@ export class MainPage implements OnInit {
     //   string: ""
     // });
     
-  }
-
-  cancelPopup(){
-    this.isPopup = false;
-    this.dt.detectChanges();
-  }
-
-  async onCheckLogin(){
-    let token = await this.storage.get('token');
-    const info = await Device.getInfo();
-    const infoID = await Device.getId();
-    let deviceName = info.manufacturer+' '+info.model;
-    let deviceID = infoID.identifier;
-    let username = await this.storage.get('username');
-    let data = {
-      userName: username,
-      token: token,
-      deviceName: deviceName,
-      deviceID: deviceID
-    }
-    let messageBody = {
-      dataRequest: JSON.stringify(data)
-    };
-    this.api.execByBody('Authencation', 'checklogin', messageBody).pipe(takeUntil(this.destroy$)).subscribe(async (res:any)=>{
-      if (res && res?.isError) {
-        this.isOpenCopy = false;
-        this.storage.remove('isLogin');
-        this.navCtrl.navigateBack('home',{queryParams:{loginError:JSON.stringify(res)}});
-        this.onDestroy();
-      }else{
-        setTimeout(() => {
-          this.isPopup = true;
-        }, 3000);
-        await this.storage.setAccount(username);
-      }
-    })
   }
 
   onExit(){
@@ -363,15 +310,6 @@ export class MainPage implements OnInit {
         this.totalNoti = res[1];
         await Badge.set({ count:this.totalNoti });
         this.dt.detectChanges();
-      }
-    })
-  }
-
-  getSlide(){
-    this.api.execByBody('Authencation', 'getslide', null).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      if(!res[0]){
-        this.imgPopup = res[1].filter((x:any) => x.imgType == 3)[0];
-      }else{
       }
     })
   }
