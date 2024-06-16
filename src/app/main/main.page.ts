@@ -107,8 +107,6 @@ export class MainPage implements OnInit {
             }
           });
         }
-        let s = await PushNotifications.getDeliveredNotifications();
-        console.log('thong bao ne'+JSON.stringify(s));
       });
     })
     await PushNotifications.addListener('pushNotificationReceived',
@@ -122,13 +120,12 @@ export class MainPage implements OnInit {
         }
       }
     );
-    
-    // await PushNotifications.addListener('pushNotificationActionPerformed',
-    //   (notification: ActionPerformed) => {
-    //     this.navCtrl.navigateForward('main/notification');
-    //     this.selected = 3;
-    //   }
-    // );
+    await PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification: ActionPerformed) => {
+        this.navCtrl.navigateForward('main/notification');
+        this.selected = 3;
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -206,8 +203,6 @@ export class MainPage implements OnInit {
     this.getTotalPackage();
     this.getTotalOrder();
     this.getTotalNoti();
-    let s = await PushNotifications.getDeliveredNotifications();
-    console.log('thong bao ne'+JSON.stringify(s));
   } 
   //#endregion
 

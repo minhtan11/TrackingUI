@@ -73,7 +73,7 @@ export class HomePageComponent{
     this.platform.ready().then(async () => {
       let checklogin = this.rt.snapshot.queryParams["checklogin"];
       if (checklogin) {
-        this.onCheckLogin();
+        this.onCheckLogin(true);
       }else{
         this.isPopup = true;
       }
@@ -228,7 +228,7 @@ export class HomePageComponent{
     })
   }
 
-  async onCheckLogin(){
+  async onCheckLogin(isPopUp:any = false){
     let token = await this.storage.get('token');
     const info = await Device.getInfo();
     const infoID = await Device.getId();
@@ -250,9 +250,11 @@ export class HomePageComponent{
         this.navCtrl.navigateBack('home',{queryParams:{loginError:JSON.stringify(res)}});
         this.onDestroy();
       }else{
-        setTimeout(() => {
-          this.isPopup = true;
-        }, 3000);
+        if (isPopUp) {
+          setTimeout(() => {
+            this.isPopup = true;
+          }, 3000);
+        }
         await this.storage.setAccount(username);
       }
     })
