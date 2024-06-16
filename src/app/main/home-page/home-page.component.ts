@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { IonRouterOutlet, NavController, Platform, ViewDidEnter, ViewWillEnter } from '@ionic/angular';
 import { Subject, connect, takeUntil } from 'rxjs';
@@ -8,7 +8,7 @@ import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { Network } from '@capacitor/network';
 import { StorageService } from 'src/app/storage-service/storage.service';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
-import { App } from '@capacitor/app';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
 import Swiper from 'swiper';
 import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 import { Device } from '@capacitor/device';
@@ -47,7 +47,8 @@ export class HomePageComponent{
     private storage: StorageService,
     private notification: NotificationServiceComponent,
     private routerOutlet: IonRouterOutlet,
-    private previous:PreviousRouterServiceService
+    private previous:PreviousRouterServiceService,
+    private zone: NgZone
     
   ) { 
     router.events.subscribe(event => {
@@ -80,6 +81,19 @@ export class HomePageComponent{
         this.onCheckLogin();
       });
     })
+    App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+      this.zone.run(() => {
+          // Example url: https://beerswift.app/tabs/tab2
+          // slug = /tabs/tab2
+          const slug = event.url.split(".app").pop();
+          
+          if (slug) {
+            this.navCtrl.navigateForward(slug);
+          }
+          // If no match, do nothing - let regular routing
+          // logic take over
+      });
+  });
     this.getSlide();
     // let isload = this.rt.snapshot.queryParams["isload"];
     // if (isload) {
@@ -131,8 +145,6 @@ export class HomePageComponent{
       this.showSlides();
     }, 4000);
   }
-
-  
 
   ionViewDidLeave(){
     //this.swiper.disable();
