@@ -17,6 +17,7 @@ import { App } from '@capacitor/app';
 import { PreviousRouterServiceService } from '../previous-router-service/previous-router-service.service';
 import { Keyboard } from '@capacitor/keyboard';
 import { Badge } from '@capawesome/capacitor-badge';
+import { Firebase } from '@ionic-native/firebase';
 register();
 
 @Component({
@@ -120,12 +121,24 @@ export class MainPage implements OnInit {
         }
       }
     );
-    await PushNotifications.addListener('pushNotificationActionPerformed',
-      (notification: ActionPerformed) => {
-        this.navCtrl.navigateForward('main/notification');
-        this.selected = 3;
-      }
-    );
+    Firebase.onNotificationOpen()
+      .subscribe(res => {
+        console.log('tap ne'+res);
+        // if (res.tap) {
+        //   // background mode
+        //   console.log('tap ne'+res);
+        // } else if (!res.tap) {
+        //   // foreground mode
+        //   console.log("foreground");
+        //   console.log(res);
+        // }
+      });
+    // await PushNotifications.addListener('pushNotificationActionPerformed',
+    //   (notification: ActionPerformed) => {
+    //     this.navCtrl.navigateForward('main/notification');
+    //     this.selected = 3;
+    //   }
+    // );
   }
 
   ngAfterViewInit() {
