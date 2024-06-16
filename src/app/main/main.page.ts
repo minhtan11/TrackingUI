@@ -17,7 +17,6 @@ import { App } from '@capacitor/app';
 import { PreviousRouterServiceService } from '../previous-router-service/previous-router-service.service';
 import { Keyboard } from '@capacitor/keyboard';
 import { Badge } from '@capawesome/capacitor-badge';
-import { Firebase } from '@ionic-native/firebase';
 register();
 
 @Component({
@@ -108,6 +107,8 @@ export class MainPage implements OnInit {
             }
           });
         }
+        let s = await PushNotifications.getDeliveredNotifications();
+        console.log('thong bao ne'+JSON.stringify(s));
       });
     })
     await PushNotifications.addListener('pushNotificationReceived',
@@ -121,18 +122,7 @@ export class MainPage implements OnInit {
         }
       }
     );
-    Firebase.onNotificationOpen()
-      .subscribe(res => {
-        console.log('tap ne'+res);
-        // if (res.tap) {
-        //   // background mode
-        //   console.log('tap ne'+res);
-        // } else if (!res.tap) {
-        //   // foreground mode
-        //   console.log("foreground");
-        //   console.log(res);
-        // }
-      });
+    
     // await PushNotifications.addListener('pushNotificationActionPerformed',
     //   (notification: ActionPerformed) => {
     //     this.navCtrl.navigateForward('main/notification');
@@ -216,6 +206,8 @@ export class MainPage implements OnInit {
     this.getTotalPackage();
     this.getTotalOrder();
     this.getTotalNoti();
+    let s = await PushNotifications.getDeliveredNotifications();
+    console.log('thong bao ne'+JSON.stringify(s));
   } 
   //#endregion
 

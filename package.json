@@ -37,7 +37,6 @@
     "@capacitor/splash-screen": "^5.0.6",
     "@capacitor/status-bar": "5.0.6",
     "@capawesome/capacitor-badge": "^6.0.0",
-    "@ionic-native/firebase": "^5.36.0",
     "@ionic/angular": "^7.0.0",
     "@ionic/storage-angular": "^4.0.0",
     "capacitor-native-biometric": "^4.2.2",
