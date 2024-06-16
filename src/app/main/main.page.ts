@@ -94,6 +94,9 @@ export class MainPage implements OnInit {
   async ngOnInit() {
     this.platform.ready().then(async () => {
       this.platform.resume.subscribe(async () => {
+        this.getTotalPackage();
+        this.getTotalOrder();
+        this.getTotalNoti();
         if (!(this.router.url.includes('/main/package/create'))) {
           Clipboard.read().then((clipboardRead: ReadResult) => {
             if (clipboardRead?.value) {
@@ -117,12 +120,12 @@ export class MainPage implements OnInit {
         }
       }
     );
-    // await PushNotifications.addListener('pushNotificationActionPerformed',
-    //   (notification: ActionPerformed) => {
-    //     this.navCtrl.navigateForward('main/notification');
-    //     this.selected = 3;
-    //   }
-    // );
+    await PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification: ActionPerformed) => {
+        this.navCtrl.navigateForward('main/notification');
+        this.selected = 3;
+      }
+    );
   }
 
   ngAfterViewInit() {
