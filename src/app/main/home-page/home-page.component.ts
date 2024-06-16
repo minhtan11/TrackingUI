@@ -33,7 +33,7 @@ export class HomePageComponent{
   animation:any;
   lstImgSlide:any;
   imgSticket:any;
-  slideIndex:any = 0;
+  slideIndex:any = 1;
   isPopup:any=false;
   imgPopup:any;
   private destroy$ = new Subject<void>();
@@ -106,7 +106,7 @@ export class HomePageComponent{
     this.isReview = await this.storage.get('isReview');
     // this.animationInProgress = false;
     // this.startAnimation();
-    this.showSlides();
+    
   }
 
   showSlides(){
@@ -221,6 +221,9 @@ export class HomePageComponent{
         this.lstImgSlide = res[1].filter((x:any) => x.imgType == 2);
         this.imgPopup = res[1].filter((x:any) => x.imgType == 3)[0];
         this.imgSticket = res[1].filter((x:any) => x.imgType == 4)[0];
+        setTimeout(() => {
+          this.showSlides();
+        }, 2000);
       }else{
       }
     })
