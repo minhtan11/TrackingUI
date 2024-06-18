@@ -75,7 +75,9 @@ export class HomePageComponent{
       if (checklogin) {
         this.onCheckLogin(true);
       }else{
-        this.isPopup = true;
+        if(!this.isReview){
+          this.isPopup = true;
+        }
       }
       this.platform.resume.subscribe(async () => {
         this.onCheckLogin();
@@ -250,7 +252,7 @@ export class HomePageComponent{
         this.navCtrl.navigateBack('home',{queryParams:{loginError:JSON.stringify(res)}});
         this.onDestroy();
       }else{
-        if (isPopUp) {
+        if (isPopUp && !this.isReview) {
           setTimeout(() => {
             this.isPopup = true;
           }, 3000);

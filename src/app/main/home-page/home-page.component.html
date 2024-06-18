@@ -316,7 +316,7 @@
       </div>
     </div>
   </ng-container>
-  <ion-fab style="margin-bottom: var(--ion-safe-area-bottom, 0);" slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab *ngIf="!isReview" style="margin-bottom: var(--ion-safe-area-bottom, 0);" slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="goRechargePage()" style="--background: none !important;
     --box-shadow: none !important;--background-activated: none !important">
     <ng-container *ngIf="imgSticket">
