@@ -12,33 +12,8 @@
   </div> -->
   <ng-container *ngIf="isReview">
     <div class="w-100">
-      <div class="w-100 padding-statusbar-ios">
-        <swiper-container #swiper mode="ios" [slidesPerView]="1" [loop]="true" [pagination]="true">
-          <swiper-slide>
-            <div>
-              <img class="w-100" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;" src="../../assets/image/anh-slide-1.jpg"
-              alt="">
-            </div>
-          </swiper-slide>
-          <swiper-slide>
-            <div>
-              <img class="w-100" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;" src="../../assets/image/anh-slide-1.jpg"
-              alt="">
-            </div>
-          </swiper-slide>
-          <swiper-slide>
-            <div>
-              <img class="w-100" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;" src="../../assets/image/anh-slide-1.jpg"
-              alt="">
-            </div>
-          </swiper-slide>
-          <swiper-slide>
-            <div>
-              <img class="w-100" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;" src="../../assets/image/anh-slide-1.jpg"
-              alt="">
-            </div>
-          </swiper-slide>
-        </swiper-container>
+      <div class="w-100 mb-2 padding-statusbar-ios">
+        <img class="w-100" src="../../../assets/image/splash.png">
       </div>
       <div class="pl-3 w-100">
         <ion-text class="dynamic-font text-dark">
@@ -315,25 +290,25 @@
         </ion-card>
       </div>
     </div>
+    <ion-fab style="margin-bottom: var(--ion-safe-area-bottom, 0);" slot="fixed" vertical="bottom" horizontal="end">
+      <ion-fab-button (click)="goRechargePage()" style="--background: none !important;
+      --box-shadow: none !important;--background-activated: none !important">
+      <ng-container *ngIf="imgSticket">
+        <img [src]="'https://tracking.nhanshiphang.vn/'+imgSticket?.img">
+      </ng-container>
+      </ion-fab-button>
+    </ion-fab>
+    <!-- Home Page -->
+    
+    <ion-modal id="modal-dialog" style="--background:none !important;--box-shadow: none !important" (willDismiss)="cancelPopup()" [isOpen]="isPopup">
+      <ng-template>
+        <div class="w-100">
+          <img (click)="goRechargePage()" style="border-radius: 20px;" [src]="'https://tracking.nhanshiphang.vn/'+imgPopup?.img">
+        </div>
+        <div class="d-flex align-items-center justify-content-center w-100 mt-3">
+          <ion-icon (click)="cancelPopup()" style="font-size: 2rem;" class="text-white" name="close-circle-outline"></ion-icon>
+        </div>
+      </ng-template>
+    </ion-modal>
   </ng-container>
-  <ion-fab *ngIf="!isReview" style="margin-bottom: var(--ion-safe-area-bottom, 0);" slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="goRechargePage()" style="--background: none !important;
-    --box-shadow: none !important;--background-activated: none !important">
-    <ng-container *ngIf="imgSticket">
-      <img [src]="'https://tracking.nhanshiphang.vn/'+imgSticket?.img">
-    </ng-container>
-    </ion-fab-button>
-  </ion-fab>
-  <!-- Home Page -->
-  
-  <ion-modal id="modal-dialog" style="--background:none !important;--box-shadow: none !important" (willDismiss)="cancelPopup()" [isOpen]="isPopup">
-    <ng-template>
-      <div class="w-100">
-        <img (click)="goRechargePage()" style="border-radius: 20px;" [src]="'https://tracking.nhanshiphang.vn/'+imgPopup?.img">
-      </div>
-      <div class="d-flex align-items-center justify-content-center w-100 mt-3">
-        <ion-icon (click)="cancelPopup()" style="font-size: 2rem;" class="text-white" name="close-circle-outline"></ion-icon>
-      </div>
-    </ng-template>
-  </ion-modal>
 </ion-content>

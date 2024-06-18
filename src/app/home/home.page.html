@@ -101,7 +101,7 @@
         </ion-col> -->
       </ng-container>
       
-      <ion-col size="12" class="pr-0 pl-0">
+      <ion-col *ngIf="!isReview" size="12" class="pr-0 pl-0">
         <ion-text>
           <span class="dynamic-font" style="color: black !important;">Bạn không có tài khoản? </span>
         </ion-text>

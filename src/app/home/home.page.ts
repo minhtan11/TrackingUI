@@ -42,6 +42,7 @@ export class HomePage implements OnInit, AfterViewInit {
   listUser:any = [];
   lastBack:any = Date.now();
   accountSelected:any;
+  isReview:any;
   isOpenExit:any=false;
   private destroy$ = new Subject<void>();
   constructor(
@@ -102,6 +103,7 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   async ionViewWillEnter(){
+    this.isReview = await this.storage.get('isReview');
     let username = await this.storage.get('username');
     if(username){
       this.userName = username;

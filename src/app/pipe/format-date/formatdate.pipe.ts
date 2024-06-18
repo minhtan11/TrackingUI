@@ -14,7 +14,7 @@ export class FormatdatePipe implements PipeTransform {
     let invalid = Date.parse(value);
     if(isNaN(invalid)) return value;
     this.valueFormat = this.tranform.transform(value,stringformat)?.toString();
-    return 'Dự kiến '+this.valueFormat;
+    return this.valueFormat;
   }
 
 }
