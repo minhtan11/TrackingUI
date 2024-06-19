@@ -250,9 +250,15 @@ export class HomePageComponent{
         this.navCtrl.navigateBack('home',{queryParams:{loginError:JSON.stringify(res)}});
         this.onDestroy();
       }else{
-        setTimeout(() => {
-          this.isPopup = true;
-        }, 3000);
+        if (isPopUp) {
+          setTimeout(() => {
+            this.isPopup = true;
+          }, 3000);
+        }
+        let data = await this.storage.get('notitap');
+        if (data) {
+          this.notification.showNotiSuccess('',data);
+        }
         await this.storage.setAccount(username);
       }
     })

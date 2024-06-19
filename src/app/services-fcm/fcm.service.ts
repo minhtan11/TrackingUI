@@ -89,6 +89,8 @@ export class FcmService {
     // Method called when tapping on a notification
     await PushNotifications.addListener('pushNotificationActionPerformed',
       (notification: ActionPerformed) => {
+        let dataNoti = notification.notification;
+        this.storage.set('notitap',JSON.stringify(dataNoti));
         console.log('Push action performed: ' + JSON.stringify(notification));
       }
     );
