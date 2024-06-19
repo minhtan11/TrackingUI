@@ -120,12 +120,6 @@ export class MainPage implements OnInit {
         }
       }
     );
-    await PushNotifications.addListener('pushNotificationActionPerformed',
-      (notification: ActionPerformed) => {
-        this.navCtrl.navigateForward('main/notification');
-        this.selected = 3;
-      }
-    );
   }
 
   ngAfterViewInit() {

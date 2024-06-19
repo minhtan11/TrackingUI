@@ -12,6 +12,7 @@ import { App, URLOpenListenerEvent } from '@capacitor/app';
 import Swiper from 'swiper';
 import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 import { Device } from '@capacitor/device';
+import { PushNotificationSchema } from '@capacitor/push-notifications';
 
 @Component({
   selector: 'app-home-page',
@@ -250,14 +251,16 @@ export class HomePageComponent{
         this.navCtrl.navigateBack('home',{queryParams:{loginError:JSON.stringify(res)}});
         this.onDestroy();
       }else{
-        if (isPopUp) {
-          setTimeout(() => {
-            this.isPopup = true;
-          }, 3000);
-        }
         let data = await this.storage.get('notitap');
+        let oData = JSON.parse(data)
         if (data) {
-          this.notification.showNotiSuccess('',data);
+          this.goNotification(oData);
+        }else{
+          if (isPopUp) {
+            setTimeout(() => {
+              this.isPopup = true;
+            }, 3000);
+          }
         }
         await this.storage.setAccount(username);
       }
@@ -267,6 +270,21 @@ export class HomePageComponent{
   cancelPopup(){
     this.isPopup = false;
     this.dt.detectChanges();
+  }
+
+  goNotification(oData:PushNotificationSchema){
+    if (oData.data) {
+      let data = JSON.parse(oData.data['data']);
+      if (data?.notifType) {
+        switch(data?.notifType){
+          case 1:
+            
+            break;
+        }
+      }
+    }else{
+      this.navCtrl.navigateForward('main/notification');
+    }
   }
 
   //#endregion
