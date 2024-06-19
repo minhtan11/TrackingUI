@@ -76,13 +76,13 @@
               <div *ngIf="oData?.data?.data" class="p-2 d-flex align-items-center justify-content-center mt-1" style="border: 1px solid #ececec;border-radius: 1em;">
                 <ion-list lines="none" style="background-color:white !important;">
                   <ng-container *ngFor="let item of oData?.data?.data">
-                    <ion-item style="background-color:white !important;">
+                    <ion-item style="--background:white !important">
                       <ion-icon style="color: var(--ion-color-mat-primary) !important" slot="start" name="checkmark-circle-outline"></ion-icon>
                       <ion-text class="dynamic-font text-dark">
                         <span>{{item?.context}}</span>
                       </ion-text>
                     </ion-item>
-                    <ion-item>
+                    <ion-item style="--background:white !important">
                       <ion-text class="dynamic-font" color="medium">
                         <span>Ngày: {{item?.time}}</span>
                       </ion-text>

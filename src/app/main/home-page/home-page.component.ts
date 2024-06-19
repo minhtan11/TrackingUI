@@ -12,7 +12,7 @@ import { App, URLOpenListenerEvent } from '@capacitor/app';
 import Swiper from 'swiper';
 import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 import { Device } from '@capacitor/device';
-import { PushNotificationSchema } from '@capacitor/push-notifications';
+import { ActionPerformed, PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
 
 @Component({
   selector: 'app-home-page',
@@ -30,6 +30,7 @@ export class HomePageComponent{
   pack3:any;
   pack5:any;
   isReview:any;
+  isLoad:any=false;
   animationInProgress = false;
   animation:any;
   lstImgSlide:any;
@@ -70,13 +71,15 @@ export class HomePageComponent{
   //#endregion
 
   //#region Init
-  ngOnInit() {
+  async ngOnInit() {
     this.platform.ready().then(async () => {
       let checklogin = this.rt.snapshot.queryParams["checklogin"];
       if (checklogin) {
         this.onCheckLogin(true);
       }else{
-        this.isPopup = true;
+        setTimeout(() => {
+          this.isPopup = true;
+        }, 2000);
       }
       this.platform.resume.subscribe(async () => {
         this.onCheckLogin();
@@ -90,6 +93,14 @@ export class HomePageComponent{
     //     this.api.isLoad2(false);
     //   }, 2000);
     // }
+    await PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification: ActionPerformed) => {
+        let oData = notification.notification;
+        if (oData && this.isLoad) {
+          this.goNotification(oData);
+        }
+      }
+    );
   }
 
   ngAfterViewInit(){
@@ -262,6 +273,7 @@ export class HomePageComponent{
             }, 3000);
           }
         }
+        this.isLoad = true;
         await this.storage.setAccount(username);
       }
     })
@@ -275,16 +287,27 @@ export class HomePageComponent{
   goNotification(oData:PushNotificationSchema){
     if (oData.data) {
       let data = JSON.parse(oData.data['data']);
-      if (data?.notifType) {
+      if (data?.NotifType) {
         switch(data?.notifType){
+          case 10:
+            this.navCtrl.navigateForward('main/notification');
+            break;
           case 1:
-            
+            if(data?.OrderCode != '' && data?.OrderCode != null){
+              this.navCtrl.navigateForward('main/package/detail', { queryParams: { id: data?.OrderCode } });
+            }else{
+              this.navCtrl.navigateForward('main/notification');
+            }
+            break;
+          default:
+            this.navCtrl.navigateForward('main/notification');
             break;
         }
       }
     }else{
       this.navCtrl.navigateForward('main/notification');
     }
+    this.storage.remove('notitap');
   }
 
   //#endregion
