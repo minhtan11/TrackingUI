@@ -383,7 +383,7 @@
                   </ion-text>
                 </ion-button>
                 <div class="d-flex align-items-center" [style]="item?.status > 2 && item?.status != 9 ? 'margin-right: auto;' : ''">
-                  <ion-button (click)="checkQuery(item)" mode="ios" size="default" class="ion-btn-orange">
+                  <ion-button (click)="checkFirst(item)" mode="ios" size="default" class="ion-btn-orange">
                     <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
                       Kiểm tra hàng
@@ -535,7 +535,7 @@
         </div>
         <div class="w-100 text-center">
           <ion-text class="dynamic-font text-dark">
-            <span>Bạn có muốn nhập mô tả cho kiện hàng </span>
+            <span>Quý khách có muốn nhập mô tả cho kiện hàng </span>
           </ion-text>
           <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
             <span>{{itemSelected?.packageCode}}</span>
@@ -572,10 +572,10 @@
         </div>
         <div class="w-100 text-center">
           <ion-text class="dynamic-font text-dark">
-            <span>Khi kiểm tra hàng được vận chuyển nội địa bên Trung Quốc,bạn sẽ mất 1 điểm tra cứu! </span>
+            <span>Khi kiểm tra hàng được vận chuyển nội địa bên Trung Quốc,Quý khách sẽ mất 1 điểm tra cứu! </span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
-            <span>Bạn có muốn tiếp tục kiểm tra kiện hàng </span>
+            <span>Quý khách có muốn tiếp tục kiểm tra kiện hàng </span>
           </ion-text>
           <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
             <span>{{itemSelected?.packageCode}}</span>
@@ -609,13 +609,13 @@
         </div>
         <div class="w-100" text-center>
           <ion-text class="dynamic-font text-dark">
-            <span>Bạn đã hết điểm tra cứu miễn phí, tiếp tục sẽ tốn phí </span>
+            <span>Quý khách đã hết điểm tra cứu miễn phí, tiếp tục sẽ tốn phí </span>
           </ion-text>
           <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
             <span>500đ.</span>
           </ion-text>
           <ion-text class="dynamic-font text-dark">
-            <span>Bạn có muốn tiếp tục?</span>
+            <span>Quý khách có muốn tiếp tục?</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
@@ -644,7 +644,7 @@
         </div>
         <div class="w-100" text-center>
           <ion-text class="dynamic-font text-dark">
-            <span>Bạn đã đăng ký theo sát trạng thái kiện hàng, hãy yên tâm chờ thông báo nhé, hoặc bạn có thể bấm đồng ý để vẫn có thể kiểm tra lại!</span>
+            <span>Quý khách đã đăng ký theo sát trạng thái kiện hàng, hãy yên tâm chờ thông báo nhé, hoặc Quý khách có thể bấm đồng ý để vẫn có thể kiểm tra lại!</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
@@ -673,7 +673,7 @@
         </div>
         <div class="w-100" text-center>
           <ion-text class="dynamic-font text-dark">
-            <span>Bạn nhớ đăng ký gửi thông báo các trạng thái kiện hàng để theo dõi sát hơn nhé!</span>
+            <span>Quý khách nhớ đăng ký gửi thông báo các trạng thái kiện hàng để theo dõi sát hơn nhé!</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
@@ -683,6 +683,44 @@
             </ion-text>
           </ion-button>
           <ion-button (click)="cancelNoQueryPackage()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelcheckFirst()" [isOpen]="isOpenCheckFirst">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Kiểm tra kiện hàng</h3>
+          </ion-text>
+        </div>
+        <div class="w-100" text-center>
+          <ion-text class="dynamic-font text-dark">
+            <span>Hiện tại trạng thái kiện hàng là </span>
+            <ng-container [ngSwitch]="itemSelected?.status">
+              <span *ngSwitchCase="4" class="text-primary-default">Hàng về tới HCM</span>
+              <span *ngSwitchCase="5" class="text-primary-default">Đã nhận hàng</span>
+              <span *ngSwitchCase="9" class="text-primary-default">Đã hủy</span>
+              <span *ngSwitchCase="11" class="text-primary-default">Không nhận được hàng</span>
+            </ng-container>
+          </ion-text>
+          <ion-text class="dynamic-font text-dark">
+            <span>.Quý khách vẫn muốn xem lại quá trình vận chuyển trọng nội đia Trung Quốc?</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="checkQuery(itemSelected)" mode="ios" size="default" class="ion-btn-default pr-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelcheckFirst()" mode="ios" size="default" color="medium">
             <ion-text style="color: white !important;" class="dynamic-font">
               Hủy bỏ
             </ion-text>
@@ -704,7 +742,7 @@
         </div>
         <div class="w-100 text-center">
           <ion-text class="dynamic-font text-dark">
-            <span>Bạn có muốn hủy kiện hàng </span>
+            <span>Quý khách có muốn hủy kiện hàng </span>
           </ion-text>
           <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
             <span>{{itemSelected?.packageCode}}</span>
@@ -741,7 +779,7 @@
         </div>
         <div class="w-100 text-center">
           <ion-text class="dynamic-font text-dark">
-            <span>Bạn có muốn khôi phục kiện hàng </span>
+            <span>Quý khách có muốn khôi phục kiện hàng </span>
           </ion-text>
           <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
             <span>{{itemSelected?.packageCode}}</span>
@@ -778,7 +816,7 @@
         </div>
         <div class="w-100 text-center">
           <ion-text class="dynamic-font text-dark">
-            <span>Bạn có muốn xóa kiện hàng </span>
+            <span>Quý khách có muốn xóa kiện hàng </span>
           </ion-text>
           <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
             <span>{{itemSelected?.packageCode}}</span>

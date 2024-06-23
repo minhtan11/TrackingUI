@@ -39,7 +39,7 @@ export class HomePageComponent{
   isPopup:any=false;
   isPopupVersion:any=false;
   imgPopup:any;
-  versionNo:any='1.3';
+  versionNo:any='1.4';
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -60,6 +60,9 @@ export class HomePageComponent{
         if (event && event.urlAfterRedirects.includes('/main/mainpage')) {
           this.getDashBoard();
           this.startAnimation();
+        }else{
+          this.swiper.disable();
+          clearTimeout(this.animation);
         }
       };
     });
@@ -149,74 +152,21 @@ export class HomePageComponent{
   // }
 
   ionViewDidLeave(){
-    //this.swiper.disable();
-    //clearTimeout(this.animation);
+    
   }
 
   startAnimation() {
+    this.swiper = this.swiperRef?.nativeElement?.swiper;
     if (!this.swiper) {
       this.swiper = this.swiperRef?.nativeElement?.swiper;
     }
-    setTimeout(() => {
-      this.slideIndex += 1;
-      if (this.slideIndex == 0) {
-        this.swiper.slideNext(1000);
-      }else{
-        this.swiper.slideTo((this.slideIndex),1000,false);
-      }
-      if (this.slideIndex == (this.lstImgSlide.length - 1)) {
-        this.slideIndex = -1;
-      }
+    if (this.swiper) {
+      this.swiper.enable();
+    }
+    this.animation = setTimeout(() => {
+      this.swiper?.slideNext(1000);
       this.startAnimation();
     }, 5000)
-    
-    // if (this.slideIndex != 0) {
-    //   this.slideIndex = this.swiper.activeIndex;
-    // }
-    // setTimeout(() => {
-    //   if (this.slideIndex == (this.lstImgSlide.length - 1)) {
-    //     this.slideIndex = 0;
-    //     //this.swiper.activeIndex = 0;
-    //     this.swiper.slideNext(1000);
-    //   }else{
-    //     this.slideIndex += 1;
-    //     this.swiper.slideTo((this.slideIndex),1000,false);
-    //   }
-    //   this.startAnimation();
-    //   // if (this.slideIndex == -1) {
-    //   //   this.swiper.slideNext(1000);
-    //   // }else{
-    //   //   this.swiper.slideTo((this.slideIndex+1),1000,false);
-    //   // }
-    //   // if (this.slideIndex == (this.lstImgSlide.length - 1)) {
-    //   //   this.slideIndex = -1;
-    //   // }else{
-    //   //   this.slideIndex +=1;
-    //   // }
-    //   // this.startAnimation();
-    // }, 1000);
-    
-    // if (this.slideIndex != -1) {
-    //   this.slideIndex = this.swiper.activeIndex;
-    // }
-    // setTimeout(() => {
-    //   this.swiper.slideTo((this.slideIndex+1),1000,false);
-    
-    //   this.startAnimation();
-    // }, 4000);
-    // if(this.animationInProgress) return;
-    // this.animationInProgress = true;
-    // setTimeout(() => {
-    //   console.log(this.slideIndex);
-    //   if (this.slideIndex == (this.lstImgSlide.length - 1)) {
-    //     this.slideIndex = -1;
-    //   }
-    //   if (this.swiper) {
-    //     this.swiper.slideToLoop((this.slideIndex+1),1000);
-    //   }
-    //   this.animationInProgress = false;
-    //   //this.startAnimation();
-    // }, 1000);
   }
   //#endregion
 
@@ -244,6 +194,10 @@ export class HomePageComponent{
     this.navCtrl.navigateForward('main/recharge');
   }
 
+  openPopup(){
+    this.isPopup = true;
+  }
+
   goServicechargePage(){
     this.onDestroy();
     this.navCtrl.navigateForward('main/service-charge');
@@ -257,6 +211,11 @@ export class HomePageComponent{
   goRegulationsPage(){
     this.onDestroy();
     this.navCtrl.navigateForward('main/regulation');
+  }
+
+  goCreatePackagePage(){
+    this.onDestroy();
+    this.navCtrl.navigateForward('main/package/create');
   }
 
   async getDashBoard(){

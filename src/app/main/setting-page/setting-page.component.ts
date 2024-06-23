@@ -182,8 +182,13 @@ export class SettingPageComponent {
     this.navCtrl.navigateForward('main/setting/report');
   }
 
-  goFAQ(){
-    this.navCtrl.navigateForward('main/setting/faq');
+  async goFAQ(){
+    let url = await this.storage.get('urlFAQ');
+    if (url) {
+      window.open(url);
+    }
+    // window.open("http://zalo.me/1977119545826967396?src=qr")
+    //this.navCtrl.navigateForward('main/setting/faq');
   }
 
   goExchange(){

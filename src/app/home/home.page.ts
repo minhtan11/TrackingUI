@@ -227,7 +227,7 @@ export class HomePage implements OnInit, AfterViewInit {
           this.notification.showNotiError('', 'Lỗi không xác định!');
           break;
         case 1:
-          this.notification.showNotiError('', 'Thiết bị của bạn không có loại xác thực bằng sinh trắc học!');
+          this.notification.showNotiError('', 'Thiết bị của Quý khách không có loại xác thực bằng sinh trắc học!');
           break;
         case 3:
           switch(result.biometryType){
@@ -248,10 +248,10 @@ export class HomePage implements OnInit, AfterViewInit {
       return;
     }
     const verified = await NativeBiometric.verifyIdentity({
-      reason: "Trakuaidi xin chào! Bạn chỉ có thể xác thực được 5 lần! Mời bạn xác thực",
+      reason: "Trakuaidi xin chào! Quý khách chỉ có thể xác thực được 5 lần! Mời Quý khách xác thực",
       title: "Trakuaidi xin chào!",
       //subtitle: "Đăng nhập",
-      description: "Bạn chỉ có thể xác thực được 5 lần! Mời bạn xác thực",
+      description: "Quý khách chỉ có thể xác thực được 5 lần! Mời Quý khách xác thực",
       maxAttempts:5,
       negativeButtonText:'Hủy',
       useFallback:true
@@ -264,7 +264,7 @@ export class HomePage implements OnInit, AfterViewInit {
               this.notification.showNotiError('', 'Xác thực không thành công!');
               break;
             case (BiometricAuthError.USER_TEMPORARY_LOCKOUT).toString():
-              this.notification.showNotiError('', 'Bạn đã xác thực không thành công quá 5 lần !Vui lòng thử lại sau 30 giây');
+              this.notification.showNotiError('', 'Quý khách đã xác thực không thành công quá 5 lần !Vui lòng thử lại sau 30 giây');
               break;
             // default:
             //   this.notification.showNotiError('', 'Xác thực không thành công!');

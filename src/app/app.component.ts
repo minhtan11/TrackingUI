@@ -70,6 +70,7 @@ export class AppComponent implements OnInit {
     this.api.execByBody('Authencation', 'getconfig', null).pipe(takeUntil(this.destroy$)).subscribe(async (res: any) => {
       this.storage.set('isReview', res?.isMobileReview);
       this.storage.set('versionNo', res?.versionNo);
+      this.storage.set('urlFAQ', res?.urlFAQ);
     })
   }
 }

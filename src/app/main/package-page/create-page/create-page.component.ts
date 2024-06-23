@@ -187,7 +187,11 @@ export class CreatePageComponent  implements OnInit {
         }else{
           if (!res[1].isError) {
             this.notification.showNotiSuccess('', res[1].message);
-            this.navCtrl.navigateForward('main/package',{queryParams:{type:'add'}});
+            if(this.previousUrl.includes('/main/package')){
+              this.navCtrl.navigateForward('main/package',{queryParams:{type:'add'}});
+              return;
+            }
+            this.navCtrl.navigateBack(this.previousUrl);
             ///this.reset();
             //this.numAdd++;
           }else{

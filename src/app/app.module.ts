@@ -15,6 +15,7 @@ import { StorageService } from './storage-service/storage.service';
 import { NotificationServiceComponent } from './notification-service/notification-service.component';
 import { FcmService } from './services-fcm/fcm.service';
 import { PreviousRouterServiceService } from './previous-router-service/previous-router-service.service';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { PreviousRouterServiceService } from './previous-router-service/previous
     FcmService,
     PreviousRouterServiceService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],

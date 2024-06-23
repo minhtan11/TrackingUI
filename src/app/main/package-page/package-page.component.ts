@@ -43,6 +43,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   isOpenDeletePackage: any = false;
   isOpenQueryPackage: any = false;
   isOpenNoQueryPackage: any = false;
+  isOpenCheckFirst: any = false;
   isOpenDescript: any = false;
   isOpenFilter: any = false;
   itemSelected: any;
@@ -412,7 +413,22 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   //#endregion Edit package
 
   //#region CheckPackage
+  checkFirst(item: any){
+    this.itemSelected = { ...item };
+    if (item && item?.status > 3) {
+      this.isOpenCheckFirst = true;
+    }else{
+      this.checkQuery(item);
+    }
+  }
+
+  cancelcheckFirst() {
+    this.isOpenCheckFirst = false;
+    this.dt.detectChanges();
+  }
+
   checkQuery(item: any){
+    this.cancelcheckFirst();
     if (item?.searchBaiduTimes == 0) {
       this.openPopCheckPackage(item);
     }else{

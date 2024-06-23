@@ -79,8 +79,14 @@
                       <br>
                       <ng-container *ngIf="item2?.data?.hContent != null && item2?.data?.hContent != ''">
                         <ion-text class="text-dark dynamic-font">
-                          <span>Nội dung: </span>
                           {{item2?.data?.hContent}}
+                        </ion-text>
+                        <br>
+                      </ng-container>
+                      <ng-container *ngIf="item2?.data?.note != null && item2?.data?.note != ''">
+                        <ion-text class="text-dark dynamic-font">
+                          <span>Mô tả: </span>
+                          {{item2?.data?.note}}
                         </ion-text>
                         <br>
                       </ng-container>
