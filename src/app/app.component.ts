@@ -10,6 +10,8 @@ import { Network } from '@capacitor/network';
 import { NotificationServiceComponent } from './notification-service/notification-service.component';
 import { FcmService } from './services-fcm/fcm.service';
 import { App } from '@capacitor/app';
+import { register } from 'swiper/element/bundle';
+register();
 
 @Component({
   selector: 'app-root',
@@ -67,6 +69,7 @@ export class AppComponent implements OnInit {
   getConfig(){
     this.api.execByBody('Authencation', 'getconfig', null).pipe(takeUntil(this.destroy$)).subscribe(async (res: any) => {
       this.storage.set('isReview', res?.isMobileReview);
+      this.storage.set('versionNo', res?.versionNo);
     })
   }
 }

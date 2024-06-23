@@ -57,7 +57,6 @@ export class CreatePageComponent  implements OnInit {
     this.formGroup = this.formBuilder.group({
       id:[0],
       packageCode: ['',Validators.required],
-      movingMethod: [''],
       wareHouse: [''],
       isWoodPackage: [false],
       isAirPackage: [false],

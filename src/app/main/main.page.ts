@@ -8,7 +8,6 @@ import { ApiserviceComponent } from '../apiservice/apiservice.component';
 import { Subject, of, switchMap, takeUntil } from 'rxjs';
 import { Device } from '@capacitor/device';
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
-import { register } from 'swiper/element/bundle';
 import Swiper from 'swiper';
 import { ActionPerformed, PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
@@ -17,7 +16,6 @@ import { App } from '@capacitor/app';
 import { PreviousRouterServiceService } from '../previous-router-service/previous-router-service.service';
 import { Keyboard } from '@capacitor/keyboard';
 import { Badge } from '@capawesome/capacitor-badge';
-register();
 
 @Component({
   selector: 'app-main',

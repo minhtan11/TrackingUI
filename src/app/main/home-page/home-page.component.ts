@@ -13,6 +13,7 @@ import Swiper from 'swiper';
 import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 import { Device } from '@capacitor/device';
 import { ActionPerformed, PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-home-page',
@@ -21,8 +22,7 @@ import { ActionPerformed, PushNotificationSchema, PushNotifications } from '@cap
 })
 export class HomePageComponent{
   //#region Contrucstor
-  @ViewChild('swiper')
-  swiperRef: ElementRef | undefined;
+  @ViewChild('swiperRef') swiperRef: ElementRef | undefined;
   swiper:Swiper;
   oUser:any;
   ship1:any;
@@ -35,9 +35,11 @@ export class HomePageComponent{
   animation:any;
   lstImgSlide:any;
   imgSticket:any;
-  slideIndex:any = 1;
+  slideIndex:any = 0;
   isPopup:any=false;
+  isPopupVersion:any=false;
   imgPopup:any;
+  versionNo:any='1.3';
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -57,6 +59,7 @@ export class HomePageComponent{
       if (event instanceof NavigationEnd) {        
         if (event && event.urlAfterRedirects.includes('/main/mainpage')) {
           this.getDashBoard();
+          this.startAnimation();
         }
       };
     });
@@ -77,9 +80,10 @@ export class HomePageComponent{
       if (checklogin) {
         this.onCheckLogin(true);
       }else{
-        setTimeout(() => {
-          this.isPopup = true;
-        }, 2000);
+        let check = await this.onCheckVersion();
+        if (check) {
+          this.showBanner(true,1000);
+        }
       }
       this.platform.resume.subscribe(async () => {
         this.onCheckLogin();
@@ -117,54 +121,103 @@ export class HomePageComponent{
 
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
-    // this.animationInProgress = false;
-    // this.startAnimation();
+    this.animationInProgress = false;
     
   }
 
-  showSlides(){
-    let i;
-    let slides = document.getElementsByClassName("mySlides");
-    let dots = document.getElementsByClassName("dot");
-    if (slides && slides.length > 0) {
-      for (i = 0; i < slides.length; i++) {
-        (slides[i] as any).style.display = "none";
-      }
-      this.slideIndex++;
-      if (this.slideIndex > slides.length) { this.slideIndex = 1 }
-      if (dots && dots.length > 0) {
-        for (i = 0; i < dots.length; i++) {
-          dots[i].className = dots[i].className.replace(" active-dots", "");
-        }
-      }
-      (slides[this.slideIndex - 1] as any).style.display = "block";
-      dots[this.slideIndex - 1].className += " active-dots";
-    }
-    setTimeout(() => {
-      this.showSlides();
-    }, 4000);
-  }
+  // showSlides(){
+  //   let i;
+  //   let slides = document.getElementsByClassName("mySlides");
+  //   let dots = document.getElementsByClassName("dot");
+  //   if (slides && slides.length > 0) {
+  //     for (i = 0; i < slides.length; i++) {
+  //       (slides[i] as any).style.display = "none";
+  //     }
+  //     this.slideIndex++;
+  //     if (this.slideIndex > slides.length) { this.slideIndex = 1 }
+  //     if (dots && dots.length > 0) {
+  //       for (i = 0; i < dots.length; i++) {
+  //         dots[i].className = dots[i].className.replace(" active-dots", "");
+  //       }
+  //     }
+  //     (slides[this.slideIndex - 1] as any).style.display = "block";
+  //     dots[this.slideIndex - 1].className += " active-dots";
+  //   }
+  //   setTimeout(() => {
+  //     this.showSlides();
+  //   }, 4000);
+  // }
 
   ionViewDidLeave(){
     //this.swiper.disable();
     //clearTimeout(this.animation);
   }
 
-  // startAnimation() {
-  //   this.swiper = this.swiperRef?.nativeElement?.swiper;
-  //   if(this.swiper){
-  //     this.swiper?.enable();
-  //   } 
-  //   if(this.animationInProgress) return;
-  //   this.animationInProgress = true;
-  //   this.animation = setTimeout(() => {
-  //     if (this.swiper) {
-  //       this.swiper.slideNext(1000,false);
-  //     }
-  //     this.animationInProgress = false;
-  //     this.startAnimation();
-  //   }, 5000);
-  // }
+  startAnimation() {
+    if (!this.swiper) {
+      this.swiper = this.swiperRef?.nativeElement?.swiper;
+    }
+    setTimeout(() => {
+      this.slideIndex += 1;
+      if (this.slideIndex == 0) {
+        this.swiper.slideNext(1000);
+      }else{
+        this.swiper.slideTo((this.slideIndex),1000,false);
+      }
+      if (this.slideIndex == (this.lstImgSlide.length - 1)) {
+        this.slideIndex = -1;
+      }
+      this.startAnimation();
+    }, 5000)
+    
+    // if (this.slideIndex != 0) {
+    //   this.slideIndex = this.swiper.activeIndex;
+    // }
+    // setTimeout(() => {
+    //   if (this.slideIndex == (this.lstImgSlide.length - 1)) {
+    //     this.slideIndex = 0;
+    //     //this.swiper.activeIndex = 0;
+    //     this.swiper.slideNext(1000);
+    //   }else{
+    //     this.slideIndex += 1;
+    //     this.swiper.slideTo((this.slideIndex),1000,false);
+    //   }
+    //   this.startAnimation();
+    //   // if (this.slideIndex == -1) {
+    //   //   this.swiper.slideNext(1000);
+    //   // }else{
+    //   //   this.swiper.slideTo((this.slideIndex+1),1000,false);
+    //   // }
+    //   // if (this.slideIndex == (this.lstImgSlide.length - 1)) {
+    //   //   this.slideIndex = -1;
+    //   // }else{
+    //   //   this.slideIndex +=1;
+    //   // }
+    //   // this.startAnimation();
+    // }, 1000);
+    
+    // if (this.slideIndex != -1) {
+    //   this.slideIndex = this.swiper.activeIndex;
+    // }
+    // setTimeout(() => {
+    //   this.swiper.slideTo((this.slideIndex+1),1000,false);
+    
+    //   this.startAnimation();
+    // }, 4000);
+    // if(this.animationInProgress) return;
+    // this.animationInProgress = true;
+    // setTimeout(() => {
+    //   console.log(this.slideIndex);
+    //   if (this.slideIndex == (this.lstImgSlide.length - 1)) {
+    //     this.slideIndex = -1;
+    //   }
+    //   if (this.swiper) {
+    //     this.swiper.slideToLoop((this.slideIndex+1),1000);
+    //   }
+    //   this.animationInProgress = false;
+    //   //this.startAnimation();
+    // }, 1000);
+  }
   //#endregion
 
   //#region Function
@@ -232,9 +285,6 @@ export class HomePageComponent{
         this.lstImgSlide = res[1].filter((x:any) => x.imgType == 2);
         this.imgPopup = res[1].filter((x:any) => x.imgType == 3)[0];
         this.imgSticket = res[1].filter((x:any) => x.imgType == 4)[0];
-        setTimeout(() => {
-          this.showSlides();
-        }, 2000);
       }else{
       }
     })
@@ -262,16 +312,16 @@ export class HomePageComponent{
         this.navCtrl.navigateBack('home',{queryParams:{loginError:JSON.stringify(res)}});
         this.onDestroy();
       }else{
+        let check = await this.onCheckVersion();
+        if (!check) {
+          return;
+        }
         let data = await this.storage.get('notitap');
         let oData = JSON.parse(data)
         if (data) {
           this.goNotification(oData);
         }else{
-          if (isPopUp) {
-            setTimeout(() => {
-              this.isPopup = true;
-            }, 3000);
-          }
+          this.showBanner(isPopUp,3000);
         }
         this.isLoad = true;
         await this.storage.setAccount(username);
@@ -308,6 +358,46 @@ export class HomePageComponent{
       this.navCtrl.navigateForward('main/notification');
     }
     this.storage.remove('notitap');
+  }
+
+  async onCheckVersion(){
+    let newVersionNo = await this.storage.get('versionNo');
+    if (newVersionNo) {
+      if (this.versionNo != newVersionNo) {
+        this.isPopupVersion = true;
+        this.storage.remove('notitap');
+        return false;
+      }
+    }
+    return true;
+  }
+
+  showBanner(isPopup:any=true,time:any){
+    if (isPopup) {
+      setTimeout(() => {
+        this.isPopup = true;
+      }, time);
+    }
+  }
+
+  cancelVersion(){
+    this.isPopupVersion = false;
+    this.dt.detectChanges();
+    App.exitApp();
+  }
+
+  async updateVersion(){
+    this.cancelVersion();
+    let platform = await Capacitor.getPlatform();
+    switch(platform.toLowerCase()){
+      case 'android':
+        window.open("https://play.google.com/store/apps/details?id=com.trakuaidi.app&hl=vi-VN");
+        break;
+      case 'ios':
+        window.open("https://apps.apple.com/vn/app/trakuaidi/id6502419759?l=vi");
+        break;
+    }
+    App.exitApp();
   }
 
   //#endregion

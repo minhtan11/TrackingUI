@@ -124,16 +124,25 @@
   </ng-container>
   <ng-container *ngIf="!isReview">
     <div class="w-100">
-      <div class="padding-statusbar-ios" style="height: 200px;" *ngIf="lstImgSlide && lstImgSlide.length == 0" class="slideshow-container w-100 mb-2">
+      <div class="w-100 padding-statusbar-ios">
+        <swiper-container #swiperRef [slidesPerView]="1" [slidesPerGroup]="1" [loop]="true" [pagination]="true">
+          <ng-container *ngFor="let item of lstImgSlide; index as i">
+            <swiper-slide [attr.data-swiper-slide-index]="i">
+              <img class="w-100 h-100 mb-5" [src]="'https://tracking.nhanshiphang.vn/'+item?.img">
+            </swiper-slide>
+          </ng-container>
+        </swiper-container>
+      </div>
+      <!-- <div class="padding-statusbar-ios" style="height: 200px;" *ngIf="lstImgSlide && lstImgSlide.length == 0" class="slideshow-container w-100 mb-2">
         <ion-skeleton-text class="w-100" [animated]="true"></ion-skeleton-text>
       </div>
       <div *ngIf="lstImgSlide && lstImgSlide.length > 0" class="slideshow-container w-100 mb-2 padding-statusbar-ios">
         <ng-container *ngFor="let item of lstImgSlide; index as i">
           <div *ngIf="i == 0" style="display: block;" class="mySlides fade">
-            <img class="w-100" [src]="'https://tracking.nhanshiphang.vn/'+item?.img">
+            <img class="w-100 h-100" [src]="'https://tracking.nhanshiphang.vn/'+item?.img">
           </div>
           <div *ngIf="i != 0" class="mySlides fade">
-            <img class="w-100" [src]="'https://tracking.nhanshiphang.vn/'+item?.img">
+            <img class="w-100 h-100" [src]="'https://tracking.nhanshiphang.vn/'+item?.img">
           </div>
         </ng-container>
       </div>
@@ -142,7 +151,7 @@
           <span *ngIf="i == 0" class="dot active-dots"></span>
           <span *ngIf="i != 0" class="dot"></span>
         </ng-container>
-      </div>
+      </div> -->
       <div class="pl-3 pt-3 w-100">
         <ion-text>
           <h4 class="mx-0 my-0 font-weight-bold dynamic-font text-dark">Dịch vụ</h4>
@@ -303,10 +312,34 @@
     <ion-modal id="modal-dialog" style="--background:none !important;--box-shadow: none !important" (willDismiss)="cancelPopup()" [isOpen]="isPopup">
       <ng-template>
         <div class="w-100">
-          <img (click)="goRechargePage()" style="border-radius: 20px;" [src]="'https://tracking.nhanshiphang.vn/'+imgPopup?.img">
+          <img class="w-100 h-100" (click)="goRechargePage()" style="border-radius: 20px;" [src]="'https://tracking.nhanshiphang.vn/'+imgPopup?.img">
         </div>
         <div class="d-flex align-items-center justify-content-center w-100 mt-3">
           <ion-icon (click)="cancelPopup()" style="font-size: 2rem;" class="text-white" name="close-circle-outline"></ion-icon>
+        </div>
+      </ng-template>
+    </ion-modal>
+
+    <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelVersion()" [isOpen]="isPopupVersion">
+      <ng-template>
+        <div class="p-3 w-100 h-100">
+          <div class="w-100 mb-3">
+            <ion-text class="dynamic-font text-center text-dark">
+              <h3 class="mx-0 my-0 font-weight-bold">Cập nhật phần mềm</h3>
+            </ion-text>
+          </div>
+          <div class="w-100 text-center">
+            <ion-text class="dynamic-font text-dark">
+              <span>Trakuaidi xin thông báo! Đã có bản cập nhật phần mềm mới, vui lòng Quý khách cập nhật phần mềm để tiếp tục sử dụng. Xin cảm ơn!</span>
+            </ion-text>
+          </div>
+          <div class="d-flex align-items-center justify-content-center mt-3">
+            <ion-button (click)="updateVersion()" mode="ios" size="default" class="ion-btn-default me-3">
+              <ion-text style="color: white !important;" class="dynamic-font">
+                Đồng ý
+              </ion-text>
+            </ion-button>
+          </div>
         </div>
       </ng-template>
     </ion-modal>
