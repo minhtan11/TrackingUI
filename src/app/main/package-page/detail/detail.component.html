@@ -633,6 +633,44 @@
       </div>
     </ng-template>
   </ion-modal>
+
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelcheckFirst()" [isOpen]="isOpenCheckFirst">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Kiểm tra kiện hàng</h3>
+          </ion-text>
+        </div>
+        <div class="w-100" text-center>
+          <ion-text class="dynamic-font text-dark">
+            <span>Hiện tại trạng thái kiện hàng là </span>
+            <ng-container [ngSwitch]="oData?.status">
+              <span *ngSwitchCase="4" class="text-primary-default">Hàng về tới HCM</span>
+              <span *ngSwitchCase="5" class="text-primary-default">Đã nhận hàng</span>
+              <span *ngSwitchCase="9" class="text-primary-default">Đã hủy</span>
+              <span *ngSwitchCase="11" class="text-primary-default">Không nhận được hàng</span>
+            </ng-container>
+          </ion-text>
+          <ion-text class="dynamic-font text-dark">
+            <span>.Quý khách vẫn muốn xem lại quá trình vận chuyển trọng nội đia Trung Quốc?</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="checkQuery(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelcheckFirst()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
   <!-- CheckPackkage -->
 
   <!-- CancelPackkage -->

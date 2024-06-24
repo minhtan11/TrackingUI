@@ -27,6 +27,7 @@ export class DetailComponent  implements OnInit {
   isOpenQueryPackage: any = false;
   isOpenNoQueryPackage: any = false;
   isOpenDescript: any = false;
+  isOpenCheckFirst: any = false;
   previousUrl:any;
   isChange:any=false;
   isCancel:any=false;
@@ -158,6 +159,19 @@ export class DetailComponent  implements OnInit {
   //#endregion Edit package
 
   //#region CheckPackage
+  checkFirst(item: any){
+    if (item && item?.status > 3) {
+      this.isOpenCheckFirst = true;
+    }else{
+      this.checkQuery(item);
+    }
+  }
+
+  cancelcheckFirst() {
+    this.isOpenCheckFirst = false;
+    this.dt.detectChanges();
+  }
+
   checkQuery(item: any){
     if (item?.searchBaiduTimes == 0) {
       this.openPopCheckPackage(item);
