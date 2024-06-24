@@ -173,6 +173,7 @@ export class DetailComponent  implements OnInit {
   }
 
   checkQuery(item: any){
+    this.cancelcheckFirst();
     if (item?.searchBaiduTimes == 0) {
       this.openPopCheckPackage(item);
     }else{
