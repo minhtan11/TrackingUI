@@ -201,153 +201,46 @@
           <h4 class="mx-0 my-0 font-weight-bold ">Truy cập nhanh</h4>
         </ion-text>
       </div>
-      <div class="w-100 p-3 d-flex align-items-center scroll-hidden overflow-auto">
-        <ion-card class="w-100 m-1 mr-3" style="min-width: 300px !important;max-width: 300px !important;--background:white !important;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;">
-          <ion-card-header class="p-2">
-            <img style="width: 10rem;margin: auto;" src="../../../assets/image/icon-package.png">
-          </ion-card-header>
+      <div class="w-100 p-2">
+        <ion-card (click)="goCreatePackagePage()" mode="ios" class="m-1"
+          style="--background:whitesmoke !important;box-shadow: unset !important;border: 1px solid;">
           <ion-card-content class="p-2">
-            <div class="d-flex align-items-center justify-content-between">
-              <div>
-                <ion-text class="dynamic-font text-dark font-weight-bold">
-                  Tạo mã vận đơn
-                </ion-text>
-                <br>
-                <ion-text *ngIf="ship1 != undefined" class="dynamic-font">
-                  Tiện lợi và nhanh chóng
-                </ion-text>
-              </div>
-              <div>
-                <ion-button (click)="goCreatePackagePage()" style="margin-left: auto;" mode="ios" size="small" class="ion-btn-orange">
-                  <ion-text style="color: white !important;" class="dynamic-font font-weight-bold">
-                    Tạo mã
+            <ion-list style="background-color:whitesmoke !important;">
+              <ion-item style="--background:whitesmoke !important" lines="none">
+                <img slot="start" style="width: 4rem;" src="../../../assets/image/icon-package.png">
+                <div style="flex-direction: column;" class="w-100 d-flex">
+                  <ion-text class="dynamic-font text-dark font-weight-bold">
+                    Tạo mã vận đơn
                   </ion-text>
-                </ion-button>
-              </div>
-            </div>
-          </ion-card-content>
-        </ion-card>
-        <ion-card class="w-100 m-1 mr-3" style="min-width: 300px !important;max-width: 300px !important;--background:white !important;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;">
-          <ion-card-header class="p-2">
-            <img style="width: 10rem;margin: auto;" src="../../../assets/image/payment.jpg">
-          </ion-card-header>
-          <ion-card-content class="p-2">
-            <div class="d-flex align-items-center justify-content-between">
-              <div>
-                <ion-text class="dynamic-font text-dark font-weight-bold">
-                  Đơn hàng đang chờ thanh toán
-                </ion-text>
-                <br>
-                <ion-text *ngIf="ship1 != undefined" class="dynamic-font">
-                  <span>Có </span><span>{{ship1 | number}}</span><span> đơn hàng</span>
-                </ion-text>
-                <ion-skeleton-text style="width: 80px;" *ngIf="ship1 == undefined" [animated]="true"></ion-skeleton-text>
-              </div>
-              <div>
-                <ion-button (click)="goOrderPage(1)" style="margin-left: auto;" mode="ios" size="small" class="ion-btn-orange">
-                  <ion-text style="color: white !important;" class="dynamic-font font-weight-bold">
-                    Xem ngay
-                  </ion-text>
-                </ion-button>
-              </div>
-            </div>
-          </ion-card-content>
-        </ion-card>
-        <ion-card class="w-100 m-1 mr-3" style="min-width: 300px !important;max-width: 300px !important;--background:white !important;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;">
-          <ion-card-header class="p-2">
-            <img style="width: 10rem;margin: auto;" src="../../../assets/image/plan-delivery.jpg">
-          </ion-card-header>
-          <ion-card-content class="p-2">
-            <div class="d-flex align-items-center justify-content-between">
-              <div>
-                <ion-text class="dynamic-font text-dark font-weight-bold">
-                  Kiện hàng đang vận chuyển
-                </ion-text>
-                <br>
-                <ion-text *ngIf="pack3 != undefined" class="dynamic-font">
-                  <span>Có </span><span>{{pack3 | number}}</span><span> kiện hàng</span>
-                </ion-text>
-                <ion-skeleton-text style="width: 80px;" *ngIf="pack3 == undefined" [animated]="true"></ion-skeleton-text>
-              </div>
-              <div>
-                <ion-button (click)="goPackagePage(3)" style="margin-left: auto;" mode="ios" size="small" class="ion-btn-orange">
-                  <ion-text style="color: white !important;" class="dynamic-font font-weight-bold">
-                    Xem ngay
-                  </ion-text>
-                </ion-button>
-              </div>
-            </div>
-          </ion-card-content>
-        </ion-card>
-        <ion-card class="w-100 m-1 mr-3" style="min-width: 300px !important;max-width: 300px !important;--background:white !important;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;">
-          <ion-card-header class="p-2">
-            <img style="width: 10rem;margin: auto;" src="../../../assets/image/payment-done.jpg">
-          </ion-card-header>
-          <ion-card-content class="p-2">
-            <div class="d-flex align-items-center justify-content-between">
-              <div>
-                <ion-text class="dynamic-font text-dark font-weight-bold">
-                  Đơn hàng đã thanh toán 
-                </ion-text>
-                <br>
-                <ion-text *ngIf="ship2 != undefined" class="dynamic-font">
-                  <span>Có </span><span>{{ship2 | number}}</span><span> đơn hàng</span>
-                </ion-text>
-                <ion-skeleton-text style="width: 80px;" *ngIf="ship2 == undefined" [animated]="true"></ion-skeleton-text>
-              </div>
-              <div>
-                <ion-button (click)="goOrderPage(2)" style="margin-left: auto;" mode="ios" size="small" class="ion-btn-orange">
-                  <ion-text style="color: white !important;" class="dynamic-font font-weight-bold">
-                    Xem ngay
-                  </ion-text>
-                </ion-button>
-              </div>
-            </div>
-          </ion-card-content>
-        </ion-card>
-        <ion-card class="w-100 m-1" style="min-width: 300px !important;max-width: 300px !important;--background:white !important;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;">
-          <ion-card-header class="p-2">
-            <img style="width: 10rem;margin: auto;" src="../../../../assets/image/delivery-done.jpg">
-          </ion-card-header>
-          <ion-card-content class="p-2">
-            <div class="d-flex align-items-center justify-content-between">
-              <div>
-                <ion-text class="dynamic-font text-dark font-weight-bold">
-                  Kiện hàng đã nhận
-                </ion-text>
-                <br>
-                <ion-text *ngIf="pack5 != undefined" class="dynamic-font">
-                  <span>Có </span><span>{{pack5 | number}}</span><span> kiện hàng</span>
-                </ion-text>
-                <ion-skeleton-text style="width: 80px;" *ngIf="pack5 == undefined" [animated]="true"></ion-skeleton-text>
-              </div>
-              <div>
-                <ion-button (click)="goPackagePage(5)" style="margin-left: auto;" mode="ios" size="small" class="ion-btn-orange">
-                  <ion-text style="color: white !important;" class="dynamic-font font-weight-bold">
-                    Xem ngay
-                  </ion-text>
-                </ion-button>
-              </div>
-            </div>
+                  <div style="white-space: nowrap;
+                                  overflow: hidden;
+                                  text-overflow: ellipsis;">
+                    <ion-text class="dynamic-font text-dark">
+                      Tiện lợi và nhanh chóng
+                    </ion-text>
+                  </div>
+                </div>
+              </ion-item>
+            </ion-list>
           </ion-card-content>
         </ion-card>
       </div>
-      <!-- <div class="w-100 p-3">
+      <div class="w-100 p-2">
         <ion-card (click)="goOrderPage(1)" mode="ios" class="m-1"
-          style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+          style="--background:whitesmoke !important;box-shadow: unset !important;border: 1px solid;">
           <ion-card-content class="p-2">
-            <ion-list style="background-color:white !important;">
-              <ion-item style="--background:white !important" lines="none">
-                <img slot="start" style="width: 10rem;" src="../../../assets/image/payment.jpg">
-                <div style="flex-direction: column;" class="w-100 text-center d-flex align-items-center">
-                  <ion-text class="dynamic-font text-dark">
-                    Đang chờ thanh toán
+            <ion-list style="background-color:whitesmoke !important;">
+              <ion-item style="--background:whitesmoke !important" lines="none">
+                <img slot="start" style="width: 4rem;" src="../../../assets/image/payment.png">
+                <div style="flex-direction: column;" class="w-100 d-flex">
+                  <ion-text class="dynamic-font text-dark font-weight-bold">
+                    Đơn hàng đang chờ thanh toán
                   </ion-text>
                   <div style="white-space: nowrap;
                                   overflow: hidden;
                                   text-overflow: ellipsis;">
                     <ion-text *ngIf="ship1 != undefined" class="dynamic-font text-dark">
-                      <span class="font-weight-bold">{{ship1 | number}}</span>
+                      <span>Có </span><span>{{ship1 | number}}</span><span> đơn hàng</span>
                     </ion-text>
                     <ion-skeleton-text style="width: 80px;" *ngIf="ship1 == undefined" [animated]="true"></ion-skeleton-text>
                   </div>
@@ -357,22 +250,22 @@
           </ion-card-content>
         </ion-card>
       </div>
-      <div class="w-100 p-3">
+      <div class="w-100 p-2">
         <ion-card (click)="goPackagePage(3)" mode="ios" class="m-1"
-          style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+          style="--background:whitesmoke !important;box-shadow: unset !important;border: 1px solid;">
           <ion-card-content class="p-2">
-            <ion-list style="background-color:white !important;">
-              <ion-item style="--background:white !important" lines="none">
-                <img slot="start" style="width: 10rem;" src="../../../assets/image/plan-delivery.jpg">
-                <div style="flex-direction: column;" class="w-100 text-center d-flex align-items-center">
-                  <ion-text class="dynamic-font text-dark">
-                    Kiện đang vận chuyển
+            <ion-list style="background-color:whitesmoke !important;">
+              <ion-item style="--background:whitesmoke !important" lines="none">
+                <img slot="start" style="width: 4rem;" src="../../../assets/image/plan-delivery.png">
+                <div style="flex-direction: column;" class="w-100 d-flex">
+                  <ion-text class="dynamic-font text-dark font-weight-bold">
+                    Kiện hàng đang vận chuyển
                   </ion-text>
                   <div style="white-space: nowrap;
                                   overflow: hidden;
                                   text-overflow: ellipsis;">
                     <ion-text *ngIf="pack3 != undefined" class="dynamic-font text-dark">
-                      <span class="font-weight-bold">{{pack3 | number}}</span>
+                      <span>Có </span><span>{{pack3 | number}}</span><span> kiện hàng</span>
                     </ion-text>
                     <ion-skeleton-text style="width: 80px;" *ngIf="pack3 == undefined" [animated]="true"></ion-skeleton-text>
                   </div>
@@ -382,22 +275,22 @@
           </ion-card-content>
         </ion-card>
       </div>
-      <div class="w-100 p-3">
+      <div class="w-100 p-2">
         <ion-card (click)="goOrderPage(2)" mode="ios" class="m-1"
-          style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+        style="--background:whitesmoke !important;box-shadow: unset !important;border: 1px solid;">
           <ion-card-content class="p-2">
-            <ion-list style="background-color:white !important;">
-              <ion-item style="--background:white !important" lines="none">
-                <img slot="start" style="width: 10rem;" src="../../../assets/image/payment-done.jpg">
-                <div style="flex-direction: column;" class="w-100 text-center d-flex align-items-center">
-                  <ion-text class="dynamic-font text-dark">
-                    Đã thanh toán
+            <ion-list style="background-color:whitesmoke !important;">
+              <ion-item style="--background:whitesmoke !important" lines="none">
+                <img slot="start" style="width: 4rem;" src="../../../assets/image/payment-done.png">
+                <div style="flex-direction: column;" class="w-100 d-flex">
+                  <ion-text class="dynamic-font text-dark font-weight-bold">
+                    Đơn hàng đã thanh toán 
                   </ion-text>
                   <div style="white-space: nowrap;
                                   overflow: hidden;
                                   text-overflow: ellipsis;">
                     <ion-text *ngIf="ship2 != undefined" class="dynamic-font text-dark">
-                      <span class="font-weight-bold">{{ship2 | number}}</span>
+                      <span>Có </span><span>{{ship2 | number}}</span><span> đơn hàng</span>
                     </ion-text>
                     <ion-skeleton-text style="width: 80px;" *ngIf="ship2 == undefined" [animated]="true"></ion-skeleton-text>
                   </div>
@@ -407,22 +300,22 @@
           </ion-card-content>
         </ion-card>
       </div>
-      <div class="w-100 p-3">
+      <div class="w-100 p-2">
         <ion-card (click)="goPackagePage(5)" mode="ios" class="m-1"
-          style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+          style="--background:whitesmoke !important;box-shadow: unset !important;border: 1px solid;">
           <ion-card-content class="p-2">
-            <ion-list style="background-color:white !important;">
-              <ion-item style="--background:white !important" lines="none">
-                <img slot="start" style="width: 10rem;" src="../../../../assets/image/delivery-done.jpg">
-                <div style="flex-direction: column;" class="w-100 text-center d-flex align-items-center">
-                  <ion-text class="dynamic-font text-dark">
-                    Đã nhận hàng
+            <ion-list style="background-color:whitesmoke !important;">
+              <ion-item style="--background:whitesmoke !important" lines="none">
+                <img slot="start" style="width: 4rem;" src="../../../assets/image/delivery-done.png">
+                <div style="flex-direction: column;" class="w-100 d-flex">
+                  <ion-text class="dynamic-font text-dark font-weight-bold">
+                    Kiện hàng đã nhận
                   </ion-text>
                   <div style="white-space: nowrap;
                                   overflow: hidden;
                                   text-overflow: ellipsis;">
                     <ion-text *ngIf="pack5 != undefined" class="dynamic-font text-dark">
-                      <span class="font-weight-bold">{{pack5 | number}}</span>
+                      <span>Có </span><span>{{pack5 | number}}</span><span> kiện hàng</span>
                     </ion-text>
                     <ion-skeleton-text style="width: 80px;" *ngIf="pack5 == undefined" [animated]="true"></ion-skeleton-text>
                   </div>
@@ -431,7 +324,7 @@
             </ion-list>
           </ion-card-content>
         </ion-card>
-      </div> -->
+      </div>
     </div>
     <ion-fab style="margin-bottom: var(--ion-safe-area-bottom, 0);" slot="fixed" vertical="bottom" horizontal="end">
       <ion-fab-button (click)="openPopup()" style="--background: none !important;
