@@ -10,6 +10,7 @@ import { StorageService } from 'src/app/storage-service/storage.service';
 import { Device } from '@capacitor/device';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
+import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-setting-page',
@@ -185,7 +186,7 @@ export class SettingPageComponent {
   async goFAQ(){
     let url = await this.storage.get('urlFAQ');
     if (url) {
-      window.open(url);
+      await Browser.open({ url: url });
     }
     // window.open("http://zalo.me/1977119545826967396?src=qr")
     //this.navCtrl.navigateForward('main/setting/faq');
@@ -265,9 +266,9 @@ export class SettingPageComponent {
     this.dt.detectChanges();
   }
 
-  goZalo(){
+  async goZalo(){
     this.cancelSupport();
-    window.open("http://zalo.me/1977119545826967396?src=qr")
+    await Browser.open({ url: 'http://zalo.me/1977119545826967396?src=qr' });
   }
 
   goPhone(){

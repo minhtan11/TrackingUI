@@ -14,6 +14,7 @@ import { PreviousRouterServiceService } from 'src/app/previous-router-service/pr
 import { Device } from '@capacitor/device';
 import { ActionPerformed, PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
+import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-home-page',
@@ -350,10 +351,12 @@ export class HomePageComponent{
     let platform = await Capacitor.getPlatform();
     switch(platform.toLowerCase()){
       case 'android':
-        window.open("https://play.google.com/store/apps/details?id=com.trakuaidi.app&hl=vi-VN");
+        await Browser.open({ url: 'https://play.google.com/store/apps/details?id=com.trakuaidi.app&hl=vi-VN' });
+        //window.open("https://play.google.com/store/apps/details?id=com.trakuaidi.app&hl=vi-VN");
         break;
       case 'ios':
-        window.open("https://apps.apple.com/vn/app/trakuaidi/id6502419759?l=vi");
+        await Browser.open({ url: 'https://apps.apple.com/vn/app/trakuaidi/id6502419759?l=vi' });
+        //window.open("https://apps.apple.com/vn/app/trakuaidi/id6502419759?l=vi");
         break;
     }
     App.exitApp();
