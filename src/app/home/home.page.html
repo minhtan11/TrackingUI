@@ -100,16 +100,17 @@
           <br>
         </ion-col> -->
       </ng-container>
-      
-      <ion-col *ngIf="!isReview" size="12" class="pr-0 pl-0">
-        <ion-text>
-          <span class="dynamic-font" style="color: black !important;">Quý khách chưa có tài khoản? </span>
-        </ion-text>
-        <ion-text>
-          <span class="dynamic-font" (click)="goSignUpPage()" style="color: var(--ion-color-mat-primary) !important"><u>Đăng ký</u></span>
-        </ion-text>
-        <br>
-      </ion-col>
+      <ng-container *ngIf="!isReview">
+        <ion-col *ngIf="" size="12" class="pr-0 pl-0">
+          <ion-text>
+            <span class="dynamic-font" style="color: black !important;">Quý khách chưa có tài khoản? </span>
+          </ion-text>
+          <ion-text>
+            <span class="dynamic-font" (click)="goSignUpPage()" style="color: var(--ion-color-mat-primary) !important"><u>Đăng ký</u></span>
+          </ion-text>
+          <br>
+        </ion-col>
+      </ng-container>
       <ion-col size="12" class="pr-0 pl-0">
         <ion-img style="max-width: 200px !important;min-width: 200px;max-height: 200px;min-height: 200px;object-fit: contain;display: block;margin-left: auto;margin-right: auto;" src="../../assets/image/delivery-service.png"></ion-img>
       </ion-col>
