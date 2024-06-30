@@ -11,104 +11,106 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding" style="--background:white !important;">
-  
-  <ion-grid [fixed]="true" style="margin: auto">
-    <ion-row [formGroup]="formGroup">
-      <ion-col size="12">
-        <div class="alert alert-warning d-flex" role="alert">
-          <div class="alert alert-warning p-0 d-flex" role="alert" style="margin-top: 1em;border: unset !important;">
-            <i class="bi bi-exclamation-triangle-fill icon-16 mr-2"></i>
-            <div>
-              <ion-text class="mb-0 dynamic-font text-dark">
-                <b>Lưu ý:</b>
-              </ion-text>
-              <br>
-              <ion-text class="mb-0 dynamic-font text-dark">
-                - Có thể tạo nhiều Mã Vận Đơn cùng lúc bằng dấu "," hoặc ":". Ví dụ: mavandon1,mavandon2 hoặc mavandon1;mavandon2
-              </ion-text>
+  <ng-container *ngIf="formGroup">
+    <ion-grid [fixed]="true" style="margin: auto">
+      <ion-row [formGroup]="formGroup">
+        <ion-col size="12">
+          <div class="alert alert-warning d-flex" role="alert">
+            <div class="alert alert-warning p-0 d-flex" role="alert" style="margin-top: 1em;border: unset !important;">
+              <i class="bi bi-exclamation-triangle-fill icon-16 mr-2"></i>
+              <div>
+                <ion-text class="mb-0 dynamic-font text-dark">
+                  <b>Lưu ý:</b>
+                </ion-text>
+                <br>
+                <ion-text class="mb-0 dynamic-font text-dark">
+                  - Có thể tạo nhiều Mã Vận Đơn cùng lúc bằng dấu "," hoặc ":". Ví dụ: mavandon1,mavandon2 hoặc mavandon1;mavandon2
+                </ion-text>
+              </div>
             </div>
           </div>
-        </div>
-      </ion-col>
-      <ion-col size="12">
-        <mat-form-field appearance="outline" class="w-100 mb-2">
-          <mat-label>Mã vận đơn (bắt buộc)</mat-label>
-          <input (focus)="onfocus(elePackageCode)" #elePackageCode formControlName="packageCode" matInput>
-        </mat-form-field>
-        <!-- <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Phương thức vận chuyển (không bắt buộc)</mat-label>
-          <mat-select #eleMovingMethod formControlName="movingMethod">
-            <mat-option [value]="1">Nhanh</mat-option>
-            <mat-option [value]="2">Thường</mat-option>
-            <mat-option [value]="3">Bộ</mat-option>
-            <mat-option [value]="4">Bộ lô</mat-option>
-            <mat-option [value]="5">Biển</mat-option>
-          </mat-select>
-        </mat-form-field> -->
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Kho (không bắt buộc)</mat-label>
-          <mat-select #eleWareHouse formControlName="wareHouse">
-            <mat-option [value]="'1'">Đông quản</mat-option>
-            <mat-option [value]="'2'">Phật sơn</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <ion-text>
-          <h5 class="mx-0 my-0 font-weight-bold dynamic-font text-orange">Dịch vụ</h5>
-        </ion-text>
-        <div class="row mb-3">
-          <div class="col-3">
-            <div class="d-flex align-items-center" style="flex-direction: column;">
-              <mat-checkbox formControlName="isWoodPackage"></mat-checkbox>
-              <ion-text class="dynamic-font text-dark font-weight-bold">
-                <span>Đóng gỗ</span>
-              </ion-text>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="d-flex align-items-center" style="flex-direction: column;">
-              <mat-checkbox formControlName="isAirPackage"></mat-checkbox>
-              <ion-text class="dynamic-font text-dark font-weight-bold">
-                <span>Túi khí</span>
-              </ion-text>
-            </div>
-          </div>
-          <div *ngIf="!isReview" class="col-3">
-            <div class="d-flex align-items-center" style="flex-direction: column;">
-              <mat-checkbox formControlName="isInsurance"></mat-checkbox>
-              <ion-text class="dynamic-font text-dark font-weight-bold">
-                <span>Bảo hiểm</span>
-              </ion-text>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="d-flex align-items-center" style="flex-direction: column;">
-              <mat-checkbox formControlName="isBrand"></mat-checkbox>
-              <ion-text class="dynamic-font text-dark font-weight-bold">
-                <span>Hàng hiệu</span>
-              </ion-text>
-            </div>
-          </div>
-        </div>
-        <ng-container *ngIf="formGroup.value.isInsurance">
-          <ion-text>
-            <h5 class="mx-0 my-0 font-weight-bold dynamic-font text-orange">Kê khai</h5>
-          </ion-text>
-          <mat-form-field appearance="outline" class="w-100 mt-3">
-            <mat-label>Tên sản phẩm</mat-label>
-            <input (focus)="onfocus(eleDeclaration)" #eleDeclaration formControlName="declaration" matInput>
-          </mat-form-field>  
+        </ion-col>
+        <ion-col size="12">
+          <mat-form-field appearance="outline" class="w-100 mb-2">
+            <mat-label>Mã vận đơn (bắt buộc)</mat-label>
+            <input (focus)="onfocus(elePackageCode)" #elePackageCode formControlName="packageCode" matInput>
+          </mat-form-field>
+          <!-- <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Phương thức vận chuyển (không bắt buộc)</mat-label>
+            <mat-select #eleMovingMethod formControlName="movingMethod">
+              <mat-option [value]="1">Nhanh</mat-option>
+              <mat-option [value]="2">Thường</mat-option>
+              <mat-option [value]="3">Bộ</mat-option>
+              <mat-option [value]="4">Bộ lô</mat-option>
+              <mat-option [value]="5">Biển</mat-option>
+            </mat-select>
+          </mat-form-field> -->
           <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Giá</mat-label>
-            <input (focus)="onfocus(eleDeclarePrice)" inputmode="numeric" type="text" (keyup)="valueChange($event,'declarePrice')" #eleDeclarePrice formControlName="declarePrice" matInput>
-          </mat-form-field>  
-        </ng-container>
-        <mat-form-field appearance="outline" class="w-100 mt-2">
-          <mat-label>Nhập mô tả</mat-label>
-          <textarea (focus)="onfocus(eleNote)" formControlName="note" [maxLength]="70" #eleNote matInput></textarea>
-        </mat-form-field>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+            <mat-label>Kho (không bắt buộc)</mat-label>
+            <mat-select #eleWareHouse formControlName="wareHouse">
+              <mat-option [value]="'1'">Đông quản</mat-option>
+              <mat-option [value]="'2'">Phật sơn</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <ion-text>
+            <h5 class="mx-0 my-0 font-weight-bold dynamic-font text-orange">Dịch vụ</h5>
+          </ion-text>
+          <div class="row mb-3">
+            <div class="col-3">
+              <div class="d-flex align-items-center" style="flex-direction: column;">
+                <mat-checkbox formControlName="isWoodPackage"></mat-checkbox>
+                <ion-text class="dynamic-font text-dark font-weight-bold">
+                  <span>Đóng gỗ</span>
+                </ion-text>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="d-flex align-items-center" style="flex-direction: column;">
+                <mat-checkbox formControlName="isAirPackage"></mat-checkbox>
+                <ion-text class="dynamic-font text-dark font-weight-bold">
+                  <span>Túi khí</span>
+                </ion-text>
+              </div>
+            </div>
+            <div *ngIf="!isReview" class="col-3">
+              <div class="d-flex align-items-center" style="flex-direction: column;">
+                <mat-checkbox formControlName="isInsurance"></mat-checkbox>
+                <ion-text class="dynamic-font text-dark font-weight-bold">
+                  <span>Bảo hiểm</span>
+                </ion-text>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="d-flex align-items-center" style="flex-direction: column;">
+                <mat-checkbox formControlName="isBrand"></mat-checkbox>
+                <ion-text class="dynamic-font text-dark font-weight-bold">
+                  <span>Hàng hiệu</span>
+                </ion-text>
+              </div>
+            </div>
+          </div>
+          <ng-container *ngIf="formGroup.value.isInsurance">
+            <ion-text>
+              <h5 class="mx-0 my-0 font-weight-bold dynamic-font text-orange">Kê khai</h5>
+            </ion-text>
+            <mat-form-field appearance="outline" class="w-100 mt-3">
+              <mat-label>Tên sản phẩm</mat-label>
+              <input (focus)="onfocus(eleDeclaration)" #eleDeclaration formControlName="declaration" matInput>
+            </mat-form-field>  
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Giá</mat-label>
+              <input (focus)="onfocus(eleDeclarePrice)" inputmode="numeric" type="text" (keyup)="valueChange($event,'declarePrice')" #eleDeclarePrice formControlName="declarePrice" matInput>
+            </mat-form-field>  
+          </ng-container>
+          <mat-form-field appearance="outline" class="w-100 mt-2">
+            <mat-label>Nhập mô tả</mat-label>
+            <textarea (focus)="onfocus(eleNote)" formControlName="note" [maxLength]="70" #eleNote matInput></textarea>
+          </mat-form-field>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+  
   <!-- create package -->
   <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelCopy()" [isOpen]="isOpenCopy">
     <ng-template>

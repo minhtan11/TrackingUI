@@ -54,31 +54,16 @@ export class CreatePageComponent  implements OnInit {
   //#region Init
 
   ngOnInit() {
-    this.formGroup = this.formBuilder.group({
-      id:[0],
-      packageCode: ['',Validators.required],
-      wareHouse: [''],
-      isWoodPackage: [false],
-      isAirPackage: [false],
-      isInsurance: [false],
-      isBrand: [false],
-      declaration: ['',Validators.required],
-      declarePrice: ['',Validators.required],
-      note: ['', Validators.maxLength(70)],
-      username:['']
-    });
+    
   }
 
   async ngAfterViewInit() {
-    this.username = await this.storage.get('username');
-    this.formGroup.patchValue({username:this.username});
     Keyboard.addListener('keyboardWillShow', info => {
       this.isHideFooter = true;
     });
 
     Keyboard.addListener('keyboardWillHide', () => {
       this.isHideFooter = false;
-      
     });
     this.platform.ready().then(async () => {
       this.platform.resume.subscribe(async () => {
@@ -106,7 +91,20 @@ export class CreatePageComponent  implements OnInit {
 
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
-    
+    this.username = await this.storage.get('username');
+    this.formGroup = this.formBuilder.group({
+      id:[0],
+      packageCode: ['',Validators.required],
+      wareHouse: [''],
+      isWoodPackage: [false],
+      isAirPackage: [false],
+      isInsurance: [false],
+      isBrand: [false],
+      declaration: ['',Validators.required],
+      declarePrice: ['',Validators.required],
+      note: ['', Validators.maxLength(70)],
+      username:[this.username]
+    });
     let isEdit = this.rt.snapshot.queryParams["isEdit"];
     if(isEdit){
       this.isEdit = isEdit;
@@ -114,7 +112,6 @@ export class CreatePageComponent  implements OnInit {
       if (data) {
         this.formGroup.patchValue(data);
         this.formGroup.controls['packageCode'].disable();
-        this.formGroup.controls['movingMethod'].disable();
         this.formGroup.controls['wareHouse'].disable();
         this.formGroup.controls['isWoodPackage'].disable();
         this.formGroup.controls['isAirPackage'].disable();
@@ -130,11 +127,13 @@ export class CreatePageComponent  implements OnInit {
     if (code) {
       this.formGroup.patchValue({packageCode:code});
     }
-    let url = this.previous.getPreviousUrl();
-    if (url) {
-      let array = url.split('?');
-      this.previousUrl = array[0];
-    }
+    if (!this.previousUrl) {
+      let url = this.previous.getPreviousUrl();
+      if (url) {
+        let array = url.split('?');
+        this.previousUrl = array[0];
+      }
+    } 
   }
 
   ionViewWillLeave(){
@@ -187,13 +186,15 @@ export class CreatePageComponent  implements OnInit {
         }else{
           if (!res[1].isError) {
             this.notification.showNotiSuccess('', res[1].message);
-            if(this.previousUrl.includes('/main/package')){
-              this.navCtrl.navigateForward('main/package',{queryParams:{type:'add'}});
-              return;
+            if ((res[1].typeRequest != '' && res[1].typeRequest != null) && res[1].typeRequest === 'exist') {
+              this.navCtrl.navigateForward('main/package/detail', { queryParams: { id: oData?.packageCode } });
+            }else{
+              if(this.previousUrl.includes('/main/package')){
+                this.navCtrl.navigateForward('main/package',{queryParams:{type:'add'}});
+                return;
+              }
+              this.navCtrl.navigateBack(this.previousUrl);
             }
-            this.navCtrl.navigateBack(this.previousUrl);
-            ///this.reset();
-            //this.numAdd++;
           }else{
             this.notification.showNotiError('',res[1].message);
           }

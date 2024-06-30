@@ -62,7 +62,10 @@ export class HomePageComponent{
           this.getDashBoard();
           this.startAnimation();
         }else{
-          this.swiper.disable();
+          this.swiper = this.swiperRef?.nativeElement?.swiper;
+          if (this.swiper) {
+            this.swiper?.disable();
+          }
           clearTimeout(this.animation);
         }
       };
@@ -162,7 +165,7 @@ export class HomePageComponent{
       this.swiper = this.swiperRef?.nativeElement?.swiper;
     }
     if (this.swiper) {
-      this.swiper.enable();
+      this.swiper?.enable();
     }
     this.animation = setTimeout(() => {
       this.swiper?.slideNext(1000);

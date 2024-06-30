@@ -326,14 +326,20 @@
         </ion-card>
       </div>
     </div>
-    <ion-fab style="margin-bottom: var(--ion-safe-area-bottom, 0);" slot="fixed" vertical="bottom" horizontal="end">
+    <div style="position: fixed;bottom: 0;
+        margin-bottom: var(--ion-safe-area-bottom, 0);" class="w-100 p-3 d-flex align-items-center justify-content-end">
+      <ng-container *ngIf="imgSticket">
+        <img (click)="openPopup()" style="width: 6rem;" [src]="'https://tracking.nhanshiphang.vn/'+imgSticket?.img">
+      </ng-container>
+    </div>
+    <!-- <ion-fab style="margin-bottom: var(--ion-safe-area-bottom, 0);" slot="fixed" vertical="bottom" horizontal="end">
       <ion-fab-button (click)="openPopup()" style="--background: none !important;
-      --box-shadow: none !important;--background-activated: none !important">
+      --box-shadow: none !important;--background-activated: none !important" size="large">
       <ng-container *ngIf="imgSticket">
         <img [src]="'https://tracking.nhanshiphang.vn/'+imgSticket?.img">
       </ng-container>
       </ion-fab-button>
-    </ion-fab>
+    </ion-fab> -->
     <!-- Home Page -->
     
     <ion-modal id="modal-dialog" style="--background:none !important;--box-shadow: none !important" (willDismiss)="cancelPopup()" [isOpen]="isPopup">
