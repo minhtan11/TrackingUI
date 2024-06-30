@@ -1,7 +1,7 @@
 ext {
     minSdkVersion = 22
-    compileSdkVersion = 33
-    targetSdkVersion = 33
+    compileSdkVersion = 34
+    targetSdkVersion = 34
     androidxActivityVersion = '1.7.0'
     androidxAppCompatVersion = '1.6.1'
     androidxCoordinatorLayoutVersion = '1.2.0'
@@ -15,4 +15,5 @@ ext {
     cordovaAndroidVersion = '10.1.1'
     firebaseMessagingVersion = '23.1.2'
     shortcutBadgerVersion = '1.1.22'
+    androidxBrowserVersion = '1.7.0'
 }

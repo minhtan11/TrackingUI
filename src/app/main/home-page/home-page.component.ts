@@ -40,7 +40,7 @@ export class HomePageComponent{
   isPopup:any=false;
   isPopupVersion:any=false;
   imgPopup:any;
-  versionNo:any='1.4';
+  versionNo:any='1.5';
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
