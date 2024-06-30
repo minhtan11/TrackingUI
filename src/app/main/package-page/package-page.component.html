@@ -376,13 +376,13 @@
                 </div>
               </div>
               <div class="w-100 pt-3 d-flex align-items-center scroll-hidden overflow-auto">
-                <ion-button style="margin-left: auto;" (click)="openPopPackage(item)" mode="ios" size="default" class="ion-btn-default">
+                <ion-button style="margin-left: auto !important;" (click)="openPopPackage(item)" mode="ios" size="default" class="ion-btn-default">
                   <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
                   <ion-text style="color: white !important;" class="dynamic-font">
                     Nhập mô tả
                   </ion-text>
                 </ion-button>
-                <div class="d-flex align-items-center" [style]="item?.status > 2 && item?.status != 9 ? 'margin-right: auto;' : ''">
+                <div class="d-flex align-items-center" [style]="item?.status >= 2 && item?.status != 9 ? 'margin-right: auto !important' : ''">
                   <ion-button (click)="checkFirst(item)" mode="ios" size="default" class="ion-btn-orange">
                     <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
@@ -403,7 +403,7 @@
                       Hủy đơn
                     </ion-text>
                   </ion-button>
-                  <ion-button style="margin-right: auto;" (click)="openPopDeletePackage(item)" mode="ios" size="default" color="danger">
+                  <ion-button style="margin-right: auto !important;" (click)="openPopDeletePackage(item)" mode="ios" size="default" color="danger">
                     <ion-icon style="color: white !important;" slot="start" name="trash-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
                       Xóa đơn
@@ -411,7 +411,7 @@
                   </ion-button>
                 </ng-container>
                 <ng-container *ngIf="item.status == 9 && item?.canceledBy == username">
-                  <ion-button style="margin-right: auto;" (click)="openPopRestorePackage(item)" mode="ios" size="default" color="success">
+                  <ion-button style="margin-right: auto !important;" (click)="openPopRestorePackage(item)" mode="ios" size="default" color="success">
                     <ion-icon style="color: white !important;" slot="start" name="sync-circle-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
                       Khôi phục

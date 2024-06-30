@@ -425,7 +425,7 @@
                   Nhập mô tả
                 </ion-text>
               </ion-button>
-              <div class="d-flex align-items-center" [style]="oData?.status > 2 && oData?.status != 9 ? 'margin-right: auto;' : ''">
+              <div class="d-flex align-items-center" [style]="oData?.status >= 2 && oData?.status != 9 ? 'margin-right: auto;' : ''">
                 <ion-button (click)="checkQuery(oData)" mode="ios" size="default" class="ion-btn-orange">
                   <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
                   <ion-text style="color: white !important;" class="dynamic-font">
