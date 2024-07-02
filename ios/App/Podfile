@@ -32,6 +32,10 @@ target 'App' do
   pod 'Firebase/Messaging'
 end
 
+target 'NotificationServiceExtension' do
+  pod 'Firebase/Messaging'
+end
+
 post_install do |installer|
   assertDeploymentTarget(installer)
 end
