@@ -37,6 +37,9 @@
             </ion-card-header>
             <ion-card-content style="background-color: #e7f6ff !important;
             border-radius: 15px;" class="p-3">
+              <div *ngIf="item?.image" class="pb-1">
+                <img [src]="'https://tracking.nhanshiphang.vn/'+item?.image" alt="">
+              </div>
               <div class="d-flex align-items-center">
                 <div class="w-100">
                   <ion-text class="text-dark font-weight-bold dynamic-font">
@@ -47,9 +50,6 @@
                     <span style="white-space: pre-line;" [innerHTML]="item.message"></span>
                   </ion-text>
                 </div>
-              </div>
-              <div *ngIf="item?.image" class="pt-2">
-                <img [src]="'https://tracking.nhanshiphang.vn/'+item?.image" alt="">
               </div>
               <div *ngIf="item?.notifType == 1 && (item?.orderCode != '' && item?.orderCode != null)" class="w-100 d-flex align-items-center justify-content-center">
                 <ion-button (click)="goPackageDetail(item?.orderCode)" mode="ios" size="default" class="ion-btn-orange">

@@ -95,16 +95,16 @@ export class MainPage implements OnInit {
         this.getTotalPackage();
         this.getTotalOrder();
         this.getTotalNoti();
-        if (!(this.router.url.includes('/main/package/create'))) {
-          Clipboard.read().then((clipboardRead: ReadResult) => {
-            if (clipboardRead?.value) {
-              let value = clipboardRead?.value;
-              this.textCopy = value.replace(/(\r\n\s|\r|\n|\s)/g, ',');
-              this.isOpenCopy = true;
-              return;
-            }
-          });
-        }
+        // if (!(this.router.url.includes('/main/package/create'))) {
+        //   Clipboard.read().then((clipboardRead: ReadResult) => {
+        //     if (clipboardRead?.value) {
+        //       let value = clipboardRead?.value;
+        //       this.textCopy = value.replace(/(\r\n\s|\r|\n|\s)/g, ',');
+        //       this.isOpenCopy = true;
+        //       return;
+        //     }
+        //   });
+        // }
       });
     })
     await PushNotifications.addListener('pushNotificationReceived',
@@ -233,19 +233,19 @@ export class MainPage implements OnInit {
 
   //#region Function
 
-  onCopy(){
-    this.cancelCopy();
-    this.navCtrl.navigateForward('main/package/create',{queryParams:{code:this.textCopy}});
-  }
+  // onCopy(){
+  //   this.cancelCopy();
+  //   this.navCtrl.navigateForward('main/package/create',{queryParams:{code:this.textCopy}});
+  // }
 
-  cancelCopy(){
-    this.isOpenCopy = false;
-    this.dt.detectChanges();
-    // Clipboard.write({
-    //   string: ""
-    // });
+  // cancelCopy(){
+  //   this.isOpenCopy = false;
+  //   this.dt.detectChanges();
+  //   // Clipboard.write({
+  //   //   string: ""
+  //   // });
     
-  }
+  // }
 
   onExit(){
     this.cancelExit();

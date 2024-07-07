@@ -15,6 +15,7 @@ import { Device } from '@capacitor/device';
 import { ActionPerformed, PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
 import { Browser } from '@capacitor/browser';
+import { Clipboard, ReadResult } from '@capacitor/clipboard';
 
 @Component({
   selector: 'app-home-page',
@@ -41,6 +42,8 @@ export class HomePageComponent{
   isPopupVersion:any=false;
   imgPopup:any;
   versionNo:any='1.5';
+  textCopy:any = '';
+  isOpenCopy:any=false;
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -156,7 +159,8 @@ export class HomePageComponent{
   // }
 
   ionViewDidLeave(){
-    
+    this.cancelPopup();
+    this.cancelCopy();
   }
 
   startAnimation() {
@@ -283,8 +287,10 @@ export class HomePageComponent{
         let oData = JSON.parse(data)
         if (data) {
           this.goNotification(oData);
+          this.checkCopy();
         }else{
           this.showBanner(isPopUp,3000);
+          this.checkCopy();
         }
         this.isLoad = true;
         await this.storage.setAccount(username);
@@ -365,6 +371,28 @@ export class HomePageComponent{
     App.exitApp();
   }
 
+  checkCopy(){
+    if (!(this.router.url.includes('/main/package/create'))) {
+      Clipboard.read().then((clipboardRead: ReadResult) => {
+        if (clipboardRead?.value) {
+          let value = clipboardRead?.value;
+          this.textCopy = value.replace(/(\r\n\s|\r|\n|\s)/g, ',');
+          this.isOpenCopy = true;
+          return;
+        }
+      });
+    }
+  }
+
+  onCopy(){
+    this.cancelCopy();
+    this.navCtrl.navigateForward('main/package/create',{queryParams:{code:this.textCopy}});
+  }
+
+  cancelCopy(){
+    this.isOpenCopy = false;
+    this.dt.detectChanges();
+  }
   //#endregion
 
 }
