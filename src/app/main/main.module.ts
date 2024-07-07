@@ -40,6 +40,7 @@ import { PreviousRouterServiceService } from '../previous-router-service/previou
 import { RelulationPageComponent } from './relulation-page/relulation-page.component';
 import { FaqPageComponent } from './setting-page/faq-page/faq-page.component';
 import { ExchangePageComponent } from './setting-page/exchange-page/exchange-page.component';
+import { TranformDoublePipe } from '../pipe/tranformDouble/tranform-double.pipe';
 
 @NgModule({
   imports: [
@@ -58,7 +59,8 @@ import { ExchangePageComponent } from './setting-page/exchange-page/exchange-pag
     MatSelectModule,
     MatCheckboxModule,
     ClipboardModule,
-    DecodeVNPipe
+    DecodeVNPipe,
+    TranformDoublePipe
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
   ,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent,FormatdatePipe,ReportPageComponent,RelulationPageComponent,FaqPageComponent,ExchangePageComponent],

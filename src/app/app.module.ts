@@ -16,6 +16,7 @@ import { NotificationServiceComponent } from './notification-service/notificatio
 import { FcmService } from './services-fcm/fcm.service';
 import { PreviousRouterServiceService } from './previous-router-service/previous-router-service.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { TranformDoublePipe } from './pipe/tranformDouble/tranform-double.pipe';
 
 @NgModule({
   declarations: [AppComponent],

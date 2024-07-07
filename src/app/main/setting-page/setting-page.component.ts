@@ -30,6 +30,7 @@ export class SettingPageComponent {
   isOpenChangeAccount:any=false;
   isOpenAddAccount:any=false;
   isOpenDeleteAccount:any=false;
+  isOpenRecharge:any=false;
   isOpenRule:any=false;
   listUser:any;
   userName:any;
@@ -183,6 +184,20 @@ export class SettingPageComponent {
     this.navCtrl.navigateForward('main/setting/report');
   }
 
+  openRecharge(){
+    this.isOpenRecharge = true;
+  }
+
+  cancelRecharge(){
+    this.isOpenRecharge = false;
+    this.dt.detectChanges();
+  }
+
+  goRecharge(){
+    this.cancelRecharge();
+    this.navCtrl.navigateForward('main/recharge');
+  }
+
   async goFAQ(){
     let url = await this.storage.get('urlFAQ');
     if (url) {
@@ -203,7 +218,7 @@ export class SettingPageComponent {
 
   cancelLogout(){
     this.isOpenLogout = false;
-    
+    this.dt.detectChanges();
   }
 
   onLogout(){

@@ -267,9 +267,66 @@
                         </ion-text>
                       </div>
                     </div> 
+                    <div *ngIf="oData.username" style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text class="text-orange dynamic-font font-weight-bold">
+                          Thông tin khách hàng
+                        </ion-text>
+                      </div>
+                    </div>
+                    <ng-container *ngIf="oData.username">
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Khách hàng
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            {{oData?.username}}
+                          </ion-text>
+                        </div>
+                      </div> 
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Số điện thoại
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            {{oData?.phone}}
+                          </ion-text>
+                        </div>
+                      </div> 
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Địa chỉ
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            {{oData?.address}}
+                          </ion-text>
+                        </div>
+                      </div> 
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Email
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            {{oData?.email}}
+                          </ion-text>
+                        </div>
+                      </div> 
+                    </ng-container>
                     <div *ngIf="oData.isWoodPackage || oData.isAirPackage || oData.isInsurance" style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                       <div>
-                        <ion-text color="primary" class="dynamic-font font-weight-bold">
+                        <ion-text class="text-orange dynamic-font font-weight-bold">
                           Dịch vụ phụ
                         </ion-text>
                       </div>
@@ -355,6 +412,43 @@
                         </div>
                         <div class="d-flex align-items-center">
                           <i class="bi bi-check2-circle"></i>
+                        </div>
+                      </div> 
+                    </ng-container>
+                    <div *ngIf="oData.weight" style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text class="text-orange dynamic-font font-weight-bold">
+                          Tài chính
+                        </ion-text>
+                      </div>
+                    </div>
+                    <ng-container *ngIf="oData.weight">
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Cân nặng
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            {{((oData.weight != null ? oData.weight : 0 ) | number)+'kg'}}
+                          </ion-text>
+                        </div>
+                      </div> 
+                    </ng-container>
+                    <ng-container *ngIf="(oData.weightExchange | tranformDouble) > 0">
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Đo lên
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            {{'('+ (oData.length | number)+'x'+ (oData.width | number) + 'x' + (oData.height | number) +')'}}
+                            &nbsp;
+                            {{(oData.weightExchange | number) +'kg'}}
+                          </ion-text>
                         </div>
                       </div> 
                     </ng-container>

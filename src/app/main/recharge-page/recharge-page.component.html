@@ -6,16 +6,18 @@
       </ion-button>
     </ion-buttons>
     <ion-title mode="md" class="dynamic-font text-primary-default pl-0 pr-0">
-      <h2 class="my-2 mx-0 font-weight-bold">Nạp tiền</h2>
+      <h2 class="my-2 mx-0 font-weight-bold">Nạp tiền tự động</h2>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content style="--background:white !important">
-  <div class="d-flex align-items-center justify-content-center h-100 w-100">
+  <div *ngIf="qr1 && qr2" class="d-flex align-items-center justify-content-center h-100 w-100">
     <div style="margin: auto;max-width: 850px;">
       <ion-card mode="ios" style="--background:white !important">
         <ion-card-header>
-          <img src="../../../assets/image/bank-vietcombank.jpg" alt="">
+          <div style="height: 470px;">
+            <img [src]="qr1" alt="">
+          </div>
         </ion-card-header>
       
         <ion-card-content>
@@ -39,7 +41,9 @@
       </ion-card>
       <ion-card mode="ios" style="--background:white !important">
         <ion-card-header>
-          <img src="../../../assets/image/bank-ACB.jpg" alt="">
+          <div style="height: 470px;">
+            <img [src]="qr2" alt="">
+          </div>
         </ion-card-header>
       
         <ion-card-content>
@@ -65,9 +69,9 @@
         <ion-row>
           <ion-col>
             <div>
-              <ion-text class="text-danger dynamic-font">(*)</ion-text>&nbsp;<ion-text style="color:black !important" class="font-weight-bold dynamic-font">Quý khách vui lòng chuyển đúng cú pháp để hệ thống duyệt tiền tự động.</ion-text>
+              <ion-text class="text-orange dynamic-font">(*)</ion-text>&nbsp;<ion-text style="color:black !important" class="font-weight-bold dynamic-font">Quý khách vui lòng chuyển đúng cú pháp để hệ thống duyệt tiền tự động.</ion-text>
               <br>
-              <ion-text class="text-danger dynamic-font">(*)</ion-text>&nbsp;<ion-text style="color:black !important" class="font-weight-bold dynamic-font">Với những giao dịch nạp tiền chuyển khoản ngoài giờ hành chính. Thời gian hệ thống xử lý có thể chậm hơn bình thường. Mong quý khách hàng thông cảm!</ion-text>
+              <ion-text class="text-orange dynamic-font">(*)</ion-text>&nbsp;<ion-text style="color:black !important" class="font-weight-bold dynamic-font">Với những giao dịch nạp tiền chuyển khoản ngoài giờ hành chính. Thời gian hệ thống xử lý có thể chậm hơn bình thường. Mong quý khách hàng thông cảm!</ion-text>
             </div>
           </ion-col>
         </ion-row>
