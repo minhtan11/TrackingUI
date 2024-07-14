@@ -1,7 +1,7 @@
 <ion-content class="ion-padding" style="--background:white !important">
   <ion-grid class="padding-statusbar-ios text-center pr-0 pl-0" [fixed]="true" style="margin: auto;max-width: 850px;">
     <ion-row>
-      <ng-container *ngIf="userName">
+      <ng-container *ngIf="userName && userName !='admintan'">
         <ion-col size="12" class="pr-0 pl-0">
           <div class="d-flex align-items-center justify-content-end">
              <div class="d-flex align-items-center">
