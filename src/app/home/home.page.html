@@ -1,6 +1,23 @@
 <ion-content class="ion-padding" style="--background:white !important">
   <ion-grid class="padding-statusbar-ios text-center pr-0 pl-0" [fixed]="true" style="margin: auto;max-width: 850px;">
     <ion-row>
+      <ng-container *ngIf="userName">
+        <ion-col size="12" class="pr-0 pl-0">
+          <div class="d-flex align-items-center justify-content-end">
+             <div class="d-flex align-items-center">
+              <i (click)="goNoti()" [ngClass]="totalNoti > 0 ? 'animation-bell' : ''" class="bi bi-bell mb-1 icon-menu "></i>
+              <ng-container *ngIf="totalNoti > 0">
+                <div style="right: -0.5rem !important;top: 0.1rem !important;" class="ion-badge-noti d-flex align-items-center justify-content-center">
+                  <ion-text class="dynamic-font font-weight-bold">
+                    <span *ngIf="totalNoti <=99">{{totalNoti}}</span>
+                    <span *ngIf="totalNoti >99">99+</span>
+                  </ion-text>
+                </div>
+              </ng-container>
+             </div>
+          </div>
+        </ion-col>
+      </ng-container>
       <ion-col size="12" class="pr-0 pl-0">
         <img style="border-radius: 50%;display: block;
         margin-left: auto;
@@ -101,7 +118,7 @@
         </ion-col> -->
       </ng-container>
       <ng-container *ngIf="!isReview">
-        <ion-col *ngIf="" size="12" class="pr-0 pl-0">
+        <ion-col size="12" class="pr-0 pl-0">
           <ion-text>
             <span class="dynamic-font" style="color: black !important;">Quý khách chưa có tài khoản? </span>
           </ion-text>

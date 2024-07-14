@@ -133,10 +133,10 @@ export class MainPage implements OnInit {
     this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
       let array = this.router.url.split('?');
       let url = array[0];
-      if ((url.includes('main/notification'))) {
-        this.navCtrl.navigateBack('main/mainpage');
-        return;
-      }
+      // if ((url.includes('main/notification'))) {
+      //   this.navCtrl.navigateBack('main/mainpage');
+      //   return;
+      // }
       if((url.includes('main/package'))){
         if((!url.includes('main/package/create')) && (!url.includes('main/package/detail')) && (!url.includes('main/package/orderstatus'))){
           this.navCtrl.navigateBack('main/mainpage');

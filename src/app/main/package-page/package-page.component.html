@@ -319,10 +319,13 @@
                     <ion-text>
                       <span class="dynamic-font text-dark font-weight-bold">Dịch vụ phụ: </span>
                       <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
-                      <span *ngIf="item.isAirPackage">,Bọt khí</span>
-                      <span *ngIf="item.isInsurance">,Bảo hiểm</span>
-                      <span *ngIf="item.isBrand">,Hàng hiệu</span>
-                      <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
+                      <span *ngIf="item.isWoodPackage && item.isAirPackage">,</span>
+                      <span *ngIf="item.isAirPackage">Bọt khí</span>
+                      <span *ngIf="(item.isWoodPackage || item.isAirPackage) && item.isInsurance">,</span>
+                      <span *ngIf="item.isInsurance">Bảo hiểm</span>
+                      <span *ngIf="(item.isWoodPackage || item.isAirPackage || item.isInsurance) && item.isBrand">,</span>
+                      <span *ngIf="item.isBrand">Hàng hiệu</span>
+                      <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance && !item.isBrand">Không có</span>
                     </ion-text>
                     <br>
                     <ng-container *ngIf="item?.note">

@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Network } from '@capacitor/network';
 import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
-import { InfiniteScrollCustomEvent, IonContent, IonRouterOutlet, NavController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, IonContent, IonRouterOutlet, NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
@@ -31,6 +31,9 @@ export class NotificationPageComponent {
   isOpenFilter:any = false;
   isSke:any=false;
   isFilter:any=false;
+  previousUrl:any;
+  isBack:any = false;
+  isReview:any;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -42,7 +45,8 @@ export class NotificationPageComponent {
     private routerOutlet: IonRouterOutlet,
     private formBuilder: FormBuilder,
     private previous:PreviousRouterServiceService,
-    private router: Router
+    private router: Router,
+    private platform : Platform,
   ) { }
 
   ngOnInit() {
@@ -53,6 +57,14 @@ export class NotificationPageComponent {
   }
 
   async ngAfterViewInit() {
+    this.platform.backButton.subscribeWithPriority(0, (processNextHandler) => {
+      if((this.router.url.includes('main/notification')) || (this.router.url.includes('home/notification'))){
+        this.onback();
+        return;
+      }
+      processNextHandler();
+    })
+
     await PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotificationSchema) => {
         let array = this.router.url.split('?');
@@ -82,7 +94,20 @@ export class NotificationPageComponent {
   }
 
   async ionViewWillEnter() {
+    this.isReview = await this.storage.get('isReview');
     this.init();
+    if (!this.previousUrl) {
+      let url = this.previous.getPreviousUrl();
+      if (url) {
+        let array = url.split('?');
+        this.previousUrl = array[0];
+      }
+    } 
+    let array = this.router.url.split('?');
+    let url = array[0];
+    if ((url.includes('home/notification'))) {
+      this.isBack = true;
+    }
     this.updateTotalNoti();
   }
 
@@ -222,6 +247,10 @@ export class NotificationPageComponent {
     this.api.execByBody('Authencation', 'updatenotification', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
       this.api.callBackNoti(true);
     })
+  }
+
+  onback(){
+    this.navCtrl.navigateBack(this.previousUrl);
   }
   //#endregion
 }

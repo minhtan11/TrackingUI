@@ -126,11 +126,10 @@
   <ng-container *ngIf="!isReview">
     <div class="w-100 h-100">
       <div *ngIf="oUser == undefined" class="w-100 p-3 d-flex align-items-center">
-        <ion-avatar style="padding: 0.2rem;background-color: white !important;">
+        <ion-avatar>
           <ion-skeleton-text [animated]="true"></ion-skeleton-text>
         </ion-avatar>
-        <div class="d-flex justify-content-center pr-2 pl-2" style="flex-direction: column;">
-          <ion-skeleton-text style="width: 80px;" [animated]="true"></ion-skeleton-text>
+        <div class="d-flex justify-content-center pr-2 pl-2">
           <ion-skeleton-text style="width: 80px;" [animated]="true"></ion-skeleton-text>
         </div>
       </div>
@@ -149,7 +148,7 @@
       </div>
       <div class="w-100 p-3 d-flex align-items-center justify-content-center">
         <div style="width: 50%;">
-          <ion-card class="mx-1 my-1" style="border-radius: 15px;box-shadow: none !important;--background: white;font-size: unset;">
+          <ion-card (click)="goHistory()" class="mx-1 my-1" style="border-radius: 15px;box-shadow: none !important;--background: white;font-size: unset;">
             <ion-card-header class="p-1 p-2">
               <div class="w-100 d-flex align-items-center justify-content-center">
                 <img class="mr-2" style="width: 2rem;height: 2rem;" src="../../assets/image/wallet.png" alt="">
@@ -173,7 +172,7 @@
           </ion-card>
         </div>
         <div style="width: 50%;">
-          <ion-card class="mx-1 my-1" style="border-radius: 15px;box-shadow: none !important;--background: white;font-size: unset;">
+          <ion-card (click)="goHistoryPoint()" class="mx-1 my-1" style="border-radius: 15px;box-shadow: none !important;--background: white;font-size: unset;">
             <ion-card-header class="p-1 p-2">
               <div class="w-100 d-flex align-items-center justify-content-center">
                 <img class="mr-2" style="width: 2rem;height: 2rem;" src="../../assets/image/star.png" alt="">
@@ -213,7 +212,7 @@
           <ion-card mode="ios" class="mx-1 my-4 mt-2" style="--background:white !important;box-shadow: none !important;border-radius: 15px;">
             <ion-card-content class="p-0">
               <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
-                <ion-item class="p-2" (click)="openRecharge()" lines="none" [button]="true" detail="false" style="--background:white !important">
+                <ion-item class="p-2" (click)="goRecharge()" lines="none" [button]="true" detail="false" style="--background:white !important">
                   <div class="d-flex align-items-center justify-content-center">
                     <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../../assets/image/icon-money-setting.png" alt="">
                     <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Nạp tiền tự động</ion-text>
@@ -603,35 +602,4 @@
     </ng-template>
   </ion-modal>
   <!-- rule -->
-
-  <!-- Rechare-->
-  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelRecharge()" [isOpen]="isOpenRecharge">
-    <ng-template>
-      <div class="p-3 w-100 h-100">
-        <div class="w-100 mb-3">
-          <ion-text class="dynamic-font text-center text-dark">
-            <h3 class="mx-0 my-0 font-weight-bold">Nhập số tiền cần nạp</h3>
-          </ion-text>
-        </div>
-        <div class="w-100">
-          <ion-text class="dynamic-font text-dark font-weight-bold">
-            <span>Quý khách vui lòng không thay đổi nội dung. Việc xử lý sẽ mất khoản 5 phút, sau thời gian này nếu tài khoản chưa được tự động nạp, vui lòng liên hệ CSKH.</span>
-          </ion-text>
-        </div>
-        <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="goRecharge()" mode="ios" size="default" class="ion-btn-default pr-3">
-            <ion-text style="color: white !important;" class="dynamic-font">
-              Đồng ý
-            </ion-text>
-          </ion-button>
-          <ion-button (click)="cancelRecharge()" mode="ios" size="default" color="medium">
-            <ion-text style="color: white !important;" class="dynamic-font">
-              Hủy bỏ
-            </ion-text>
-          </ion-button>
-        </div>
-      </div>
-    </ng-template>
-  </ion-modal>
-  <!-- Rechare -->
 </ion-content>

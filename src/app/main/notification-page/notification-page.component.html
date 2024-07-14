@@ -1,9 +1,19 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar mode="ios" class="pr-2 pl-2" style="--background:white !important">
+  <!-- <ion-toolbar mode="ios" class="pr-2 pl-2" style="--background:white !important">
     <ion-title mode="md" class="dynamic-font text-primary-default pl-2 pr-0">
       <h2 class="my-2 mx-0 font-weight-bold">Thông báo</h2>
     </ion-title>
-    <!-- <img (click)="openPopFilter()" slot="end" style="width: 2rem;height: 2rem;" src="../../../assets/image/funnel-tool.png" alt=""> -->
+    <i (click)="openPopFilter()" [ngClass]="isFilter ? 'text-orange' : 'text-primary-default'" class="pr-2 text-dark" slot="end" class="bi bi-funnel icon-menu"></i>
+  </ion-toolbar> -->
+  <ion-toolbar [ngClass]="isBack ? '' : 'pr-2 pl-2'" mode="ios" style="--background:white !important">
+    <ion-buttons *ngIf="isBack" slot="start">
+      <ion-button (click)="onback()" fill="clear">
+        <ion-icon class="text-primary-default" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title [ngClass]="isBack ? 'pl-0' : 'pl-2'" mode="md" class="dynamic-font text-primary-default pr-0">
+      <h2 class="my-2 mx-0 font-weight-bold">Thông báo</h2>
+    </ion-title>
     <i (click)="openPopFilter()" [ngClass]="isFilter ? 'text-orange' : 'text-primary-default'" class="pr-2 text-dark" slot="end" class="bi bi-funnel icon-menu"></i>
   </ion-toolbar>
 </ion-header>
@@ -51,14 +61,16 @@
                   </ion-text>
                 </div>
               </div>
-              <div *ngIf="item?.notifType == 1 && (item?.orderCode != '' && item?.orderCode != null)" class="w-100 d-flex align-items-center justify-content-center">
-                <ion-button (click)="goPackageDetail(item?.orderCode)" mode="ios" size="default" class="ion-btn-orange">
-                  <ion-text style="color: white !important;" class="dynamic-font">
-                    Chi tiết kiện hàng
-                  </ion-text>
-                  <ion-icon style="color: white !important;" slot="end" name="chevron-forward-outline"></ion-icon>
-                </ion-button>
-              </div>
+              <ng-container *ngIf="!isReview">
+                <div *ngIf="item?.notifType == 1 && (item?.orderCode != '' && item?.orderCode != null)" class="w-100 d-flex align-items-center justify-content-center">
+                  <ion-button (click)="goPackageDetail(item?.orderCode)" mode="ios" size="default" class="ion-btn-orange">
+                    <ion-text style="color: white !important;" class="dynamic-font">
+                      Chi tiết kiện hàng
+                    </ion-text>
+                    <ion-icon style="color: white !important;" slot="end" name="chevron-forward-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </ng-container>
             </ion-card-content>
           </ion-card>
         </ion-item>

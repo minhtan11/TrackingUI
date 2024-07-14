@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 import { NavController, Platform } from '@ionic/angular';
@@ -14,12 +14,15 @@ export class RechargePageComponent  implements OnInit {
   previousUrl:any;
   qr1:any;
   qr2:any;
+  isOpenRecharge:any=false;
+  isShowRecharge:any=false;
   constructor(
     private navCtrl: NavController,
     private platform: Platform,
     private router: Router,
     private previous:PreviousRouterServiceService,
     private storage: StorageService,
+    private dt: ChangeDetectorRef,
   ) { 
 
   }
@@ -40,6 +43,8 @@ export class RechargePageComponent  implements OnInit {
         this.previousUrl = array[0];
       }
     } 
+
+    this.openRecharge();
   }
 
   ngAfterViewInit() {
@@ -52,7 +57,24 @@ export class RechargePageComponent  implements OnInit {
     })
   }
 
+  openRecharge(){
+    this.isOpenRecharge = true;
+  }
+
+  acceptRecharge(){
+    this.cancelRecharge();
+    this.isShowRecharge = true;
+    this.dt.detectChanges();
+  }
+
+  cancelRecharge(isBack:any=false){
+    this.isOpenRecharge = false;
+    this.dt.detectChanges();
+    if(isBack) this.onback();
+  }
+
   onback(){
+    this.cancelRecharge();
     this.navCtrl.navigateBack(this.previousUrl);
   }
 }

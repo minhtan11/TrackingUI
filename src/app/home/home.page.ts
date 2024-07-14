@@ -14,6 +14,7 @@ import { BiometricAuthError, BiometryType, NativeBiometric } from "capacitor-nat
 import { Device } from '@capacitor/device';
 import { PreviousRouterServiceService } from '../previous-router-service/previous-router-service.service';
 import { App } from '@capacitor/app';
+import { Badge } from '@capawesome/capacitor-badge';
 
 @Component({
   selector: 'app-home',
@@ -44,6 +45,7 @@ export class HomePage implements OnInit, AfterViewInit {
   accountSelected:any;
   isReview:any;
   isOpenExit:any=false;
+  totalNoti:any=0;
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -111,6 +113,7 @@ export class HomePage implements OnInit, AfterViewInit {
       this.isAuthen = true;
       this.getUser();
       this.getlstUser();
+      this.getTotalNoti();
     } 
     let loginError = this.rt.snapshot.queryParams["loginError"];
     if (loginError) {
@@ -375,6 +378,28 @@ export class HomePage implements OnInit, AfterViewInit {
         // }
       }
     })
+  }
+
+  async getTotalNoti(){
+    let username = await this.storage.get('username');
+    let data = {
+      userName: username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'gettotalnotification', messageBody).subscribe(async (res:any)=>{
+      if (res[0]) {
+      } else {
+        this.totalNoti = res[1];
+        await Badge.set({ count:this.totalNoti });
+        this.dt.detectChanges();
+      }
+    })
+  }
+
+  goNoti(){
+    this.navCtrl.navigateForward('home/notification');
   }
 
   openDeleteAccount(item:any){

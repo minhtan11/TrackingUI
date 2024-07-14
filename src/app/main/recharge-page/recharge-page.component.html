@@ -11,12 +11,12 @@
   </ion-toolbar>
 </ion-header>
 <ion-content style="--background:white !important">
-  <div *ngIf="qr1 && qr2" class="d-flex align-items-center justify-content-center h-100 w-100">
+  <div [style]="isShowRecharge ? '' : 'display: none !important;'" class="d-flex align-items-center justify-content-center h-100 w-100">
     <div style="margin: auto;max-width: 850px;">
       <ion-card mode="ios" style="--background:white !important">
         <ion-card-header>
           <div style="height: 470px;">
-            <img [src]="qr1" alt="">
+            <img *ngIf="qr1" [src]="qr1" alt="">
           </div>
         </ion-card-header>
       
@@ -42,7 +42,7 @@
       <ion-card mode="ios" style="--background:white !important">
         <ion-card-header>
           <div style="height: 470px;">
-            <img [src]="qr2" alt="">
+            <img *ngIf="qr2" [src]="qr2" alt="">
           </div>
         </ion-card-header>
       
@@ -78,6 +78,36 @@
       </ion-grid>
     </div>
   </div>
+  <!-- Rechare-->
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelRecharge()" [isOpen]="isOpenRecharge">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Nhập số tiền cần nạp</h3>
+          </ion-text>
+        </div>
+        <div class="w-100">
+          <ion-text class="dynamic-font text-dark font-weight-bold">
+            <span>Quý khách vui lòng không thay đổi nội dung. Việc xử lý sẽ mất khoản 5 phút, sau thời gian này nếu tài khoản chưa được tự động nạp, vui lòng liên hệ CSKH.</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="acceptRecharge()" mode="ios" size="default" class="ion-btn-default pr-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelRecharge(true)" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- Rechare -->
 </ion-content>
 <!-- <ion-footer *ngIf="platform == 'ios'" class="ion-no-border" style="--background:white;">
   <ion-toolbar style="--background:white;">
