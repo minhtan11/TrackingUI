@@ -132,7 +132,6 @@ export class HomePageComponent{
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
     this.animationInProgress = false;
-    
   }
 
   // showSlides(){
@@ -373,11 +372,43 @@ export class HomePageComponent{
 
   checkCopy(){
     if (!(this.router.url.includes('/main/package/create'))) {
-      Clipboard.read().then((clipboardRead: ReadResult) => {
+      Clipboard.read().then(async (clipboardRead: ReadResult) => {
         if (clipboardRead?.value) {
           let value = clipboardRead?.value;
-          this.textCopy = value.replace(/(\r\n\s|\r|\n|\s)/g, ',');
-          this.isOpenCopy = true;
+          let text = value.replace(/(\r\n\s|\r|\n|\s)/g, ',');
+          if (text.length < 100) {
+            let pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+              '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+              '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+              '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+              '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+              '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+            if (!pattern.test(text)) {
+              let data = await this.storage.get('lstHistory');
+              if (data) {
+                let lstHistory = [];
+                lstHistory = JSON.parse(data);
+                let index = lstHistory.findIndex((x:any) => x.id === text);
+                if (index > -1) {
+                  let obj = lstHistory[index];
+                  let now = new Date().toISOString();
+                  let exprireDate = Date.parse(obj.exprireTime);
+                  if (Date.parse(now) > exprireDate) {
+                    lstHistory.splice(index, 1);
+                    this.storage.set('lstHistory', JSON.stringify(lstHistory));
+                    this.textCopy = text;
+                    this.isOpenCopy = true;
+                  }
+                }else{
+                  this.textCopy = text;
+                  this.isOpenCopy = true;
+                }
+              }else{
+                this.textCopy = text;
+                this.isOpenCopy = true;
+              }
+            }
+          }
           return;
         }
       });
@@ -385,11 +416,26 @@ export class HomePageComponent{
   }
 
   onCopy(){
-    this.cancelCopy();
+    this.isOpenCopy = false;
+    this.dt.detectChanges();
     this.navCtrl.navigateForward('main/package/create',{queryParams:{code:this.textCopy}});
+    Clipboard.write({string:''});
   }
 
-  cancelCopy(){
+  async cancelCopy(){
+    let now = new Date();
+    now.setHours(now.getHours() + 3);
+    let lstHistory = [];
+    let obj = {
+      id: this.textCopy,
+      exprireTime: now
+    }
+    let data = await this.storage.get('lstHistory');
+    if (data) {
+      lstHistory = JSON.parse(data);
+    }
+    lstHistory.push(obj);
+    this.storage.set('lstHistory', JSON.stringify(lstHistory));
     this.isOpenCopy = false;
     this.dt.detectChanges();
   }

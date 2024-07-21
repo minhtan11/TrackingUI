@@ -41,6 +41,7 @@ import { RelulationPageComponent } from './relulation-page/relulation-page.compo
 import { FaqPageComponent } from './setting-page/faq-page/faq-page.component';
 import { ExchangePageComponent } from './setting-page/exchange-page/exchange-page.component';
 import { TranformDoublePipe } from '../pipe/tranformDouble/tranform-double.pipe';
+import {ProgressBarMode, MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   imports: [
@@ -60,7 +61,8 @@ import { TranformDoublePipe } from '../pipe/tranformDouble/tranform-double.pipe'
     MatCheckboxModule,
     ClipboardModule,
     DecodeVNPipe,
-    TranformDoublePipe
+    TranformDoublePipe,
+    MatProgressBarModule
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
   ,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent,FormatdatePipe,ReportPageComponent,RelulationPageComponent,FaqPageComponent,ExchangePageComponent],

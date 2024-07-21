@@ -67,6 +67,7 @@ export class CreatePageComponent  implements OnInit {
     });
     this.platform.ready().then(async () => {
       this.platform.resume.subscribe(async () => {
+        this.checkCopy();
         if ((this.router.url.includes('/main/package/create'))) {
           Clipboard.read().then((clipboardRead: ReadResult) => {
             if (clipboardRead?.value) {
@@ -270,17 +271,74 @@ export class CreatePageComponent  implements OnInit {
     this.navCtrl.navigateBack(this.previousUrl);
   }
 
-  onCopy(){
-    this.cancelCopy();
-    this.formGroup.patchValue({packageCode:this.textCopy});
+  checkCopy(){
+    if ((this.router.url.includes('/main/package/create'))) {
+      Clipboard.read().then(async (clipboardRead: ReadResult) => {
+        if (clipboardRead?.value) {
+          let value = clipboardRead?.value;
+          let text = value.replace(/(\r\n\s|\r|\n|\s)/g, ',');
+          if (text.length < 100) {
+            let pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+              '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+              '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+              '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+              '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+              '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+            if (!pattern.test(text)) {
+              let data = await this.storage.get('lstHistory');
+              if (data) {
+                let lstHistory = [];
+                lstHistory = JSON.parse(data);
+                let index = lstHistory.findIndex((x:any) => x.id === text);
+                if (index > -1) {
+                  let obj = lstHistory[index];
+                  let now = new Date().toISOString();
+                  let exprireDate = Date.parse(obj.exprireTime);
+                  if (Date.parse(now) > exprireDate) {
+                    lstHistory.splice(index, 1);
+                    this.storage.set('lstHistory', JSON.stringify(lstHistory));
+                    this.textCopy = text;
+                    this.isOpenCopy = true;
+                  }
+                }else{
+                  this.textCopy = text;
+                  this.isOpenCopy = true;
+                }
+              }else{
+                this.textCopy = text;
+                this.isOpenCopy = true;
+              }
+            }
+          }
+          return;
+        }
+      });
+    }
   }
 
-  cancelCopy(){
+  onCopy(){
     this.isOpenCopy = false;
-    // Clipboard.write({
-    //   string: ""
-    // });
-    
+    this.dt.detectChanges();
+    this.formGroup.patchValue({packageCode:this.textCopy});
+    Clipboard.write({string:''});
+  }
+
+  async cancelCopy(){
+    let now = new Date();
+    now.setHours(now.getHours() + 3);
+    let lstHistory = [];
+    let obj = {
+      id: this.textCopy,
+      exprireTime: now
+    }
+    let data = await this.storage.get('lstHistory');
+    if (data) {
+      lstHistory = JSON.parse(data);
+    }
+    lstHistory.push(obj);
+    this.storage.set('lstHistory', JSON.stringify(lstHistory));
+    this.isOpenCopy = false;
+    this.dt.detectChanges();
   }
 
   onfocus(ele:any){

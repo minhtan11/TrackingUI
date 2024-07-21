@@ -231,7 +231,7 @@
           <ion-card-content class="p-2">
             <ion-list style="background-color:whitesmoke !important;">
               <ion-item style="--background:whitesmoke !important" lines="none">
-                <img slot="start" style="width: 4rem;" src="../../../assets/image/add-package.png">
+                <img slot="start" style="width: 4rem;" src="../../../assets/image/box.png">
                 <div style="flex-direction: column;" class="w-100 d-flex">
                   <ion-text class="dynamic-font text-dark font-weight-bold">
                     Tạo mã vận đơn
@@ -351,7 +351,7 @@
       </div>
     </div>
     <div style="position: fixed;bottom: 0;
-        margin-bottom: var(--ion-safe-area-bottom, 0);" class="w-100 p-3 d-flex align-items-center justify-content-end">
+        margin-bottom: var(--ion-safe-area-bottom, 0);right: 0;" class="p-3">
       <ng-container *ngIf="imgSticket">
         <img (click)="openPopup()" style="width: 6rem;" [src]="'https://tracking.nhanshiphang.vn/'+imgSticket?.img">
       </ng-container>
