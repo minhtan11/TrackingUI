@@ -26,7 +26,7 @@ export class HomePageComponent{
   //#region Contrucstor
   @ViewChild('swiperRef') swiperRef: ElementRef | undefined;
   swiper:Swiper;
-  oUser:any;
+  userName:any;
   ship1:any;
   ship2:any;
   pack3:any;
@@ -131,6 +131,8 @@ export class HomePageComponent{
 
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
+    let username = await this.storage.get('username');
+    this.userName = username;
     this.animationInProgress = false;
   }
 

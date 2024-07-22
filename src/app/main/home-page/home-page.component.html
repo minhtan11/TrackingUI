@@ -10,7 +10,7 @@
       <img style="width: 2rem;height: 2rem;" src="../../../assets/image/customer-service-headset.png" alt="">
     </div>
   </div> -->
-  <ng-container *ngIf="isReview">
+  <ng-container *ngIf="userName && userName === 'admintan'">
     <div class="w-100">
       <div class="w-100 mb-2 padding-statusbar-ios">
         <img class="w-100" src="../../../assets/image/splash.png">
@@ -146,7 +146,7 @@
       </div>
     </div>
   </ng-container>
-  <ng-container *ngIf="!isReview">
+  <ng-container *ngIf="userName && userName != 'admintan'">
     <div class="w-100">
       <div *ngIf="!lstImgSlide" class="padding-statusbar-ios" style="height: 200px;" class="w-100">
         <ion-skeleton-text class="w-100" [animated]="true"></ion-skeleton-text>
