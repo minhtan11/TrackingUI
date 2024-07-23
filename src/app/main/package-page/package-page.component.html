@@ -14,7 +14,7 @@
       enterkeyhint="search" mode="ios" show-clear-button="always"></ion-searchbar>
     </div>
   </ion-toolbar>
-  <ion-toolbar *ngIf="!isReview" style="--background:white !important;">
+  <ion-toolbar *ngIf="username && username != 'admintan'" style="--background:white !important;">
     <ion-segment style="min-height: unset !important;height: 3rem !important;" mode="md" [scrollable]="true" [value]="status">
       <ion-segment-button (click)=" sortData(0)" [value]="0">
         <div class="d-flex align-items-center text-center">
@@ -140,7 +140,7 @@
                 </div>
               </div>
             </ion-card-header>
-            <ion-card-content *ngIf="isReview" class="p-3" >
+            <ion-card-content *ngIf="username && username === 'admintan'" class="p-3" >
               <div class="w-100">
                 <div class="d-flex align-items-center">
                   <ng-container *ngIf="item.status == 0 || item.status == 1">
@@ -258,7 +258,7 @@
                 </div>
               </div>
             </ion-card-content>
-            <ion-card-content *ngIf="!isReview" class="p-3" >
+            <ion-card-content *ngIf="username && username != 'admintan'" class="p-3" >
               <div class="w-100" (click)="viewDetail(item)">
                 <div class="d-flex align-items-center">
                   <ng-container *ngIf="item.status == 0 || item.status == 1">

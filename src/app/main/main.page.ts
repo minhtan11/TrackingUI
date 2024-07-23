@@ -35,6 +35,7 @@ export class MainPage implements OnInit {
   totalOrder:any=0;
   totalNoti:any=0;
   isHideFooter:any = false;
+  userName:any;
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
@@ -191,6 +192,8 @@ export class MainPage implements OnInit {
 
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
+    let username = await this.storage.get('username');
+    this.userName = username;
     this.routerOutlet.swipeGesture = false; 
     this.getTotalPackage();
     this.getTotalOrder();

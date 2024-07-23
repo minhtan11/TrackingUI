@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content style="--background:#F0F2F5 !important;">
-  <ng-container *ngIf="isReview">
+  <ng-container *ngIf="userName && userName === 'admintan'">
     <div class="w-100 h-100">
       <div *ngIf="oUser == undefined" class="w-100 p-3 d-flex align-items-center">
         <ion-avatar style="padding: 0.2rem;background-color: white !important;">
@@ -123,7 +123,7 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="!isReview">
+  <ng-container *ngIf="userName && userName != 'admintan'">
     <div class="w-100 h-100">
       <div *ngIf="oUser == undefined" class="w-100 p-3 d-flex align-items-center">
         <ion-avatar>

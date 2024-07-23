@@ -61,7 +61,7 @@
                   </ion-text>
                 </div>
               </div>
-              <ng-container *ngIf="!isReview">
+              <ng-container *ngIf="userName && userName != 'admintan'">
                 <div *ngIf="item?.notifType == 1 && (item?.orderCode != '' && item?.orderCode != null)" class="w-100 d-flex align-items-center justify-content-center">
                   <ion-button (click)="goPackageDetail(item?.orderCode)" mode="ios" size="default" class="ion-btn-orange">
                     <ion-text style="color: white !important;" class="dynamic-font">

@@ -280,21 +280,23 @@ export class HomePageComponent{
         this.navCtrl.navigateBack('home',{queryParams:{loginError:JSON.stringify(res)}});
         this.onDestroy();
       }else{
-        let check = await this.onCheckVersion();
-        if (!check) {
-          return;
+        if(username != 'admintan'){
+          let check = await this.onCheckVersion();
+          if (!check) {
+            return;
+          }
+          let data = await this.storage.get('notitap');
+          let oData = JSON.parse(data)
+          if (data) {
+            this.goNotification(oData);
+            this.checkCopy();
+          }else{
+            this.showBanner(isPopUp,3000);
+            this.checkCopy();
+          }
+          this.isLoad = true;
+          await this.storage.setAccount(username);
         }
-        let data = await this.storage.get('notitap');
-        let oData = JSON.parse(data)
-        if (data) {
-          this.goNotification(oData);
-          this.checkCopy();
-        }else{
-          this.showBanner(isPopUp,3000);
-          this.checkCopy();
-        }
-        this.isLoad = true;
-        await this.storage.setAccount(username);
       }
     })
   }
