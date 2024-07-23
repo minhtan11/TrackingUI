@@ -71,6 +71,7 @@ export class AppComponent implements OnInit {
       this.storage.set('isReview', res?.isMobileReview);
       this.storage.set('versionNo', res?.versionNo);
       this.storage.set('urlFAQ', res?.urlFAQ);
+      this.storage.set('urlServiceCharge', res?.urlServiceCharge);
     })
   }
 }

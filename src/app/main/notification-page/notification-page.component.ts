@@ -32,9 +32,7 @@ export class NotificationPageComponent {
   isSke:any=false;
   isFilter:any=false;
   previousUrl:any;
-  isBack:any = false;
   isReview:any;
-  userName:any;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -96,8 +94,6 @@ export class NotificationPageComponent {
 
   async ionViewWillEnter() {
     this.isReview = await this.storage.get('isReview');
-    let username = await this.storage.get('username');
-    this.userName = username;
     this.init();
     if (!this.previousUrl) {
       let url = this.previous.getPreviousUrl();
@@ -108,9 +104,6 @@ export class NotificationPageComponent {
     } 
     let array = this.router.url.split('?');
     let url = array[0];
-    if ((url.includes('home/notification'))) {
-      this.isBack = true;
-    }
     this.updateTotalNoti();
   }
 

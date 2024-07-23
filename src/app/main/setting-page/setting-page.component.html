@@ -172,13 +172,15 @@
           </ion-card>
         </div>
         <div style="width: 50%;">
-          <ion-card (click)="goHistoryPoint()" class="mx-1 my-1" style="border-radius: 15px;box-shadow: none !important;--background: white;font-size: unset;">
+          <ion-card class="mx-1 my-1" style="border-radius: 15px;box-shadow: none !important;--background: white;font-size: unset;">
             <ion-card-header class="p-1 p-2">
               <div class="w-100 d-flex align-items-center justify-content-center">
-                <img class="mr-2" style="width: 2rem;height: 2rem;" src="../../assets/image/star.png" alt="">
-                <ion-text class="dynamic-font font-weight-bold text-dark">
-                  <span>Điểm tra cứu</span>
-                </ion-text>
+                <div class="w-100 d-flex align-items-center justify-content-center" (click)="goHistoryPoint()" >
+                  <img class="mr-2" style="width: 2rem;height: 2rem;" src="../../assets/image/star.png" alt="">
+                  <ion-text class="dynamic-font font-weight-bold text-dark">
+                    <span>Điểm tra cứu</span>
+                  </ion-text>
+                </div>
                 <div (click)="openRule()" style="background-color: grey !important;border-radius: 50px;
                 position: absolute;
                 right: 0.2rem;
@@ -560,7 +562,7 @@
         <div class="w-100">
           <div class="w-100 text-center ">
             <ion-text class="dynamic-font text-primary-default font-weight-bold">
-              <span>Điểm này dùng để tra cứu quá trình vận chuyển của kiện hàng ở nội địa Trung Quóc, dữ liệu theo nguồn của hệ thống Baidu.</span>
+              <span>Điểm này dùng để tra cứu quá trình vận chuyển của kiện hàng ở nội địa Trung Quốc, dữ liệu theo nguồn của hệ thống Baidu.</span>
             </ion-text>
           </div>
           <ion-text class="dynamic-font text-orange font-weight-bold">

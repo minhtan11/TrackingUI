@@ -207,9 +207,13 @@ export class HomePageComponent{
     this.isPopup = true;
   }
 
-  goServicechargePage(){
-    this.onDestroy();
-    this.navCtrl.navigateForward('main/service-charge');
+  async goServicechargePage(){
+    let url = await this.storage.get('urlServiceCharge');
+    if (url) {
+      await Browser.open({ url: url });
+    }
+    // this.onDestroy();
+    // this.navCtrl.navigateForward('main/service-charge');
   }
 
   goHistoryPage(){
