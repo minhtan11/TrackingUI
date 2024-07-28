@@ -49,17 +49,17 @@
       <ion-segment-button  (click)="sortData(3)" [value]="3">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <h5 class="my-0 mx-0 font-weight-bold">Đã hủy</h5>
+            <h5 class="my-0 mx-0 font-weight-bold">Đã nhận hàng</h5>
           </ion-text>
           <ion-text *ngIf="total3 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
             <h5 class="my-0 mx-0">{{'('+(total3 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
-      <ion-segment-button  (click)="sortData(4)" [value]="4">
+      <ion-segment-button  (click)="sortData(9)" [value]="9">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <h5 class="my-0 mx-0 font-weight-bold">Khác</h5>
+            <h5 class="my-0 mx-0 font-weight-bold">Đã hủy</h5>
           </ion-text>
           <ion-text *ngIf="total4 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
             <h5 class="my-0 mx-0">{{'('+(total4 | number)+')'}}</h5>
@@ -140,11 +140,11 @@
                       </ng-container>
                       <ng-container *ngIf="item.status == 3">
                         <img  style="width: 4em;height: 4em;
-                        margin-right: 1rem;" src="../../../assets/image/ship-cancel.png" alt="">
+                        margin-right: 1rem;" src="../../../assets/image/package.png" alt="">
                       </ng-container>
-                      <ng-container *ngIf="item.status == 4">
+                      <ng-container *ngIf="item.status == 9">
                         <img  style="width: 4em;height: 4em;
-                        margin-right: 1rem;" src="../../../assets/image/ship-other.png" alt="">
+                        margin-right: 1rem;" src="../../../assets/image/cancel-order.png" alt="">
                       </ng-container>
                       <div>
                         <ion-text mode="ios" class="dynamic-font">
@@ -161,14 +161,14 @@
                           <span class="font-weight-bold text-dark">Người tạo: </span>
                           <span>{{item.lastName}}</span>
                         </ion-text>
-                        <br>
+                        <!-- <br>
                         <ion-text class="dynamic-font">
                           <span class="font-weight-bold text-dark">Dịch vụ phụ: </span>
                           <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
                           <span *ngIf="item.isAirPackage">,Bọt khí</span>
                           <span *ngIf="item.isInsurance">,Bảo hiểm</span>
                           <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance">Không có</span>
-                        </ion-text>
+                        </ion-text> -->
                         <ion-text>
                         </ion-text>
                       </div>
@@ -197,12 +197,12 @@
                           </ion-badge>
                           <ion-badge mode="md" *ngSwitchCase="3" style="--background	: orange !important;">
                             <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                              <span>Đã hủy</span>
+                              <span>Đã nhận hàng</span>
                             </ion-text>
                           </ion-badge>
-                          <ion-badge mode="md" *ngSwitchCase="4" color="medium">
+                          <ion-badge mode="md" *ngSwitchCase="9" color="medium">
                             <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                              <span>Khác</span>
+                              <span>Đã hủy</span>
                             </ion-text>
                           </ion-badge>
                         </ng-container>

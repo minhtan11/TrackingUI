@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Browser } from '@capacitor/browser';
 import { Network } from '@capacitor/network';
 import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
 import { InfiniteScrollCustomEvent, IonContent, IonRouterOutlet, NavController, Platform } from '@ionic/angular';
@@ -147,6 +148,7 @@ export class NotificationPageComponent {
         if (this.lstData.length == 0) this.isEmpty = true;
         if (this.lstData.length == oData[1]) this.isload = false;
         this.isSke = false;
+        console.log(this.lstData);
       }
       this.dt.detectChanges();
     })
@@ -230,6 +232,12 @@ export class NotificationPageComponent {
 
   async goPackageDetail(orderCode:any){
     this.navCtrl.navigateForward('main/package/detail', { queryParams: { id: orderCode } });
+  }
+
+  async goLink(link:any){
+    if (link) {
+      await Browser.open({ url: link });
+    }
   }
 
   async updateTotalNoti(){

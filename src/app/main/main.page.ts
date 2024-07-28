@@ -271,7 +271,8 @@ export class MainPage implements OnInit {
     this.api.execByBody('Authencation', 'gettotalpackage', messageBody).subscribe((res: any) => {
       if (res[0]) {
       } else {
-        this.totalPackage = res[5];
+        let lst = res[1];
+        this.totalPackage = lst.filter((x:any) => x.status == 4).length;
         this.dt.detectChanges();
       }
     })
@@ -288,7 +289,8 @@ export class MainPage implements OnInit {
     this.api.execByBody('Authencation', 'gettotalorder', messageBody).subscribe((res:any)=>{
       if (res[0]) {
       } else {
-        this.totalOrder = res[2];
+        let lst = res[1];
+        this.totalOrder = lst.filter((x:any) => x.status == 1).length;
         this.dt.detectChanges();
       }
     })

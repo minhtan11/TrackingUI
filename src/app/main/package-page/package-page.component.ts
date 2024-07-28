@@ -54,6 +54,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   total3: any;
   total4: any;
   total5: any;
+  total6: any;
   total9: any;
   total10: any;
   total11: any;
@@ -287,15 +288,17 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
     this.api.execByBody('Authencation', 'gettotalpackage', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res[0]) {
       } else {
-        this.total0 = res[1];
-        this.total1 = res[2];
-        this.total2 = res[3];
-        this.total3 = res[4];
-        this.total4 = res[5];
-        this.total5 = res[6];
-        this.total9 = res[7];
-        this.total10 = res[8];
-        this.total11 = res[9];
+        let lst = res[1];
+        this.total0 = lst.length;
+        this.total1 = lst.filter((x:any) => x.status == 1).length;
+        this.total2 = lst.filter((x:any) => x.status == 2).length;
+        this.total3 = lst.filter((x:any) => x.status == 3).length;
+        this.total4 = lst.filter((x:any) => x.status == 4).length;
+        this.total5 = lst.filter((x:any) => x.status == 5).length;
+        this.total6 = lst.filter((x:any) => x.status == 6).length;
+        this.total9 = lst.filter((x:any) => x.status == 9).length;
+        this.total10 = lst.filter((x:any) => x.status == 10).length;
+        this.total11 = lst.filter((x:any) => x.status == 11).length;
       }
     })
   }

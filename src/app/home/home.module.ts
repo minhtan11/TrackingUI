@@ -15,6 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NotificationServiceComponent } from '../notification-service/notification-service.component';
 import {MatSelectModule} from '@angular/material/select';
 import { DecodeVNPipe } from '../pipe/decode-VN/decode-vn.pipe';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 @NgModule({
@@ -33,7 +35,7 @@ import { DecodeVNPipe } from '../pipe/decode-VN/decode-vn.pipe';
     HttpClientModule, 
     DecodeVNPipe
   ],
-  declarations: [HomePage,SignUpComponent],
+  declarations: [HomePage,SignUpComponent,ForgotPasswordComponent,ResetPasswordComponent],
   providers: [
     ApiserviceComponent,
     NotificationServiceComponent,

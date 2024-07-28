@@ -246,11 +246,12 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     this.api.execByBody('Authencation', 'gettotalorder', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
       if (res[0]) {
       } else {
-        this.total0 = res[1];
-        this.total1 = res[2];
-        this.total2 = res[3];
-        this.total3 = res[4];
-        this.total4 = res[5];
+        let lst = res[1];
+        this.total0 = lst.length;
+        this.total1 = lst.filter((x:any) => x.status == 1).length;
+        this.total2 = lst.filter((x:any) => x.status == 2).length;
+        this.total3 = lst.filter((x:any) => x.status == 3).length;
+        this.total4 = lst.filter((x:any) => x.status == 9).length;
       }
     })
   }

@@ -58,6 +58,14 @@
                   <ion-icon style="color: white !important;" slot="end" name="chevron-forward-outline"></ion-icon>
                 </ion-button>
               </div>
+              <div *ngIf="item?.notifType != 1 && (item?.link != '' && item?.link != null)" class="w-100 d-flex align-items-center justify-content-center">
+                <ion-button (click)="goLink(item?.link)" mode="ios" size="default" class="ion-btn-orange">
+                  <ion-text style="color: white !important;" class="dynamic-font">
+                    Xem chi tiết
+                  </ion-text>
+                  <ion-icon style="color: white !important;" slot="end" name="chevron-forward-outline"></ion-icon>
+                </ion-button>
+              </div>
             </ion-card-content>
           </ion-card>
         </ion-item>

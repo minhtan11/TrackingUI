@@ -76,6 +76,16 @@
           </ion-text>
         </div>
       </ion-segment-button>
+      <ion-segment-button (click)=" sortData(6)" [value]="6">
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <h5 class="my-0 mx-0 font-weight-bold">Đã thông quan</h5>
+          </ion-text>
+          <ion-text *ngIf="total6 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
+            <h5 class="my-0 mx-0">{{'('+(total6 | number)+')'}}</h5>
+          </ion-text>
+        </div>
+      </ion-segment-button>
       <ion-segment-button (click)=" sortData(9)" [value]="9">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
@@ -263,7 +273,7 @@
                 <div class="d-flex align-items-center">
                   <ng-container *ngIf="item.status == 0 || item.status == 1">
                     <img style="width: 4em;height: 4em;
-                      margin-right: 1rem;" src="../../../assets/image/package-wait.png" alt="">
+                      margin-right: 1rem;" src="../../../assets/image/hourglass.png" alt="">
                   </ng-container>
                   <ng-container *ngIf="item.status == 2 || item.status == 3 || item.status == 4">
                     <img style="width: 4em;height: 4em;
@@ -273,7 +283,11 @@
                     <img style="width: 4em;height: 4em;
                       margin-right: 1rem;" src="../../../assets/image/package.png" alt="">
                   </ng-container>
-                  <ng-container *ngIf="item.status == 9 || item.status == 10 || item.status == 11">
+                  <ng-container *ngIf="item.status == 6">
+                    <img style="width: 4em;height: 4em;
+                      margin-right: 1rem;" src="../../../assets/image/truck.png" alt="">
+                  </ng-container>
+                  <ng-container *ngIf="item.status == 9 || item.status == 11">
                     <img style="width: 4em;height: 4em;
                       margin-right: 1rem;" src="../../../assets/image/package-cancelled.png" alt="">
                   </ng-container>
@@ -321,11 +335,11 @@
                       <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
                       <span *ngIf="item.isWoodPackage && item.isAirPackage">,</span>
                       <span *ngIf="item.isAirPackage">Bọt khí</span>
-                      <span *ngIf="(item.isWoodPackage || item.isAirPackage) && item.isInsurance">,</span>
-                      <span *ngIf="item.isInsurance">Bảo hiểm</span>
-                      <span *ngIf="(item.isWoodPackage || item.isAirPackage || item.isInsurance) && item.isBrand">,</span>
+                      <!-- <span *ngIf="(item.isWoodPackage || item.isAirPackage) && item.isInsurance">,</span>
+                      <span *ngIf="item.isInsurance">Bảo hiểm</span> -->
+                      <span *ngIf="(item.isWoodPackage || item.isAirPackage) && item.isBrand">,</span>
                       <span *ngIf="item.isBrand">Hàng hiệu</span>
-                      <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance && !item.isBrand">Không có</span>
+                      <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isBrand">Không có</span>
                     </ion-text>
                     <br>
                     <ng-container *ngIf="item?.note">
@@ -365,12 +379,17 @@
                         <span>Đã nhận hàng</span>
                       </ion-text>
                     </ion-badge>
+                    <ion-badge mode="md" *ngSwitchCase="6" style="--background	: orange !important;">
+                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                        <span>Đã thông quan</span>
+                      </ion-text>
+                    </ion-badge>
                     <ion-badge mode="md" *ngSwitchCase="9" color="dark">
                       <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                         <span>Đã hủy</span>
                       </ion-text>
                     </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="11" style="--background	: orange !important;">
+                    <ion-badge mode="md" *ngSwitchCase="11" color="dark">
                       <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                         <span>Không nhận được hàng</span>
                       </ion-text>

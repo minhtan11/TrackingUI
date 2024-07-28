@@ -135,7 +135,7 @@ export class DetailComponent  implements OnInit {
       if (res[0]) {
       } else {
         if(res[1]) this.oData = res[1];
-        
+        console.log(this.oData);
       }
       this.onDestroy();
     })

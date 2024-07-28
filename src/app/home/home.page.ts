@@ -92,7 +92,7 @@ export class HomePage implements OnInit, AfterViewInit {
       let array = this.router.url.split('?');
       let url = array[0];
       if((url.includes('home'))){
-        if((!url.includes('home/signup'))){
+        if((!url.includes('home/signup')) && (!url.includes('home/forgotpassword')) && (!url.includes('home/resetpassword'))){
           if (Date.now() - this.lastBack < 500) { // logic for double tap: delay of 500ms between two clicks of back button
             this.isOpenExit = true;
           }
@@ -455,6 +455,10 @@ export class HomePage implements OnInit, AfterViewInit {
   cancelSigin(){
     this.isOpenSigin = false;
     this.dt.detectChanges();
+  }
+
+  goForgotPassword(){
+    this.navCtrl.navigateForward('home/forgotpassword');
   }
   //#endregion
 }
