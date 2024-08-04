@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { InAppReview } from '@capacitor-community/in-app-review';
 import { Capacitor } from '@capacitor/core';
 import { Keyboard } from '@capacitor/keyboard';
 import { Network } from '@capacitor/network';
@@ -374,7 +375,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     };
     this.api.execByBody('Authencation', 'paymentselected', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
       if (res && !res.isError) {
-        this.notification.showNotiSuccess('',res.message);
+        this.notification.showNotiSuccess('',(res.message+'.Vui lòng liên hệ CSKH để nhận hàng!'));
         this.isCheckAll = false;
         this.arrOrderSelected = [];
         this.totalAllOrder = 0;
@@ -399,6 +400,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
           }
           this.getTotal();
         }
+        InAppReview.requestReview();
       }else{
         this.notification.showNotiError('',res.message);
       }

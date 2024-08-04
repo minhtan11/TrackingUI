@@ -56,8 +56,7 @@ export class HomePageComponent{
     private notification: NotificationServiceComponent,
     private routerOutlet: IonRouterOutlet,
     private previous:PreviousRouterServiceService,
-    private zone: NgZone
-    
+    private zone: NgZone,
   ) { 
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {        
@@ -391,31 +390,46 @@ export class HomePageComponent{
               '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
               '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
               '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-            if (!pattern.test(text)) {
-              let data = await this.storage.get('lstHistory');
-              if (data) {
-                let lstHistory = [];
-                lstHistory = JSON.parse(data);
-                let index = lstHistory.findIndex((x:any) => x.id === text);
-                if (index > -1) {
-                  let obj = lstHistory[index];
-                  let now = new Date().toISOString();
-                  let exprireDate = Date.parse(obj.exprireTime);
-                  if (Date.parse(now) > exprireDate) {
-                    lstHistory.splice(index, 1);
-                    this.storage.set('lstHistory', JSON.stringify(lstHistory));
-                    this.textCopy = text;
-                    this.isOpenCopy = true;
-                  }
-                }else{
-                  this.textCopy = text;
-                  this.isOpenCopy = true;
+            let arr = text.split(',');
+            if (arr.length > 0) {
+              for (let index = 0; index < arr.length; index++) {
+                let value = arr[index];
+                if (pattern.test(value)) {
+                  arr.splice(index, 1);
                 }
-              }else{
-                this.textCopy = text;
+              }
+              if(arr.length > 0){
+                let newText = arr.join(',');
+                this.textCopy = newText;
                 this.isOpenCopy = true;
               }
             }
+            
+            // if (!pattern.test(text)) {
+            //   let data = await this.storage.get('lstHistory');
+            //   if (data) {
+            //     let lstHistory = [];
+            //     lstHistory = JSON.parse(data);
+            //     let index = lstHistory.findIndex((x:any) => x.id === text);
+            //     if (index > -1) {
+            //       let obj = lstHistory[index];
+            //       let now = new Date().toISOString();
+            //       let exprireDate = Date.parse(obj.exprireTime);
+            //       if (Date.parse(now) > exprireDate) {
+            //         lstHistory.splice(index, 1);
+            //         this.storage.set('lstHistory', JSON.stringify(lstHistory));
+            //         this.textCopy = text;
+            //         this.isOpenCopy = true;
+            //       }
+            //     }else{
+            //       this.textCopy = text;
+            //       this.isOpenCopy = true;
+            //     }
+            //   }else{
+            //     this.textCopy = text;
+            //     this.isOpenCopy = true;
+            //   }
+            // }
           }
           return;
         }
@@ -431,19 +445,19 @@ export class HomePageComponent{
   }
 
   async cancelCopy(){
-    let now = new Date();
-    now.setHours(now.getHours() + 3);
-    let lstHistory = [];
-    let obj = {
-      id: this.textCopy,
-      exprireTime: now
-    }
-    let data = await this.storage.get('lstHistory');
-    if (data) {
-      lstHistory = JSON.parse(data);
-    }
-    lstHistory.push(obj);
-    this.storage.set('lstHistory', JSON.stringify(lstHistory));
+    // let now = new Date();
+    // now.setHours(now.getHours() + 3);
+    // let lstHistory = [];
+    // let obj = {
+    //   id: this.textCopy,
+    //   exprireTime: now
+    // }
+    // let data = await this.storage.get('lstHistory');
+    // if (data) {
+    //   lstHistory = JSON.parse(data);
+    // }
+    // lstHistory.push(obj);
+    // this.storage.set('lstHistory', JSON.stringify(lstHistory));
     this.isOpenCopy = false;
     this.dt.detectChanges();
   }

@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, OnInit } from '@angular/core';
 import {ActivatedRoute, Router } from '@angular/router';
+import { InAppReview } from '@capacitor-community/in-app-review';
 import { NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiserviceComponent } from 'src/app/apiservice/apiservice.component';
@@ -93,9 +94,10 @@ export class OrderPageDetailComponent {
     };
     this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
       if (res && !res.isError) {
-        this.notification.showNotiSuccess('',res.message);
+        this.notification.showNotiSuccess('',(res.message+'.Vui lòng liên hệ CSKH để nhận hàng!'));
         this.oData = res?.data;
         this.isChange = true;
+        InAppReview.requestReview();
       }else{
         this.notification.showNotiError('',res.message);
       }
