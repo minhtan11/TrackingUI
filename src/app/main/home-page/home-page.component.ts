@@ -41,7 +41,7 @@ export class HomePageComponent{
   isPopup:any=false;
   isPopupVersion:any=false;
   imgPopup:any;
-  versionNo:any='1.9';
+  versionNo:any='2.0';
   textCopy:any = '';
   isOpenCopy:any=false;
   private destroy$ = new Subject<void>();
