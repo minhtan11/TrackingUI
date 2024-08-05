@@ -9,6 +9,8 @@ PODS:
     - Capacitor
   - CapacitorClipboard (6.0.0):
     - Capacitor
+  - CapacitorCommunityInAppReview (6.0.0):
+    - Capacitor
   - CapacitorCordova (5.7.5)
   - CapacitorDevice (6.0.0):
     - Capacitor
@@ -95,6 +97,7 @@ DEPENDENCIES:
   - "CapacitorBrowser (from `../../node_modules/@capacitor/browser`)"
   - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
   - "CapacitorClipboard (from `../../node_modules/@capacitor/clipboard`)"
+  - "CapacitorCommunityInAppReview (from `../../node_modules/@capacitor-community/in-app-review`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorDevice (from `../../node_modules/@capacitor/device`)"
   - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
@@ -130,6 +133,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/camera"
   CapacitorClipboard:
     :path: "../../node_modules/@capacitor/clipboard"
+  CapacitorCommunityInAppReview:
+    :path: "../../node_modules/@capacitor-community/in-app-review"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorDevice:
@@ -157,6 +162,7 @@ SPEC CHECKSUMS:
   CapacitorBrowser: 473c7fd70ddbe541608ff09ec1be14da0078279e
   CapacitorCamera: 4be26c04b35e01f5e7ceb0fcaeafd7dc19b448e0
   CapacitorClipboard: 80282f684154124b9019ebf401235b70b0cf4994
+  CapacitorCommunityInAppReview: c69a9392f39a10f28092d823cfa979637f4fa079
   CapacitorCordova: c946a6052b547e1e185fc46862003f7b9130ead1
   CapacitorDevice: f8fd88f9edd1261c55a109f32015b09bbbfdc4a0
   CapacitorHaptics: 1fffc1217c7e64a472d7845be50fb0c2f7d4204c
@@ -177,6 +183,6 @@ SPEC CHECKSUMS:
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
 
-PODFILE CHECKSUM: 725c32c7b147b9c0a7b7b0680debaf499db5e5a4
+PODFILE CHECKSUM: 48f0936a1257896baf5861b49b1f41d08dc60870
 
 COCOAPODS: 1.15.2
