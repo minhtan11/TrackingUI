@@ -325,6 +325,9 @@
                           </div>
                           <div class="d-flex align-items-center">
                             <ng-container [ngSwitch]="item.movingMethod">
+                              <ion-text *ngSwitchCase="1" class="dynamic-font">
+                                Nhanh
+                              </ion-text>
                               <ion-text *ngSwitchCase="2" class="dynamic-font">
                                 Thường
                               </ion-text>
@@ -338,7 +341,7 @@
                                 Biển
                               </ion-text>
                               <ion-text *ngSwitchDefault>
-                                Nhanh
+                                Chưa thiết lập
                               </ion-text>
                             </ng-container>
                             

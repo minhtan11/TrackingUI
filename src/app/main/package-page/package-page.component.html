@@ -296,6 +296,9 @@
                       <span class="dynamic-font text-dark font-weight-bold"> Loại vận chuyển:</span>
                       <ng-container [ngSwitch]="item.movingMethod">
                         <span *ngSwitchCase="2">
+                          Nhanh
+                        </span>
+                        <span *ngSwitchCase="2">
                           Thường
                         </span>
                         <span *ngSwitchCase="3">
@@ -308,7 +311,7 @@
                           Biển
                         </span>
                         <span *ngSwitchDefault>
-                          Nhanh
+                          Chưa thiết lập
                         </span>
                       </ng-container>
                     </ion-text>
