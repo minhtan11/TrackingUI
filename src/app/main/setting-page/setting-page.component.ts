@@ -204,6 +204,10 @@ export class SettingPageComponent {
     //this.navCtrl.navigateForward('main/setting/faq');
   }
 
+  goFAQPage(){
+    this.navCtrl.navigateForward('main/setting/faq');
+  }
+
   goExchange(){
     this.navCtrl.navigateForward('main/setting/exchange');
   }

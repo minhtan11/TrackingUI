@@ -40,7 +40,7 @@
           <ion-card mode="ios" class="mx-1 my-4 mt-2" style="--background:white !important;box-shadow: none !important;border-radius: 15px;">
             <ion-card-content class="p-0">
               <ion-list [inset]="true" class="m-0" style="background-color:white !important;">
-                <ion-item class="p-2" lines="none" [button]="true" detail="false" style="--background:white !important">
+                <ion-item (click)="goFAQPage()" class="p-2" lines="none" [button]="true" detail="false" style="--background:white !important">
                   <div class="d-flex align-items-center justify-content-center">
                     <img style="width: 2rem;height: 2rem;"  class="mr-2" src="../../../assets/image/request.png" alt="">
                     <ion-text style="color:black !important" mode="ios" class="font-weight-normal dynamic-font">Câu hỏi thường gặp</ion-text>
