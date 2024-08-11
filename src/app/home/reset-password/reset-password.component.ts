@@ -17,7 +17,7 @@ import { StorageService } from 'src/app/storage-service/storage.service';
   styleUrls: ['./reset-password.component.scss'],
 })
 export class ResetPasswordComponent  implements OnInit {
-  @ViewChild('eleOldPassword') eleOldPassword: any;
+  @ViewChild('eleCode') eleCode: any;
   @ViewChild('eleNewPassword') eleNewPassword: any;
   @ViewChild('eleConfirmPassword') eleConfirmPassword: any;
   isHideFooter:any=false;
@@ -45,7 +45,7 @@ export class ResetPasswordComponent  implements OnInit {
 
   async ngOnInit() {
     this.formGroup = this.formBuilder.group({
-      oldPassword: ['', Validators.required],
+      code: ['', Validators.required],
       newPassword: ['', Validators.required],
       confirmPassword: ['', Validators.required],
       userName:[''],
@@ -93,9 +93,9 @@ export class ResetPasswordComponent  implements OnInit {
   }
 
   onChange(){
-    if (this.formGroup.controls['oldPassword'].invalid) {
-      this.notification.showNotiError('', 'Mật khẩu không được bỏ trống!');
-      this.eleOldPassword.nativeElement.focus();
+    if (this.formGroup.controls['code'].invalid) {
+      this.notification.showNotiError('', 'Mã OTP không được bỏ trống!');
+      this.eleCode.nativeElement.focus();
       return;
     }
     if (this.formGroup.controls['newPassword'].invalid) {
@@ -113,7 +113,19 @@ export class ResetPasswordComponent  implements OnInit {
       this.eleConfirmPassword.nativeElement.focus();
       return;
     }
-    this.api.execByBody('Authencation','changepassword',this.formGroup.value,true).pipe(takeUntil(this.destroy$)).subscribe(async (res:any)=>{
+    let oData = this.formGroup.getRawValue();
+    let userName = this.userName;
+    let password = oData?.newPassword;
+    let code = oData?.code;
+    let data = {
+      userName:userName,
+      password:password,
+      code:code,
+    }
+    let messageBody = {
+      dataRequest:JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation','changepasswordwithotp',messageBody).pipe(takeUntil(this.destroy$)).subscribe(async (res:any)=>{
       if (res && !res?.isError) {
         this.notification.showNotiSuccess('', res.message);
         let oData = this.formGroup.getRawValue();

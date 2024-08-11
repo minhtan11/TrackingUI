@@ -108,6 +108,7 @@ export class ForgotPasswordComponent  implements OnInit {
     };
     this.api.execByBody('Authencation', 'forgotpassword', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe(async (res:any)=>{
       if (res && !res?.isError) {
+        this.notification.showNotiSuccess('', res?.message);
         this.navCtrl.navigateForward('home/resetpassword');
       } else {
         this.notification.showNotiError('', res?.message);

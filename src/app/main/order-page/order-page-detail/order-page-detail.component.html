@@ -53,9 +53,9 @@
                   </div>
                   <div class="d-flex align-items-center">
                     <ion-text class="dynamic-font pr-2">
-                      {{oData.packageCode}}
+                      {{item.packageCode}}
                     </ion-text>
-                    <ion-icon [cdkCopyToClipboard]="oData.packageCode" (click)="onCopy()" style="font-size: 2rem;"
+                    <ion-icon [cdkCopyToClipboard]="item.packageCode" (click)="onCopy()" style="font-size: 2rem;"
                         name="copy-outline"></ion-icon>
                   </div>
                 </div>
@@ -65,9 +65,14 @@
                       <div class="w-100 d-flex align-items-center justify-content-start" style="margin-bottom: 28px;">
                         <div style="flex-direction: column;" class="d-flex align-items-center ">
                           <div style="width: 20px;height: 20px;border-radius: 50px;background: var(--ion-color-mat-primary);margin-bottom: 28px;"></div>
-                          <mat-progress-bar *ngIf="item.cnwhExpectation == null" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
-                          <mat-progress-bar *ngIf="item.cnwhExpectation != null && (item.exportedCNWH == null || item.exportedCNWH == '')" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
-                          <mat-progress-bar *ngIf="item.cnwhExpectation != null && item.exportedCNWH != null" style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="item.cnwhExpectation == null && item.status == 1" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="item.cnwhExpectation != null && (item.exportedCNWH == null || item.exportedCNWH == '') && item.status < 2" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="item.cnwhExpectation != null && item.exportedCNWH != null" style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="
+                              (item.cnwhExpectation == null && item.exportedCNWH != null && item.status >= 2) 
+                              || (item.cnwhExpectation != null && item.exportedCNWH == null && item.status >= 2) 
+                              || (item.cnwhExpectation == null && item.exportedCNWH == null && item.status >= 2)" 
+                          style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
                         </div>
                         <div style="flex-direction: column;margin-top: -2.3rem;" class="d-flex">
                           <span class="font-weight-bold" style="font-size: 0.8rem;">
@@ -83,9 +88,14 @@
                       <div class="w-100 d-flex align-items-center justify-content-start" style="margin-bottom: 28px;">
                         <div style="flex-direction: column;" class="d-flex align-items-center ">
                           <div style="width: 20px;height: 20px;border-radius: 50px;background: var(--ion-color-mat-primary);margin-bottom: 28px;"></div>
-                          <mat-progress-bar *ngIf="item.exportedCNWH == null" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
-                          <mat-progress-bar *ngIf="item.exportedCNWH != null && (item.dateExpectation == null || item.dateExpectation == '')" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
-                          <mat-progress-bar *ngIf="item.exportedCNWH != null && item.dateExpectation != null" style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="item.exportedCNWH == null && item.status == 1" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="item.exportedCNWH != null && (item.dateExpectation == null || item.dateExpectation == '') && item.status < 3" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="item.exportedCNWH != null && item.dateExpectation != null" style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="
+                              (item.exportedCNWH == null && item.dateExpectation != null && item.status >= 3) 
+                              || (item.exportedCNWH != null && item.dateExpectation == null && item.status >= 3) 
+                              || (item.exportedCNWH == null && item.dateExpectation == null && item.status >= 3)" 
+                              style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
                         </div>
                         <div style="flex-direction: column;margin-top: -2.3rem;" class="d-flex">
                           <span class="font-weight-bold" style="font-size: 0.8rem;">
@@ -101,9 +111,14 @@
                       <div class="w-100 d-flex align-items-center justify-content-start" style="margin-bottom: 28px;">
                         <div style="flex-direction: column;" class="d-flex align-items-center ">
                           <div style="width: 20px;height: 20px;border-radius: 50px;background: var(--ion-color-mat-primary);margin-bottom: 28px;"></div>
-                          <mat-progress-bar *ngIf="item.dateExpectation == null" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
-                          <mat-progress-bar *ngIf="item.dateExpectation != null && (item.importedSGWH == null || item.importedSGWH == '')" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
-                          <mat-progress-bar *ngIf="item.dateExpectation != null && item.importedSGWH != null" style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="item.dateExpectation == null && item.status == 1" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="item.dateExpectation != null && (item.importedSGWH == null || item.importedSGWH == '') && item.status < 4" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="item.dateExpectation != null && item.importedSGWH != null" style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="
+                              (item.dateExpectation == null && item.importedSGWH != null && item.status >=4)
+                              || (item.dateExpectation != null && item.importedSGWH == null && item.status >=4)
+                              || (item.dateExpectation == null && item.importedSGWH == null && item.status >=4)" 
+                              style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
                         </div>
                         <div style="flex-direction: column;margin-top: -2.3rem;" class="d-flex">
                           <span class="font-weight-bold" style="font-size: 0.8rem;">
@@ -119,9 +134,14 @@
                       <div class="w-100 d-flex align-items-center justify-content-start" style="margin-bottom: 28px;">
                         <div style="flex-direction: column;" class="d-flex align-items-center ">
                           <div style="width: 20px;height: 20px;border-radius: 50px;background: var(--ion-color-mat-primary);margin-bottom: 28px;"></div>
-                          <mat-progress-bar *ngIf="item.importedSGWH == null" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
-                          <mat-progress-bar *ngIf="item.importedSGWH != null && (item.receivedDate == null || item.receivedDate == '')" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
-                          <mat-progress-bar *ngIf="item.importedSGWH != null && item.receivedDate != null" style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="item.importedSGWH == null" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="item.importedSGWH != null && (item.receivedDate == null || item.receivedDate == '') && item.status < 5" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="item.importedSGWH != null && item.receivedDate != null" style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
+                            <mat-progress-bar *ngIf="
+                              (item.importedSGWH == null && item.receivedDate != null && item.status == 5)
+                              || (item.importedSGWH != null && item.receivedDate == null && item.status == 5)
+                              || (item.importedSGWH == null && item.receivedDate == null && item.status == 5)" 
+                              style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
                         </div>
                         <div style="flex-direction: column;margin-top: -2.3rem;" class="d-flex">
                           <span class="font-weight-bold" style="font-size: 0.8rem;">
@@ -285,6 +305,11 @@
                               <ion-badge mode="md" *ngSwitchCase="6" style="--background	: orange !important;">
                                 <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                                   <span>Đã thông quan</span>
+                                </ion-text>
+                              </ion-badge>
+                              <ion-badge mode="md" *ngSwitchCase="7" style="--background	: #69c6fd !important;">
+                                <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                                  <span>Hàng bị kiểm tra</span>
                                 </ion-text>
                               </ion-badge>
                               <ion-badge mode="md" *ngSwitchCase="9" color="dark">
@@ -643,6 +668,29 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
+            <ng-container *ngIf="lstLog && lstLog.length">
+              <div style="padding-top: 1em;">
+                <ion-text style="color: var(--ion-color-mat-primary);" class="dynamic-font font-weight-bold">
+                  NHẬT KÝ
+                </ion-text>
+              </div>
+              <ion-list lines="none" style="background-color:white !important;">
+                <ng-container *ngFor="let item2 of lstLog">
+                  <ion-item style="--background:white !important;padding-top: 1em;">
+                    <ion-icon style="color: orange !important" slot="start" name="bookmark-outline"></ion-icon>
+                    <ion-text class="dynamic-font">
+                      {{(item2.createdOn | formatdate : 'dd/MM/yyyy hh:mm a') + ' - '+item2?.context}}
+                    </ion-text>
+                  </ion-item>
+                </ng-container>
+              </ion-list>
+              <!-- <ng-container *ngFor="let item2 of lstLog">
+                <div class="w-100 d-flex align-items-center" style="padding-top: 1em;">
+                  <ion-icon style="color: var(--ion-color-mat-primary) !important" slot="start" name="checkmark-circle-outline"></ion-icon>
+                  
+                </div>
+              </ng-container> -->
+            </ng-container>
           </ion-card-content>
         </ion-card>
       </ion-item>

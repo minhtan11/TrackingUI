@@ -39,9 +39,14 @@
                   <div class="w-100 d-flex align-items-center justify-content-start" style="margin-bottom: 28px;">
                     <div style="flex-direction: column;" class="d-flex align-items-center ">
                       <div style="width: 20px;height: 20px;border-radius: 50px;background: var(--ion-color-mat-primary);margin-bottom: 28px;"></div>
-                      <mat-progress-bar *ngIf="oData.cnwhExpectation == null" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
-                      <mat-progress-bar *ngIf="oData.cnwhExpectation != null && (oData.exportedCNWH == null || oData.exportedCNWH == '')" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
+                      <mat-progress-bar *ngIf="oData.cnwhExpectation == null && oData.status == 1" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
+                      <mat-progress-bar *ngIf="oData.cnwhExpectation != null && (oData.exportedCNWH == null || oData.exportedCNWH == '') && oData.status < 2" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
                       <mat-progress-bar *ngIf="oData.cnwhExpectation != null && oData.exportedCNWH != null" style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
+                      <mat-progress-bar *ngIf="
+                        (oData.cnwhExpectation == null && oData.exportedCNWH != null && oData.status >= 2) 
+                        || (oData.cnwhExpectation != null && oData.exportedCNWH == null && oData.status >= 2) 
+                        || (oData.cnwhExpectation == null && oData.exportedCNWH == null && oData.status >= 2)" 
+                        style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
                     </div>
                     <div style="flex-direction: column;margin-top: -2.3rem;" class="d-flex">
                       <span class="font-weight-bold" style="font-size: 0.8rem;">
@@ -57,9 +62,14 @@
                   <div class="w-100 d-flex align-items-center justify-content-start" style="margin-bottom: 28px;">
                     <div style="flex-direction: column;" class="d-flex align-items-center ">
                       <div style="width: 20px;height: 20px;border-radius: 50px;background: var(--ion-color-mat-primary);margin-bottom: 28px;"></div>
-                      <mat-progress-bar *ngIf="oData.exportedCNWH == null" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
-                      <mat-progress-bar *ngIf="oData.exportedCNWH != null && (oData.dateExpectation == null || oData.dateExpectation == '')" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
+                      <mat-progress-bar *ngIf="oData.exportedCNWH == null && oData.status == 1" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
+                      <mat-progress-bar *ngIf="oData.exportedCNWH != null && (oData.dateExpectation == null || oData.dateExpectation == '') && oData.status < 3" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
                       <mat-progress-bar *ngIf="oData.exportedCNWH != null && oData.dateExpectation != null" style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
+                      <mat-progress-bar *ngIf="
+                      (oData.exportedCNWH == null && oData.dateExpectation != null && oData.status >= 3) 
+                      || (oData.exportedCNWH != null && oData.dateExpectation == null && oData.status >= 3) 
+                      || (oData.exportedCNWH == null && oData.dateExpectation == null && oData.status >= 3)" 
+                      style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
                     </div>
                     <div style="flex-direction: column;margin-top: -2.3rem;" class="d-flex">
                       <span class="font-weight-bold" style="font-size: 0.8rem;">
@@ -75,9 +85,14 @@
                   <div class="w-100 d-flex align-items-center justify-content-start" style="margin-bottom: 28px;">
                     <div style="flex-direction: column;" class="d-flex align-items-center ">
                       <div style="width: 20px;height: 20px;border-radius: 50px;background: var(--ion-color-mat-primary);margin-bottom: 28px;"></div>
-                      <mat-progress-bar *ngIf="oData.dateExpectation == null" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
-                      <mat-progress-bar *ngIf="oData.dateExpectation != null && (oData.importedSGWH == null || oData.importedSGWH == '')" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
+                      <mat-progress-bar *ngIf="oData.dateExpectation == null && oData.status == 1" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
+                      <mat-progress-bar *ngIf="oData.dateExpectation != null && (oData.importedSGWH == null || oData.importedSGWH == '') && oData.status < 4" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
                       <mat-progress-bar *ngIf="oData.dateExpectation != null && oData.importedSGWH != null" style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
+                      <mat-progress-bar *ngIf="
+                      (oData.dateExpectation == null && oData.importedSGWH != null && oData.status >=4)
+                      || (oData.dateExpectation != null && oData.importedSGWH == null && oData.status >=4)
+                      || (oData.dateExpectation == null && oData.importedSGWH == null && oData.status >=4)" 
+                      style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
                     </div>
                     <div style="flex-direction: column;margin-top: -2.3rem;" class="d-flex">
                       <span class="font-weight-bold" style="font-size: 0.8rem;">
@@ -94,8 +109,13 @@
                     <div style="flex-direction: column;" class="d-flex align-items-center ">
                       <div style="width: 20px;height: 20px;border-radius: 50px;background: var(--ion-color-mat-primary);margin-bottom: 28px;"></div>
                       <mat-progress-bar *ngIf="oData.importedSGWH == null" style="width: 60px;rotate: 90deg;" mode="determinate" value="0"></mat-progress-bar>
-                      <mat-progress-bar *ngIf="oData.importedSGWH != null && (oData.receivedDate == null || oData.receivedDate == '')" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
+                      <mat-progress-bar *ngIf="oData.importedSGWH != null && (oData.receivedDate == null || oData.receivedDate == '') && oData.status < 5" style="width: 60px;rotate: 90deg;" mode="indeterminate"></mat-progress-bar>
                       <mat-progress-bar *ngIf="oData.importedSGWH != null && oData.receivedDate != null" style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
+                      <mat-progress-bar *ngIf="
+                      (oData.importedSGWH == null && oData.receivedDate != null && oData.status == 5)
+                      || (oData.importedSGWH != null && oData.receivedDate == null && oData.status == 5)
+                      || (oData.importedSGWH == null && oData.receivedDate == null && oData.status == 5)" 
+                      style="width: 60px;rotate: 90deg;" mode="determinate" value="100"></mat-progress-bar>
                     </div>
                     <div style="flex-direction: column;margin-top: -2.3rem;" class="d-flex">
                       <span class="font-weight-bold" style="font-size: 0.8rem;">
@@ -266,6 +286,11 @@
                           <ion-badge mode="md" *ngSwitchCase="6" style="--background	: orange !important;">
                             <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                               <span>Đã thông quan</span>
+                            </ion-text>
+                          </ion-badge>
+                          <ion-badge mode="md" *ngSwitchCase="7" style="--background	: #69c6fd !important;">
+                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                              <span>Hàng bị kiểm tra</span>
                             </ion-text>
                           </ion-badge>
                           <ion-badge mode="md" *ngSwitchCase="9" color="dark">
@@ -617,20 +642,30 @@
                   Nhập mô tả
                 </ion-text>
               </ion-button>
-              <div class="d-flex align-items-center" [style]="oData?.status >= 2 && oData?.status != 9 ? 'margin-right: auto;' : ''">
-                <ion-button (click)="checkQuery(oData)" mode="ios" size="default" class="ion-btn-orange">
-                  <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
+              <ng-container *ngIf="oData?.status >= 2">
+                <div [style]="(oData?.status >= 2 && oData?.status != 9 && (oData?.transID == '' || oData?.transID == null)) ? 'margin-right: auto !important' : ''" class="d-flex align-items-center">
+                  <ion-button (click)="checkFirst(oData)" mode="ios" size="default" class="ion-btn-orange">
+                    <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
+                    <ion-text style="color: white !important;" class="dynamic-font">
+                      Kiểm tra hàng
+                    </ion-text>
+                  </ion-button>
+                  <div (click)="openPopDescrip()" style="background-color: grey !important;border-radius: 50px;margin-top: -3rem;
+                                    left: 2rem;
+                                    margin-left: -1rem;
+                                    z-index: 1000;" class="d-flex align-items-center justify-content-center">
+                    <ion-icon style="font-size: 1.5rem;" class="text-white" name="information-circle-outline"></ion-icon>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="(oData?.transID != '' && oData?.transID != null)">
+                <ion-button [style]="(oData?.transID != '' && oData?.transID != null) ? 'margin-right: auto !important' : ''" (click)="openPopViewOrder(oData)" mode="ios" size="default" class="ion-btn-light-primary">
+                  <ion-icon style="color: white !important;" slot="start" name="eye-outline"></ion-icon>
                   <ion-text style="color: white !important;" class="dynamic-font">
-                    Kiểm tra hàng
+                    Xem đơn hàng
                   </ion-text>
                 </ion-button>
-                <div (click)="openPopDescrip()" style="background-color: grey !important;border-radius: 50px;margin-top: -3rem;
-                                  left: 2rem;
-                                  margin-left: -1rem;
-                                  z-index: 1000;" class="d-flex align-items-center justify-content-center">
-                  <ion-icon style="font-size: 1.5rem;" class="text-white" name="information-circle-outline"></ion-icon>
-                </div>
-              </div>
+              </ng-container>
               <ng-container *ngIf="oData?.status < 2">
                 <ion-button (click)="openPopCancelPackage(oData)" mode="ios" size="default" color="medium">
                   <ion-icon style="color: white !important;" slot="start" name="stop-circle-outline"></ion-icon>
@@ -1001,4 +1036,41 @@
     </ng-template>
   </ion-modal>
   <!-- Descript -->
+  
+  <!-- ViewOrder -->
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelPopViewOrder()" [isOpen]="isOpenOrder">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Xem đơn hàng</h3>
+          </ion-text>
+        </div>
+        <div class="w-100 text-center">
+          <ion-text class="dynamic-font text-dark">
+            <span>Quý khách có muốn xem đơn hàng của kiện hàng </span>
+          </ion-text>
+          <ion-text style="color: var(--ion-color-mat-primary) !important;" class="dynamic-font">
+            <span>{{oData?.packageCode}}</span>
+          </ion-text>
+          <ion-text class="dynamic-font text-dark">
+            <span> không?</span>
+          </ion-text>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="viewOrder(oData)" mode="ios" size="default" class="ion-btn-default pr-3">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đồng ý
+            </ion-text>
+          </ion-button>
+          <ion-button (click)="cancelPopViewOrder()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Hủy bỏ
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- ViewOrder -->
 </ion-content>

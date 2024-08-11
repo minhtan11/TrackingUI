@@ -391,45 +391,44 @@ export class HomePageComponent{
               '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
               '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
             let arr = text.split(',');
+            let newarr:any = [];
             if (arr.length > 0) {
               for (let index = 0; index < arr.length; index++) {
                 let value = arr[index];
-                if (pattern.test(value)) {
-                  arr.splice(index, 1);
+                if (!pattern.test(value)) {
+                  let str = value.substring(3);
+                  if (str.length >= 8 && str.length <= 18 && !(isNaN(parseFloat(str)))) {
+                    newarr.push(value);
+                  }
                 }
               }
-              if(arr.length > 0){
-                let newText = arr.join(',');
-                this.textCopy = newText;
-                this.isOpenCopy = true;
+              if (newarr.length > 0) {
+                let newText = newarr.join(',');
+                let data = await this.storage.get('lstHistory');
+                if (data) {
+                  let lstHistory = [];
+                  lstHistory = JSON.parse(data);
+                  let index = lstHistory.findIndex((x: any) => x.id === newText);
+                  if (index > -1) {
+                    let obj = lstHistory[index];
+                    let now = new Date().toISOString();
+                    let exprireDate = Date.parse(obj.exprireTime);
+                    if (Date.parse(now) > exprireDate) {
+                      lstHistory.splice(index, 1);
+                      this.storage.set('lstHistory', JSON.stringify(lstHistory));
+                      this.textCopy = newText;
+                      this.isOpenCopy = true;
+                    }
+                  } else {
+                    this.textCopy = newText;
+                    this.isOpenCopy = true;
+                  }
+                } else {
+                  this.textCopy = newText;
+                  this.isOpenCopy = true;
+                }
               }
             }
-            
-            // if (!pattern.test(text)) {
-            //   let data = await this.storage.get('lstHistory');
-            //   if (data) {
-            //     let lstHistory = [];
-            //     lstHistory = JSON.parse(data);
-            //     let index = lstHistory.findIndex((x:any) => x.id === text);
-            //     if (index > -1) {
-            //       let obj = lstHistory[index];
-            //       let now = new Date().toISOString();
-            //       let exprireDate = Date.parse(obj.exprireTime);
-            //       if (Date.parse(now) > exprireDate) {
-            //         lstHistory.splice(index, 1);
-            //         this.storage.set('lstHistory', JSON.stringify(lstHistory));
-            //         this.textCopy = text;
-            //         this.isOpenCopy = true;
-            //       }
-            //     }else{
-            //       this.textCopy = text;
-            //       this.isOpenCopy = true;
-            //     }
-            //   }else{
-            //     this.textCopy = text;
-            //     this.isOpenCopy = true;
-            //   }
-            // }
           }
           return;
         }
@@ -441,23 +440,26 @@ export class HomePageComponent{
     this.isOpenCopy = false;
     this.dt.detectChanges();
     this.navCtrl.navigateForward('main/package/create',{queryParams:{code:this.textCopy}});
+    this.textCopy = '';
     Clipboard.write({string:''});
   }
 
   async cancelCopy(){
-    // let now = new Date();
-    // now.setHours(now.getHours() + 3);
-    // let lstHistory = [];
-    // let obj = {
-    //   id: this.textCopy,
-    //   exprireTime: now
-    // }
-    // let data = await this.storage.get('lstHistory');
-    // if (data) {
-    //   lstHistory = JSON.parse(data);
-    // }
-    // lstHistory.push(obj);
-    // this.storage.set('lstHistory', JSON.stringify(lstHistory));
+    if (this.textCopy != '' && this.textCopy != null) {
+      let now = new Date();
+      now.setHours(now.getHours() + 3);
+      let lstHistory = [];
+      let obj = {
+        id: this.textCopy,
+        exprireTime: now
+      }
+      let data = await this.storage.get('lstHistory');
+      if (data) {
+        lstHistory = JSON.parse(data);
+      }
+      lstHistory.push(obj);
+      this.storage.set('lstHistory', JSON.stringify(lstHistory));
+    }
     this.isOpenCopy = false;
     this.dt.detectChanges();
   }

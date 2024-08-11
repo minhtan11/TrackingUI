@@ -28,6 +28,7 @@ export class DetailComponent  implements OnInit {
   isOpenNoQueryPackage: any = false;
   isOpenDescript: any = false;
   isOpenCheckFirst: any = false;
+  isOpenOrder:any=false;
   previousUrl:any;
   isChange:any=false;
   isCancel:any=false;
@@ -135,7 +136,6 @@ export class DetailComponent  implements OnInit {
       if (res[0]) {
       } else {
         if(res[1]) this.oData = res[1];
-        console.log(this.oData);
       }
       this.onDestroy();
     })
@@ -384,6 +384,22 @@ export class DetailComponent  implements OnInit {
   cancelPopDescrip() {
     this.isOpenDescript = false;
     this.dt.detectChanges();
+  }
+  //#endregion
+
+  //#region ViewOrder
+  openPopViewOrder(item: any) {
+    this.isOpenOrder = true;
+  }
+
+  cancelPopViewOrder() {
+    this.isOpenOrder = false;
+    this.dt.detectChanges();
+  }
+
+  viewOrder(item:any){
+    this.cancelPopViewOrder();
+    this.navCtrl.navigateForward('main/order/detail',{queryParams:{recID:item.transID}});
   }
   //#endregion
 }

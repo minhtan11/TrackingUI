@@ -15,10 +15,11 @@ import { StorageService } from 'src/app/storage-service/storage.service';
   styleUrls: ['./order-page-detail.component.scss'],
 })
 export class OrderPageDetailComponent {
-  id:any;
+  recID:any;
   oData:any;
   username:any;
   lstPackage:any;
+  lstLog:any;
   isOpenPayment:any = false;
   previousUrl:any;
   isChange:any=false;
@@ -53,8 +54,8 @@ export class OrderPageDetailComponent {
 
   async ionViewWillEnter(){
     this.username = await this.storage.get('username');
-    let id = this.rt.snapshot.queryParams['id'];
-    if(id) this.id = id;
+    let recID = this.rt.snapshot.queryParams['recID'];
+    if(recID) this.recID = recID;
     this.getDetail();
     if (!this.previousUrl) {
       let url = this.previous.getPreviousUrl();
@@ -94,7 +95,7 @@ export class OrderPageDetailComponent {
     };
     this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
       if (res && !res.isError) {
-        this.notification.showNotiSuccess('',(res.message+'.Vui lòng liên hệ CSKH để nhận hàng!'));
+        this.notification.showNotiSuccess('',(res.message+'Vui lòng liên hệ CSKH để nhận hàng!'));
         this.oData = res?.data;
         this.isChange = true;
         InAppReview.requestReview();
@@ -119,17 +120,23 @@ export class OrderPageDetailComponent {
 
   getDetail(){
     let data = {
-      recID: this.id,
+      recID: this.recID,
+      userName: this.username,
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'getdetail', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+    this.api.execByBody('Authencation', 'getdetailorder', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res[0]) {
         this.notification.showNotiError('', res[1].message);
       }else{
-        this.oData = res[1];
-        this.lstPackage = res[2];
+        let data = res[1]?.data;
+        if (data != null) {
+          this.oData= data?.order;
+          this.lstPackage = data?.packs;
+          this.lstLog = data?.logs;
+          console.log(this.lstPackage);
+        }
       }
       this.onDestroy();
     })

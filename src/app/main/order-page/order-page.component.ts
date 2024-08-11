@@ -258,7 +258,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   }
 
   viewDetail(data:any){
-    this.navCtrl.navigateForward('main/order/detail',{queryParams:{id:data.recID}});
+    this.navCtrl.navigateForward('main/order/detail',{queryParams:{recID:data.recID}});
   }
 
   onback(){
@@ -375,7 +375,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     };
     this.api.execByBody('Authencation', 'paymentselected', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
       if (res && !res.isError) {
-        this.notification.showNotiSuccess('',(res.message+'.Vui lòng liên hệ CSKH để nhận hàng!'));
+        this.notification.showNotiSuccess('',(res.message+'Vui lòng liên hệ CSKH để nhận hàng!'));
         this.isCheckAll = false;
         this.arrOrderSelected = [];
         this.totalAllOrder = 0;

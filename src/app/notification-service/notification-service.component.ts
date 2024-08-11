@@ -17,7 +17,7 @@ export class NotificationServiceComponent implements OnInit {
   //#endregion Init
 
   //#region Function
-  async showNotiError(title: string, text: string, timer: number = 2500) {
+  async showNotiError(title: string, text: string, timer: number = 5000) {
     const toast = await this.toastController.create({
       message: text,
       duration: timer,
@@ -28,7 +28,7 @@ export class NotificationServiceComponent implements OnInit {
     await toast.present();
   }
 
-  async showNotiSuccess(title: string, text: string, timer: number = 2500) {
+  async showNotiSuccess(title: string, text: string, timer: number = 5000) {
     const toast = await this.toastController.create({
       message: text,
       duration: timer,

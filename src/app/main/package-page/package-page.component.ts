@@ -46,6 +46,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   isOpenCheckFirst: any = false;
   isOpenDescript: any = false;
   isOpenFilter: any = false;
+  isOpenOrder: any = false;
   itemSelected: any;
   firstLoad: any = true;
   total0: any;
@@ -716,6 +717,23 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   cancelPopDescrip() {
     this.isOpenDescript = false;
     this.dt.detectChanges();
+  }
+  //#endregion
+
+  //#region ViewOrder
+  openPopViewOrder(item: any) {
+    this.itemSelected = { ...item };
+    this.isOpenOrder = true;
+  }
+
+  cancelPopViewOrder() {
+    this.isOpenOrder = false;
+    this.dt.detectChanges();
+  }
+
+  viewOrder(item:any){
+    this.cancelPopViewOrder();
+    this.navCtrl.navigateForward('main/order/detail',{queryParams:{recID:item.transID}});
   }
   //#endregion
 }
