@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  apiUrl:'https://localhost:7043/api/',
+  //apiUrl:'https://localhost:7043/api/',
   //apiUrl:'https://192.168.2.13:45455/api/',
   //apiUrl:'https://192.168.2.8:45455/api/',
-  //apiUrl:'https://tracking.nhanshiphang.vn/api/',
+  apiUrl:'https://tracking.nhanshiphang.vn/api/',
 };
 
 /*
