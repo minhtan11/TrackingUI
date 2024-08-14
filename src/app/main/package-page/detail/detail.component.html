@@ -33,8 +33,47 @@
             </div>
           </ion-card-header>
           <ion-card-content>
+            <div style="position: relative;margin-top: 5rem;" class="w-100 h-100">
+              <div style="background-repeat: no-repeat;background-size: 100% 3px;border-left: none;" class="w-100 h-100 pt-4 pb-4 pl-2 pr-2 border-gradient-1">
+                <div style="flex-direction: column;top: 5.4rem;left: 1rem;position: fixed;" class="d-flex">
+                  <div style="flex-direction: column;" class="d-flex">
+                    <span class="font-weight-bold" style="font-size: 0.7rem;">
+                      Đã kí nhận
+                    </span>
+                    <ion-text color="medium" class="dynamic-font">
+                      <span *ngIf="oData.cnwhExpectation != null" style="font-size: 0.7rem;">
+                        {{oData?.cnwhExpectation | formatdate : 'dd/MM/yyyy hh:mm a'}}
+                      </span>
+                      <span *ngIf="(oData.cnwhExpectation == null || oData.cnwhExpectation == '')" style="font-size: 0.7rem;">
+                        (chưa có)
+                      </span>
+                    </ion-text>
+                  </div>
+                  <div class="circle-timeline-1"><span class="font-weight-bold">1</span></div>
+                </div>
+                <div style="flex-direction: column;top: 5.4rem;right: 1rem;position: fixed;" class="d-flex">
+                  <div style="flex-direction: column;" class="d-flex">
+                    <span class="font-weight-bold" style="font-size: 0.7rem;">
+                      Xuất kho Trung Quốc
+                    </span>
+                    <ion-text color="medium" class="dynamic-font">
+                      <span *ngIf="oData.exportedCNWH != null" style="font-size: 0.7rem;">
+                        {{oData?.exportedCNWH | formatdate : 'dd/MM/yyyy hh:mm a'}}
+                      </span>
+                      <span *ngIf="(oData.exportedCNWH == null || oData.exportedCNWH == '')" style="font-size: 0.7rem;">
+                        (chưa có)
+                      </span>
+                    </ion-text>
+                  </div>
+                  <div class="circle-timeline-2"><span class="font-weight-bold">2</span></div>
+                </div>
+                <ion-text class="dynamic-font">
+                  (1) Dữ liệu cung cấp từ Baidu,
+                </ion-text>
+              </div>
+            </div>
             <div class="w-100" style="border: 1px solid #ececec;border-radius: 1em;margin-top: 1em;">
-              <div class="container">
+              <!-- <div class="container">
                 <div style="flex-direction: column;" class="w-100 pt-4 d-flex align-items-center justify-content-start">
                   <div class="w-100 d-flex align-items-center justify-content-start" style="margin-bottom: 28px;">
                     <div style="flex-direction: column;" class="d-flex align-items-center ">
@@ -144,102 +183,7 @@
                     </div>
                   </div>
                 </div>
-                <!-- <div class="row">
-                  <div class="col-md-6 offset-md-3">
-                    <ul class="timeline">
-                      <ng-container>
-                        <li *ngIf="oData.exportedCNWH == null" class="no-active d-flex align-items-center">
-                          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                          <ion-text class="dynamic-font">
-                            <span class="font-weight-bold" style="font-size: 0.8rem;">
-                              XUẤT KHO TRUNG QUỐC
-                            </span>
-                          </ion-text>
-                        </li>
-                        <li *ngIf="oData.exportedCNWH != null" class="active">
-                          <ion-text class="dynamic-font">
-                            <span class="font-weight-bold" style="font-size: 0.8rem;">
-                              XUẤT KHO TRUNG QUỐC
-                            </span>
-                          </ion-text>
-                          <br>
-                          <ion-text color="medium" class="dynamic-font">
-                            <span style="font-size: 0.8rem;">
-                              {{oData?.exportedCNWH | formatdate : 'dd/MM/yyyy hh:mm a'}}
-                            </span>
-                          </ion-text>
-                        </li>
-                      </ng-container>
-                      <ng-container>
-                        <li *ngIf="oData.dateExpectation == null" class="no-active d-flex align-items-center">
-                          <ion-text class="dynamic-font">
-                            <span class="font-weight-bold" style="font-size: 0.8rem;">
-                              ĐANG TRÊN ĐƯỜNG VỀ HCM
-                            </span>
-                          </ion-text>
-                        </li>
-                        <li *ngIf="oData.dateExpectation != null" class="active">
-                          <ion-text class="dynamic-font">
-                            <span class="font-weight-bold" style="font-size: 0.8rem;">
-                              ĐANG TRÊN ĐƯỜNG VỀ HCM
-                            </span>
-                          </ion-text>
-                          <br>
-                          <ion-text color="medium" class="dynamic-font">
-                            <span style="font-size: 0.8rem;">
-                              {{oData?.dateExpectation}}
-                            </span>
-                          </ion-text>
-                        </li>
-                      </ng-container>
-                      <ng-container>
-                        <li *ngIf="oData.importedSGWH == null" class="no-active d-flex align-items-center">
-                          <ion-text class="dynamic-font">
-                            <span class="font-weight-bold" style="font-size: 0.8rem;">
-                              ĐÃ VỀ KHO HCM
-                            </span>
-                          </ion-text>
-                        </li>
-                        <li *ngIf="oData.importedSGWH != null" class="active">
-                          <ion-text class="dynamic-font">
-                            <span class="font-weight-bold" style="font-size: 0.8rem;">
-                              ĐÃ VỀ KHO HCM
-                            </span>
-                          </ion-text>
-                          <br>
-                          <ion-text color="medium" class="dynamic-font">
-                            <span style="font-size: 0.8rem;">
-                              {{oData?.importedSGWH | formatdate : 'dd/MM/yyyy hh:mm a'}}
-                            </span>
-                          </ion-text>
-                        </li>
-                      </ng-container>
-                      <ng-container>
-                        <li *ngIf="oData.receivedDate == null" class="no-active d-flex align-items-center">
-                          <ion-text class="dynamic-font">
-                            <span class="font-weight-bold" style="font-size: 0.8rem;">
-                              ĐÃ NHẬN HÀNG
-                            </span>
-                          </ion-text>
-                        </li>
-                        <li *ngIf="oData.receivedDate != null" class="active">
-                          <ion-text class="dynamic-font">
-                            <span class="font-weight-bold" style="font-size: 0.8rem;">
-                              ĐÃ NHẬN HÀNG
-                            </span>
-                          </ion-text>
-                          <br>
-                          <ion-text color="medium" class="dynamic-font">
-                            <span style="font-size: 0.8rem;">
-                              {{oData?.receivedDate | formatdate : 'dd/MM/yyyy hh:mm a'}}
-                            </span>
-                          </ion-text>
-                        </li>
-                      </ng-container>                
-                    </ul>
-                  </div>
-                </div> -->
-              </div>
+              </div> -->
               <ion-grid fixed>
                 <ion-row>
                   <ion-col>
