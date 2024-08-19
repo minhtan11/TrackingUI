@@ -33,6 +33,9 @@ export class DetailComponent  implements OnInit {
   isChange:any=false;
   isCancel:any=false;
   isRestore:any=false;
+  content1:any='';
+  content2:any='';
+  content3:any='';
   private destroy$ = new Subject<void>();
   constructor(
     private rt : ActivatedRoute,
@@ -94,6 +97,13 @@ export class DetailComponent  implements OnInit {
         this.previousUrl = array[0];
       }
     } 
+    let content = await this.storage.get('infoContent');
+    if (content) {
+      let str = content.split(';');
+      this.content1 = str[0];
+      this.content2 = str[1];
+      this.content3 = str[2];
+    }
   }
 
   ionViewWillLeave(){
@@ -136,6 +146,7 @@ export class DetailComponent  implements OnInit {
       if (res[0]) {
       } else {
         if(res[1]) this.oData = res[1];
+        console.log(this.oData);
       }
       this.onDestroy();
     })

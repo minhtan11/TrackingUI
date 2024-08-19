@@ -5,17 +5,20 @@
     </ion-title>
     <!-- <ion-icon (click)="openPopFilter()" class="pr-2 text-dark" slot="end" style="font-size: 2rem;" name="funnel-outline"></ion-icon>   -->
     <!-- <img (click)="openPopFilter()" slot="end" style="width: 2rem;height: 2rem;" src="../../../assets/image/funnel-tool.png" alt=""> -->
-    <i (click)="openPopFilter()" [ngClass]="isFilter ? 'text-orange' : 'text-primary-default'" class="pr-2 text-dark" slot="end" class="bi bi-funnel icon-menu"></i>
+    <i (click)="openPopFilter()" [ngClass]="isFilter ? 'text-orange' : 'text-primary-default'" class="pr-2 text-dark"
+      slot="end" class="bi bi-funnel icon-menu"></i>
   </ion-toolbar>
   <ion-toolbar class="pr-2 pl-2 pb-2" style="--background:white !important">
     <div class="w-100 d-flex align-items-center">
-      <ion-searchbar [style]="isSearchFocus ? '--icon-color: orange' : ''" animated="true" class="pb-0 pl-0 pl-2 pr-2" id='custom-search' placeholder="Tìm kiếm kiện hàng / mô tả" 
-      (ionFocus)="ionFocus($event)" (ionBlur)="ionBlur($event)" (ionChange)="ionChange($event)" (ionClear)="ionChange($event)"
-      enterkeyhint="search" mode="ios" show-clear-button="always"></ion-searchbar>
+      <ion-searchbar [style]="isSearchFocus ? '--icon-color: orange' : ''" animated="true" class="pb-0 pl-0 pl-2 pr-2"
+        id='custom-search' placeholder="Tìm kiếm kiện hàng / mô tả" (ionFocus)="ionFocus($event)"
+        (ionBlur)="ionBlur($event)" (ionChange)="ionChange($event)" (ionClear)="ionChange($event)" enterkeyhint="search"
+        mode="ios" show-clear-button="always"></ion-searchbar>
     </div>
   </ion-toolbar>
   <ion-toolbar *ngIf="username && username != 'admintan'" style="--background:white !important;">
-    <ion-segment style="min-height: unset !important;height: 3rem !important;" mode="md" [scrollable]="true" [value]="status">
+    <ion-segment style="min-height: unset !important;height: 3rem !important;" mode="md" [scrollable]="true"
+      [value]="status">
       <ion-segment-button (click)=" sortData(0)" [value]="0">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
@@ -59,7 +62,7 @@
       <ion-segment-button (click)=" sortData(4)" [value]="4">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <h5 class="my-0 mx-0 font-weight-bold">Hàng về tới HCM</h5>
+            <h5 class="my-0 mx-0 font-weight-bold">Hàng bị kiểm tra</h5>
           </ion-text>
           <ion-text *ngIf="total4 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
             <h5 class="my-0 mx-0">{{'('+(total4 | number)+')'}}</h5>
@@ -69,7 +72,7 @@
       <ion-segment-button (click)=" sortData(5)" [value]="5">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <h5 class="my-0 mx-0 font-weight-bold">Đã nhận hàng</h5>
+            <h5 class="my-0 mx-0 font-weight-bold">Đã thông quan</h5>
           </ion-text>
           <ion-text *ngIf="total5 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
             <h5 class="my-0 mx-0">{{'('+(total5 | number)+')'}}</h5>
@@ -79,10 +82,20 @@
       <ion-segment-button (click)=" sortData(6)" [value]="6">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
-            <h5 class="my-0 mx-0 font-weight-bold">Đã thông quan</h5>
+            <h5 class="my-0 mx-0 font-weight-bold">Đã về kho HCM</h5>
           </ion-text>
           <ion-text *ngIf="total6 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
             <h5 class="my-0 mx-0">{{'('+(total6 | number)+')'}}</h5>
+          </ion-text>
+        </div>
+      </ion-segment-button>
+      <ion-segment-button (click)=" sortData(7)" [value]="7">
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <h5 class="my-0 mx-0 font-weight-bold">Đã nhận hàng</h5>
+          </ion-text>
+          <ion-text *ngIf="total7 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
+            <h5 class="my-0 mx-0">{{'('+(total7 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
@@ -132,8 +145,9 @@
     <ion-list *ngIf="lstData && lstData.length" class="m-0" style="background-color:white !important;">
       <ng-container *ngFor="let item of lstData">
         <ion-item lines="none" style="--background:white !important">
-          <ion-card class="mx-1 my-1 mb-4 w-100"
-            style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;font-size: unset !important;">
+          <ion-card
+            [style]="item?.status != 4 ? '--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;font-size: unset !important;':'--background:rgb(211, 211, 211) !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;font-size: unset !important;'"
+            class="mx-1 my-1 mb-4 w-100">
             <ion-card-header class="p-3">
               <div style="justify-content: space-between;" class="d-flex align-items-center">
                 <div class="d-flex align-items-center">
@@ -150,7 +164,7 @@
                 </div>
               </div>
             </ion-card-header>
-            <ion-card-content *ngIf="username && username === 'admintan'" class="p-3" >
+            <ion-card-content *ngIf="username && username === 'admintan'" class="p-3">
               <div class="w-100">
                 <div class="d-flex align-items-center">
                   <ng-container *ngIf="item.status == 0 || item.status == 1">
@@ -249,7 +263,8 @@
                         <span>Hàng về tới HCM</span>
                       </ion-text>
                     </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="5" style="--background	: var(--ion-color-mat-primary) !important;">
+                    <ion-badge mode="md" *ngSwitchCase="5"
+                      style="--background	: var(--ion-color-mat-primary) !important;">
                       <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                         <span>Đã nhận hàng</span>
                       </ion-text>
@@ -268,24 +283,32 @@
                 </div>
               </div>
             </ion-card-content>
-            <ion-card-content *ngIf="username && username != 'admintan'" class="p-3" >
+            <ion-card-content *ngIf="username && username != 'admintan'" class="p-3">
               <div class="w-100" (click)="viewDetail(item)">
                 <div class="d-flex align-items-center">
                   <ng-container *ngIf="item.status == 0 || item.status == 1">
                     <img style="width: 4em;height: 4em;
                       margin-right: 1rem;" src="../../../assets/image/hourglass.png" alt="">
                   </ng-container>
-                  <ng-container *ngIf="item.status == 2 || item.status == 3 || item.status == 4">
+                  <ng-container *ngIf="item.status == 2 || item.status == 3">
                     <img style="width: 4em;height: 4em;
                       margin-right: 1rem;" src="../../../assets/image/package-delivery.png" alt="">
                   </ng-container>
+                  <ng-container *ngIf="item.status == 4">
+                    <img style="width: 4em;height: 4em;
+                      margin-right: 1rem;" src="../../../assets/image/quality-control.png" alt="">
+                  </ng-container>
                   <ng-container *ngIf="item.status == 5">
                     <img style="width: 4em;height: 4em;
-                      margin-right: 1rem;" src="../../../assets/image/package.png" alt="">
+                      margin-right: 1rem;" src="../../../assets/image/truck.png" alt="">
                   </ng-container>
                   <ng-container *ngIf="item.status == 6">
                     <img style="width: 4em;height: 4em;
-                      margin-right: 1rem;" src="../../../assets/image/truck.png" alt="">
+                      margin-right: 1rem;" src="../../../assets/image/logistics.png" alt="">
+                  </ng-container>
+                  <ng-container *ngIf="item.status == 7">
+                    <img style="width: 4em;height: 4em;
+                      margin-right: 1rem;" src="../../../assets/image/package.png" alt="">
                   </ng-container>
                   <ng-container *ngIf="item.status == 9 || item.status == 11">
                     <img style="width: 4em;height: 4em;
@@ -371,24 +394,25 @@
                         <span>Đang về HCM</span>
                       </ion-text>
                     </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="4" color="primary">
+                    <ion-badge mode="md" *ngSwitchCase="4" color="dark">
                       <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Hàng về tới HCM</span>
+                        <span>Hàng bị kiểm tra</span>
                       </ion-text>
                     </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="5" style="--background	: var(--ion-color-mat-primary) !important;">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Đã nhận hàng</span>
-                      </ion-text>
-                    </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="6" style="--background	: orange !important;">
+                    <ion-badge mode="md" *ngSwitchCase="5" style="--background	: orange !important;">
                       <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                         <span>Đã thông quan</span>
                       </ion-text>
                     </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="7" style="--background	: #69c6fd !important;">
+                    <ion-badge mode="md" *ngSwitchCase="6" color="primary">
                       <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Hàng bị kiểm tra</span>
+                        <span>Hàng về tới HCM</span>
+                      </ion-text>
+                    </ion-badge>
+                    <ion-badge mode="md" *ngSwitchCase="7"
+                      style="--background	: var(--ion-color-mat-primary) !important;">
+                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                        <span>Đã nhận hàng</span>
                       </ion-text>
                     </ion-badge>
                     <ion-badge mode="md" *ngSwitchCase="9" color="dark">
@@ -405,16 +429,20 @@
                 </div>
               </div>
               <div class="w-100 pt-3 d-flex align-items-center scroll-hidden overflow-auto">
-                <ion-button style="margin-left: auto !important;" (click)="openPopPackage(item)" mode="ios" size="default" class="ion-btn-default">
+                <ion-button style="margin-left: auto !important;" (click)="openPopPackage(item)" mode="ios"
+                  size="default" class="ion-btn-default">
                   <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
                   <ion-text style="color: white !important;" class="dynamic-font">
                     Nhập mô tả
                   </ion-text>
                 </ion-button>
                 <ng-container *ngIf="item?.status >= 2">
-                  <div [style]="(item?.status >= 2 && item?.status != 9 && (item?.transID == '' || item?.transID == null)) ? 'margin-right: auto !important' : ''" class="d-flex align-items-center">
+                  <div
+                    [style]="(item?.status >= 2 && item?.status != 9 && (item?.transID == '' || item?.transID == null)) ? 'margin-right: auto !important' : ''"
+                    class="d-flex align-items-center">
                     <ion-button (click)="checkFirst(item)" mode="ios" size="default" class="ion-btn-orange">
-                      <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
+                      <ion-icon style="color: white !important;" slot="start"
+                        name="checkmark-circle-outline"></ion-icon>
                       <ion-text style="color: white !important;" class="dynamic-font">
                         Kiểm tra hàng
                       </ion-text>
@@ -423,12 +451,15 @@
                                       left: 2rem;
                                       margin-left: -1rem;
                                       z-index: 1000;" class="d-flex align-items-center justify-content-center">
-                      <ion-icon style="font-size: 1.5rem;" class="text-white" name="information-circle-outline"></ion-icon>
+                      <ion-icon style="font-size: 1.5rem;" class="text-white"
+                        name="information-circle-outline"></ion-icon>
                     </div>
                   </div>
                 </ng-container>
                 <ng-container *ngIf="(item?.transID != '' && item?.transID != null)">
-                  <ion-button [style]="(item?.transID != '' && item?.transID != null) ? 'margin-right: auto !important' : ''" (click)="openPopViewOrder(item)" mode="ios" size="default" class="ion-btn-light-primary">
+                  <ion-button
+                    [style]="(item?.transID != '' && item?.transID != null) ? 'margin-right: auto !important' : ''"
+                    (click)="openPopViewOrder(item)" mode="ios" size="default" class="ion-btn-light-primary">
                     <ion-icon style="color: white !important;" slot="start" name="eye-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
                       Xem đơn hàng
@@ -442,7 +473,8 @@
                       Hủy đơn
                     </ion-text>
                   </ion-button>
-                  <ion-button style="margin-right: auto !important;" (click)="openPopDeletePackage(item)" mode="ios" size="default" color="danger">
+                  <ion-button style="margin-right: auto !important;" (click)="openPopDeletePackage(item)" mode="ios"
+                    size="default" color="danger">
                     <ion-icon style="color: white !important;" slot="start" name="trash-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
                       Xóa đơn
@@ -450,7 +482,8 @@
                   </ion-button>
                 </ng-container>
                 <ng-container *ngIf="item.status == 9 && item?.canceledBy == username">
-                  <ion-button style="margin-right: auto !important;" (click)="openPopRestorePackage(item)" mode="ios" size="default" color="success">
+                  <ion-button style="margin-right: auto !important;" (click)="openPopRestorePackage(item)" mode="ios"
+                    size="default" color="success">
                     <ion-icon style="color: white !important;" slot="start" name="sync-circle-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
                       Khôi phục
@@ -564,7 +597,8 @@
   </ion-fab>
 
   <!-- update note -->
-  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelEdit()" [isOpen]="isOpenEditPackage">
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelEdit()"
+    [isOpen]="isOpenEditPackage">
     <ng-template>
       <div class="p-3 w-100 h-100">
         <div class="w-100 mb-3">
@@ -601,7 +635,8 @@
   <!-- update note -->
 
   <!-- CheckPackkage -->
-  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelCheck()" [isOpen]="isOpenCheckPackage">
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelCheck()"
+    [isOpen]="isOpenCheckPackage">
     <ng-template>
       <div class="p-3 w-100 h-100">
         <div class="w-100 mb-3">
@@ -638,7 +673,8 @@
       </div>
     </ng-template>
   </ion-modal>
-  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelCheck2()" [isOpen]="isOpenCheckPackage2">
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelCheck2()"
+    [isOpen]="isOpenCheckPackage2">
     <ng-template>
       <div class="p-3 w-100 h-100">
         <div class="w-100 mb-3">
@@ -673,7 +709,8 @@
     </ng-template>
   </ion-modal>
 
-  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelQueryPackage()" [isOpen]="isOpenQueryPackage">
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelQueryPackage()"
+    [isOpen]="isOpenQueryPackage">
     <ng-template>
       <div class="p-3 w-100 h-100">
         <div class="w-100 mb-3">
@@ -683,7 +720,8 @@
         </div>
         <div class="w-100" text-center>
           <ion-text class="dynamic-font text-dark">
-            <span>Quý khách đã đăng ký theo sát trạng thái kiện hàng, hãy yên tâm chờ thông báo nhé, hoặc Quý khách có thể bấm đồng ý để vẫn có thể kiểm tra lại!</span>
+            <span>Quý khách đã đăng ký theo sát trạng thái kiện hàng, hãy yên tâm chờ thông báo nhé, hoặc Quý khách có
+              thể bấm đồng ý để vẫn có thể kiểm tra lại!</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
@@ -702,7 +740,8 @@
     </ng-template>
   </ion-modal>
 
-  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelNoQueryPackage()" [isOpen]="isOpenNoQueryPackage">
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelNoQueryPackage()"
+    [isOpen]="isOpenNoQueryPackage">
     <ng-template>
       <div class="p-3 w-100 h-100">
         <div class="w-100 mb-3">
@@ -731,7 +770,8 @@
     </ng-template>
   </ion-modal>
 
-  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelcheckFirst()" [isOpen]="isOpenCheckFirst">
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelcheckFirst()"
+    [isOpen]="isOpenCheckFirst">
     <ng-template>
       <div class="p-3 w-100 h-100">
         <div class="w-100 mb-3">
@@ -771,7 +811,8 @@
   <!-- CheckPackkage -->
 
   <!-- CancelPackkage -->
-  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelPopPackage()" [isOpen]="isOpenCancelPackage">
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelPopPackage()"
+    [isOpen]="isOpenCancelPackage">
     <ng-template>
       <div class="p-3 w-100 h-100">
         <div class="w-100 mb-3">
@@ -808,7 +849,8 @@
   <!-- CancelPackkage -->
 
   <!-- RestorePackkage -->
-  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelRestorePackage()" [isOpen]="isOpenRestorePackage">
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelRestorePackage()"
+    [isOpen]="isOpenRestorePackage">
     <ng-template>
       <div class="p-3 w-100 h-100">
         <div class="w-100 mb-3">
@@ -845,7 +887,8 @@
   <!-- RestorePackkage -->
 
   <!-- DeletePackkage -->
-  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelDeletePackage()" [isOpen]="isOpenDeletePackage">
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelDeletePackage()"
+    [isOpen]="isOpenDeletePackage">
     <ng-template>
       <div class="p-3 w-100 h-100">
         <div class="w-100 mb-3">
@@ -882,7 +925,8 @@
   <!-- DeletePackkage -->
 
   <!-- FilterPackkage -->
-  <ion-modal style="--background:white !important" (willDismiss)="cancelFilter()" [isOpen]="isOpenFilter" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+  <ion-modal style="--background:white !important" (willDismiss)="cancelFilter()" [isOpen]="isOpenFilter"
+    [initialBreakpoint]="1" [breakpoints]="[0, 1]">
     <ng-template>
       <div class="p-3 w-100 h-100">
         <ion-text class="dynamic-font text-center text-dark">
@@ -908,17 +952,18 @@
             <mat-datepicker #picker2></mat-datepicker>
           </mat-form-field>
         </div>
-        <div style="margin-bottom: var(--ion-safe-area-bottom, 0);" class="d-flex align-items-center justify-content-center mt-3">
+        <div style="margin-bottom: var(--ion-safe-area-bottom, 0);"
+          class="d-flex align-items-center justify-content-center mt-3">
           <ion-button class="w-100" (click)="clearFilter()" mode="ios" size="default" color="medium">
             <ion-text style="color: white !important;" class="dynamic-font">
               Xóa bộ lọc
             </ion-text>
-          </ion-button> 
+          </ion-button>
           <ion-button (click)="onFilter()" mode="ios" size="default" class="ion-btn-default w-100">
             <ion-text style="color: white !important;" class="dynamic-font">
               Áp dụng
             </ion-text>
-          </ion-button> 
+          </ion-button>
         </div>
       </div>
     </ng-template>
@@ -926,7 +971,8 @@
   <!-- FilterPackkage -->
 
   <!-- Descript -->
-  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelPopDescrip()" [isOpen]="isOpenDescript">
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelPopDescrip()"
+    [isOpen]="isOpenDescript">
     <ng-template>
       <div class="p-3 w-100 h-100">
         <div class="w-100 mb-3">
@@ -936,7 +982,8 @@
         </div>
         <div class="w-100 text-center">
           <ion-text class="dynamic-font text-dark">
-            <span>Đây là chức năng kiểm tra lịch trình hàng trong nội địa Trung Quốc, dữ liệu được cung cấp bởi Baidu.</span>
+            <span>Đây là chức năng kiểm tra lịch trình hàng trong nội địa Trung Quốc, dữ liệu được cung cấp bởi
+              Baidu.</span>
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
@@ -952,7 +999,8 @@
   <!-- Descript -->
 
   <!-- ViewOrder -->
-  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelPopViewOrder()" [isOpen]="isOpenOrder">
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelPopViewOrder()"
+    [isOpen]="isOpenOrder">
     <ng-template>
       <div class="p-3 w-100 h-100">
         <div class="w-100 mb-3">

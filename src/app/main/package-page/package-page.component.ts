@@ -56,6 +56,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
   total4: any;
   total5: any;
   total6: any;
+  total7: any;
   total9: any;
   total10: any;
   total11: any;
@@ -297,6 +298,7 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
         this.total4 = lst.filter((x:any) => x.status == 4).length;
         this.total5 = lst.filter((x:any) => x.status == 5).length;
         this.total6 = lst.filter((x:any) => x.status == 6).length;
+        this.total7 = lst.filter((x:any) => x.status == 7).length;
         this.total9 = lst.filter((x:any) => x.status == 9).length;
         this.total10 = lst.filter((x:any) => x.status == 10).length;
         this.total11 = lst.filter((x:any) => x.status == 11).length;
