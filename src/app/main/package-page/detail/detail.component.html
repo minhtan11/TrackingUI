@@ -37,30 +37,18 @@
               <div style="position: relative;margin-top: 5rem;" class="w-100 h-100">
                 <div style="border: 4px solid rgb(170, 170, 170);border-left: none;" class="w-100 h-100 pt-4 pb-4 pl-2 pr-2">
                   <!-- line so 1-->
-                  <div *ngIf="oData?.cnwhExpectation != null && (oData?.exportedCNWH == null || oData?.exportedCNWH == '') && oData?.status < 2" class="h-100 border-gradient-1-indeterminate"></div>
-                  <div *ngIf="oData?.cnwhExpectation != null && oData?.exportedCNWH != null" class="h-100 border-gradient-1-active"></div>
-                  <div *ngIf="
-                  (oData?.cnwhExpectation == null && oData?.exportedCNWH != null && oData?.status >= 2) 
-                  || (oData?.cnwhExpectation != null && oData?.exportedCNWH == null && oData?.status >= 2) 
-                  || (oData?.cnwhExpectation == null && oData?.exportedCNWH == null && oData?.status >= 2)" class="h-100 border-gradient-1-active"></div>
+                  <div *ngIf="oData?.status == 1" class="h-100 border-gradient-1-indeterminate"></div>
+                  <div *ngIf="oData?.status > 1" class="h-100 border-gradient-1-active"></div>
                   <!-- line so 1-->
                    
                   <!-- line so 2-->
-                  <div *ngIf="oData?.exportedCNWH != null && (oData?.dateExpectation == null || oData?.dateExpectation == '') && oData?.status < 3" class="w-100 border-gradient-2-indeterminate"></div>
-                  <div *ngIf="oData?.exportedCNWH != null && oData?.dateExpectation != null" class="w-100 border-gradient-2-active"></div>
-                  <div *ngIf="
-                  (oData?.exportedCNWH == null && oData?.dateExpectation != null && oData?.status >= 3) 
-                  || (oData?.exportedCNWH != null && oData?.dateExpectation == null && oData?.status >= 3) 
-                  || (oData?.exportedCNWH == null && oData?.dateExpectation == null && oData?.status >= 3)"  class="w-100 border-gradient-2-active"></div>
+                  <div *ngIf="oData?.status == 2" class="w-100 border-gradient-2-indeterminate"></div>
+                  <div *ngIf="oData?.status > 2" class="w-100 border-gradient-2-active"></div>
                   <!-- line so 2-->
 
                   <!-- line so 3-->
-                  <div *ngIf="oData?.dateExpectation != null && (oData?.inspectedDate == null || oData?.inspectedDate == '') && oData?.status < 4" class="h-100 border-gradient-3-indeterminate"></div>
-                  <div *ngIf="oData?.dateExpectation != null && oData?.inspectedDate != null" class="h-100 border-gradient-3-active"></div>
-                  <div *ngIf="
-                  (oData?.dateExpectation == null && oData?.inspectedDate != null && oData?.status >=4)
-                  || (oData?.dateExpectation != null && oData?.inspectedDate == null && oData?.status >=4)
-                  || (oData?.dateExpectation == null && oData?.inspectedDate == null && oData?.status >=4)"  class="h-100 border-gradient-3-active"></div>
+                  <div *ngIf="oData?.status == 3" class="h-100 border-gradient-3-indeterminate"></div>
+                  <div *ngIf="oData?.status > 3" class="h-100 border-gradient-3-active"></div>
                   <!-- line so 3-->
 
                   <div style="flex-direction: column;
@@ -153,30 +141,18 @@
               <div style="position: relative;" class="w-100 h-100">
                 <div style="border: 4px solid rgb(170, 170, 170);border-right: none;border-top: none;padding-top: 4rem;" class="w-100 h-100 pb-4 pl-2 pr-2">
                   <!-- line so 4-->
-                  <div *ngIf="oData?.inspectedDate != null && (oData?.clearanceDate == null || oData?.clearanceDate == '') && oData?.status < 5" class="w-100 border-gradient-4-indeterminate"></div>
-                  <div *ngIf="oData?.inspectedDate != null && oData?.clearanceDate != null" class="w-100 border-gradient-4-active"></div>
-                  <div *ngIf="
-                  (oData?.inspectedDate == null && oData?.clearanceDate != null && oData?.status >=5)
-                  || (oData?.inspectedDate != null && oData?.clearanceDate == null && oData?.status >=5)
-                  || (oData?.inspectedDate == null && oData?.clearanceDate == null && oData?.status >=5)" class="w-100 border-gradient-4-active"></div>
+                  <div *ngIf="oData?.status == 4" class="w-100 border-gradient-4-indeterminate"></div>
+                  <div *ngIf="oData?.status > 4" class="w-100 border-gradient-4-active"></div>
                   <!-- line so 4-->
 
                   <!-- line so 5-->
-                  <div *ngIf="oData?.clearanceDate != null && (oData?.importedSGWH == null || oData?.importedSGWH == '') && oData?.status < 6" class="h-100 border-gradient-5-indeterminate"></div>
-                  <div *ngIf="oData?.clearanceDate != null && oData?.importedSGWH != null" class="h-100 border-gradient-5-active"></div>
-                  <div *ngIf="
-                  (oData?.clearanceDate == null && oData?.importedSGWH != null && oData?.status >=6)
-                  || (oData?.clearanceDate != null && oData?.importedSGWH == null && oData?.status >=6)
-                  || (oData?.clearanceDate == null && oData?.importedSGWH == null && oData?.status >=6)" class="h-100 border-gradient-5-active"></div>
+                  <div *ngIf="oData?.status == 5" class="h-100 border-gradient-5-indeterminate"></div>
+                  <div *ngIf="oData?.status > 5" class="h-100 border-gradient-5-active"></div>
                   <!-- line so 5-->
                    
                   <!-- line so 6-->
-                  <div *ngIf="oData?.importedSGWH != null && (oData?.receivedDate == null || oData?.receivedDate == '') && oData?.status < 7" class="h-100 border-gradient-6-indeterminate"></div>
-                  <div *ngIf="oData.importedSGWH != null && oData?.receivedDate != null" class="h-100 border-gradient-6-active"></div>
-                  <div *ngIf="
-                  (oData?.importedSGWH == null && oData?.receivedDate != null && oData?.status == 7)
-                  || (oData?.importedSGWH != null && oData?.receivedDate == null && oData?.status == 7)
-                  || (oData?.importedSGWH == null && oData?.receivedDate == null && oData?.status == 7)" class="h-100 border-gradient-6-active"></div>
+                  <div *ngIf="oData?.status == 6" class="h-100 border-gradient-6-indeterminate"></div>
+                  <div *ngIf="oData?.status > 6" class="h-100 border-gradient-6-active"></div>
                   <!-- line so 6-->
 
                   <div style="flex-direction: column;
@@ -278,7 +254,7 @@
                               <span>Đang về HCM</span>
                             </ion-text>
                           </ion-badge>
-                          <ion-badge mode="md" *ngSwitchCase="4" style="--background	: #69c6fd !important;">
+                          <ion-badge mode="md" *ngSwitchCase="4" style="--background	: black !important;">
                             <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                               <span>Hàng bị kiểm tra</span>
                             </ion-text>

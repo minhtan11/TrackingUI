@@ -204,6 +204,15 @@ export class SettingPageComponent {
     //this.navCtrl.navigateForward('main/setting/faq');
   }
 
+  goChatZaloOA(){
+    let url = 'http://zalo.me/1977119545826967396?src=qr';
+    if (url) {
+      Browser.open({ url: url });
+    }
+    // window.open("http://zalo.me/1977119545826967396?src=qr")
+    //this.navCtrl.navigateForward('main/setting/faq');
+  }
+
   goFAQPage(){
     this.navCtrl.navigateForward('main/setting/faq');
   }

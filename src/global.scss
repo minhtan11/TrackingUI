@@ -628,7 +628,7 @@ ion-fab {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #ff4740;
+    background: #ff64f2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -715,7 +715,7 @@ ion-fab {
 
   .border-gradient-2-active {
       border-right: 4px solid;
-      border-image-source: linear-gradient(169deg, rgba(255, 165, 0, 1) 0%, rgba(255, 165, 0, 1) 44%, rgba(255, 0, 0, 1) 100%);
+      border-image-source: linear-gradient(169deg, rgba(255, 165, 0, 1) 0%, rgba(255, 165, 0, 1) 44%, rgb(255, 100, 242) 100%);
       position: absolute;
       left: 0;
       top: 0;
@@ -726,7 +726,7 @@ ion-fab {
 
   .border-gradient-2-indeterminate {
       border-right: 4px solid;
-      border-image-source: linear-gradient(169deg, rgba(255, 165, 0, 1) 0%, rgba(255, 165, 0, 1) 44%, rgba(255, 0, 0, 1) 100%);
+      border-image-source: linear-gradient(169deg, rgba(255, 165, 0, 1) 0%, rgba(255, 165, 0, 1) 44%, rgb(255, 100, 242) 100%);
       position: absolute;
       left: 0;
       top: 0;
@@ -739,7 +739,7 @@ ion-fab {
 
   .border-gradient-3-active {
       border-bottom: 4px solid;
-      border-image-source: linear-gradient(169deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 1) 44%, rgba(255, 0, 0, 1) 100%);
+      border-image-source: linear-gradient(169deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 1) 44%, rgb(255, 100, 242) 100%);
       position: absolute;
       right: 0;
       top: 0;
@@ -750,7 +750,7 @@ ion-fab {
 
   .border-gradient-3-indeterminate {
       border-bottom: 4px solid;
-      border-image-source: linear-gradient(169deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 1) 44%, rgba(255, 0, 0, 1) 100%);
+      border-image-source: linear-gradient(169deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 1) 44%, rgb(255, 100, 242) 100%);
       position: absolute;
       right: 0;
       top: 0;
@@ -762,7 +762,7 @@ ion-fab {
 
   .border-gradient-4-active {
       border-left: 4px solid;
-      border-image-source: linear-gradient(99deg, rgba(255, 0, 0, 1) 0%, rgba(36, 204, 255, 1) 3%, rgba(36, 204, 255, 1) 100%);
+      border-image-source: linear-gradient(99deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 1) 44%, rgba(255, 0, 0, 1) 100%);
       position: absolute;
       left: 0;
       top: 0;
@@ -773,7 +773,7 @@ ion-fab {
 
   .border-gradient-4-indeterminate {
       border-left: 4px solid;
-      border-image-source: linear-gradient(99deg, rgba(255, 0, 0, 1) 0%, rgba(36, 204, 255, 1) 3%, rgba(36, 204, 255, 1) 100%);
+      border-image-source: linear-gradient(99deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 1) 44%, rgba(255, 0, 0, 1) 100%);
       position: absolute;
       left: 0;
       top: 0;
