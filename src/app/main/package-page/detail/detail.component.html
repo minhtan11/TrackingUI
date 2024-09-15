@@ -569,7 +569,7 @@
                   Nhập mô tả
                 </ion-text>
               </ion-button>
-              <div [style]="(oData?.status != 9 && (oData?.transID == '' || oData?.transID == null)) ? 'margin-right: auto !important' : ''" class="d-flex align-items-center">
+              <!-- <div [style]="(oData?.status != 9 && (oData?.transID == '' || oData?.transID == null)) ? 'margin-right: auto !important' : ''" class="d-flex align-items-center">
                 <ion-button (click)="checkFirst(oData)" mode="ios" size="default" class="ion-btn-orange">
                   <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
                   <ion-text style="color: white !important;" class="dynamic-font">
@@ -582,7 +582,7 @@
                                   z-index: 1000;" class="d-flex align-items-center justify-content-center">
                   <ion-icon style="font-size: 1.5rem;" class="text-white" name="information-circle-outline"></ion-icon>
                 </div>
-              </div>
+              </div> -->
               <ng-container *ngIf="(oData?.transID != '' && oData?.transID != null)">
                 <ion-button [style]="(oData?.transID != '' && oData?.transID != null) ? 'margin-right: auto !important' : ''" (click)="openPopViewOrder(oData)" mode="ios" size="default" class="ion-btn-light-primary">
                   <ion-icon style="color: white !important;" slot="start" name="eye-outline"></ion-icon>

@@ -436,7 +436,7 @@
                     Nhập mô tả
                   </ion-text>
                 </ion-button>
-                <div
+                <!-- <div
                     [style]="(item?.status != 9 && (item?.transID == '' || item?.transID == null)) ? 'margin-right: auto !important' : ''"
                     class="d-flex align-items-center">
                     <ion-button (click)="checkFirst(item)" mode="ios" size="default" class="ion-btn-orange">
@@ -453,7 +453,7 @@
                       <ion-icon style="font-size: 1.5rem;" class="text-white"
                         name="information-circle-outline"></ion-icon>
                     </div>
-                </div>
+                </div> -->
                 <ng-container *ngIf="(item?.transID != '' && item?.transID != null)">
                   <ion-button
                     [style]="(item?.transID != '' && item?.transID != null) ? 'margin-right: auto !important' : ''"
