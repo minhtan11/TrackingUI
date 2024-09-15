@@ -720,7 +720,7 @@
                 <ng-container *ngFor="let item2 of lstLog">
                   <ion-item *ngIf="item2?.context != '' && item2?.context != null" style="--background:white !important;padding-top: 1em;">
                     <ion-icon style="color: orange !important" slot="start" name="bookmark-outline"></ion-icon>
-                    <ion-text class="dynamic-font text-dark">
+                    <ion-text class="dynamic-font" color="medium">
                       {{(item2.createdOn | formatdate : 'dd/MM/yyyy hh:mm a') + ' - '+item2?.context}}
                     </ion-text>
                   </ion-item>
