@@ -606,7 +606,7 @@ ion-fab {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: rgb(253, 186, 42);
+    background: rgb(12, 157, 253);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -661,7 +661,7 @@ ion-fab {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #b23eff;
+    background: rgb(61, 226, 255);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -672,7 +672,7 @@ ion-fab {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #313030;
+    background: rgb(12, 157, 253);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -691,7 +691,7 @@ ion-fab {
 
   .border-gradient-1-active {
       border-top: 4px solid;
-      border-image-source: linear-gradient(94deg, rgba(253, 226, 42, 1) 55%, rgba(255, 165, 0, 1) 80%, rgba(255, 165, 0, 1) 100%);
+      border-image-source: linear-gradient(80deg, rgb(12, 157, 253) 55%, rgba(255, 165, 0, 1) 80%, rgba(255, 165, 0, 1) 100%);
       position: absolute;
       left: 0;
       top: 0;
@@ -702,7 +702,7 @@ ion-fab {
 
   .border-gradient-1-indeterminate{
     border-top: 4px solid;
-    border-image-source: linear-gradient(94deg, rgba(253, 226, 42, 1) 55%, rgba(255, 165, 0, 1) 80%, rgba(255, 165, 0, 1) 100%);
+    border-image-source: linear-gradient(80deg, rgb(12, 157, 253) 55%, rgba(255, 165, 0, 1) 80%, rgba(255, 165, 0, 1) 100%);
     position: absolute;
     left: 0;
     top: 0;
@@ -785,7 +785,7 @@ ion-fab {
 
   .border-gradient-5-active {
       border-bottom: 4px solid;
-      border-image-source: linear-gradient(99deg, rgb(248, 94, 94) 0%,rgb(248, 94, 94) 30%, rgba(178,62,255,1) 100%);
+      border-image-source: linear-gradient(99deg, rgb(248, 94, 94) 0%,rgb(248, 94, 94) 30%, rgb(61, 226, 255) 100%);
       position: absolute;
       left: 0;
       top: 0;
@@ -796,7 +796,7 @@ ion-fab {
 
   .border-gradient-5-indeterminate {
       border-bottom: 4px solid;
-      border-image-source: linear-gradient(99deg, rgb(248, 94, 94) 0%,rgb(248, 94, 94) 30%, rgba(178,62,255,1) 100%);
+      border-image-source: linear-gradient(99deg, rgb(248, 94, 94) 0%,rgb(248, 94, 94) 30%, rgb(61, 226, 255) 100%);
       position: absolute;
       left: 0;
       top: 0;
@@ -808,7 +808,7 @@ ion-fab {
 
   .border-gradient-6-active {
       border-bottom: 4px solid;
-      border-image-source: linear-gradient(99deg,rgba(178, 62, 255, 1) 38%, rgba(49, 48, 48, 1) 100%);
+      border-image-source: linear-gradient(99deg,rgb(61, 226, 255) 38%, rgb(12, 157, 253) 100%);
       position: absolute;
       right: 0;
       top: 0;
@@ -819,7 +819,7 @@ ion-fab {
 
   .border-gradient-6-indeterminate {
       border-bottom: 4px solid;
-      border-image-source: linear-gradient(99deg,rgba(178, 62, 255, 1) 38%, rgba(49, 48, 48, 1) 100%);
+      border-image-source: linear-gradient(99deg,rgb(61, 226, 255) 38%, rgb(12, 157, 253) 100%);
       position: absolute;
       right: 0;
       top: 0;

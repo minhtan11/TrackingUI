@@ -33,193 +33,315 @@
             </div>
           </ion-card-header>
           <ion-card-content>
-            <div class="w-100 h-100">
-              <div style="position: relative;margin-top: 5rem;" class="w-100 h-100">
-                <div style="border: 4px solid rgb(170, 170, 170);border-left: none;" class="w-100 h-100 pt-4 pb-4 pl-2 pr-2">
-                  <!-- line so 1-->
-                  <div *ngIf="oData?.status == 1" class="h-100 border-gradient-1-indeterminate"></div>
-                  <div *ngIf="oData?.status > 1" class="h-100 border-gradient-1-active"></div>
-                  <!-- line so 1-->
-                   
-                  <!-- line so 2-->
-                  <div *ngIf="oData?.status == 2" class="w-100 border-gradient-2-indeterminate"></div>
-                  <div *ngIf="oData?.status > 2" class="w-100 border-gradient-2-active"></div>
-                  <!-- line so 2-->
-
-                  <!-- line so 3-->
-                  <div *ngIf="oData?.status == 3" class="h-100 border-gradient-3-indeterminate"></div>
-                  <div *ngIf="oData?.status > 3" class="h-100 border-gradient-3-active"></div>
-                  <!-- line so 3-->
-
-                  <div style="flex-direction: column;
-                                  left: -0.5em;
-                                  position: absolute;
-                                  top: -3.1em;" class="d-flex">
-                    <div style="flex-direction: column;" class="d-flex">
-                      <span class="font-weight-bold" style="font-size: 0.7rem;">
-                        Đã kí nhận
-                      </span>
-                      <ion-text color="medium" class="dynamic-font">
-                        <span *ngIf="oData.cnwhExpectation != null" style="font-size: 0.7rem;">
-                          {{oData?.cnwhExpectation | formatdate : 'dd/MM/yyyy hh:mm a'}}
-                        </span>
-                        <span *ngIf="(oData.cnwhExpectation == null || oData.cnwhExpectation == '')" style="font-size: 0.7rem;">
-                          (chưa có)
-                        </span>
-                      </ion-text>
-                    </div>
-                    <div class="circle-timeline-1"><span class="font-weight-bold">1</span></div>
-                  </div>
-                  <div style="flex-direction: column;
-                                  right: -0.6rem;
-                                  position: absolute;
-                                  top: -3.1rem;" class="d-flex">
-                    <div style="flex-direction: column;text-align: end;" class="d-flex">
-                      <span class="font-weight-bold" style="font-size: 0.7rem;">
-                        Xuất kho Trung Quốc
-                      </span>
-                      <ion-text color="medium" class="dynamic-font">
-                        <span *ngIf="oData.exportedCNWH != null" style="font-size: 0.7rem;">
-                          {{oData?.exportedCNWH | formatdate : 'dd/MM/yyyy hh:mm a'}}
-                        </span>
-                        <span *ngIf="(oData.exportedCNWH == null || oData.exportedCNWH == '')" style="font-size: 0.7rem;">
-                          (chưa có)
-                        </span>
-                      </ion-text>
-                    </div>
-                    <div class="d-flex align-items-center justify-content-end">
-                      <div class="circle-timeline-2"><span class="font-weight-bold">2</span></div>
-                    </div>
-                  </div>
-                  <div style="flex-direction: column;
-                                  right: -0.5rem;
-                                  position: absolute;
-                                  bottom: -3rem;" class="d-flex">
-                    <div style="flex-direction: column;text-align: end;" class="d-flex">
-                      <div class="d-flex align-items-center justify-content-end">
-                        <div class="circle-timeline-3"><span class="font-weight-bold">3</span></div>
+            <swiper-container *ngIf="oDataStatus" [slidesPerView]="1" [slidesPerGroup]="1" [pagination]="true">
+              <swiper-slide *ngIf="!oDataStatus?.isError">
+                <ion-card mode="ios" style="--background:white !important;box-shadow: unset !important" class="m-1">
+                  <ion-card-content class="p-0">
+                    <div style="margin-bottom: 2rem;" class="w-100">
+                      <div style="justify-content: space-between;" class="d-flex align-items-center mb-2">
+                        <div>
+                          <ion-text class="dynamic-font font-weight-bold text-dark">
+                            Công ty vận chuyển
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text *ngIf="oDataStatus?.data?.exname != null && oDataStatus?.data?.company != null" color="primary">
+                            <a [href]="oDataStatus?.data?.url">{{oDataStatus?.data?.exname +' ('+oDataStatus?.data?.company+')'}}</a>
+                          </ion-text>
+                        </div>
                       </div>
-                      <span class="font-weight-bold" style="font-size: 0.7rem;">
-                        Đang trên đường về HCM
-                      </span>
-                      <ion-text color="medium" class="dynamic-font">
-                        <span *ngIf="oData?.dateExpectation != null" style="font-size: 0.7rem;">
-                          {{oData?.dateExpectation}}
-                        </span>
-                        <span *ngIf="(oData?.dateExpectation == null || oData?.dateExpectation == '')" style="font-size: 0.7rem;">
-                          (chưa có)
-                        </span>
-                      </ion-text>
-                    </div>
-                  </div>
-                  <div style="flex-direction: column;
-                                  left: -0.5rem;
-                                  position: absolute;
-                                  bottom: -3rem;" class="d-flex">
-                    <div style="flex-direction: column;width: 150px;text-align: center;" class="d-flex">
-                      <div style="z-index: 1000;" class="circle-timeline-4"><span class="font-weight-bold">4</span></div>
-                      <span class="font-weight-bold" style="font-size: 0.7rem;">
-                        Hàng bị HQ kiểm
-                      </span>
-                      <ion-text color="medium" class="dynamic-font">
-                        <span *ngIf="oData?.inspectedDate != null" style="font-size: 0.7rem;">
-                          {{oData?.inspectedDate | formatdate : 'dd/MM/yyyy hh:mm a'}}
-                        </span>
-                        <span *ngIf="(oData?.inspectedDate == null || oData?.inspectedDate == '')" style="font-size: 0.7rem;">
-                          (chưa có)
-                        </span>
-                      </ion-text>
-                    </div>
-                  </div>
-                  <ion-text class="dynamic-font" style="font-size: 0.7rem;">
-                    <span>{{content1}}</span>
-                    <br>
-                    <span>{{content2}}</span>
-                  </ion-text>
-                </div>
-              </div>
-              <div style="position: relative;" class="w-100 h-100">
-                <div style="border: 4px solid rgb(170, 170, 170);border-right: none;border-top: none;padding-top: 4rem;" class="w-100 h-100 pb-4 pl-2 pr-2">
-                  <!-- line so 4-->
-                  <div *ngIf="oData?.status == 4" class="w-100 border-gradient-4-indeterminate"></div>
-                  <div *ngIf="oData?.status > 4" class="w-100 border-gradient-4-active"></div>
-                  <!-- line so 4-->
-
-                  <!-- line so 5-->
-                  <div *ngIf="oData?.status == 5" class="h-100 border-gradient-5-indeterminate"></div>
-                  <div *ngIf="oData?.status > 5" class="h-100 border-gradient-5-active"></div>
-                  <!-- line so 5-->
-                   
-                  <!-- line so 6-->
-                  <div *ngIf="oData?.status == 6" class="h-100 border-gradient-6-indeterminate"></div>
-                  <div *ngIf="oData?.status > 6" class="h-100 border-gradient-6-active"></div>
-                  <!-- line so 6-->
-
-                  <div style="flex-direction: column;
-                                  left: -0.5rem;
-                                  position: absolute;
-                                  bottom: -3rem;" class="d-flex">
-                    <div style="flex-direction: column;" class="d-flex">
-                      <div class="circle-timeline-5"><span class="font-weight-bold">5</span></div>
-                      <span class="font-weight-bold" style="font-size: 0.7rem;">
-                        Đã thông quan
-                      </span>
-                      <ion-text color="medium" class="dynamic-font">
-                        <span *ngIf="oData?.clearanceDate != null" style="font-size: 0.7rem;">
-                          {{oData?.clearanceDate | formatdate : 'dd/MM/yyyy hh:mm a'}}
-                        </span>
-                        <span *ngIf="(oData?.clearanceDate == null || oData?.clearanceDate == '')" style="font-size: 0.7rem;">
-                          (chưa có)
-                        </span>
-                      </ion-text>
-                    </div>
-                  </div>
-                  <div style="flex-direction: column;
-                                  left: 40%;
-                                  position: absolute;
-                                  bottom: -3rem;" class="d-flex">
-                    <div style="flex-direction: column;" class="d-flex">
-                      <div class="circle-timeline-6"><span class="font-weight-bold">6</span></div>
-                      <span class="font-weight-bold" style="font-size: 0.7rem;">
-                        Đã về kho HCM
-                      </span>
-                      <ion-text color="medium" class="dynamic-font">
-                        <span *ngIf="oData.importedSGWH != null" style="font-size: 0.7rem;">
-                          {{oData?.importedSGWH | formatdate : 'dd/MM/yyyy hh:mm a'}}
-                        </span>
-                        <span *ngIf="(oData?.importedSGWH == null || oData?.importedSGWH == '')" style="font-size: 0.7rem;">
-                          (chưa có)
-                        </span>
-                      </ion-text>
-                    </div>
-                  </div>
-                  <div style="flex-direction: column;
-                                  right: 0rem;
-                                  position: absolute;
-                                  bottom: -3rem;" class="d-flex">
-                    <div style="flex-direction: column;text-align: end;" class="d-flex">
-                      <div class="d-flex align-items-center justify-content-end">
-                        <div class="circle-timeline-7"><span class="font-weight-bold">7</span></div>
+                      <div *ngIf="oDataStatus?.data?.ico" class="d-flex align-items-center justify-content-center mt-3 mb-3">
+                        <img style="width: 20%;" [src]="oDataStatus?.data?.ico" alt="">
                       </div>
-                      <span class="font-weight-bold" style="font-size: 0.7rem;">
-                        Đã nhận hàng
-                      </span>
-                      <ion-text color="medium" class="dynamic-font">
-                        <span *ngIf="oData.receivedDate != null" style="font-size: 0.7rem;">
-                          {{oData?.receivedDate | formatdate : 'dd/MM/yyyy hh:mm a'}}
-                        </span>
-                        <span *ngIf="(oData.receivedDate == null || oData.receivedDate == '')" style="font-size: 0.7rem;">
-                          (chưa có)
-                        </span>
-                      </ion-text>
+                      <div>
+                        <ion-text class="dynamic-font font-weight-bold text-dark">
+                          Hành trình đơn hàng
+                        </ion-text>
+                      </div>
+                      <div *ngIf="oDataStatus?.data?.data" class="p-2 d-flex align-items-center justify-content-center mt-1" style="border: 1px solid #ececec;border-radius: 1em;">
+                        <ion-list lines="none" style="background-color:white !important;">
+                          <ng-container *ngFor="let item of oDataStatus?.data?.data">
+                            <ion-item style="--background:white !important">
+                              <ion-icon style="color: var(--ion-color-mat-primary) !important" slot="start" name="checkmark-circle-outline"></ion-icon>
+                              <ion-text class="dynamic-font text-dark">
+                                <span>{{item?.context}}</span>
+                              </ion-text>
+                            </ion-item>
+                            <ion-item style="--background:white !important">
+                              <ion-text class="dynamic-font" color="medium">
+                                <span>Ngày: {{item?.time}}</span>
+                              </ion-text>
+                            </ion-item>
+                          </ng-container>
+                        </ion-list>
+                      </div>
                     </div>
-                  </div>
-                  <ion-text class="dynamic-font" style="font-size: 0.7rem;">
-                    <span>{{content3}}</span>
-                  </ion-text>
-                </div>
-              </div>
-            </div>
+                  </ion-card-content>
+                </ion-card>
+              </swiper-slide>
+              <swiper-slide>
+                <ion-card mode="ios" style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;" class="m-1">
+                  <ion-card-content>
+                    <div style="margin-bottom: 5rem;" class="w-100 h-100">
+                      <div style="position: relative;margin-top: 5rem;" class="w-100 h-100">
+                        <div style="border: 4px solid rgb(170, 170, 170);border-left: none;" class="w-100 h-100 pt-4 pb-4 pl-2 pr-2">
+                          <!-- line so 1-->
+                          <div *ngIf="oData?.status == 1" class="h-100 border-gradient-1-indeterminate"></div>
+                          <div *ngIf="oData?.status > 1" class="h-100 border-gradient-1-active"></div>
+                          <!-- line so 1-->
+                           
+                          <!-- line so 2-->
+                          <div *ngIf="oData?.status == 2" class="w-100 border-gradient-2-indeterminate"></div>
+                          <div *ngIf="oData?.status > 2" class="w-100 border-gradient-2-active"></div>
+                          <!-- line so 2-->
+        
+                          <!-- line so 3-->
+                          <div *ngIf="oData?.status == 3" class="h-100 border-gradient-3-indeterminate"></div>
+                          <div *ngIf="oData?.status > 3" class="h-100 border-gradient-3-active"></div>
+                          <!-- line so 3-->
+        
+                          <div style="flex-direction: column;
+                                          left: -0.5em;
+                                          position: absolute;
+                                          top: -3.1em;" class="d-flex">
+                            <div style="flex-direction: column;" class="d-flex">
+                              <span class="font-weight-bold" style="font-size: 0.7rem;">
+                                Đã kí nhận
+                              </span>
+                              <ion-text color="medium" class="dynamic-font">
+                                <span *ngIf="oData.cnwhExpectation != null" style="font-size: 0.7rem;">
+                                  {{oData?.cnwhExpectation | formatdate : 'dd/MM/yyyy hh:mm a'}}
+                                </span>
+                                <span *ngIf="(oData.cnwhExpectation == null || oData.cnwhExpectation == '')" style="font-size: 0.7rem;">
+                                  (chưa có)
+                                </span>
+                              </ion-text>
+                            </div>
+                            <div class="circle-timeline-1"><span class="font-weight-bold">1</span></div>
+                          </div>
+                          <!-- arrow so 1-->
+                          <div style="flex-direction: column;
+                                          left: 50%;
+                                          position: absolute;
+                                          top: -0.6em;
+                                          font-size: 1.2rem;
+                                          z-index: 1000;
+                                          transform: rotate(45deg);" class="d-flex">
+                            <i style="color: rgb(170, 170, 170);" *ngIf="oData?.status == 1" class="bi bi-send-fill"></i>
+                            <i style="color: #ffa500;" *ngIf="oData?.status > 1" class="bi bi-send-fill"></i>
+                          </div>
+                          <!-- arrow so 1-->
+                          <div style="flex-direction: column;
+                                          right: -0.6rem;
+                                          position: absolute;
+                                          top: -3.1rem;" class="d-flex">
+                            <div style="flex-direction: column;text-align: end;" class="d-flex">
+                              <span class="font-weight-bold" style="font-size: 0.7rem;">
+                                Xuất kho Trung Quốc
+                              </span>
+                              <ion-text color="medium" class="dynamic-font">
+                                <span *ngIf="oData.exportedCNWH != null" style="font-size: 0.7rem;">
+                                  {{oData?.exportedCNWH | formatdate : 'dd/MM/yyyy hh:mm a'}}
+                                </span>
+                                <span *ngIf="(oData.exportedCNWH == null || oData.exportedCNWH == '')" style="font-size: 0.7rem;">
+                                  (chưa có)
+                                </span>
+                              </ion-text>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-end">
+                              <div class="circle-timeline-2"><span class="font-weight-bold">2</span></div>
+                            </div>
+                          </div>
+                          <!-- arrow so 2-->
+                          <div style="flex-direction: column;
+                                          right: -0.4rem;
+                                          position: absolute;
+                                          top: 40%;
+                                          transform: rotate(135deg);
+                                          z-index: 1000;
+                                          font-size: 1.2rem;" class="d-flex">
+                            <i style="color: rgb(170, 170, 170);" *ngIf="oData?.status == 2" class="bi bi-send-fill"></i>
+                            <i style="color: #ff64f2;" *ngIf="oData?.status > 2" class="bi bi-send-fill"></i>
+                          </div>
+                          <!-- arrow so 2-->
+                          <div style="flex-direction: column;
+                                          right: -0.5rem;
+                                          position: absolute;
+                                          bottom: -3rem;" class="d-flex">
+                            <div style="flex-direction: column;text-align: end;" class="d-flex">
+                              <div class="d-flex align-items-center justify-content-end">
+                                <div class="circle-timeline-3"><span class="font-weight-bold">3</span></div>
+                              </div>
+                              <span class="font-weight-bold" style="font-size: 0.7rem;">
+                                Đang trên đường về HCM
+                              </span>
+                              <ion-text color="medium" class="dynamic-font">
+                                <span *ngIf="oData?.dateExpectation != null" style="font-size: 0.7rem;">
+                                  {{oData?.dateExpectation}}
+                                </span>
+                                <span *ngIf="(oData?.dateExpectation == null || oData?.dateExpectation == '')" style="font-size: 0.7rem;">
+                                  (chưa có)
+                                </span>
+                              </ion-text>
+                            </div>
+                          </div>
+                          <!-- arrow so 3-->
+                          <div style="flex-direction: column;
+                                          right: 50%;
+                                          position: absolute;
+                                          bottom: -0.6rem;
+                                          font-size: 1.2rem;
+                                          transform: rotate(225deg);
+                                          z-index: 1000;" class="d-flex">
+                            <i style="color: rgb(170, 170, 170);" *ngIf="oData?.status == 3" class="bi bi-send-fill"></i>
+                            <i style="color: rgb(248, 94, 94);" *ngIf="oData?.status > 3" class="bi bi-send-fill"></i>
+                          </div>
+                          <!-- arrow so 3-->
+                          <div style="flex-direction: column;
+                                          left: -0.5rem;
+                                          position: absolute;
+                                          bottom: -3rem;" class="d-flex">
+                            <div style="flex-direction: column;width: 150px;text-align: center;" class="d-flex">
+                              <div style="z-index: 1000;" class="circle-timeline-4"><span class="font-weight-bold">4</span></div>
+                              <span class="font-weight-bold" style="font-size: 0.7rem;">
+                                Hàng bị HQ kiểm
+                              </span>
+                              <ion-text color="medium" class="dynamic-font">
+                                <span *ngIf="oData?.inspectedDate != null" style="font-size: 0.7rem;">
+                                  {{oData?.inspectedDate | formatdate : 'dd/MM/yyyy hh:mm a'}}
+                                </span>
+                                <span *ngIf="(oData?.inspectedDate == null || oData?.inspectedDate == '')" style="font-size: 0.7rem;">
+                                  (chưa có)
+                                </span>
+                              </ion-text>
+                            </div>
+                          </div>
+                          <!-- arrow so 4-->
+                          <div style="flex-direction: column;
+                                          left: -0.5rem;
+                                          position: absolute;
+                                          bottom: -60%;
+                                          transform: rotate(135deg);
+                                          font-size: 1.2rem;
+                                          z-index: 1000;
+                                          " class="d-flex">
+                            <i style="color: rgb(170, 170, 170);" *ngIf="oData?.status == 4" class="bi bi-send-fill"></i>
+                            <i style="color: rgb(248, 94, 94);" *ngIf="oData?.status > 4" class="bi bi-send-fill"></i>
+                          </div>
+                          <!-- arrow so 4-->
+                          <ion-text class="dynamic-font" style="font-size: 0.7rem;">
+                            <span>{{content1}}</span>
+                            <br>
+                            <span>{{content2}}</span>
+                          </ion-text>
+                        </div>
+                      </div>
+                      <div style="position: relative;" class="w-100 h-100">
+                        <div style="border: 4px solid rgb(170, 170, 170);border-right: none;border-top: none;padding-top: 4rem;" class="w-100 h-100 pb-4 pl-2 pr-2">
+                          <!-- line so 4-->
+                          <div *ngIf="oData?.status == 4" class="w-100 border-gradient-4-indeterminate"></div>
+                          <div *ngIf="oData?.status > 4" class="w-100 border-gradient-4-active"></div>
+                          <!-- line so 4-->
+        
+                          <!-- line so 5-->
+                          <div *ngIf="oData?.status == 5" class="h-100 border-gradient-5-indeterminate"></div>
+                          <div *ngIf="oData?.status > 5" class="h-100 border-gradient-5-active"></div>
+                          <!-- line so 5-->
+                           
+                          <!-- line so 6-->
+                          <div *ngIf="oData?.status == 6" class="h-100 border-gradient-6-indeterminate"></div>
+                          <div *ngIf="oData?.status > 6" class="h-100 border-gradient-6-active"></div>
+                          <!-- line so 6-->
+        
+                          <div style="flex-direction: column;
+                                          left: -0.5rem;
+                                          position: absolute;
+                                          bottom: -3rem;" class="d-flex">
+                            <div style="flex-direction: column;" class="d-flex">
+                              <div class="circle-timeline-5"><span class="font-weight-bold">5</span></div>
+                              <span class="font-weight-bold" style="font-size: 0.7rem;">
+                                Đã thông quan
+                              </span>
+                              <ion-text color="medium" class="dynamic-font">
+                                <span *ngIf="oData?.clearanceDate != null" style="font-size: 0.7rem;">
+                                  {{oData?.clearanceDate | formatdate : 'dd/MM/yyyy hh:mm a'}}
+                                </span>
+                                <span *ngIf="(oData?.clearanceDate == null || oData?.clearanceDate == '')" style="font-size: 0.7rem;">
+                                  (chưa có)
+                                </span>
+                              </ion-text>
+                            </div>
+                          </div>
+                          <div style="flex-direction: column;
+                                          left: 20%;
+                                          position: absolute;
+                                          bottom: -0.7rem;
+                                          font-size: 1.2rem;
+                                          z-index: 1000;
+                                          transform: rotate(45deg);" class="d-flex">
+                            <i style="color: rgb(170, 170, 170);" *ngIf="oData?.status == 5" class="bi bi-send-fill"></i>
+                            <i style="color: rgb(61, 226, 255);" *ngIf="oData?.status > 5" class="bi bi-send-fill"></i>
+                          </div>
+                          <div style="flex-direction: column;
+                                          left: 40%;
+                                          position: absolute;
+                                          bottom: -3rem;" class="d-flex">
+                            <div style="flex-direction: column;" class="d-flex">
+                              <div class="circle-timeline-6"><span class="font-weight-bold">6</span></div>
+                              <span class="font-weight-bold" style="font-size: 0.7rem;">
+                                Đã về kho HCM
+                              </span>
+                              <ion-text color="medium" class="dynamic-font">
+                                <span *ngIf="oData.importedSGWH != null" style="font-size: 0.7rem;">
+                                  {{oData?.importedSGWH | formatdate : 'dd/MM/yyyy hh:mm a'}}
+                                </span>
+                                <span *ngIf="(oData?.importedSGWH == null || oData?.importedSGWH == '')" style="font-size: 0.7rem;">
+                                  (chưa có)
+                                </span>
+                              </ion-text>
+                            </div>
+                          </div>
+                          <div style="flex-direction: column;
+                                          left: 70%;
+                                          position: absolute;
+                                          bottom: -0.7rem;
+                                          font-size: 1.2rem;
+                                          z-index: 1000;
+                                          transform: rotate(45deg);" class="d-flex">
+                            <i style="color: rgb(170, 170, 170);" *ngIf="oData?.status == 6" class="bi bi-send-fill"></i>
+                            <i style="color: rgb(12, 157, 253);" *ngIf="oData?.status > 6" class="bi bi-send-fill"></i>
+                          </div>
+                          <div style="flex-direction: column;
+                                          right: 0rem;
+                                          position: absolute;
+                                          bottom: -3rem;" class="d-flex">
+                            <div style="flex-direction: column;text-align: end;" class="d-flex">
+                              <div class="d-flex align-items-center justify-content-end">
+                                <div class="circle-timeline-7"><span class="font-weight-bold">7</span></div>
+                              </div>
+                              <span class="font-weight-bold" style="font-size: 0.7rem;">
+                                Đã nhận hàng
+                              </span>
+                              <ion-text color="medium" class="dynamic-font">
+                                <span *ngIf="oData.receivedDate != null" style="font-size: 0.7rem;">
+                                  {{oData?.receivedDate | formatdate : 'dd/MM/yyyy hh:mm a'}}
+                                </span>
+                                <span *ngIf="(oData.receivedDate == null || oData.receivedDate == '')" style="font-size: 0.7rem;">
+                                  (chưa có)
+                                </span>
+                              </ion-text>
+                            </div>
+                          </div>
+                          <ion-text class="dynamic-font" style="font-size: 0.7rem;">
+                            <span>{{content3}}</span>
+                          </ion-text>
+                        </div>
+                      </div>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
+              </swiper-slide>
+            </swiper-container>
             <div class="w-100" style="border: 1px solid #ececec;border-radius: 1em;margin-top: 5rem;">
               <ion-grid fixed>
                 <ion-row>

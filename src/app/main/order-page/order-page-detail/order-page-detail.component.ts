@@ -17,12 +17,16 @@ import { StorageService } from 'src/app/storage-service/storage.service';
 export class OrderPageDetailComponent {
   recID:any;
   oData:any;
+  oDataPackage:any;
   username:any;
   lstPackage:any;
   lstLog:any;
   isOpenPayment:any = false;
   previousUrl:any;
   isChange:any=false;
+  content1:any=''
+  content2:any=''
+  content3:any=''
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
@@ -57,6 +61,13 @@ export class OrderPageDetailComponent {
     let recID = this.rt.snapshot.queryParams['recID'];
     if(recID) this.recID = recID;
     this.getDetail();
+    let content = await this.storage.get('infoContent');
+    if (content) {
+      let str = content.split(';');
+      this.content1 = str[0];
+      this.content2 = str[1];
+      this.content3 = str[2];
+    }
     if (!this.previousUrl) {
       let url = this.previous.getPreviousUrl();
       if (url) {
@@ -133,9 +144,12 @@ export class OrderPageDetailComponent {
         let data = res[1]?.data;
         if (data != null) {
           this.oData= data?.order;
+          console.log(this.oData);
           this.lstPackage = data?.packs;
           this.lstLog = data?.logs;
-          console.log(this.lstPackage);
+          if(this.lstPackage && this.lstPackage.length){
+            this.oDataPackage = this.lstPackage[0];
+          }
         }
       }
       this.onDestroy();
@@ -144,5 +158,9 @@ export class OrderPageDetailComponent {
 
   onCopy(){
     this.notification.showNotiSuccess('','Đã Sao chép',1000);
+  }
+
+  viewDetailPackage(item:any){
+    this.navCtrl.navigateForward('main/package/detail', { queryParams: { id: item.packageCode } });
   }
 }

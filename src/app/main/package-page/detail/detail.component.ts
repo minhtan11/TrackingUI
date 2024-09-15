@@ -16,6 +16,7 @@ import Swal from 'sweetalert2'
 })
 export class DetailComponent  implements OnInit {
   oData:any;
+  oDataStatus:any;
   id:any;
   username:any;
   isOpenEditPackage:any = false;
@@ -90,6 +91,7 @@ export class DetailComponent  implements OnInit {
     if(id) this.id = id;
     this.username = await this.storage.get('username');
     this.getPackage();
+    this.getStatus();
     if (!this.previousUrl) {
       let url = this.previous.getPreviousUrl();
       if (url) {
@@ -146,9 +148,25 @@ export class DetailComponent  implements OnInit {
       if (res[0]) {
       } else {
         if(res[1]) this.oData = res[1];
-        console.log(this.oData);
       }
-      this.onDestroy();
+    })
+  }
+
+  getStatus(){
+    let data = {
+      id: this.id,
+      userName: this.username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'checkstatus', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      } else {
+        this.oDataStatus = res[1];
+        console.log(this.oDataStatus);
+      }
     })
   }
 
