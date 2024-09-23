@@ -88,6 +88,36 @@
                               </ion-text>
                             </div>
                           </div> 
+                          <ng-container *ngIf="item.weight">
+                            <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                              <div>
+                                <ion-text class="dynamic-font text-dark font-weight-bold">
+                                  Cân nặng
+                                </ion-text>
+                              </div>
+                              <div class="d-flex align-items-center">
+                                <ion-text class="dynamic-font">
+                                  {{((item.weight != null ? item.weight : 0 ) | number)+'kg'}}
+                                </ion-text>
+                              </div>
+                            </div> 
+                          </ng-container>
+                          <ng-container *ngIf="(item.weightExchange | tranformDouble) > 0">
+                            <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                              <div>
+                                <ion-text class="dynamic-font text-dark font-weight-bold">
+                                  Đo lên
+                                </ion-text>
+                              </div>
+                              <div class="d-flex align-items-center">
+                                <ion-text class="dynamic-font">
+                                  {{'('+ (item.length | number)+'x'+ (item.width | number) + 'x' + (item.height | number) +')'}}
+                                  &nbsp;
+                                  {{(item.weightExchange | number) +'kg'}}
+                                </ion-text>
+                              </div>
+                            </div> 
+                          </ng-container>
                         </div>
                         <!-- <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                           <div>
@@ -298,36 +328,7 @@
                             </div>
                           </div> 
                         </ng-container> -->
-                        <!-- <ng-container *ngIf="item.weight">
-                          <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                            <div>
-                              <ion-text class="dynamic-font text-dark font-weight-bold">
-                                Cân nặng
-                              </ion-text>
-                            </div>
-                            <div class="d-flex align-items-center">
-                              <ion-text class="dynamic-font">
-                                {{((item.weight != null ? item.weight : 0 ) | number)+'kg'}}
-                              </ion-text>
-                            </div>
-                          </div> 
-                        </ng-container> -->
-                        <!-- <ng-container *ngIf="(item.weightExchange | tranformDouble) > 0">
-                          <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
-                            <div>
-                              <ion-text class="dynamic-font text-dark font-weight-bold">
-                                Đo lên
-                              </ion-text>
-                            </div>
-                            <div class="d-flex align-items-center">
-                              <ion-text class="dynamic-font">
-                                {{'('+ (item.length | number)+'x'+ (item.width | number) + 'x' + (item.height | number) +')'}}
-                                &nbsp;
-                                {{(item.weightExchange | number) +'kg'}}
-                              </ion-text>
-                            </div>
-                          </div> 
-                        </ng-container> -->
+                        
                       </ion-col>
                     </ion-row>
                   </ion-grid>
@@ -494,7 +495,7 @@
                                   z-index: 1000;
                                   transform: rotate(45deg);" class="d-flex">
                     <i style="color: rgb(170, 170, 170);" *ngIf="oDataPackage?.status == 1" class="bi bi-send-fill"></i>
-                    <i style="color: #ffa500;" *ngIf="oDataPackage?.status > 1" class="bi bi-send-fill"></i>
+                    <i *ngIf="oDataPackage?.status > 1" class="bi bi-send-fill icon-line-1"></i>
                   </div>
                   <!-- arrow so 1-->
                   <div style="flex-direction: column;
@@ -527,7 +528,7 @@
                                   z-index: 1000;
                                   font-size: 1.2rem;" class="d-flex">
                     <i style="color: rgb(170, 170, 170);" *ngIf="oDataPackage?.status == 2" class="bi bi-send-fill"></i>
-                    <i style="color: #ff64f2;" *ngIf="oDataPackage?.status > 2" class="bi bi-send-fill"></i>
+                    <i *ngIf="oDataPackage?.status > 2" class="bi bi-send-fill icon-line-2"></i>
                   </div>
                   <!-- arrow so 2-->
                   <div style="flex-direction: column;
@@ -560,7 +561,7 @@
                                   transform: rotate(225deg);
                                   z-index: 1000;" class="d-flex">
                     <i style="color: rgb(170, 170, 170);" *ngIf="oDataPackage?.status == 3" class="bi bi-send-fill"></i>
-                    <i style="color: rgb(248, 94, 94);" *ngIf="oDataPackage?.status > 3" class="bi bi-send-fill"></i>
+                    <i *ngIf="oDataPackage?.status > 3" class="bi bi-send-fill icon-line-3"></i>
                   </div>
                   <!-- arrow so 3-->
                   <div style="flex-direction: column;
@@ -592,7 +593,7 @@
                                   z-index: 1000;
                                   " class="d-flex">
                     <i style="color: rgb(170, 170, 170);" *ngIf="oDataPackage?.status == 4" class="bi bi-send-fill"></i>
-                    <i style="color: rgb(248, 94, 94);" *ngIf="oDataPackage?.status > 4" class="bi bi-send-fill"></i>
+                    <i *ngIf="oDataPackage?.status > 4" class="bi bi-send-fill icon-line-4"></i>
                   </div>
                   <!-- arrow so 4-->
                   <ion-text class="dynamic-font" style="font-size: 0.7rem;">
@@ -646,7 +647,7 @@
                                   z-index: 1000;
                                   transform: rotate(45deg);" class="d-flex">
                     <i style="color: rgb(170, 170, 170);" *ngIf="oDataPackage?.status == 5" class="bi bi-send-fill"></i>
-                    <i style="color: rgb(61, 226, 255);" *ngIf="oDataPackage?.status > 5" class="bi bi-send-fill"></i>
+                    <i *ngIf="oDataPackage?.status > 5" class="bi bi-send-fill icon-line-5"></i>
                   </div>
                   <div style="flex-direction: column;
                                   left: 40%;
@@ -675,7 +676,7 @@
                                   z-index: 1000;
                                   transform: rotate(45deg);" class="d-flex">
                     <i style="color: rgb(170, 170, 170);" *ngIf="oDataPackage?.status == 6" class="bi bi-send-fill"></i>
-                    <i style="color: rgb(12, 157, 253);" *ngIf="oDataPackage?.status > 6" class="bi bi-send-fill"></i>
+                    <i *ngIf="oDataPackage?.status > 6" class="bi bi-send-fill icon-line-6"></i>
                   </div>
                   <div style="flex-direction: column;
                                   right: 0rem;
@@ -781,7 +782,7 @@
     <div class="w-100 d-flex align-items-center justify-content-center">
       <ion-button (click)="openPayment(oData)" mode="ios" size="default" class="ion-btn-default w-100">
         <ion-text style="color: white !important;" class="dynamic-font">
-          Thanh toán
+          {{'Thanh toán'+'('+(oData.totalPrice | number)+'đ'+')'}}
         </ion-text>
       </ion-button>
     </div>

@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
@@ -165,7 +165,6 @@ export class DetailComponent  implements OnInit {
         this.notification.showNotiError('', res[1].message);
       } else {
         this.oDataStatus = res[1];
-        console.log(this.oDataStatus);
       }
     })
   }

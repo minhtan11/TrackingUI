@@ -32,6 +32,11 @@
           <h5 class="my-0 mx-0 font-weight-bold">Nạp tiền</h5>
         </ion-text>
       </ion-segment-button>
+      <ion-segment-button (click)=" sortData(9)" [value]="9">
+        <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+          <h5 class="my-0 mx-0 font-weight-bold">Nạp tiền qua ngân hàng</h5>
+        </ion-text>
+      </ion-segment-button>
       <ion-segment-button (click)=" sortData(4)" [value]="4">
         <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
           <h5 class="my-0 mx-0 font-weight-bold">Rút tiền</h5>
@@ -40,6 +45,11 @@
       <ion-segment-button (click)=" sortData(6)" [value]="6">
         <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
           <h5 class="my-0 mx-0 font-weight-bold">Đổi điểm Baidu</h5>
+        </ion-text>
+      </ion-segment-button>
+      <ion-segment-button (click)=" sortData(8)" [value]="8">
+        <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+          <h5 class="my-0 mx-0 font-weight-bold">Nhận tiền từ Zalo</h5>
         </ion-text>
       </ion-segment-button>
     </ion-segment>
@@ -86,6 +96,8 @@
                     <img class="mr-2" style="width: 4em;height: 4em;" *ngIf="item2?.data?.tradeType == 3" src="../../../assets/image/icon-add-dolla.png" alt="">
                     <img class="mr-2" style="width: 4em;height: 4em;" *ngIf="item2?.data?.tradeType == 4" src="../../../assets/image/icon-withdraw.png" alt="">
                     <img class="mr-2" style="width: 4em;height: 4em;" *ngIf="item2?.data?.tradeType == 6" src="../../../assets/image/star.png" alt="">
+                    <img class="mr-2" style="width: 4em;height: 4em;" *ngIf="item2?.data?.tradeType == 8" src="../../../assets/image/zalo-cash.png" alt="">
+                    <img class="mr-2" style="width: 4em;height: 4em;" *ngIf="item2?.data?.tradeType == 9" src="../../../assets/image/phone-banking.png" alt="">
                     <div class="w-100">
                       <ng-container [ngSwitch]="item2?.data?.tradeType">
                         <ion-text class="text-dark font-weight-bold dynamic-font" *ngSwitchCase="1">
@@ -102,6 +114,12 @@
                         </ion-text> 
                         <ion-text class="text-dark font-weight-bold dynamic-font" *ngSwitchCase="6">
                           Đổi điểm Baidu
+                        </ion-text> 
+                        <ion-text class="text-dark font-weight-bold dynamic-font" *ngSwitchCase="8">
+                          Nhận tiền từ Zalo
+                        </ion-text> 
+                        <ion-text class="text-dark font-weight-bold dynamic-font" *ngSwitchCase="9">
+                          Nạp tiền qua ngân hàng
                         </ion-text> 
                       </ng-container>
                       <br>
@@ -125,7 +143,7 @@
                               {{'-'+(item2?.data?.amount)+'đ'}}
                             </ion-text>
                           </ng-container>
-                          <ng-container *ngIf="item2?.data?.tradeType == 2 || item2?.data?.tradeType == 3">
+                          <ng-container *ngIf="item2?.data?.tradeType == 2 || item2?.data?.tradeType == 3 || item2?.data?.tradeType == 8 || item2?.data?.tradeType == 9">
                             <ion-text class="font-weight-bold dynamic-font text-primary-default">
                               {{'+'+item2?.data?.amount+'đ'}}
                             </ion-text>

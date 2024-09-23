@@ -606,7 +606,7 @@ ion-fab {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: rgb(12, 157, 253);
+    background: #309bd9;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -617,7 +617,7 @@ ion-fab {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #ffa500;
+    background: #ffbd59;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -628,7 +628,7 @@ ion-fab {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #ff64f2;
+    background: #f790cf;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -639,7 +639,7 @@ ion-fab {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: red;
+    background: #ff3131;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -650,7 +650,7 @@ ion-fab {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: rgb(248, 94, 94);
+    background:  #ff5757;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -661,7 +661,7 @@ ion-fab {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: rgb(61, 226, 255);
+    background: #8fd1f7;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -672,7 +672,7 @@ ion-fab {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: rgb(12, 157, 253);
+    background: #8fd1f7;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -691,7 +691,7 @@ ion-fab {
 
   .border-gradient-1-active {
       border-top: 4px solid;
-      border-image-source: linear-gradient(80deg, rgb(12, 157, 253) 55%, rgba(255, 165, 0, 1) 80%, rgba(255, 165, 0, 1) 100%);
+      border-image-source: linear-gradient(80deg, #309bd9 55%, #ffbd59 80%, #ffbd59 100%);
       position: absolute;
       left: 0;
       top: 0;
@@ -702,7 +702,7 @@ ion-fab {
 
   .border-gradient-1-indeterminate{
     border-top: 4px solid;
-    border-image-source: linear-gradient(80deg, rgb(12, 157, 253) 55%, rgba(255, 165, 0, 1) 80%, rgba(255, 165, 0, 1) 100%);
+    border-image-source: linear-gradient(80deg, #309bd9 55%, #ffbd59 80%, #ffbd59 100%);
     position: absolute;
     left: 0;
     top: 0;
@@ -715,7 +715,7 @@ ion-fab {
 
   .border-gradient-2-active {
       border-right: 4px solid;
-      border-image-source: linear-gradient(169deg, rgba(255, 165, 0, 1) 0%, rgba(255, 165, 0, 1) 44%, rgb(255, 100, 242) 100%);
+      border-image-source: linear-gradient(169deg, #ffbd59 0%, #ffbd59 44%, #f790cf 100%);
       position: absolute;
       left: 0;
       top: 0;
@@ -726,7 +726,7 @@ ion-fab {
 
   .border-gradient-2-indeterminate {
       border-right: 4px solid;
-      border-image-source: linear-gradient(169deg, rgba(255, 165, 0, 1) 0%, rgba(255, 165, 0, 1) 44%, rgb(255, 100, 242) 100%);
+      border-image-source: linear-gradient(169deg, #ffbd59 0%, #ffbd59 44%, #f790cf 100%);
       position: absolute;
       left: 0;
       top: 0;
@@ -739,7 +739,7 @@ ion-fab {
 
   .border-gradient-3-active {
       border-bottom: 4px solid;
-      border-image-source: linear-gradient(169deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 1) 44%, rgb(255, 100, 242) 100%);
+      border-image-source: linear-gradient(169deg, #f790cf 0%, #f790cf 44%, #ff3131 100%);
       position: absolute;
       right: 0;
       top: 0;
@@ -750,7 +750,7 @@ ion-fab {
 
   .border-gradient-3-indeterminate {
       border-bottom: 4px solid;
-      border-image-source: linear-gradient(169deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 1) 44%, rgb(255, 100, 242) 100%);
+      border-image-source: linear-gradient(169deg, #f790cf 0%, #f790cf 44%, #ff3131 100%);
       position: absolute;
       right: 0;
       top: 0;
@@ -762,7 +762,7 @@ ion-fab {
 
   .border-gradient-4-active {
       border-left: 4px solid;
-      border-image-source: linear-gradient(99deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 1) 44%, rgba(255, 0, 0, 1) 100%);
+      border-image-source: linear-gradient(99deg, #ff3131 0%, #ff3131 44%, #ff5757 100%);
       position: absolute;
       left: 0;
       top: 0;
@@ -773,7 +773,7 @@ ion-fab {
 
   .border-gradient-4-indeterminate {
       border-left: 4px solid;
-      border-image-source: linear-gradient(99deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 1) 44%, rgba(255, 0, 0, 1) 100%);
+      border-image-source: linear-gradient(99deg, #ff3131 0%, #ff3131 44%, #ff5757 100%);
       position: absolute;
       left: 0;
       top: 0;
@@ -785,7 +785,7 @@ ion-fab {
 
   .border-gradient-5-active {
       border-bottom: 4px solid;
-      border-image-source: linear-gradient(99deg, rgb(248, 94, 94) 0%,rgb(248, 94, 94) 30%, rgb(61, 226, 255) 100%);
+      border-image-source: linear-gradient(99deg, #ff5757 0%,#ff5757 30%, #8fd1f7 100%);
       position: absolute;
       left: 0;
       top: 0;
@@ -796,7 +796,7 @@ ion-fab {
 
   .border-gradient-5-indeterminate {
       border-bottom: 4px solid;
-      border-image-source: linear-gradient(99deg, rgb(248, 94, 94) 0%,rgb(248, 94, 94) 30%, rgb(61, 226, 255) 100%);
+      border-image-source: linear-gradient(99deg, #ff5757 0%,#ff5757 30%, #8fd1f7 100%);
       position: absolute;
       left: 0;
       top: 0;
@@ -808,7 +808,7 @@ ion-fab {
 
   .border-gradient-6-active {
       border-bottom: 4px solid;
-      border-image-source: linear-gradient(99deg,rgb(61, 226, 255) 38%, rgb(12, 157, 253) 100%);
+      border-image-source: linear-gradient(99deg,#8fd1f7 38%, #8fd1f7 100%);
       position: absolute;
       right: 0;
       top: 0;
@@ -819,7 +819,7 @@ ion-fab {
 
   .border-gradient-6-indeterminate {
       border-bottom: 4px solid;
-      border-image-source: linear-gradient(99deg,rgb(61, 226, 255) 38%, rgb(12, 157, 253) 100%);
+      border-image-source: linear-gradient(99deg,#8fd1f7 38%, #8fd1f7 100%);
       position: absolute;
       right: 0;
       top: 0;
@@ -828,6 +828,31 @@ ion-fab {
       animation: animation-line-horizontal-3 2s infinite linear;
       width: 60%;
   }
+
+  .icon-line-1{
+    color: #ffbd59;
+  }
+
+  .icon-line-2{
+    color: #f790cf;
+  }
+
+  .icon-line-3{
+    color: #ff3131;
+  }
+
+  .icon-line-4{
+    color: #ff5757;
+  }
+
+  .icon-line-5{
+    color: #8fd1f7;
+  }
+
+  .icon-line-6{
+    color: #8fd1f7;
+  }
+
   .mat-mdc-progress-bar{
     --mdc-linear-progress-track-color: rgb(0 0 0 / 25%) !important;
   }
