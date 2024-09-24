@@ -46,6 +46,8 @@ export class HomePage implements OnInit, AfterViewInit {
   isReview:any;
   isOpenExit:any=false;
   totalNoti:any=0;
+  versionNew:any='2.6';
+  versisonCurrent:any='';
   private destroy$ = new Subject<void>();
   constructor(
     private router: Router,
@@ -70,6 +72,7 @@ export class HomePage implements OnInit, AfterViewInit {
       userName: ['', Validators.required],
       passWord: ['', Validators.required]
     });
+    this.versisonCurrent = await this.storage.get('versionNo');
     // let username = await this.storage.get('username');
     
     // if(username){
