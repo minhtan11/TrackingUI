@@ -16,6 +16,7 @@ import { ActionPerformed, PushNotificationSchema, PushNotifications } from '@cap
 import { Capacitor } from '@capacitor/core';
 import { Browser } from '@capacitor/browser';
 import { Clipboard, ReadResult } from '@capacitor/clipboard';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home-page',
@@ -41,7 +42,8 @@ export class HomePageComponent{
   isPopup:any=false;
   isPopupVersion:any=false;
   imgPopup:any;
-  versionNo:any='2.6';
+  versionNo:any=environment.version;
+  newVersionNo:any='';
   textCopy:any = '';
   isOpenCopy:any=false;
   private destroy$ = new Subject<void>();
@@ -84,6 +86,7 @@ export class HomePageComponent{
 
   //#region Init
   async ngOnInit() {
+    console.log(this.versionNo);
     this.platform.ready().then(async () => {
       let checklogin = this.rt.snapshot.queryParams["checklogin"];
       if (checklogin) {
@@ -336,9 +339,9 @@ export class HomePageComponent{
   }
 
   async onCheckVersion(){
-    let newVersionNo = await this.storage.get('versionNo');
-    if (newVersionNo) {
-      if (this.versionNo != newVersionNo) {
+    this.newVersionNo = await this.storage.get('versionNo');
+    if (this.newVersionNo) {
+      if (this.versionNo != this.newVersionNo) {
         this.isPopupVersion = true;
         this.storage.remove('notitap');
         return false;

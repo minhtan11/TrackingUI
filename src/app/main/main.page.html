@@ -78,7 +78,7 @@
   <!-- Exit App  -->
 </ion-content> 
 <ion-footer *ngIf="!isHideFooter" class="ion-no-border mobile-toolbar" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
-  <ng-container *ngIf="userName && userName === 'admintan'">
+  <ng-container *ngIf="versisonCurrent && versisonCurrent != versionNew">
     <ion-toolbar style="--background:white !important;">
       <mat-tab-group [selectedIndex]="selected" (selectedTabChange)="selectedTabChange($event)" headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
         <mat-tab label="home">
@@ -127,7 +127,7 @@
       </mat-tab-group>
     </ion-toolbar>
   </ng-container>
-  <ng-container *ngIf="userName && userName != 'admintan'">
+  <ng-container *ngIf="versisonCurrent && versisonCurrent == versionNew">
     <ion-toolbar style="--background:white !important;">
       <mat-tab-group [selectedIndex]="selected" (selectedTabChange)="selectedTabChange($event)" headerPosition="below" id="tab-main" [animationDuration]="200" [disableRipple]="true">
         <mat-tab label="home">

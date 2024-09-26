@@ -16,6 +16,7 @@ import { App } from '@capacitor/app';
 import { PreviousRouterServiceService } from '../previous-router-service/previous-router-service.service';
 import { Keyboard } from '@capacitor/keyboard';
 import { Badge } from '@capawesome/capacitor-badge';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-main',
@@ -36,6 +37,8 @@ export class MainPage implements OnInit {
   totalNoti:any=0;
   isHideFooter:any = false;
   userName:any;
+  versionNew:any=environment.version;
+  versisonCurrent:any='';
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
@@ -192,6 +195,7 @@ export class MainPage implements OnInit {
 
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
+    this.versisonCurrent = await this.storage.get('versionNo');
     let username = await this.storage.get('username');
     this.userName = username;
     this.routerOutlet.swipeGesture = false; 

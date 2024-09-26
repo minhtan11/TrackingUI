@@ -46,7 +46,7 @@ export class HomePage implements OnInit, AfterViewInit {
   isReview:any;
   isOpenExit:any=false;
   totalNoti:any=0;
-  versionNew:any='2.6';
+  versionNew:any=environment.version;
   versisonCurrent:any='';
   private destroy$ = new Subject<void>();
   constructor(
@@ -72,7 +72,7 @@ export class HomePage implements OnInit, AfterViewInit {
       userName: ['', Validators.required],
       passWord: ['', Validators.required]
     });
-    this.versisonCurrent = await this.storage.get('versionNo');
+    
     // let username = await this.storage.get('username');
     
     // if(username){
@@ -109,6 +109,7 @@ export class HomePage implements OnInit, AfterViewInit {
 
   async ionViewWillEnter(){
     this.isReview = await this.storage.get('isReview');
+    this.versisonCurrent = await this.storage.get('versionNo');
     let username = await this.storage.get('username');
     if(username){
       this.userName = username;
