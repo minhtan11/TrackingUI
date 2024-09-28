@@ -588,7 +588,7 @@
       </ng-container>
     </ion-list>
   </div>
-  <ion-fab style="margin-bottom: var(--ion-safe-area-bottom, 0);" slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab *ngIf="username && username != 'admintan'" style="margin-bottom: var(--ion-safe-area-bottom, 0);" slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="createPackage()" class="ion-btn-orange">
       <img style="width: 3rem;height: 3rem;" src="../../../assets/image/add-package.png" alt="">
     </ion-fab-button>
