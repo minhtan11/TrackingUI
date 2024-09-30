@@ -76,34 +76,22 @@
       <div *ngIf="!lstImgSlide" class="padding-statusbar-ios" style="height: 200px;" class="w-100">
         <ion-skeleton-text class="w-100" [animated]="true"></ion-skeleton-text>
       </div>
-      <div *ngIf="lstImgSlide && lstImgSlide.length > 0" class="w-100 padding-statusbar-ios">
-        <swiper-container #swiperRef [slidesPerView]="1" [slidesPerGroup]="1" [loop]="true" [pagination]="true">
-          <ng-container *ngFor="let item of lstImgSlide; index as i">
-            <swiper-slide [attr.data-swiper-slide-index]="i">
-              <img class="w-100 h-100 mb-5" [src]="'https://tracking.nhanshiphang.vn/'+item?.img">
-            </swiper-slide>
-          </ng-container>
-        </swiper-container>
-      </div>
-      <!-- <div class="padding-statusbar-ios" style="height: 200px;" *ngIf="lstImgSlide && lstImgSlide.length == 0" class="slideshow-container w-100 mb-2">
-        <ion-skeleton-text class="w-100" [animated]="true"></ion-skeleton-text>
-      </div>
-      <div *ngIf="lstImgSlide && lstImgSlide.length > 0" class="slideshow-container w-100 mb-2 padding-statusbar-ios">
-        <ng-container *ngFor="let item of lstImgSlide; index as i">
-          <div *ngIf="i == 0" style="display: block;" class="mySlides fade">
-            <img class="w-100 h-100" [src]="'https://tracking.nhanshiphang.vn/'+item?.img">
-          </div>
-          <div *ngIf="i != 0" class="mySlides fade">
-            <img class="w-100 h-100" [src]="'https://tracking.nhanshiphang.vn/'+item?.img">
-          </div>
-        </ng-container>
-      </div>
-      <div *ngIf="lstImgSlide && lstImgSlide.length > 0" style="text-align:center">
-        <ng-container *ngFor="let item of lstImgSlide; index as i">
-          <span *ngIf="i == 0" class="dot active-dots"></span>
-          <span *ngIf="i != 0" class="dot"></span>
-        </ng-container>
-      </div> -->
+      <ng-container *ngIf="versionNo != newVersionNo">
+        <div class="w-100 mb-2 padding-statusbar-ios">
+          <img class="w-100" src="../../../assets/image/splash.png">
+        </div>
+      </ng-container>
+      <ng-container *ngIf="versionNo == newVersionNo">
+        <div *ngIf="lstImgSlide && lstImgSlide.length > 0" class="w-100 padding-statusbar-ios">
+          <swiper-container #swiperRef [slidesPerView]="1" [slidesPerGroup]="1" [loop]="true" [pagination]="true">
+            <ng-container *ngFor="let item of lstImgSlide; index as i">
+              <swiper-slide [attr.data-swiper-slide-index]="i">
+                <img class="w-100 h-100 mb-5" [src]="'https://tracking.nhanshiphang.vn/'+item?.img">
+              </swiper-slide>
+            </ng-container>
+          </swiper-container>
+        </div>
+      </ng-container>
       <div class="pl-3 pt-3 w-100">
         <ion-text>
           <h4 class="mx-0 my-0 font-weight-bold dynamic-font text-dark">Dịch vụ</h4>

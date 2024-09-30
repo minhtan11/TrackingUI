@@ -86,7 +86,6 @@ export class HomePageComponent{
 
   //#region Init
   async ngOnInit() {
-    console.log(this.versionNo);
     this.platform.ready().then(async () => {
       let checklogin = this.rt.snapshot.queryParams["checklogin"];
       if (checklogin) {
