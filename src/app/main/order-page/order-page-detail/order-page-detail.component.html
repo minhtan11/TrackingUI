@@ -76,7 +76,7 @@
                               </ion-text>
                             </div>
                           </div> 
-                          <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                          <!-- <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                             <div>
                               <ion-text class="dynamic-font font-weight-bold text-dark">
                                 Vận chuyển
@@ -87,7 +87,7 @@
                                 {{(item.weight ? item.weight : '0')+'kg'}}
                               </ion-text>
                             </div>
-                          </div> 
+                          </div>  -->
                           <ng-container *ngIf="item.weight">
                             <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                               <div>
@@ -781,8 +781,9 @@
   <ion-toolbar mode="ios" style="--background:white !important">
     <div class="w-100 d-flex align-items-center justify-content-center">
       <ion-button (click)="openPayment(oData)" mode="ios" size="default" class="ion-btn-default w-100">
-        <ion-text style="color: white !important;" class="dynamic-font">
-          {{'Thanh toán'+'('+(oData.totalPrice | number)+'đ'+')'}}
+        <i style="font-size: 1.5rem;" class="bi bi-shield-fill-check mr-2"></i>
+        <ion-text style="color: white !important;" class="dynamic-font font-weight-bold">
+          {{'Thanh toán'+':'+' '+(oData.totalPrice | number)+'đ'}}
         </ion-text>
       </ion-button>
     </div>
