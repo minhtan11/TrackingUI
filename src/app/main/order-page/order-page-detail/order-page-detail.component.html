@@ -394,6 +394,100 @@
                       </ion-text>
                     </div>
                   </div>
+                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                    <div>
+                      <ion-text style="color: var(--ion-color-mat-primary);" class="dynamic-font font-weight-bold">
+                        Cân nặng
+                      </ion-text>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <ion-text class="dynamic-font">
+                        {{(oData.weight | number) +'kg'}}
+                      </ion-text>
+                    </div>
+                  </div>
+                  <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                    <div>
+                      <ion-text style="color: var(--ion-color-mat-primary);" class="dynamic-font font-weight-bold">
+                        Phí vận chuyển
+                      </ion-text>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <ion-text class="dynamic-font">
+                        {{((oData.weightPrice ? oData.weightPrice : 0 ) | number)+'đ'}}
+                      </ion-text>
+                    </div>
+                  </div>
+                  <ng-container *ngIf="oData?.woodPackagePrice && oData?.woodPackagePrice != '0'">
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text style="color: var(--ion-color-mat-primary);" class="dynamic-font font-weight-bold">
+                          Phí đóng gỗ
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ion-text class="dynamic-font">
+                          {{((oData.woodPackagePrice ? oData.woodPackagePrice : 0 ) | number)+'đ'}}
+                        </ion-text>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="oData?.airPackagePrice && oData?.airPackagePrice != '0'">
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text style="color: var(--ion-color-mat-primary);" class="dynamic-font font-weight-bold">
+                          Phí bọt khí
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ion-text class="dynamic-font">
+                          {{((oData.airPackagePrice ? oData.airPackagePrice : 0) | number)+'đ'}}
+                        </ion-text>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="oData?.insurancePrice && oData?.insurancePrice != '0'">
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text style="color: var(--ion-color-mat-primary);" class="dynamic-font font-weight-bold">
+                          Phí bảo hiểm
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ion-text class="dynamic-font">
+                          {{((oData.insurancePrice ? oData.insurancePrice : 0) | number)+'đ'}}
+                        </ion-text>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="oData.surCharge">
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text style="color: var(--ion-color-mat-primary);" class="dynamic-font font-weight-bold">
+                          Phí thu hộ
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ion-text class="dynamic-font">
+                          {{((oData.surCharge ? oData.surCharge : 0) | number)+'đ'}}
+                        </ion-text>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="oData.moreCharge">
+                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                      <div>
+                        <ion-text style="color: var(--ion-color-mat-primary);" class="dynamic-font font-weight-bold">
+                          Phụ phí
+                        </ion-text>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <ion-text class="dynamic-font">
+                          {{((oData.moreCharge ? oData.moreCharge : 0) | number)+'đ'}}
+                        </ion-text>
+                      </div>
+                    </div>
+                  </ng-container>
                   <!-- <ng-container *ngIf="oData.isWoodPackage">
                     <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                       <div>
