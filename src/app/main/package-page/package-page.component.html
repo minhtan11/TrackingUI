@@ -465,14 +465,14 @@
                   </ion-button>
                 </ng-container>
                 <ng-container *ngIf="item?.status < 2">
-                  <ion-button (click)="openPopCancelPackage(item)" mode="ios" size="default" color="medium">
+                  <!-- <ion-button (click)="openPopCancelPackage(item)" mode="ios" size="default" color="medium">
                     <ion-icon style="color: white !important;" slot="start" name="stop-circle-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
                       Hủy đơn
                     </ion-text>
-                  </ion-button>
+                  </ion-button> -->
                   <ion-button style="margin-right: auto !important;" (click)="openPopDeletePackage(item)" mode="ios"
-                    size="default" color="danger">
+                    size="default" color="medium">
                     <ion-icon style="color: white !important;" slot="start" name="trash-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
                       Xóa đơn
@@ -588,6 +588,9 @@
       </ng-container>
     </ion-list>
   </div>
+  <ion-infinite-scroll *ngIf="isload" (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content style="--color: black !important;" loadingSpinner="dots"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
   <ion-fab *ngIf="username && username != 'admintan'" style="margin-bottom: var(--ion-safe-area-bottom, 0);" slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="createPackage()" class="ion-btn-orange">
       <img style="width: 3rem;height: 3rem;" src="../../../assets/image/add-package.png" alt="">

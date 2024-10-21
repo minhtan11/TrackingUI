@@ -592,13 +592,13 @@
                 </ion-button>
               </ng-container>
               <ng-container *ngIf="oData?.status < 2">
-                <ion-button (click)="openPopCancelPackage(oData)" mode="ios" size="default" color="medium">
+                <!-- <ion-button (click)="openPopCancelPackage(oData)" mode="ios" size="default" color="medium">
                   <ion-icon style="color: white !important;" slot="start" name="stop-circle-outline"></ion-icon>
                   <ion-text style="color: white !important;" class="dynamic-font">
                     Hủy đơn
                   </ion-text>
-                </ion-button>
-                <ion-button style="margin-right: auto;" (click)="openPopDeletePackage(oData)" mode="ios" size="default" color="danger">
+                </ion-button> -->
+                <ion-button style="margin-right: auto;" (click)="openPopDeletePackage(oData)" mode="ios" size="default" color="medium">
                   <ion-icon style="color: white !important;" slot="start" name="trash-outline"></ion-icon>
                   <ion-text style="color: white !important;" class="dynamic-font">
                     Xóa đơn

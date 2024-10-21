@@ -225,6 +225,9 @@
       </ng-container>
     </ion-list>
   </div>
+  <ion-infinite-scroll *ngIf="isload" (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content style="--color: black !important;" loadingSpinner="dots"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
   <!-- payment -->
   <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelPayment()" [isOpen]="isOpenPayment">
     <ng-template>
