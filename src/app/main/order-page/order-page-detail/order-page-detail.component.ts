@@ -21,12 +21,16 @@ export class OrderPageDetailComponent {
   username:any;
   lstPackage:any;
   lstLog:any;
+  lstVoucher:any;
+  voucherSelected:any;
   isOpenPayment:any = false;
   previousUrl:any;
   isChange:any=false;
-  content1:any=''
-  content2:any=''
-  content3:any=''
+  content1:any='';
+  content2:any='';
+  content3:any='';
+  isOpenVoucher:any = false;
+  isOpenUseVoucher:any = false;
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
@@ -96,10 +100,14 @@ export class OrderPageDetailComponent {
   }
 
   onPayment(item:any){
-    this.cancelPayment();
+    this.cancelUseVoucher();
+    this.cancelVoucher();
+    let voucherID = '';
+    if(this.voucherSelected) voucherID = this.voucherSelected?.voucherID;
     let data = {
       id: item.id,
       userName: this.username,
+      voucherID:voucherID
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)
@@ -144,9 +152,10 @@ export class OrderPageDetailComponent {
         let data = res[1]?.data;
         if (data != null) {
           this.oData= data?.order;
-          console.log(this.oData);
           this.lstPackage = data?.packs;
           this.lstLog = data?.logs;
+          this.lstVoucher = data?.vouchers;
+          console.log(this.lstVoucher);
           if(this.lstPackage && this.lstPackage.length){
             this.oDataPackage = this.lstPackage[0];
           }
@@ -163,4 +172,47 @@ export class OrderPageDetailComponent {
   viewDetailPackage(item:any){
     this.navCtrl.navigateForward('main/package/detail', { queryParams: { id: item.packageCode } });
   }
+
+  //#region Voucher
+  onChooseVoucher(){
+    this.cancelPayment();
+    this.openPopVoucher();
+  }
+
+  openPopVoucher(){
+    this.isOpenVoucher = true;
+  }
+
+  cancelVoucher(){
+    this.isOpenVoucher = false;
+    this.dt.detectChanges();
+  }
+
+  onSelecteVoucher(event:any,item:any){
+    if(event){
+      this.voucherSelected = {...item};
+    }else{
+      this.voucherSelected = null;
+    }
+  }
+
+  oncheckUseVoucher(){
+    if(!this.voucherSelected){
+      this.openPopUseVoucher();
+    }else{
+      this.onPayment(this.oData);
+    }
+  }
+  //#endregion
+
+  //#region UseVoucher
+  openPopUseVoucher(){
+    this.isOpenUseVoucher = true;
+  }
+
+  cancelUseVoucher(){
+    this.isOpenUseVoucher = false;
+    this.dt.detectChanges();
+  }
+  //#endregion
 }

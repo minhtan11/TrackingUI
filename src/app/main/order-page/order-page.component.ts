@@ -29,6 +29,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   status:any = 0;
   id:any='';
   lstData:any;
+  lstVoucher:any;
   isEmpty:any = false;
   isload:any=true;
   isconnected:any = true;
@@ -37,6 +38,9 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   totalPay:any = 0;
   totalOrder:any = 0;
   isOpenFilter:any = false;
+  isOpenVoucher:any = false;
+  isOpenUseVoucher:any = false;
+  voucherSelected:any;
   private destroy$ = new Subject<void>();
   formGroup!: FormGroup;
   previousUrl:any;
@@ -257,6 +261,24 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     })
   }
 
+  async loadVoucher(){
+    let username = await this.storage.get('username');
+    let data = {
+      userName: username
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'getvoucherorder', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+      }else{
+        let oData = res[1];
+        this.lstVoucher = oData;
+        console.log(this.lstVoucher);
+      }
+    })
+  }
+
   viewDetail(data:any){
     this.navCtrl.navigateForward('main/order/detail',{queryParams:{recID:data.recID}});
   }
@@ -330,6 +352,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     this.lstData = [];
     this.loadData();
     this.getTotal();
+    this.loadVoucher();
     // let type = this.rt.snapshot.queryParams['type'];
     // switch(type){
     //   case 'change':
@@ -363,12 +386,21 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     this.dt.detectChanges();
   }
 
-  onPayment(){
+  onChooseVoucher(){
     this.cancelPayment();
+    this.openPopVoucher();
+  }
+
+  onPayment(){
+    this.cancelUseVoucher();
+    this.cancelVoucher();
+    let voucherID = '';
+    if(this.voucherSelected) voucherID = this.voucherSelected?.voucherID;
     let sArray = this.arrOrderSelected.map((x:any) => x.recID).join(',');
     let data = {
       id: sArray,
       userName: this.username,
+      voucherID:voucherID
     }
     let messageBody = {
       dataRequest: JSON.stringify(data)
@@ -472,6 +504,44 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
       this.isCheckAll = false;
       this.totalAllOrder = 0;
     }
+  }
+  //#endregion
+
+  //#region Voucher
+  openPopVoucher(){
+    this.isOpenVoucher = true;
+  }
+
+  cancelVoucher(){
+    this.isOpenVoucher = false;
+    this.dt.detectChanges();
+  }
+
+  onSelecteVoucher(event:any,item:any){
+    if(event){
+      this.voucherSelected = {...item};
+    }else{
+      this.voucherSelected = null;
+    }
+  }
+
+  oncheckUseVoucher(){
+    if(!this.voucherSelected){
+      this.openPopUseVoucher();
+    }else{
+      this.onPayment();
+    }
+  }
+  //#endregion
+
+  //#region UseVoucher
+  openPopUseVoucher(){
+    this.isOpenUseVoucher = true;
+  }
+
+  cancelUseVoucher(){
+    this.isOpenUseVoucher = false;
+    this.dt.detectChanges();
   }
   //#endregion
 }

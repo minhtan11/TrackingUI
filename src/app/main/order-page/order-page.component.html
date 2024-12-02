@@ -249,7 +249,7 @@
           </ion-text>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3">
-          <ion-button (click)="onPayment()" mode="ios" size="default" class="ion-btn-default pr-3">
+          <ion-button (click)="onChooseVoucher()" mode="ios" size="default" class="ion-btn-default pr-3">
             <ion-text style="color: white !important;" class="dynamic-font">
               Đồng ý
             </ion-text>
@@ -308,6 +308,103 @@
     </ng-template>
   </ion-modal>
   <!-- Filter -->
+   
+  <!-- Voucher -->
+  <ion-modal style="--background:white !important;--height: 100% !important;" [initialBreakpoint]="1" [breakpoints]="[0, 1]" (willDismiss)="cancelVoucher()" [isOpen]="isOpenVoucher">
+    <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar style="--background:white !important">
+          <ion-title class="text-center">
+            <h3 class="font-weight-bold dynamic-font text-dark m-0">Mã khuyến mãi</h3>
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ng-container *ngIf="lstVoucher && lstVoucher.length">
+          <ng-container *ngFor="let item of lstVoucher">
+            <ion-card class="mx-1 my-1 mb-4 w-100"
+              style="--background:#e7f6ff !important;box-shadow: none !important;font-size: unset !important;">
+              <div class="w-100">
+                <ion-card-content class="p-3">
+                  <div class="w-100">
+                    <ion-text class="dynamic-font text-dark font-weight-bold">
+                      <span>Mã khuyến mãi: </span>
+                      <span class="text-primary-default">{{item?.voucherID}}</span>
+                    </ion-text>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between w-100">
+                    <div>
+                      <ion-text class="dynamic-font font-weight-bold">
+                        <span class="text-orange" style="font-size: 2rem;">{{(item?.discount | number)+'đ'}}</span>
+                      </ion-text>
+                    </div>
+                    <div>
+                      <mat-checkbox [checked]="voucherSelected && voucherSelected?.voucherID == item?.voucherID" class="checkbox-circle" color="warn" (change)="onSelecteVoucher($event.checked,item)"></mat-checkbox>
+                    </div>
+                  </div>
+                  <div class="w-100">
+                    <ion-text class="dynamic-font font-weight-bold" color="medium">
+                      <span>Áp dụng: </span>
+                      <span>{{item.expriedFrom | date : 'dd/MM/yyyy'}} - {{item.expriedTo | date : 'dd/MM/yyyy'}}</span>
+                    </ion-text>
+                  </div>
+                </ion-card-content>
+              </div>
+            </ion-card>
+          </ng-container>
+        </ng-container>
+      </ion-content>
+      <ion-footer>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button class="w-100" (click)="cancelVoucher()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đóng
+            </ion-text>
+          </ion-button> 
+          <ion-button (click)="oncheckUseVoucher()" mode="ios" size="default" class="ion-btn-default w-100">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Áp dụng
+            </ion-text>
+          </ion-button> 
+        </div>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
+  <!-- Voucher -->
+
+  <!-- Check Use Voucher -->
+  
+  <ion-modal id="modal-dialog" style="--background:white !important"
+      (willDismiss)="cancelUseVoucher()" [isOpen]="isOpenUseVoucher">
+      <ng-template>
+        <div class="p-3 w-100 h-100">
+          <div class="w-100 mb-3">
+            <ion-text class="dynamic-font text-center text-dark">
+              <h3 class="mx-0 my-0 font-weight-bold">Thanh toán đơn hàng</h3>
+            </ion-text>
+          </div>
+          <div class="w-100 text-center">
+            <ion-text class="dynamic-font text-dark">
+              <span>Quý khách vẫn muốn thanh toán cho đơn hàng đã chọn khi không áp dụng Voucher không?</span>
+            </ion-text>
+          </div>
+          <div class="d-flex align-items-center justify-content-center mt-3">
+            <ion-button (click)="onPayment()" mode="ios" size="default" class="ion-btn-default pr-3">
+              <ion-text style="color: white !important;" class="dynamic-font">
+                Đồng ý
+              </ion-text>
+            </ion-button>
+            <ion-button (click)="cancelUseVoucher()" mode="ios" size="default" color="medium">
+              <ion-text style="color: white !important;" class="dynamic-font">
+                Hủy bỏ
+              </ion-text>
+            </ion-button>
+          </div>
+        </div>
+      </ng-template>
+    </ion-modal>
+  
+  <!--  Check Use Voucher -->
 </ion-content>
 <ion-footer *ngIf="!isHideFooter && (status == 0 || status == 1)" class="ion-no-border"
   style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">

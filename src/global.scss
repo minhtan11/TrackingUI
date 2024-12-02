@@ -193,6 +193,7 @@ ion-segment-button {
     height: 3rem !important;
 }
 
+
 // ion-segment-button#custom::part(indicator-background) {
 //     background: var(--ion-color-mat-primary)  !important;
 //   }
@@ -866,6 +867,12 @@ ion-fab {
   .border-gradient-1 .mdc-linear-progress__bar .mdc-linear-progress__bar-inner{
     border-image-source: linear-gradient(94deg, rgba(253, 226, 42, 1) 55%, rgba(255, 165, 0, 1) 80%, rgba(255, 165, 0, 1) 100%)  !important;
     border-image-slice: 1;
+  }
+
+  .checkbox-circle{
+    .mdc-checkbox__background{
+        border-radius: 50% !important;
+    }
   }
 
   @keyframes animation-line-horizontal {
