@@ -350,7 +350,7 @@ export class HomePageComponent{
   }
 
   showBanner(isPopup:any=true,time:any){
-    if (isPopup) {
+    if (isPopup && this.imgPopup) {
       setTimeout(() => {
         this.isPopup = true;
       }, time);
