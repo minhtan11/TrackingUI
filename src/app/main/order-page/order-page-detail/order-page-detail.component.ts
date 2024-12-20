@@ -155,7 +155,6 @@ export class OrderPageDetailComponent {
           this.lstPackage = data?.packs;
           this.lstLog = data?.logs;
           this.lstVoucher = data?.vouchers;
-          console.log(this.lstVoucher);
           if(this.lstPackage && this.lstPackage.length){
             this.oDataPackage = this.lstPackage[0];
           }
@@ -176,7 +175,11 @@ export class OrderPageDetailComponent {
   //#region Voucher
   onChooseVoucher(){
     this.cancelPayment();
-    this.openPopVoucher();
+    if(this.lstVoucher && this.lstVoucher?.length){
+      this.openPopVoucher();
+    }else{
+      this.onPayment(this.oData);
+    }
   }
 
   openPopVoucher(){

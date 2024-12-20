@@ -16,13 +16,23 @@
   </ion-toolbar>
   <ion-toolbar style="--background:white !important;">
     <ion-segment style="min-height: unset !important;height: 3rem !important;" mode="md" [scrollable]="true" [value]="status">
-      <ion-segment-button  (click)="sortData(0)" [value]="0">
+      <ion-segment-button  (click)="sortData(-1)" [value]="-1">
         <div class="d-flex align-items-center text-center">
           <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
             <h5 class="my-0 mx-0 font-weight-bold">Tất cả</h5>
           </ion-text>
           <ion-text *ngIf="total0 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
             <h5 class="my-0 mx-0">{{'('+(total0 | number)+')'}}</h5>
+          </ion-text>
+        </div>
+      </ion-segment-button>
+      <ion-segment-button  (click)=" sortData(0)" [value]="0">
+        <div class="d-flex align-items-center text-center">
+          <ion-text class="text-segment dynamic-font font-weight-bold pr-1">
+            <h5 class="my-0 mx-0 font-weight-bold">Đang làm hàng</h5>
+          </ion-text>
+          <ion-text *ngIf="total5 != undefined" style="color: orange !important;" class="text-segment dynamic-font">
+            <h5 class="my-0 mx-0">{{'('+(total5 | number)+')'}}</h5>
           </ion-text>
         </div>
       </ion-segment-button>
@@ -107,7 +117,7 @@
           <ion-card class="mx-1 my-1 mb-4 w-100"
             style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px !important;font-size: unset !important;">
             <div class="d-flex align-items-center justify-content-between w-100">
-              <div *ngIf="item?.status == 0 || item?.status == 1">
+              <div *ngIf="status == 1 && item?.status == 1">
                 <mat-checkbox [checked]="isCheckAll" color="warn" (change)="onSelected($event.checked,item)"></mat-checkbox>
               </div>
               <div class="w-100">
@@ -130,6 +140,10 @@
                 <ion-card-content class="p-3">
                   <div class="w-100" (click)="viewDetail(item)" >
                     <div class="d-flex align-items-center">
+                      <ng-container *ngIf="item.status == 0">
+                        <img  style="width: 4em;height: 4em;
+                        margin-right: 1rem;" src="../../../assets/image/waiting.png" alt="">
+                      </ng-container>
                       <ng-container *ngIf="item.status == 1">
                         <img  style="width: 4em;height: 4em;
                         margin-right: 1rem;" src="../../../assets/image/wait-order.png" alt="">
@@ -185,6 +199,11 @@
                       </div>
                       <div class="d-flex justify-content-end mb-2">
                         <ng-container [ngSwitch]="item.status">
+                          <ion-badge mode="md" *ngSwitchCase="0" color="medium">
+                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                              <span>Đang làm hàng</span>
+                            </ion-text>
+                          </ion-badge>
                           <ion-badge mode="md" *ngSwitchCase="1" color="warning">
                             <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                               <span>Chờ thanh toán</span>
@@ -406,7 +425,7 @@
   
   <!--  Check Use Voucher -->
 </ion-content>
-<ion-footer *ngIf="!isHideFooter && (status == 0 || status == 1)" class="ion-no-border"
+<ion-footer *ngIf="!isHideFooter && (status == 1)" class="ion-no-border"
   style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
   <ion-toolbar mode="ios" style="--background:white !important">
     <div class="row">

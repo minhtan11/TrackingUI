@@ -26,7 +26,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   fromDate:any = null;
   toDate:any = null;
   username:any;
-  status:any = 0;
+  status:any = -1;
   id:any='';
   lstData:any;
   lstVoucher:any;
@@ -49,6 +49,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
   total2:any;
   total3:any;
   total4:any;
+  total5:any;
   isSke:any=false;
   isHideFooter:any=false;
   isSearchFocus:any=false;
@@ -77,7 +78,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
             case 'change':
               let data = JSON.parse(this.rt.snapshot.queryParams['dataUpdate']);
               if (data) {
-                if (this.status == 0) {
+                if (this.status == -1) {
                   let index = this.lstData.findIndex((x: any) => x.id == data.id);
                   if (index > -1) {
                     this.lstData[index] = data;
@@ -257,6 +258,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
         this.total2 = lst.filter((x:any) => x.status == 2).length;
         this.total3 = lst.filter((x:any) => x.status == 3).length;
         this.total4 = lst.filter((x:any) => x.status == 9).length;
+        this.total5 = lst.filter((x:any) => x.status == 0).length;
       }
     })
   }
@@ -274,7 +276,6 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
       }else{
         let oData = res[1];
         this.lstVoucher = oData;
-        console.log(this.lstVoucher);
       }
     })
   }
@@ -388,7 +389,11 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
 
   onChooseVoucher(){
     this.cancelPayment();
-    this.openPopVoucher();
+    if(this.lstVoucher.length){
+      this.openPopVoucher();
+    }else{
+      this.onPayment();
+    }
   }
 
   onPayment(){
@@ -490,14 +495,16 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
 
   onSelectedAll(event:any){
     if (event) {
-      if (this.status == 0) {
-        let lst = this.lstData.filter((x:any) => x.status == 1);
-        this.arrOrderSelected = lst;
-        this.isCheckAll = event;
-      }
-      if(this.status == 1){
-        this.arrOrderSelected = this.lstData;
-      }
+      this.arrOrderSelected = [...this.lstData];
+      this.isCheckAll = event;
+      // if (this.status == 0) {
+      //   let lst = this.lstData.filter((x:any) => x.status == 1);
+      //   this.arrOrderSelected = lst;
+      //   this.isCheckAll = event;
+      // }
+      // if(this.status == 1){
+      //   this.arrOrderSelected = this.lstData;
+      // }
       this.totalAllOrder = this?.arrOrderSelected.reduce((sum:any, data:any) => sum + parseFloat(data?.totalPrice),0);
     }else{
       this.arrOrderSelected = [];
