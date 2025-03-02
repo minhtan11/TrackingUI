@@ -33,56 +33,63 @@
             </div>
           </ion-card-header>
           <ion-card-content>
-            <swiper-container [slidesPerView]="1" [slidesPerGroup]="1" [pagination]="true">
-              <swiper-slide *ngIf="!oDataStatus?.isError">
+            <swiper-container #swiperRef [slidesPerView]="1" [slidesPerGroup]="1" [pagination]="true">
+              <swiper-slide >
                 <ion-card mode="ios" style="--background:white !important;box-shadow: unset !important" class="m-1">
                   <ion-card-content class="p-0">
-                    <div style="margin-bottom: 2rem;" class="w-100">
-                      <div style="justify-content: space-between;" class="d-flex align-items-center mb-2">
+                    <ng-container *ngIf="!oDataStatus">
+                      <div style="height: calc(100vh - 490px) !important;margin-bottom: 2rem;" class="d-flex align-items-center justify-content-center">
+                        <ion-spinner style="color: var(--ion-color-mat-primary) !important;" mode="ios" name="crescent"></ion-spinner>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="oDataStatus && !oDataStatus?.isError">
+                      <div style="margin-bottom: 2rem;" class="w-100">
+                        <div style="justify-content: space-between;" class="d-flex align-items-center mb-2">
+                          <div>
+                            <ion-text class="dynamic-font font-weight-bold text-dark">
+                              Công ty vận chuyển
+                            </ion-text>
+                          </div>
+                          <div class="d-flex align-items-center">
+                            <ion-text *ngIf="oDataStatus?.data?.exname != null && oDataStatus?.data?.company != null" color="primary">
+                              <a [href]="oDataStatus?.data?.url">{{oDataStatus?.data?.exname +' ('+oDataStatus?.data?.company+')'}}</a>
+                            </ion-text>
+                          </div>
+                        </div>
+                        <div *ngIf="oDataStatus?.data?.ico" class="d-flex align-items-center justify-content-center mt-3 mb-3">
+                          <img style="width: 20%;" [src]="oDataStatus?.data?.ico" alt="">
+                        </div>
                         <div>
                           <ion-text class="dynamic-font font-weight-bold text-dark">
-                            Công ty vận chuyển
+                            Hành trình đơn hàng
                           </ion-text>
                         </div>
-                        <div class="d-flex align-items-center">
-                          <ion-text *ngIf="oDataStatus?.data?.exname != null && oDataStatus?.data?.company != null" color="primary">
-                            <a [href]="oDataStatus?.data?.url">{{oDataStatus?.data?.exname +' ('+oDataStatus?.data?.company+')'}}</a>
-                          </ion-text>
+                        <div *ngIf="oDataStatus?.data?.data" class="p-2 d-flex align-items-center justify-content-center mt-1" style="border: 1px solid #ececec;border-radius: 1em;">
+                          <ion-list lines="none" style="background-color:white !important;height: 300px !important;overflow: auto;">
+                            <ng-container *ngFor="let item of oDataStatus?.data?.data">
+                              <ion-item style="--background:white !important">
+                                <ion-icon style="color: var(--ion-color-mat-primary) !important" slot="start" name="checkmark-circle-outline"></ion-icon>
+                                <ion-text class="dynamic-font text-dark">
+                                  <span>{{item?.context}}</span>
+                                </ion-text>
+                              </ion-item>
+                              <ion-item style="--background:white !important">
+                                <ion-text class="dynamic-font" color="medium">
+                                  <span>Ngày: {{item?.time}}</span>
+                                </ion-text>
+                              </ion-item>
+                            </ng-container>
+                          </ion-list>
                         </div>
                       </div>
-                      <div *ngIf="oDataStatus?.data?.ico" class="d-flex align-items-center justify-content-center mt-3 mb-3">
-                        <img style="width: 20%;" [src]="oDataStatus?.data?.ico" alt="">
-                      </div>
-                      <div>
-                        <ion-text class="dynamic-font font-weight-bold text-dark">
-                          Hành trình đơn hàng
-                        </ion-text>
-                      </div>
-                      <div *ngIf="oDataStatus?.data?.data" class="p-2 d-flex align-items-center justify-content-center mt-1" style="border: 1px solid #ececec;border-radius: 1em;">
-                        <ion-list lines="none" style="background-color:white !important;height: 300px !important;overflow: auto;">
-                          <ng-container *ngFor="let item of oDataStatus?.data?.data">
-                            <ion-item style="--background:white !important">
-                              <ion-icon style="color: var(--ion-color-mat-primary) !important" slot="start" name="checkmark-circle-outline"></ion-icon>
-                              <ion-text class="dynamic-font text-dark">
-                                <span>{{item?.context}}</span>
-                              </ion-text>
-                            </ion-item>
-                            <ion-item style="--background:white !important">
-                              <ion-text class="dynamic-font" color="medium">
-                                <span>Ngày: {{item?.time}}</span>
-                              </ion-text>
-                            </ion-item>
-                          </ng-container>
-                        </ion-list>
-                      </div>
-                    </div>
+                    </ng-container>
                   </ion-card-content>
                 </ion-card>
               </swiper-slide>
               <swiper-slide>
                 <ion-card mode="ios" style="--background:white !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;" class="m-1">
                   <ion-card-content>
-                    <div style="margin-bottom: 5rem;" class="w-100 h-100">
+                    <div style="margin-bottom: 5.7rem;" class="w-100 h-100">
                       <div style="position: relative;margin-top: 5rem;" class="w-100 h-100">
                         <div style="border: 4px solid rgb(170, 170, 170);border-left: none;" class="w-100 h-100 pt-4 pb-4 pl-2 pr-2">
                           <!-- line so 1-->

@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
 import { Subject, takeUntil } from 'rxjs';
@@ -8,6 +8,7 @@ import { NotificationServiceComponent } from 'src/app/notification-service/notif
 import { PreviousRouterServiceService } from 'src/app/previous-router-service/previous-router-service.service';
 import { StorageService } from 'src/app/storage-service/storage.service';
 import Swal from 'sweetalert2'
+import Swiper from 'swiper';
 
 @Component({
   selector: 'app-detail',
@@ -15,6 +16,8 @@ import Swal from 'sweetalert2'
   styleUrls: ['./detail.component.scss'],
 })
 export class DetailComponent  implements OnInit {
+  @ViewChild('swiperRef') swiperRef: ElementRef | undefined;
+  swiper:Swiper;
   oData:any;
   oDataStatus:any;
   id:any;
@@ -109,7 +112,8 @@ export class DetailComponent  implements OnInit {
   }
 
   ionViewWillLeave(){
-    //this.onDestroy();
+    this.previousUrl = '';
+    this.onDestroy();
   }
 
   onback(){
@@ -130,6 +134,7 @@ export class DetailComponent  implements OnInit {
     }else{
       this.navCtrl.navigateBack(this.previousUrl);
     }
+    this.onDestroy();
   }
 
   onCopy(){
@@ -147,7 +152,10 @@ export class DetailComponent  implements OnInit {
     this.api.execByBody('Authencation', 'getonepackage', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
       if (res[0]) {
       } else {
-        if(res[1]) this.oData = res[1];
+        if(res[1]){
+          this.oData = res[1];
+          if(this.oData && this.oData?.status > 1) this.setSlide();
+        } 
       }
     })
   }
@@ -160,7 +168,7 @@ export class DetailComponent  implements OnInit {
     let messageBody = {
       dataRequest: JSON.stringify(data)
     };
-    this.api.execByBody('Authencation', 'checkstatus', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+    this.api.execByBody('Authencation', 'checkstatus', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       if (res[0]) {
         this.notification.showNotiError('', res[1].message);
       } else {
@@ -428,6 +436,16 @@ export class DetailComponent  implements OnInit {
   viewOrder(item:any){
     this.cancelPopViewOrder();
     this.navCtrl.navigateForward('main/order/detail',{queryParams:{recID:item.transID}});
+  }
+
+  setSlide(){
+    let interval = setInterval(() => {
+      this.swiper = this.swiperRef?.nativeElement?.swiper;
+      if(this.swiper){
+        clearInterval(interval);
+        this.swiper.slideTo(1);
+      } 
+    });
   }
   //#endregion
 }

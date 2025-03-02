@@ -161,6 +161,11 @@
                         margin-right: 1rem;" src="../../../assets/image/cancel-order.png" alt="">
                       </ng-container>
                       <div>
+                        <ion-text class="dynamic-font">
+                          <span class="font-weight-bold text-dark">Kiện hàng: </span>
+                          <span>{{item?.packages?.length}} kiện</span>
+                        </ion-text>
+                        <br>
                         <ion-text mode="ios" class="dynamic-font">
                           <span class="font-weight-bold text-dark"> Vận chuyển: </span>
                           <span>{{item.shippingMethodName}}</span>
@@ -169,11 +174,6 @@
                         <ion-text class="dynamic-font">
                           <span class="font-weight-bold text-dark">Ngày tạo: </span>
                           <span>{{item.createdDate | date : 'dd/MM/yyyy hh:mm a'}}</span>
-                        </ion-text>
-                        <br>
-                        <ion-text class="dynamic-font">
-                          <span class="font-weight-bold text-dark">Người tạo: </span>
-                          <span>{{item.lastName}}</span>
                         </ion-text>
                         <!-- <br>
                         <ion-text class="dynamic-font">

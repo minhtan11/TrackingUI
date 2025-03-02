@@ -50,7 +50,15 @@
                   </ion-text>
                 </div>
               </div>
-              <div *ngIf="item?.notifType == 1 && (item?.orderCode != '' && item?.orderCode != null)" class="w-100 d-flex align-items-center justify-content-center">
+              <div *ngIf="item?.notifType == 1 && (item?.orderCode != '' && item?.orderCode != null) && item?.url.includes('/ShippingOrder/')" class="w-100 d-flex align-items-center justify-content-center">
+                <ion-button (click)="goOrderDetail(item?.orderCode)" mode="ios" size="default" class="ion-btn-orange">
+                  <ion-text style="color: white !important;" class="dynamic-font">
+                    Chi tiết đơn hàng
+                  </ion-text>
+                  <ion-icon style="color: white !important;" slot="end" name="chevron-forward-outline"></ion-icon>
+                </ion-button>
+              </div>
+              <div *ngIf="item?.notifType == 1 && (item?.orderCode != '' && item?.orderCode != null) && item?.url.includes('/package/')" class="w-100 d-flex align-items-center justify-content-center">
                 <ion-button (click)="goPackageDetail(item?.orderCode)" mode="ios" size="default" class="ion-btn-orange">
                   <ion-text style="color: white !important;" class="dynamic-font">
                     Chi tiết kiện hàng

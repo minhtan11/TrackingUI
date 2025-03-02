@@ -230,8 +230,27 @@ export class NotificationPageComponent {
     this.cancelFilter();
   }
 
-  async goPackageDetail(orderCode:any){
+  goPackageDetail(orderCode:any){
     this.navCtrl.navigateForward('main/package/detail', { queryParams: { id: orderCode } });
+  }
+
+  async goOrderDetail(orderCode:any){
+    let data = {
+      orderCode: orderCode
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'getorderbycode', messageBody).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      }else{
+        let oData = res[1];
+        if(oData){
+          this.navCtrl.navigateForward('main/order/detail',{queryParams:{recID:oData?.recID}});
+        }
+      }
+    })
   }
 
   async goLink(link:any){
@@ -255,6 +274,7 @@ export class NotificationPageComponent {
 
   onback(){
     this.navCtrl.navigateBack(this.previousUrl);
+    this.onDestroy();
   }
   //#endregion
 }
