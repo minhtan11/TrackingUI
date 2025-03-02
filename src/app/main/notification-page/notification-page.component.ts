@@ -148,7 +148,6 @@ export class NotificationPageComponent {
         if (this.lstData.length == 0) this.isEmpty = true;
         if (this.lstData.length == oData[1]) this.isload = false;
         this.isSke = false;
-        console.log(this.lstData);
       }
       this.dt.detectChanges();
     })
