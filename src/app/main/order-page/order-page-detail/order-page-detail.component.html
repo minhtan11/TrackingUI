@@ -583,7 +583,7 @@
                         </span>
                       </ion-text>
                     </div>
-                    <div [style]="oDataPackage?.status > 1 ? 'width: 25px;height: 25px;' : ''" class="circle-timeline-1"><span [style]="oDataPackage?.status > 1 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">1</span></div>
+                    <div [style]="oDataPackage?.status >= 1 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oDataPackage?.status == 1 ? 'line-breath-1' : ''" class="circle-timeline-1"><span [style]="oDataPackage?.status >= 1 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">1</span></div>
                   </div>
                   <!-- arrow so 1-->
                   <div style="flex-direction: column;
@@ -615,7 +615,7 @@
                       </ion-text>
                     </div>
                     <div class="d-flex align-items-center justify-content-end">
-                      <div [style]="oDataPackage?.status > 2 ? 'width: 25px;height: 25px;' : ''" class="circle-timeline-2"><span [style]="oDataPackage?.status > 2 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">2</span></div>
+                      <div [style]="oDataPackage?.status >= 2 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oDataPackage?.status == 2 ? 'line-breath-2' : ''" class="circle-timeline-2"><span [style]="oDataPackage?.status >= 2 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">2</span></div>
                     </div>
                   </div>
                   <!-- arrow so 2-->
@@ -636,7 +636,7 @@
                                   bottom: -3rem;" class="d-flex">
                     <div style="flex-direction: column;text-align: end;" class="d-flex">
                       <div class="d-flex align-items-center justify-content-end">
-                        <div [style]="oDataPackage?.status > 3 ? 'width: 25px;height: 25px;' : ''" class="circle-timeline-3"><span [style]="oDataPackage?.status > 3 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">3</span></div>
+                        <div [style]="oDataPackage?.status >= 3 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oDataPackage?.status == 3 ? 'line-breath-3' : ''" class="circle-timeline-3"><span [style]="oDataPackage?.status >= 3 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">3</span></div>
                       </div>
                       <span class="font-weight-bold" style="font-size: 0.7rem;">
                         Đang trên đường về HCM
@@ -668,7 +668,7 @@
                                   position: absolute;
                                   bottom: -3rem;" class="d-flex">
                     <div style="flex-direction: column;width: 150px;text-align: center;" class="d-flex">
-                      <div [style]="oDataPackage?.status > 4 ? 'width: 25px;height: 25px;' : ''" style="z-index: 1000;" class="circle-timeline-4"><span [style]="oDataPackage?.status > 4 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">4</span></div>
+                      <div [style]="oDataPackage?.status >= 4 ? 'width: 25px;height: 25px;' : ''" style="z-index: 1000;" [ngClass]="oDataPackage?.status == 4 ? 'line-breath-4' : ''" class="circle-timeline-4"><span [style]="oDataPackage?.status >= 4 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">4</span></div>
                       <span class="font-weight-bold" style="font-size: 0.7rem;">
                         Hàng bị HQ kiểm
                       </span>
@@ -724,7 +724,7 @@
                                   position: absolute;
                                   bottom: -3rem;" class="d-flex">
                     <div style="flex-direction: column;" class="d-flex">
-                      <div [style]="oDataPackage?.status > 5 ? 'width: 25px;height: 25px;' : ''" class="circle-timeline-5"><span [style]="oDataPackage?.status > 5 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">5</span></div>
+                      <div [style]="oDataPackage?.status >= 5 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oDataPackage?.status == 5 ? 'line-breath-5' : ''" class="circle-timeline-5"><span [style]="oDataPackage?.status >= 5 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">5</span></div>
                       <span class="font-weight-bold" style="font-size: 0.7rem;">
                         Đã thông quan
                       </span>
@@ -753,7 +753,7 @@
                                   position: absolute;
                                   bottom: -3rem;" class="d-flex">
                     <div style="flex-direction: column;" class="d-flex">
-                      <div [style]="oDataPackage?.status > 6 ? 'width: 25px;height: 25px;' : ''" class="circle-timeline-6"><span [style]="oDataPackage?.status > 6 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">6</span></div>
+                      <div [style]="oDataPackage?.status >= 6 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oDataPackage?.status == 6 ? 'line-breath-6' : ''" class="circle-timeline-6"><span [style]="oDataPackage?.status >= 6 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">6</span></div>
                       <span class="font-weight-bold" style="font-size: 0.7rem;">
                         Đã về kho HCM
                       </span>
@@ -778,26 +778,26 @@
                     <i *ngIf="oDataPackage?.status > 6" class="bi bi-send-fill icon-line-6"></i>
                   </div>
                   <div style="flex-direction: column;
-                                  right: 0rem;
-                                  position: absolute;
-                                  bottom: -3rem;" class="d-flex">
-                    <div style="flex-direction: column;text-align: end;" class="d-flex">
-                      <div class="d-flex align-items-center justify-content-end">
-                        <div [style]="oDataPackage?.status > 6 ? 'width: 25px;height: 25px;' : ''" class="circle-timeline-7"><span [style]="oDataPackage?.status > 6 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">7</span></div>
-                      </div>
-                      <span class="font-weight-bold" style="font-size: 0.7rem;">
-                        Đã nhận hàng
-                      </span>
-                      <ion-text color="medium" class="dynamic-font">
-                        <span *ngIf="oData.receivedDate != null" style="font-size: 0.7rem;">
-                          {{oDataPackage?.receivedDate | formatdate : 'dd/MM/yyyy hh:mm a'}}
-                        </span>
-                        <span *ngIf="(oDataPackage.receivedDate == null || oDataPackage.receivedDate == '')" style="font-size: 0.7rem;">
-                          (chưa có)
-                        </span>
-                      </ion-text>
-                    </div>
-                  </div>
+                                          right: 0rem;
+                                          position: absolute;
+                                          bottom: -3rem;" class="d-flex">
+                            <div style="flex-direction: column;text-align: end;" class="d-flex">
+                              <div class="d-flex align-items-center justify-content-end">
+                                <div [style]="oDataPackage?.status > 6 ? 'width: 25px;height: 25px;' : ''" class="circle-timeline-7"><span [style]="oDataPackage?.status > 6 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">7</span></div>
+                              </div>
+                              <span class="font-weight-bold" style="font-size: 0.7rem;">
+                                Đã nhận hàng
+                              </span>
+                              <ion-text color="medium" class="dynamic-font">
+                                <span *ngIf="oDataPackage.receivedDate != null" style="font-size: 0.7rem;">
+                                  {{oDataPackage?.receivedDate | formatdate : 'dd/MM/yyyy hh:mm a'}}
+                                </span>
+                                <span *ngIf="(oDataPackage.receivedDate == null || oDataPackage.receivedDate == '')" style="font-size: 0.7rem;">
+                                  (chưa có)
+                                </span>
+                              </ion-text>
+                            </div>
+                          </div>
                   <ion-text class="dynamic-font" style="font-size: 0.7rem;">
                     <span>{{content3}}</span>
                   </ion-text>

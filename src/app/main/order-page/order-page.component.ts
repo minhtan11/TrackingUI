@@ -68,7 +68,6 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
     private platform: Platform,
     private router: Router,
     private formBuilder: FormBuilder,
-    private previous:PreviousRouterServiceService
   ) { 
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {        

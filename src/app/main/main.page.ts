@@ -272,7 +272,7 @@ export class MainPage implements OnInit {
       if (res[0]) {
       } else {
         let lst = res[1];
-        this.totalPackage = lst.filter((x:any) => x.status == 4).length;
+        this.totalPackage = lst.filter((x:any) => x.status == 6).length;
         this.dt.detectChanges();
       }
     })

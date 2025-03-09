@@ -124,7 +124,7 @@
                                 </span>
                               </ion-text>
                             </div>
-                            <div [style]="oData?.status > 1 ? 'width: 25px;height: 25px;' : ''" class="circle-timeline-1"><span [style]="oData?.status > 1 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">1</span></div>
+                            <div [style]="oData?.status >= 1 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oData?.status == 1 ? 'line-breath-1' : ''" class="circle-timeline-1 "><span [style]="oData?.status >= 1 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">1</span></div>
                           </div>
                           <!-- arrow so 1-->
                           <div style="flex-direction: column;
@@ -156,7 +156,7 @@
                               </ion-text>
                             </div>
                             <div class="d-flex align-items-center justify-content-end">
-                              <div [style]="oData?.status > 2 ? 'width: 25px;height: 25px;' : ''" class="circle-timeline-2"><span [style]="oData?.status > 2 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">2</span></div>
+                              <div [style]="oData?.status >= 2 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oData?.status == 2 ? 'line-breath-2' : ''" class="circle-timeline-2"><span [style]="oData?.status >= 2 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">2</span></div>
                             </div>
                           </div>
                           <!-- arrow so 2-->
@@ -177,7 +177,7 @@
                                           bottom: -3rem;" class="d-flex">
                             <div style="flex-direction: column;text-align: end;" class="d-flex">
                               <div class="d-flex align-items-center justify-content-end">
-                                <div [style]="oData?.status > 3 ? 'width: 25px;height: 25px;' : ''" class="circle-timeline-3"><span [style]="oData?.status > 3 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">3</span></div>
+                                <div [style]="oData?.status >= 3 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oData?.status == 3 ? 'line-breath-3' : ''" class="circle-timeline-3"><span [style]="oData?.status >= 3 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">3</span></div>
                               </div>
                               <span class="font-weight-bold" style="font-size: 0.7rem;">
                                 Đang trên đường về HCM
@@ -209,7 +209,7 @@
                                           position: absolute;
                                           bottom: -3rem;" class="d-flex">
                             <div style="flex-direction: column;width: 150px;text-align: center;" class="d-flex">
-                              <div [style]="oData?.status > 4 ? 'width: 25px;height: 25px;' : ''" style="z-index: 1000;" class="circle-timeline-4"><span [style]="oData?.status > 4 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">4</span></div>
+                              <div [style]="oData?.status >= 4 ? 'width: 25px;height: 25px;' : ''" style="z-index: 1000;" [ngClass]="oData?.status == 4 ? 'line-breath-4' : ''" class="circle-timeline-4"><span [style]="oData?.status >= 4 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">4</span></div>
                               <span class="font-weight-bold" style="font-size: 0.7rem;">
                                 Hàng bị HQ kiểm
                               </span>
@@ -265,7 +265,7 @@
                                           position: absolute;
                                           bottom: -3rem;" class="d-flex">
                             <div style="flex-direction: column;" class="d-flex">
-                              <div [style]="oData?.status > 5 ? 'width: 25px;height: 25px;' : ''" class="circle-timeline-5"><span [style]="oData?.status > 5 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">5</span></div>
+                              <div [style]="oData?.status >= 5 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oData?.status == 5 ? 'line-breath-5' : ''" class="circle-timeline-5"><span [style]="oData?.status >= 5 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">5</span></div>
                               <span class="font-weight-bold" style="font-size: 0.7rem;">
                                 Đã thông quan
                               </span>
@@ -294,7 +294,7 @@
                                           position: absolute;
                                           bottom: -3rem;" class="d-flex">
                             <div style="flex-direction: column;" class="d-flex">
-                              <div [style]="oData?.status > 6 ? 'width: 25px;height: 25px;' : ''" class="circle-timeline-6"><span [style]="oData?.status > 6 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">6</span></div>
+                              <div [style]="oData?.status >= 6 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oData?.status == 6 ? 'line-breath-6' : ''" class="circle-timeline-6"><span [style]="oData?.status >= 6 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">6</span></div>
                               <span class="font-weight-bold" style="font-size: 0.7rem;">
                                 Đã về kho HCM
                               </span>
@@ -570,7 +570,7 @@
               </ion-grid>
             </div>
             <div class="w-100 pt-3 d-flex align-items-center scroll-hidden overflow-auto">
-              <ion-button [style]="(oData?.transID == '' || oData?.transID == null) ? 'margin-left: auto;margin-right: auto !important' : 'margin-left: auto;'" (click)="openPopPackage(oData)" mode="ios" size="default" class="ion-btn-default">
+              <ion-button [style]="((oData?.transID == '' || oData?.transID == null) && oData?.status >= 2 && oData?.status != 9) ? 'margin-left: auto;margin-right: auto !important' : 'margin-left: auto;'" (click)="openPopPackage(oData)" mode="ios" size="default" class="ion-btn-default">
                 <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
                 <ion-text style="color: white !important;" class="dynamic-font">
                   Nhập mô tả
@@ -1006,3 +1006,22 @@
   </ion-modal>
   <!-- ViewOrder -->
 </ion-content>
+<ion-footer *ngIf="oData?.status == 1" class="ion-no-border"
+  style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+  <ion-toolbar mode="ios" style="--background:white !important">
+    <div class="w-100 d-flex align-items-center justify-content-center">
+      <ion-button *ngIf="oData && oData?.autoQuery" (click)="changeAutoQuery(false)" mode="ios" size="default" class="ion-btn-orange">
+        <ion-icon style="color: white !important;" slot="start" name="checkbox-outline"></ion-icon>
+        <ion-text style="color: white !important;" class="dynamic-font">
+          Hủy đăng ký gửi thông báo các trạng thái kiện hàng
+        </ion-text>
+      </ion-button>
+      <ion-button *ngIf="oData && !oData?.autoQuery" (click)="changeAutoQuery(true)" mode="ios" size="default" color="medium">
+        <ion-icon style="color: white !important;" slot="start" name="square-outline"></ion-icon>
+        <ion-text style="color: white !important;" class="dynamic-font">
+          Đăng ký gửi thông báo các trạng thái kiện hàng
+        </ion-text>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

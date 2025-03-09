@@ -429,7 +429,7 @@
                 </div>
               </div>
               <div class="w-100 pt-3 d-flex align-items-center scroll-hidden overflow-auto">
-                <ion-button [style]="(item?.transID == '' || item?.transID == null) ? 'margin-left: auto;margin-right: auto !important' : 'margin-left: auto;'" (click)="openPopPackage(item)" mode="ios"
+                <ion-button [style]="((item?.transID == '' || item?.transID == null) && item?.status >= 2 && item?.status != 9) ? 'margin-left: auto;margin-right: auto !important' : 'margin-left: auto;'" (click)="openPopPackage(item)" mode="ios"
                   size="default" class="ion-btn-default">
                   <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
                   <ion-text style="color: white !important;" class="dynamic-font">

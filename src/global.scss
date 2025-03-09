@@ -479,14 +479,14 @@ ion-fab {
 .ion-badge-noti{
     border-radius: 50px;
     position: absolute;
-    top: 0.2rem;
-    right: 1rem;
+    top: 0;
+    right: 0.6rem;
     color: #fff;
     background-color: orange;
-    width: 1.3rem;
-    height: 1.3rem;
+    width: 1.6rem;
+    height: 1.6rem;
     text-align: center;
-    font-size: 0.8rem !important;
+    font-size: 0.7rem !important;
 }
 
 .animation-bell{
@@ -612,6 +612,37 @@ ion-fab {
     align-items: center;
     justify-content: center;
     color: white;
+    position: relative;
+  }
+  .line-breath-1::before {
+      animation: line-breath-1 2.5s infinite ease-in-out;
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 25px;
+      height: 25px;
+      background-color: #309bd9;
+      border-radius: 50%;
+      z-index: 0;
+  }
+  .circle-timeline-1 span {
+    position: relative;
+    z-index: 1; /* Để trên nền */
+  }
+  @keyframes line-breath-1{
+    0% {
+        box-shadow: 0 0 #309bd9;
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 0 5px #326e5100;
+        transform: scale(1.5);
+    }
+    100% {
+        box-shadow: 0 0 #326e5100;
+        transform: scale(1);
+    }
   }
 
   .circle-timeline-2{
@@ -624,6 +655,36 @@ ion-fab {
     justify-content: center;
     color: white;
   }
+  .line-breath-2::before {
+      animation: line-breath-2 2.5s infinite ease-in-out;
+      content: "";
+      position: absolute;
+      top: 2.4rem;
+      right: 0rem;
+      width: 25px;
+      height: 25px;
+      background-color: #ffbd59;
+      border-radius: 50%;
+      z-index: 0;
+  }
+  .circle-timeline-2 span {
+    position: relative;
+    z-index: 1; /* Để trên nền */
+  }
+  @keyframes line-breath-2{
+    0% {
+        box-shadow: 0 0 #ffbd59;
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 0 5px #326e5100;
+        transform: scale(1.5);
+    }
+    100% {
+        box-shadow: 0 0 #326e5100;
+        transform: scale(1);
+    }
+  }
 
   .circle-timeline-3{
     width: 20px;
@@ -634,6 +695,36 @@ ion-fab {
     align-items: center;
     justify-content: center;
     color: white;
+  }
+  .line-breath-3::before {
+      animation: line-breath-3 2.5s infinite ease-in-out;
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 25px;
+      height: 25px;
+      background-color: #f790cf;
+      border-radius: 50%;
+      z-index: 0;
+  }
+  .circle-timeline-3 span {
+    position: relative;
+    z-index: 1; /* Để trên nền */
+  }
+  @keyframes line-breath-3{
+    0% {
+        box-shadow: 0 0 #f790cf;
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 0 5px #326e5100;
+        transform: scale(1.5);
+    }
+    100% {
+        box-shadow: 0 0 #326e5100;
+        transform: scale(1);
+    }
   }
 
   .circle-timeline-4{
@@ -646,6 +737,36 @@ ion-fab {
     justify-content: center;
     color: white;
   }
+  .line-breath-4::before {
+      animation: line-breath-4 2.5s infinite ease-in-out;
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 25px;
+      height: 25px;
+      background-color: #ff3131;
+      border-radius: 50%;
+      z-index: 0;
+  }
+  .circle-timeline-4 span {
+    position: relative;
+    z-index: 1; /* Để trên nền */
+  }
+  @keyframes line-breath-4{
+    0% {
+        box-shadow: 0 0 #ff3131;
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 0 5px #326e5100;
+        transform: scale(1.5);
+    }
+    100% {
+        box-shadow: 0 0 #326e5100;
+        transform: scale(1);
+    }
+  }
 
   .circle-timeline-5{
     width: 20px;
@@ -657,6 +778,36 @@ ion-fab {
     justify-content: center;
     color: white;
   }
+  .line-breath-5::before {
+      animation: line-breath-5 2.5s infinite ease-in-out;
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 25px;
+      height: 25px;
+      background-color: #ff3131;
+      border-radius: 50%;
+      z-index: 0;
+  }
+  .circle-timeline-5 span {
+    position: relative;
+    z-index: 1; /* Để trên nền */
+  }
+  @keyframes line-breath-5{
+    0% {
+        box-shadow: 0 0 #ff3131;
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 0 5px #326e5100;
+        transform: scale(1.5);
+    }
+    100% {
+        box-shadow: 0 0 #326e5100;
+        transform: scale(1);
+    }
+  }
 
   .circle-timeline-6{
     width: 20px;
@@ -667,6 +818,36 @@ ion-fab {
     align-items: center;
     justify-content: center;
     color: white;
+  }
+  .line-breath-6::before {
+      animation: line-breath-6 2.5s infinite ease-in-out;
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 25px;
+      height: 25px;
+      background-color: #8fd1f7;
+      border-radius: 50%;
+      z-index: 0;
+  }
+  .circle-timeline-6 span {
+    position: relative;
+    z-index: 1; /* Để trên nền */
+  }
+  @keyframes line-breath-6{
+    0% {
+        box-shadow: 0 0 #8fd1f7;
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 0 5px #326e5100;
+        transform: scale(1.5);
+    }
+    100% {
+        box-shadow: 0 0 #326e5100;
+        transform: scale(1);
+    }
   }
 
   .circle-timeline-7{

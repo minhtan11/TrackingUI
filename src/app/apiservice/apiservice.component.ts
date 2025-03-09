@@ -65,7 +65,7 @@ export class ApiserviceComponent implements OnInit {
   //#region Function
   execByBody(controller: any, router: any, data: any,showLoading:any = false) {
     if(showLoading) this.isLoad(true);
-    return this.http.post(environment.apiUrl + controller + '/' + router, data).pipe(catchError(this.handleError), takeUntil(this.destroy$),switchMap((response)=>{
+    return this.http.post(environment.apiUrl + controller + '/' + router, data).pipe(catchError(this.handleError),switchMap((response)=>{
       if(showLoading) this.isLoad(false);
       return of(response);
     }))

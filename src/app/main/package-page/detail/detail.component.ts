@@ -447,5 +447,27 @@ export class DetailComponent  implements OnInit {
       } 
     });
   }
+
+  changeAutoQuery(check:any){
+    let data = {
+      id: this.oData.id,
+      check: check
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'changeautoquery', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      } else {
+        if (res[1].isError) {
+          this.notification.showNotiError('', res[1].message);
+        }else{
+          this.notification.showNotiSuccess('', res[1].message);
+          this.oData.autoQuery = check;
+        }
+      }
+    })
+  }
   //#endregion
 }
