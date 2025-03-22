@@ -975,11 +975,17 @@
 <ion-footer *ngIf="oData?.status == 1" class="ion-no-border"
   style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
   <ion-toolbar mode="ios" style="--background:white !important">
-    <div class="w-100 d-flex align-items-center justify-content-center">
+    <div class="w-100 d-flex align-items-center justify-content-center flex-column">
       <ion-button (click)="openPayment(oData)" mode="ios" size="default" class="ion-btn-default w-100">
         <i style="font-size: 1.5rem;" class="bi bi-shield-fill-check mr-2"></i>
         <ion-text style="color: white !important;" class="dynamic-font font-weight-bold">
           {{'Thanh toán'+':'+' '+(oData.totalPrice | number)+'đ'}}
+        </ion-text>
+      </ion-button>
+      <ion-button (click)="goRechargePage()" mode="ios" size="default" class="ion-btn-orange w-100">
+        <i style="font-size: 1.5rem;" class="bi bi-wallet2 mr-2"></i>
+        <ion-text style="color: white !important;" class="dynamic-font font-weight-bold">
+          Nạp tiền
         </ion-text>
       </ion-button>
     </div>

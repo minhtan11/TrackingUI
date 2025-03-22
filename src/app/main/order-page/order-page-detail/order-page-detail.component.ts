@@ -172,6 +172,10 @@ export class OrderPageDetailComponent {
     this.navCtrl.navigateForward('main/package/detail', { queryParams: { id: item.packageCode } });
   }
 
+  goRechargePage(){
+    this.navCtrl.navigateForward('main/recharge');
+  }
+
   //#region Voucher
   onChooseVoucher(){
     this.cancelPayment();
