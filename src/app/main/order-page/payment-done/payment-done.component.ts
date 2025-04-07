@@ -22,16 +22,23 @@ export class PaymentDoneComponent  implements OnInit {
   }
 
   async openGrab(){
-    let url = this.platform === 'android' ? 'com.grabtaxi.passenger' : 'grab://';
-    const { value } = await AppLauncher.canOpenUrl({ url: url });
-    if(value){
-      await AppLauncher.openUrl({ url: url });
-    }else{
-      this.notification.showNotiSuccess('','ko co app');
-      if(this.platform === 'android')
-        await Browser.open({ url: 'https://play.google.com/store/apps/details?id=com.grabtaxi.passenger&hl=vi' });
-      else
-        await Browser.open({ url: 'https://apps.apple.com/vn/app/grab-đặt-xe-giao-đồ-ăn/id647268330?l=vi' });
+    switch(this.platform){
+      case 'android':
+        let url = 'com.grabtaxi.passenger'
+        const { value } = await AppLauncher.canOpenUrl({ url: url });
+        if (value) {
+          await AppLauncher.openUrl({ url: url });
+        } else {
+          await Browser.open({
+            url: 'https://play.google.com/store/apps/details?id=com.grabtaxi.passenger&hl=vi',
+          });
+        }
+        break;
+      case 'ios':
+        await Browser.open({
+          url: 'https://grab.onelink.me/2695613898?af_banner=true&pid=organic_web&c=organic_web&af_adset=grab_website&af_ad=vn&af_channel=smart_banner_pax&af_sub1=open_app&is_retargeting=true&af_dp=grab%3A%2F%2Fopen%3FscreenType%3DMAIN&af_force_deeplink=true&af_sub5=organic',
+        });
+        break;
     }
   }
 
