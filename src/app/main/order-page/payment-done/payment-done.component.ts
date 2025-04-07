@@ -35,9 +35,10 @@ export class PaymentDoneComponent  implements OnInit {
         }
         break;
       case 'ios':
-        await Browser.open({
-          url: 'https://grab.onelink.me/2695613898?af_banner=true&pid=organic_web&c=organic_web&af_adset=grab_website&af_ad=vn&af_channel=smart_banner_pax&af_sub1=open_app&is_retargeting=true&af_dp=grab%3A%2F%2Fopen%3FscreenType%3DMAIN&af_force_deeplink=true&af_sub5=organic',
-        });
+        window.open('https://grab.onelink.me/2695613898?af_banner=true&pid=organic_web&c=organic_web&af_adset=grab_website&af_ad=vn&af_channel=smart_banner_pax&af_sub1=open_app&is_retargeting=true&af_dp=grab%3A%2F%2Fopen%3FscreenType%3DMAIN&af_force_deeplink=true&af_sub5=organic', '_system');
+        // await Browser.open({
+        //   url: 'https://grab.onelink.me/2695613898?af_banner=true&pid=organic_web&c=organic_web&af_adset=grab_website&af_ad=vn&af_channel=smart_banner_pax&af_sub1=open_app&is_retargeting=true&af_dp=grab%3A%2F%2Fopen%3FscreenType%3DMAIN&af_force_deeplink=true&af_sub5=organic',
+        // });
         break;
     }
   }
