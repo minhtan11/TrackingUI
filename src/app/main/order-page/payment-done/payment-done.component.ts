@@ -27,10 +27,11 @@ export class PaymentDoneComponent  implements OnInit {
     if(value){
       await AppLauncher.openUrl({ url: url });
     }else{
+      this.notification.showNotiSuccess('','ko co app');
       if(this.platform === 'android')
         await Browser.open({ url: 'https://play.google.com/store/apps/details?id=com.grabtaxi.passenger&hl=vi' });
       else
-        await Browser.open({ url: 'https://apps.apple.com/vn/app/grab-%C4%91%E1%BA%B7t-xe-giao-%C4%91%E1%BB%93-%C4%83n/id647268330?l=vi' });
+        await Browser.open({ url: 'https://apps.apple.com/vn/app/grab-đặt-xe-giao-đồ-ăn/id647268330?l=vi' });
     }
   }
 
