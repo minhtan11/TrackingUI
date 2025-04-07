@@ -64,6 +64,10 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>grab://</string>
+	</array>
 	<true/>
 </dict>
 </plist>

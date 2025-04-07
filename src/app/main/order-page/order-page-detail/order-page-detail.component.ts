@@ -31,6 +31,7 @@ export class OrderPageDetailComponent {
   content3:any='';
   isOpenVoucher:any = false;
   isOpenUseVoucher:any = false;
+  isOpenWeightChange:any = false;
   private destroy$ = new Subject<void>();
   constructor(
     private navCtrl: NavController,
@@ -102,27 +103,29 @@ export class OrderPageDetailComponent {
   onPayment(item:any){
     this.cancelUseVoucher();
     this.cancelVoucher();
-    let voucherID = '';
-    if(this.voucherSelected) voucherID = this.voucherSelected?.voucherID;
-    let data = {
-      id: item.id,
-      userName: this.username,
-      voucherID:voucherID
-    }
-    let messageBody = {
-      dataRequest: JSON.stringify(data)
-    };
-    this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
-      if (res && !res.isError) {
-        this.notification.showNotiSuccess('',(res.message+'Vui lòng liên hệ CSKH để nhận hàng!'));
-        this.oData = res?.data;
-        this.isChange = true;
-        InAppReview.requestReview();
-      }else{
-        this.notification.showNotiError('',res.message);
-      }
-      this.onDestroy();
-    })
+    this.navCtrl.navigateForward('main/order/paymentdone');
+    // let voucherID = '';
+    // if(this.voucherSelected) voucherID = this.voucherSelected?.voucherID;
+    // let data = {
+    //   id: item.id,
+    //   userName: this.username,
+    //   voucherID:voucherID
+    // }
+    // let messageBody = {
+    //   dataRequest: JSON.stringify(data)
+    // };
+    // this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+    //   if (res && !res.isError) {
+    //     this.notification.showNotiSuccess('',(res.message+'Vui lòng liên hệ CSKH để nhận hàng!'));
+    //     this.oData = res?.data;
+    //     this.isChange = true;
+    //     //InAppReview.requestReview();
+    //     this.navCtrl.navigateForward('main/order/paymentdone');
+    //   }else{
+    //     this.notification.showNotiError('',res.message);
+    //   }
+    //   this.onDestroy();
+    // })
   }
 
   onback(){
@@ -222,4 +225,16 @@ export class OrderPageDetailComponent {
     this.dt.detectChanges();
   }
   //#endregion
+
+  //#region WeightChange
+  openWeightChange(event:any){
+    event.stopPropagation();
+    this.isOpenWeightChange = true;
+  }
+
+  cancelWeightChange(){
+    this.isOpenWeightChange = false;
+    this.dt.detectChanges();
+  }
+  //#endregion WeightChange
 }

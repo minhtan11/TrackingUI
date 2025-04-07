@@ -22,6 +22,7 @@ import { ReportPageComponent } from './setting-page/report-page/report-page.comp
 import { RelulationPageComponent } from './relulation-page/relulation-page.component';
 import { FaqPageComponent } from './setting-page/faq-page/faq-page.component';
 import { ExchangePageComponent } from './setting-page/exchange-page/exchange-page.component';
+import { PaymentDoneComponent } from './order-page/payment-done/payment-done.component';
 
 const routes: Routes = [
   {
@@ -82,6 +83,10 @@ const routes: Routes = [
   {
     path: 'order/detail',
     component: OrderPageDetailComponent,
+  },
+  {
+    path: 'order/paymentdone',
+    component: PaymentDoneComponent,
   },
   {
     path: 'recharge',

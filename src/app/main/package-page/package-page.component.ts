@@ -737,5 +737,30 @@ export class PackagePageComponent implements OnInit, AfterViewInit {
     this.cancelPopViewOrder();
     this.navCtrl.navigateForward('main/order/detail',{queryParams:{recID:item.transID}});
   }
+
+  changeAutoQuery(item: any,check:any){
+    this.itemSelected = { ...item };
+    let data = {
+      id: this.itemSelected.id,
+      check: check
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'changeautoquery', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      if (res[0]) {
+        this.notification.showNotiError('', res[1].message);
+      } else {
+        if (res[1].isError) {
+          this.notification.showNotiError('', res[1].message);
+        }else{
+          this.notification.showNotiSuccess('', res[1].message);
+          let index = this.lstData.findIndex((x:any) => x.id == this.itemSelected?.id);
+          if(index > -1) this.lstData[index].autoQuery = check;
+          this.dt.detectChanges();
+        }
+      }
+    })
+  }
   //#endregion
 }

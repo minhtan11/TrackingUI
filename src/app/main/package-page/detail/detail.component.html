@@ -570,28 +570,14 @@
               </ion-grid>
             </div>
             <div class="w-100 pt-3 d-flex align-items-center scroll-hidden overflow-auto">
-              <ion-button [style]="((oData?.transID == '' || oData?.transID == null) && oData?.status >= 2 && oData?.status != 9) ? 'margin-left: auto;margin-right: auto !important' : 'margin-left: auto;'" (click)="openPopPackage(oData)" mode="ios" size="default" class="ion-btn-default">
+              <ion-button [style]="((oData?.transID == '' || oData?.transID == null) && oData?.status >= 2 && oData?.status != 9) ? 'margin-left: auto;' : 'margin-left: auto;'" (click)="openPopPackage(oData)" mode="ios" size="default" class="ion-btn-default">
                 <ion-icon style="color: white !important;" slot="start" name="create-outline"></ion-icon>
                 <ion-text style="color: white !important;" class="dynamic-font">
                   Nhập mô tả
                 </ion-text>
               </ion-button>
-              <!-- <div [style]="(oData?.status != 9 && (oData?.transID == '' || oData?.transID == null)) ? 'margin-right: auto !important' : ''" class="d-flex align-items-center">
-                <ion-button (click)="checkFirst(oData)" mode="ios" size="default" class="ion-btn-orange">
-                  <ion-icon style="color: white !important;" slot="start" name="checkmark-circle-outline"></ion-icon>
-                  <ion-text style="color: white !important;" class="dynamic-font">
-                    Kiểm tra hàng
-                  </ion-text>
-                </ion-button>
-                <div (click)="openPopDescrip()" style="background-color: grey !important;border-radius: 50px;margin-top: -3rem;
-                                  left: 2rem;
-                                  margin-left: -1rem;
-                                  z-index: 1000;" class="d-flex align-items-center justify-content-center">
-                  <ion-icon style="font-size: 1.5rem;" class="text-white" name="information-circle-outline"></ion-icon>
-                </div>
-              </div> -->
               <ng-container *ngIf="(oData?.transID != '' && oData?.transID != null)">
-                <ion-button [style]="(oData?.transID != '' && oData?.transID != null) ? 'margin-right: auto !important' : ''" (click)="openPopViewOrder(oData)" mode="ios" size="default" class="ion-btn-light-primary">
+                <ion-button (click)="openPopViewOrder(oData)" mode="ios" size="default" class="ion-btn-light-primary">
                   <ion-icon style="color: white !important;" slot="start" name="eye-outline"></ion-icon>
                   <ion-text style="color: white !important;" class="dynamic-font">
                     Xem đơn hàng
@@ -599,13 +585,7 @@
                 </ion-button>
               </ng-container>
               <ng-container *ngIf="oData?.status < 2">
-                <!-- <ion-button (click)="openPopCancelPackage(oData)" mode="ios" size="default" color="medium">
-                  <ion-icon style="color: white !important;" slot="start" name="stop-circle-outline"></ion-icon>
-                  <ion-text style="color: white !important;" class="dynamic-font">
-                    Hủy đơn
-                  </ion-text>
-                </ion-button> -->
-                <ion-button style="margin-right: auto;" (click)="openPopDeletePackage(oData)" mode="ios" size="default" color="medium">
+                <ion-button (click)="openPopDeletePackage(oData)" mode="ios" size="default" color="medium">
                   <ion-icon style="color: white !important;" slot="start" name="trash-outline"></ion-icon>
                   <ion-text style="color: white !important;" class="dynamic-font">
                     Xóa đơn
@@ -617,6 +597,22 @@
                   <ion-icon style="color: white !important;" slot="start" name="sync-circle-outline"></ion-icon>
                   <ion-text style="color: white !important;" class="dynamic-font">
                     Khôi phục
+                  </ion-text>
+                </ion-button>
+              </ng-container>
+              <ng-container *ngIf="oData?.autoQuery">
+                <ion-button (click)="changeAutoQuery(false)" mode="ios" size="default" class="ion-btn-orange">
+                  <ion-icon style="color: white !important;" slot="start" name="checkbox-outline"></ion-icon>
+                  <ion-text style="color: white !important;" class="dynamic-font">
+                    Hủy đăng ký gửi thông báo các trạng thái kiện hàng
+                  </ion-text>
+                </ion-button>
+              </ng-container>
+              <ng-container *ngIf="!oData?.autoQuery">
+                <ion-button *ngIf="oData && !oData?.autoQuery" (click)="changeAutoQuery(true)" mode="ios" size="default" color="medium">
+                  <ion-icon style="color: white !important;" slot="start" name="square-outline"></ion-icon>
+                  <ion-text style="color: white !important;" class="dynamic-font">
+                    Đăng ký gửi thông báo các trạng thái kiện hàng
                   </ion-text>
                 </ion-button>
               </ng-container>
@@ -1006,7 +1002,7 @@
   </ion-modal>
   <!-- ViewOrder -->
 </ion-content>
-<ion-footer *ngIf="oData?.status == 1" class="ion-no-border"
+<!-- <ion-footer *ngIf="oData?.status == 1" class="ion-no-border"
   style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
   <ion-toolbar mode="ios" style="--background:white !important">
     <div class="w-100 d-flex align-items-center justify-content-center">
@@ -1024,4 +1020,4 @@
       </ion-button>
     </div>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

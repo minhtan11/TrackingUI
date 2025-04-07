@@ -56,6 +56,15 @@
                             </ion-text>
                           </div>
                           <div class="d-flex align-items-center">
+                            <ng-container *ngIf="item?.isWoodPackage">
+                              <img class="m-1" style="width: 15px" src="../../../../assets/image/package.svg" alt="">
+                            </ng-container>
+                            <ng-container *ngIf="item?.isAirPackage">
+                              <img class="m-1" style="width: 15px" src="../../../../assets/image/shock.svg" alt="">
+                            </ng-container>
+                            <ng-container *ngIf="item.isInsurance">
+                              <img class="m-1" style="width: 15px" src="../../../../assets/image/insurane.svg" alt="">
+                            </ng-container>
                             <ion-text class="dynamic-font pr-2">
                               {{item.packageCode}}
                             </ion-text>
@@ -92,7 +101,7 @@
                             <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                               <div>
                                 <ion-text class="dynamic-font text-dark font-weight-bold">
-                                  Cân nặng
+                                  Trọng lượng thật
                                 </ion-text>
                               </div>
                               <div class="d-flex align-items-center">
@@ -102,19 +111,49 @@
                               </div>
                             </div> 
                           </ng-container>
-                          <ng-container *ngIf="(item.weightExchange | tranformDouble) > 0">
+                          <ng-container *ngIf="(item?.width | tranformDouble) > 0 && (item.height | tranformDouble) > 0 && (item.length | tranformDouble) > 0">
                             <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                               <div>
                                 <ion-text class="dynamic-font text-dark font-weight-bold">
-                                  Đo lên
+                                  Trọng lượng quy đổi
                                 </ion-text>
+                                <ion-icon (click)="openWeightChange($event)" name="information-circle-outline"></ion-icon>
                               </div>
                               <div class="d-flex align-items-center">
                                 <ion-text class="dynamic-font">
                                   {{'('+ (item.length | number)+'x'+ (item.width | number) + 'x' + (item.height | number) +')'}}
-                                  &nbsp;
                                   {{(item.weightExchange | number) +'kg'}}
                                 </ion-text>
+                              </div>
+                            </div> 
+                          </ng-container>
+                          <ng-container *ngIf="(item.woodPackagePrice | tranformDouble) > 0 || (item.airPackagePrice | tranformDouble) > 0">
+                            <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                              <div>
+                                <ion-text class="dynamic-font text-dark font-weight-bold">
+                                  Đóng gỗ/Túi khí
+                                </ion-text>
+                                <ion-icon class="text-white" name="information-circle-outline"></ion-icon>
+                              </div>
+                              <div class="d-flex align-items-center">
+                                <ion-text class="dynamic-font">
+                                  {{((item.woodPackagePrice != null && item.woodPackagePrice != '' ? item.woodPackagePrice : 0 ) | number)}}
+                                  /
+                                  {{((item.airPackagePrice != null && item.airPackagePrice != '' ? item.airPackagePrice : 0 ) | number)}}
+                                </ion-text>
+                              </div>
+                            </div> 
+                          </ng-container>
+                          <ng-container *ngIf="item.isBrand">
+                            <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                              <div>
+                                <ion-text class="dynamic-font text-dark font-weight-bold">
+                                  Hàng hiệu
+                                </ion-text>
+                                <ion-icon class="text-white" name="information-circle-outline"></ion-icon>
+                              </div>
+                              <div class="d-flex align-items-center">
+                                <i class="bi bi-check2-circle"></i>
                               </div>
                             </div> 
                           </ng-container>
@@ -971,6 +1010,66 @@
     </ion-modal>
   
   <!--  Check Use Voucher -->
+
+  <!-- rule-->
+  <ion-modal id="modal-dialog" style="--background:white !important" (willDismiss)="cancelWeightChange()" [isOpen]="isOpenWeightChange">
+    <ng-template>
+      <div class="p-3 w-100 h-100">
+        <div class="w-100 mb-3">
+          <ion-text class="dynamic-font text-center text-dark">
+            <h3 class="mx-0 my-0 font-weight-bold">Quy đổi</h3>
+          </ion-text>
+        </div>
+        <div class="w-100">
+          <ion-text class="dynamic-font text-orange font-weight-bold">
+            <span>Tuyến bộ:</span>
+          </ion-text>
+          <br>
+          <div class="w-100 text-center ">
+            <div class="d-flex align-items-center justify-content-center flex-column">
+              <ion-text class="dynamic-font text-dark">
+                <span>( Dài x Rộng x Cao )</span>
+              </ion-text>
+              <hr style="margin: 5px;
+              height: 1px;
+              width: 50%;
+              background-color: black;">
+              <ion-text class="dynamic-font text-dark">
+                <span>6000</span>
+              </ion-text>
+            </div>
+          </div>
+          <br>
+          <ion-text class="dynamic-font text-orange font-weight-bold">
+            <span>Tuyến nhanh - thường:</span>
+          </ion-text>
+          <br>
+          <div class="w-100 text-center ">
+            <div class="d-flex align-items-center justify-content-center flex-column">
+              <ion-text class="dynamic-font text-dark">
+                <span>( Dài x Rộng x Cao ) / 6000 + trọng lượng thực</span>
+              </ion-text>
+              <hr style="margin: 5px;
+              height: 1px;
+              width: 50%;
+              background-color: black;">
+              <ion-text class="dynamic-font text-dark">
+                <span>2</span>
+              </ion-text>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-3">
+          <ion-button (click)="cancelWeightChange()" mode="ios" size="default" color="medium">
+            <ion-text style="color: white !important;" class="dynamic-font">
+              Đóng
+            </ion-text>
+          </ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!-- rule -->
 </ion-content>
 <ion-footer *ngIf="oData?.status == 1" class="ion-no-border"
   style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
