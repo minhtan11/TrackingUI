@@ -15,10 +15,12 @@
     </div>
   </div>
   <div class="mt-3 p-3" style="background-color: white;">
-    <div class="w-100 mb-3">
+    <div class="w-100 mb-2 text-center ">
       <ion-text class="dynamic-font text-dark text-center">
         <h3 class="mx-0 my-0 font-weight-bold">Bạn Muốn Lấy Hàng?</h3>
       </ion-text>
+    </div>
+    <div class="w-100 mb-3 text-center ">
       <ion-text class="dynamic-font text-center text-dark">
         <span>Nếu bạn muốn lấy hàng,hãy chọn một trong những ứng dụng sau nhé!</span>
       </ion-text>
@@ -38,4 +40,79 @@
       <img (click)="openJT()" style="width: 4rem;height:4rem;border-radius: 10px;" src="../../../../assets/image/jt.webp" alt="">
     </div>
   </div>
+  <div class="mt-3 p-3" style="background-color: white;">
+    <div class="w-100 mb-3">
+      <ion-text class="dynamic-font text-dark text-center">
+        <h3 class="mx-0 my-0 font-weight-bold">Thông tin lấy hàng</h3>
+      </ion-text>
+    </div>
+    <div class="w-100 mb-2 d-flex align-items-center justify-content-between">
+      <div>
+        <ion-text class="dynamic-font text-center text-dark font-weight-bold">
+          <span>Địa chỉ:</span>
+        </ion-text>
+      </div>
+      <div class="d-flex align-items-center">
+        <ion-text class="dynamic-font pr-2">
+          Nhận Ship Hàng
+        </ion-text>
+        <ion-icon [cdkCopyToClipboard]="'Nhận Ship Hàng'" (click)="onCopy()" style="font-size: 2rem;" name="copy-outline"></ion-icon>
+      </div>
+    </div>
+    <div class="w-100 mb-2 d-flex align-items-center justify-content-between">
+      <div>
+        <ion-text class="dynamic-font text-center text-dark font-weight-bold">
+          <span>Ghi chú:</span>
+        </ion-text>
+      </div>
+      <div class="d-flex align-items-center">
+        <ion-text class="dynamic-font pr-2">
+          66/19/8/1 Trần Văn Quang P.10,Q.Tân Bình 
+        </ion-text>
+        <ion-icon [cdkCopyToClipboard]="'66/19/8/1 Trần Văn Quang P.10,Q.Tân Bình'" (click)="onCopy()" style="font-size: 2rem;" name="copy-outline"></ion-icon>
+      </div>
+    </div>
+    <div class="w-100 mb-2 d-flex align-items-center justify-content-between">
+      <div>
+        <ion-text class="dynamic-font text-center text-dark font-weight-bold">
+          <span>Tên người liên lạc:</span>
+        </ion-text>
+      </div>
+      <div class="d-flex align-items-center">
+        <ion-text class="dynamic-font pr-2">
+          Nhận Ship Hàng
+        </ion-text>
+        <ion-icon [cdkCopyToClipboard]="'Nhận Ship Hàng'" (click)="onCopy()" style="font-size: 2rem;" name="copy-outline"></ion-icon>
+      </div>
+    </div>
+    <div class="w-100 d-flex align-items-center justify-content-between">
+      <div>
+        <ion-text class="dynamic-font text-center text-dark font-weight-bold">
+          <span>Số điện thoại:</span>
+        </ion-text>
+      </div>
+      <div class="d-flex align-items-center">
+        <ion-text class="dynamic-font pr-2">
+          0982128029
+        </ion-text>
+        <ion-icon [cdkCopyToClipboard]="'0982128029'" (click)="onCopy()" style="font-size: 2rem;" name="copy-outline"></ion-icon>
+      </div>
+    </div>
+  </div>
+  <div class="mt-3 d-flex align-items-center justify-content-center">
+    <img style="width: 15em;height: 15em;
+                                margin-right: 1rem;" src="../../../assets/image/icon-order.png" alt="">
+  </div>
 </ion-content>
+<ion-footer class="ion-no-border"
+  style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+  <ion-toolbar mode="ios" style="--background:white !important">
+    <div class="w-100 d-flex align-items-center justify-content-center flex-column">
+      <ion-button (click)="onback()" mode="ios" size="default" class="ion-btn-default w-100">
+        <ion-text style="color: white !important;" class="dynamic-font font-weight-bold">
+          Quay về màn hình chính
+        </ion-text>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

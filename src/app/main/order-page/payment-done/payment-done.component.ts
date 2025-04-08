@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { AppLauncher } from '@capacitor/app-launcher';
 import { NotificationServiceComponent } from 'src/app/notification-service/notification-service.component';
 import { Browser } from '@capacitor/browser';
 import { Capacitor } from '@capacitor/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment-done',
@@ -15,10 +16,22 @@ export class PaymentDoneComponent  implements OnInit {
   constructor(
     private navCtrl: NavController,
     private notification: NotificationServiceComponent,
+    private router:Router,
+    private platforms : Platform,
   ) { }
 
   async ngOnInit() {
     this.platform = await Capacitor.getPlatform();
+  }
+
+  ngAfterViewInit() {
+    this.platforms.backButton.subscribeWithPriority(0, (processNextHandler) => {
+      if((this.router.url.includes('main/order/detail'))){
+        this.onback();
+        return;
+      }
+      processNextHandler();
+    })
   }
 
   async openGrab(){
@@ -244,4 +257,13 @@ export class PaymentDoneComponent  implements OnInit {
         break;
     }
   }
+
+  onCopy(){
+    this.notification.showNotiSuccess('','Đã Sao chép',1000);
+  }
+
+  onback(){
+    this.navCtrl.navigateForward('main/mainpage');
+  }
 }
+

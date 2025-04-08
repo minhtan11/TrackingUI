@@ -103,29 +103,28 @@ export class OrderPageDetailComponent {
   onPayment(item:any){
     this.cancelUseVoucher();
     this.cancelVoucher();
-    this.navCtrl.navigateForward('main/order/paymentdone');
-    // let voucherID = '';
-    // if(this.voucherSelected) voucherID = this.voucherSelected?.voucherID;
-    // let data = {
-    //   id: item.id,
-    //   userName: this.username,
-    //   voucherID:voucherID
-    // }
-    // let messageBody = {
-    //   dataRequest: JSON.stringify(data)
-    // };
-    // this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
-    //   if (res && !res.isError) {
-    //     this.notification.showNotiSuccess('',(res.message+'Vui lòng liên hệ CSKH để nhận hàng!'));
-    //     this.oData = res?.data;
-    //     this.isChange = true;
-    //     //InAppReview.requestReview();
-    //     this.navCtrl.navigateForward('main/order/paymentdone');
-    //   }else{
-    //     this.notification.showNotiError('',res.message);
-    //   }
-    //   this.onDestroy();
-    // })
+    let voucherID = '';
+    if(this.voucherSelected) voucherID = this.voucherSelected?.voucherID;
+    let data = {
+      id: item.id,
+      userName: this.username,
+      voucherID:voucherID
+    }
+    let messageBody = {
+      dataRequest: JSON.stringify(data)
+    };
+    this.api.execByBody('Authencation', 'payment', messageBody,true).pipe(takeUntil(this.destroy$)).subscribe((res:any)=>{
+      if (res && !res.isError) {
+        //this.notification.showNotiSuccess('',(res.message+'Vui lòng liên hệ CSKH để nhận hàng!'));
+        this.oData = res?.data;
+        this.isChange = true;
+        InAppReview.requestReview();
+        this.navCtrl.navigateForward('main/order/paymentdone');
+      }else{
+        this.notification.showNotiError('',res.message);
+      }
+      this.onDestroy();
+    })
   }
 
   onback(){
