@@ -437,6 +437,7 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
           this.getTotal();
         }
         InAppReview.requestReview();
+        this.navCtrl.navigateForward('main/order/paymentdone');
       }else{
         this.notification.showNotiError('',res.message);
       }

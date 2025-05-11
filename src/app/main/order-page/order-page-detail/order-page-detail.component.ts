@@ -160,6 +160,7 @@ export class OrderPageDetailComponent {
           if(this.lstPackage && this.lstPackage.length){
             this.oDataPackage = this.lstPackage[0];
           }
+          console.log(res[1]?.data);
         }
       }
       this.onDestroy();
