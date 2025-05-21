@@ -8,7 +8,7 @@ export const environment = {
   //apiUrl:'https://192.168.2.13:45455/api/',
   //apiUrl:'https://192.168.2.8:45455/api/',
   apiUrl:'https://tracking.nhanshiphang.vn/api/',
-  version:'3.9'
+  version:'4.0'
 };
 
 /*
