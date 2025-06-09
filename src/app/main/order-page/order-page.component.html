@@ -228,6 +228,18 @@
                       </div>
                     </div>
                   </div>
+                  <div class="w-100">
+                    <div class="d-flex justify-content-center">
+                      <div style="overflow-x: auto;gap: 0.5rem" class="d-flex hidden-scrollbar">
+                        <ion-button *ngIf="item.status == 2" (click)="delivery()" mode="ios" size="default" class="ion-btn-default">
+                          <ion-icon style="color: white !important;" slot="start" name="receipt-outline"></ion-icon>
+                          <ion-text style="color: white !important;" class="dynamic-font">
+                            Đặt hàng
+                          </ion-text>
+                        </ion-button>
+                      </div>
+                    </div>
+                  </div>
                   <!-- <div *ngIf="item.status == 1" class="d-flex align-items-center justify-content-between text-center pt-3">
                     <ion-button (click)="openPayment(item)" mode="ios" size="default" class="ion-btn-default">
                       <ion-icon style="color: white !important;" slot="start" name="wallet-outline"></ion-icon>

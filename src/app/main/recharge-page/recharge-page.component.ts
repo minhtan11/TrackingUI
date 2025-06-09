@@ -33,8 +33,8 @@ export class RechargePageComponent  implements OnInit {
 
   async ionViewWillEnter(){
     let username = await this.storage.get('username');
-    this.qr1 = `https://img.vietqr.io/image/mb-52888168888-print.jpg?addInfo=NAP ${username}&accountName=NGUYEN THI MY NGA`;
-    this.qr2 = `https://img.vietqr.io/image/acb-33738077-print.jpg?addInfo=NAP ${username}&accountName=LE TRI DUNG`;
+    this.qr1 = `https://img.vietqr.io/image/mb-52888168888-print.jpg?addInfo=${username} CK&accountName=NGUYEN THI MY NGA`;
+    this.qr2 = `https://img.vietqr.io/image/acb-33738077-print.jpg?addInfo=${username} CK&accountName=LE TRI DUNG`;
 
     if (!this.previousUrl) {
       let url = this.previous.getPreviousUrl();

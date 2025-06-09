@@ -1145,3 +1145,7 @@ ion-fab {
         height: 0%;
       }
   }
+
+  .hidden-scrollbar::-webkit-scrollbar {
+      display: none;
+  }

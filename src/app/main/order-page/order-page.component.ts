@@ -443,6 +443,10 @@ export class OrderPageComponent  implements OnInit,AfterViewInit {
       }
     })
   }
+
+  delivery(){
+    this.navCtrl.navigateForward('main/order/paymentdone');
+  }
   //#endregion
 
   //#region FilterPackage

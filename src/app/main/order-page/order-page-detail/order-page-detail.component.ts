@@ -101,6 +101,7 @@ export class OrderPageDetailComponent {
   }
 
   onPayment(item:any){
+    //this.navCtrl.navigateForward('main/order/paymentdone');
     this.cancelUseVoucher();
     this.cancelVoucher();
     let voucherID = '';
