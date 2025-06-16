@@ -290,7 +290,7 @@ export class MainPage implements OnInit {
       if (res[0]) {
       } else {
         let lst = res[1];
-        this.totalOrder = lst.filter((x:any) => x.status == 1).length;
+        this.totalOrder = lst?.filter((x:any) => x.status == 1)?.length;
         this.dt.detectChanges();
       }
     })
