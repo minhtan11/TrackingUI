@@ -399,6 +399,11 @@
                         <span>Đang về HCM</span>
                       </ion-text>
                     </ion-badge>
+                    <ion-badge mode="md" *ngSwitchCase="8" color="secondary">
+                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                        <span>Đang về HCM</span>
+                      </ion-text>
+                    </ion-badge>
                     <ion-badge mode="md" *ngSwitchCase="4" style="--background	: black !important;">
                       <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                         <span>Hàng bị kiểm tra</span>
@@ -440,7 +445,7 @@
                     Nhập mô tả
                   </ion-text>
                 </ion-button>
-                <ng-container *ngIf="(item?.transID != '' && item?.transID != null)">
+                <ng-container *ngIf="(item?.transID != '' && item?.transID != null && (item?.status == 6 || item?.status == 7))">
                   <ion-button (click)="openPopViewOrder(item)" mode="ios" size="default" class="ion-btn-light-primary">
                     <ion-icon style="color: white !important;" slot="start" name="eye-outline"></ion-icon>
                     <ion-text style="color: white !important;" class="dynamic-font">
