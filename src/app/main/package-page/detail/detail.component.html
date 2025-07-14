@@ -581,7 +581,7 @@
                   Nhập mô tả
                 </ion-text>
               </ion-button>
-              <ng-container *ngIf="(oData?.transID != '' && oData?.transID != null)">
+              <ng-container *ngIf="(oData?.transID != '' && oData?.transID != null && (oData?.status == 6 || oData?.status == 7))">
                 <ion-button (click)="openPopViewOrder(oData)" mode="ios" size="default" class="ion-btn-light-primary">
                   <ion-icon style="color: white !important;" slot="start" name="eye-outline"></ion-icon>
                   <ion-text style="color: white !important;" class="dynamic-font">
