@@ -361,17 +361,39 @@
                     </ion-text>
                     <br>
                     <ion-text>
-                      <span class="dynamic-font text-dark font-weight-bold">Dịch vụ phụ: </span>
-                      <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
+                      <div class="d-flex align-items-center" style="gap: 3px;">
+                        <span class="dynamic-font text-dark font-weight-bold">Dịch vụ phụ: </span>
+                        <div class="d-flex align-items-center" style="gap: 3px;">
+                          <ng-container *ngIf="item.isWoodPackage">
+                            <img style="width: 20px" src="../../../assets/image/1.svg" alt="">
+                          </ng-container>
+                          <ng-container *ngIf="item.isAirPackage">
+                            <img style="width: 20px" src="../../../assets/image/2.svg" alt="">
+                          </ng-container>
+                          <ng-container *ngIf="item.isInsurance">
+                            <span>Bảo hiểm</span>
+                          </ng-container>
+                          <ng-container *ngIf="item.isBrand">
+                            <img style="width: 20px" src="../../../assets/image/3.svg" alt="">
+                          </ng-container>
+                          <ng-container *ngIf="(item.surCharge | tranformDouble) > 0">
+                            <img style="width: 20px" src="../../../assets/image/4.svg" alt="">
+                          </ng-container>
+                          <ng-container *ngIf="(item.moreCharge | tranformDouble) > 0">
+                            <img style="width: 20px" src="../../../assets/image/7.svg" alt="">
+                          </ng-container>
+                          <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isInsurance && (item.surCharge | tranformDouble) == 0 && (item.moreCharge | tranformDouble) == 0">Không có</span>
+                        </div>
+                      </div>
+                      <!-- <span *ngIf="item.isWoodPackage">Đóng gỗ</span>
                       <span *ngIf="item.isWoodPackage && item.isAirPackage">,</span>
                       <span *ngIf="item.isAirPackage">Bọt khí</span>
-                      <!-- <span *ngIf="(item.isWoodPackage || item.isAirPackage) && item.isInsurance">,</span>
-                      <span *ngIf="item.isInsurance">Bảo hiểm</span> -->
+                      <span *ngIf="(item.isWoodPackage || item.isAirPackage) && item.isInsurance">,</span>
+                      <span *ngIf="item.isInsurance">Bảo hiểm</span>
                       <span *ngIf="(item.isWoodPackage || item.isAirPackage) && item.isBrand">,</span>
                       <span *ngIf="item.isBrand">Hàng hiệu</span>
-                      <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isBrand">Không có</span>
+                      <span *ngIf="!item.isWoodPackage && !item.isAirPackage && !item.isBrand">Không có</span> -->
                     </ion-text>
-                    <br>
                     <ng-container *ngIf="item?.note">
                       <ion-text class="dynamic-font text-dark font-weight-bold">
                         <span>Mô tả: </span>
@@ -383,59 +405,62 @@
                   </div>
                 </div>
                 <div class="d-flex justify-content-end mt-2 mb-2">
-                  <ng-container [ngSwitch]="item.status">
-                    <ion-badge mode="md" *ngSwitchDefault color="medium">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Chưa xác nhận</span>
-                      </ion-text>
-                    </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="2" color="tertiary">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Hàng về kho TQ</span>
-                      </ion-text>
-                    </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="3" color="secondary">
+                  <ng-container *ngIf="item?.subStatus == 1;else statusDefault">
+                    <ion-badge mode="md" color="secondary">
                       <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                         <span>Đang về HCM</span>
-                      </ion-text>
-                    </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="8" color="secondary">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Đang về HCM</span>
-                      </ion-text>
-                    </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="4" style="--background	: black !important;">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Hàng bị kiểm tra</span>
-                      </ion-text>
-                    </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="5" style="--background	: orange !important;">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Đã thông quan</span>
-                      </ion-text>
-                    </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="6" color="primary">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Hàng về tới HCM</span>
-                      </ion-text>
-                    </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="7"
-                      style="--background	: var(--ion-color-mat-primary) !important;">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Đã nhận hàng</span>
-                      </ion-text>
-                    </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="9" color="dark">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Đã hủy</span>
-                      </ion-text>
-                    </ion-badge>
-                    <ion-badge mode="md" *ngSwitchCase="11" color="dark">
-                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                        <span>Không nhận được hàng</span>
                       </ion-text>
                     </ion-badge>
                   </ng-container>
+                  <ng-template #statusDefault>
+                    <ng-container [ngSwitch]="item.status">
+                      <ion-badge mode="md" *ngSwitchDefault color="medium">
+                        <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                          <span>Chưa xác nhận</span>
+                        </ion-text>
+                      </ion-badge>
+                      <ion-badge mode="md" *ngSwitchCase="2" color="tertiary">
+                        <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                          <span>Hàng về kho TQ</span>
+                        </ion-text>
+                      </ion-badge>
+                      <ion-badge mode="md" *ngSwitchCase="3" color="secondary">
+                        <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                          <span>Đang về HCM</span>
+                        </ion-text>
+                      </ion-badge>
+                      <ion-badge mode="md" *ngSwitchCase="4" style="--background	: black !important;">
+                        <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                          <span>Hàng bị kiểm tra</span>
+                        </ion-text>
+                      </ion-badge>
+                      <ion-badge mode="md" *ngSwitchCase="5" style="--background	: orange !important;">
+                        <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                          <span>Đã thông quan</span>
+                        </ion-text>
+                      </ion-badge>
+                      <ion-badge mode="md" *ngSwitchCase="6" color="primary">
+                        <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                          <span>Hàng về tới HCM</span>
+                        </ion-text>
+                      </ion-badge>
+                      <ion-badge mode="md" *ngSwitchCase="7" style="--background	: var(--ion-color-mat-primary) !important;">
+                        <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                          <span>Đã nhận hàng</span>
+                        </ion-text>
+                      </ion-badge>
+                      <ion-badge mode="md" *ngSwitchCase="9" color="dark">
+                        <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                          <span>Đã hủy</span>
+                        </ion-text>
+                      </ion-badge>
+                      <ion-badge mode="md" *ngSwitchCase="11" color="dark">
+                        <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                          <span>Không nhận được hàng</span>
+                        </ion-text>
+                      </ion-badge>
+                    </ng-container>
+                  </ng-template>
                 </div>
               </div>
               <div class="w-100 pt-3 d-flex align-items-center scroll-hidden overflow-auto">

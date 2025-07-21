@@ -99,7 +99,11 @@ export class DetailComponent  implements OnInit {
       let url = this.previous.getPreviousUrl();
       if (url) {
         let array = url.split('?');
-        this.previousUrl = array[0];
+        if(array[0].includes('/main/order/detail')){
+          this.previousUrl = url;
+        }else{
+          this.previousUrl = array[0];
+        }
       }
     } 
     let content = await this.storage.get('infoContent');

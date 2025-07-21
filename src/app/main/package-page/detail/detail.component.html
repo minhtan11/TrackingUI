@@ -103,8 +103,8 @@
                           <!-- line so 2-->
         
                           <!-- line so 3-->
-                          <div *ngIf="oData?.status == 3" class="h-100 border-gradient-3-indeterminate"></div>
-                          <div *ngIf="oData?.status > 3" class="h-100 border-gradient-3-active"></div>
+                          <div *ngIf="oData?.status == 3 && oData?.subStatus != 1" class="h-100 border-gradient-3-indeterminate"></div>
+                          <div *ngIf="oData?.status > 3 && oData?.subStatus != 1" class="h-100 border-gradient-3-active"></div>
                           <!-- line so 3-->
         
                           <div style="flex-direction: column;
@@ -177,10 +177,10 @@
                                           bottom: -3rem;" class="d-flex">
                             <div style="flex-direction: column;text-align: end;" class="d-flex">
                               <div class="d-flex align-items-center justify-content-end">
-                                <div [style]="oData?.status >= 3 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oData?.status == 3 ? 'line-breath-3' : ''" class="circle-timeline-3"><span [style]="oData?.status >= 3 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">3</span></div>
+                                <div [style]="oData?.status >= 3 && oData?.subStatus != 1 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oData?.status == 3 && oData?.subStatus != 1 ? 'line-breath-3' : ''" class="circle-timeline-3"><span [style]="oData?.status >= 3 && oData?.subStatus != 1 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">3</span></div>
                               </div>
                               <span class="font-weight-bold" style="font-size: 0.7rem;">
-                                Đang trên đường về HCM
+                                Đang chờ thông quan
                               </span>
                               <ion-text color="medium" class="dynamic-font">
                                 <span *ngIf="oData?.dateExpectation != null" style="font-size: 0.7rem;">
@@ -200,8 +200,8 @@
                                           font-size: 1.2rem;
                                           transform: rotate(225deg);
                                           z-index: 1000;" class="d-flex">
-                            <i style="color: rgb(170, 170, 170);" *ngIf="oData?.status == 3" class="bi bi-send-fill"></i>
-                            <i *ngIf="oData?.status > 3" class="bi bi-send-fill icon-line-3"></i>
+                            <i style="color: rgb(170, 170, 170);" *ngIf="oData?.status == 3 && oData?.subStatus != 1" class="bi bi-send-fill"></i>
+                            <i *ngIf="oData?.status > 3 && oData?.subStatus != 1" class="bi bi-send-fill icon-line-3"></i>
                           </div>
                           <!-- arrow so 3-->
                           <div style="flex-direction: column;
@@ -209,7 +209,7 @@
                                           position: absolute;
                                           bottom: -3rem;" class="d-flex">
                             <div style="flex-direction: column;width: 150px;text-align: center;" class="d-flex">
-                              <div [style]="oData?.status >= 4 ? 'width: 25px;height: 25px;' : ''" style="z-index: 1000;" [ngClass]="oData?.status == 4 ? 'line-breath-4' : ''" class="circle-timeline-4"><span [style]="oData?.status >= 4 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">4</span></div>
+                              <div [style]="oData?.status >= 4 && oData?.subStatus != 1 ? 'width: 25px;height: 25px;' : ''" style="z-index: 1000;" [ngClass]="oData?.status == 4 && oData?.subStatus != 1 ? 'line-breath-4' : ''" class="circle-timeline-4"><span [style]="oData?.status >= 4 && oData?.subStatus != 1 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">4</span></div>
                               <span class="font-weight-bold" style="font-size: 0.7rem;">
                                 Hàng bị HQ kiểm
                               </span>
@@ -232,8 +232,8 @@
                                           font-size: 1.2rem;
                                           z-index: 1000;
                                           " class="d-flex">
-                            <i style="color: rgb(170, 170, 170);" *ngIf="oData?.status == 4" class="bi bi-send-fill"></i>
-                            <i *ngIf="oData?.status > 4" class="bi bi-send-fill icon-line-4"></i>
+                            <i style="color: rgb(170, 170, 170);" *ngIf="oData?.status == 4 && oData?.subStatus != 1" class="bi bi-send-fill"></i>
+                            <i *ngIf="oData?.status > 4 && oData?.subStatus != 1" class="bi bi-send-fill icon-line-4"></i>
                           </div>
                           <!-- arrow so 4-->
                           <ion-text class="dynamic-font" style="font-size: 0.7rem;">
@@ -246,18 +246,18 @@
                       <div style="position: relative;" class="w-100 h-100">
                         <div style="border: 4px solid rgb(170, 170, 170);border-right: none;border-top: none;padding-top: 4rem;" class="w-100 h-100 pb-4 pl-2 pr-2">
                           <!-- line so 4-->
-                          <div *ngIf="oData?.status == 4" class="w-100 border-gradient-4-indeterminate"></div>
-                          <div *ngIf="oData?.status > 4" class="w-100 border-gradient-4-active"></div>
+                          <div *ngIf="oData?.status == 4 && oData?.subStatus != 1" class="w-100 border-gradient-4-indeterminate"></div>
+                          <div *ngIf="oData?.status > 4 && oData?.subStatus != 1" class="w-100 border-gradient-4-active"></div>
                           <!-- line so 4-->
         
                           <!-- line so 5-->
-                          <div *ngIf="oData?.status == 5" class="h-100 border-gradient-5-indeterminate"></div>
-                          <div *ngIf="oData?.status > 5" class="h-100 border-gradient-5-active"></div>
+                          <div *ngIf="oData?.status == 5 && oData?.subStatus != 1" class="h-100 border-gradient-5-indeterminate"></div>
+                          <div *ngIf="oData?.status > 5 && oData?.subStatus != 1" class="h-100 border-gradient-5-active"></div>
                           <!-- line so 5-->
                            
                           <!-- line so 6-->
-                          <div *ngIf="oData?.status == 6" class="h-100 border-gradient-6-indeterminate"></div>
-                          <div *ngIf="oData?.status > 6" class="h-100 border-gradient-6-active"></div>
+                          <div *ngIf="oData?.status == 6 && oData?.subStatus != 1" class="h-100 border-gradient-6-indeterminate"></div>
+                          <div *ngIf="oData?.status > 6 && oData?.subStatus != 1" class="h-100 border-gradient-6-active"></div>
                           <!-- line so 6-->
         
                           <div style="flex-direction: column;
@@ -265,7 +265,7 @@
                                           position: absolute;
                                           bottom: -3rem;" class="d-flex">
                             <div style="flex-direction: column;" class="d-flex">
-                              <div [style]="oData?.status >= 5 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oData?.status == 5 ? 'line-breath-5' : ''" class="circle-timeline-5"><span [style]="oData?.status >= 5 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">5</span></div>
+                              <div [style]="oData?.status >= 5 && oData?.subStatus != 1 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oData?.status == 5 && oData?.subStatus != 1 ? 'line-breath-5' : ''" class="circle-timeline-5"><span [style]="oData?.status >= 5 && oData?.subStatus != 1 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">5</span></div>
                               <span class="font-weight-bold" style="font-size: 0.7rem;">
                                 Đã thông quan
                               </span>
@@ -286,15 +286,15 @@
                                           font-size: 1.2rem;
                                           z-index: 1000;
                                           transform: rotate(45deg);" class="d-flex">
-                            <i style="color: rgb(170, 170, 170);" *ngIf="oData?.status == 5" class="bi bi-send-fill"></i>
-                            <i *ngIf="oData?.status > 5" class="bi bi-send-fill icon-line-5"></i>
+                            <i style="color: rgb(170, 170, 170);" *ngIf="oData?.status == 5 && oData?.subStatus != 1" class="bi bi-send-fill"></i>
+                            <i *ngIf="oData?.status > 5 && oData?.subStatus != 1" class="bi bi-send-fill icon-line-5"></i>
                           </div>
                           <div style="flex-direction: column;
                                           left: 40%;
                                           position: absolute;
                                           bottom: -3rem;" class="d-flex">
                             <div style="flex-direction: column;" class="d-flex">
-                              <div [style]="oData?.status >= 6 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oData?.status == 6 ? 'line-breath-6' : ''" class="circle-timeline-6"><span [style]="oData?.status >= 6 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">6</span></div>
+                              <div [style]="oData?.status >= 6 && oData?.subStatus != 1 ? 'width: 25px;height: 25px;' : ''" [ngClass]="oData?.status == 6 && oData?.subStatus != 1 ? 'line-breath-6' : ''" class="circle-timeline-6"><span [style]="oData?.status >= 6 && oData?.subStatus != 1 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">6</span></div>
                               <span class="font-weight-bold" style="font-size: 0.7rem;">
                                 Đã về kho HCM
                               </span>
@@ -315,8 +315,8 @@
                                           font-size: 1.2rem;
                                           z-index: 1000;
                                           transform: rotate(45deg);" class="d-flex">
-                            <i style="color: rgb(170, 170, 170);" *ngIf="oData?.status == 6" class="bi bi-send-fill"></i>
-                            <i *ngIf="oData?.status > 6" class="bi bi-send-fill icon-line-6"></i>
+                            <i style="color: rgb(170, 170, 170);" *ngIf="oData?.status == 6 && oData?.subStatus != 1" class="bi bi-send-fill"></i>
+                            <i *ngIf="oData?.status > 6 && oData?.subStatus != 1" class="bi bi-send-fill icon-line-6"></i>
                           </div>
                           <div style="flex-direction: column;
                                           right: 0rem;
@@ -324,7 +324,7 @@
                                           bottom: -3rem;" class="d-flex">
                             <div style="flex-direction: column;text-align: end;" class="d-flex">
                               <div class="d-flex align-items-center justify-content-end">
-                                <div [style]="oData?.status > 6 ? 'width: 25px;height: 25px;' : ''" class="circle-timeline-7"><span [style]="oData?.status > 6 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">7</span></div>
+                                <div [style]="oData?.status > 6 && oData?.subStatus != 1 ? 'width: 25px;height: 25px;' : ''" class="circle-timeline-7"><span [style]="oData?.status > 6 && oData?.subStatus != 1 ? 'font-size: 1.2rem;' : ''" class="font-weight-bold">7</span></div>
                               </div>
                               <span class="font-weight-bold" style="font-size: 0.7rem;">
                                 Đã nhận hàng
@@ -367,58 +367,62 @@
                         </ion-text>
                       </div>
                       <div class="d-flex align-items-center">
-                        <ng-container [ngSwitch]="oData.status">
-                          <ion-badge mode="md" *ngSwitchDefault color="medium">
-                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                              <span>Chưa xác nhận</span>
-                            </ion-text>
-                          </ion-badge>
-                          <ion-badge mode="md" *ngSwitchCase="2" color="tertiary">
-                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                              <span>Hàng về kho TQ</span>
-                            </ion-text>
-                          </ion-badge>
-                          <ion-badge mode="md" *ngSwitchCase="3" color="secondary">
+                        <ng-container *ngIf="oData?.subStatus == 1;else statusDefault">
+                          <ion-badge mode="md" color="secondary">
                             <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                               <span>Đang về HCM</span>
-                            </ion-text>
-                          </ion-badge>
-                          <ion-badge mode="md" *ngSwitchCase="8" color="secondary">
-                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                              <span>Đang về HCM</span>
-                            </ion-text>
-                          </ion-badge>
-                          <ion-badge mode="md" *ngSwitchCase="4" style="--background	: black !important;">
-                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                              <span>Hàng bị kiểm tra</span>
-                            </ion-text>
-                          </ion-badge>
-                          <ion-badge mode="md" *ngSwitchCase="5" style="--background	: orange !important;">
-                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                              <span>Đã thông quan</span>
-                            </ion-text>
-                          </ion-badge>
-                          <ion-badge mode="md" *ngSwitchCase="6" color="primary">
-                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                              <span>Hàng về tới HCM</span>
-                            </ion-text>
-                          </ion-badge>
-                          <ion-badge mode="md" *ngSwitchCase="7" style="--background	: var(--ion-color-mat-primary) !important;">
-                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                              <span>Đã nhận hàng</span>
-                            </ion-text>
-                          </ion-badge>
-                          <ion-badge mode="md" *ngSwitchCase="9" color="dark">
-                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                              <span>Đã hủy</span>
-                            </ion-text>
-                          </ion-badge>
-                          <ion-badge mode="md" *ngSwitchCase="11" color="dark">
-                            <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
-                              <span>Không nhận được hàng</span>
                             </ion-text>
                           </ion-badge>
                         </ng-container>
+                        <ng-template #statusDefault>
+                          <ng-container [ngSwitch]="oData.status">
+                            <ion-badge mode="md" *ngSwitchDefault color="medium">
+                              <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                                <span>Chưa xác nhận</span>
+                              </ion-text>
+                            </ion-badge>
+                            <ion-badge mode="md" *ngSwitchCase="2" color="tertiary">
+                              <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                                <span>Hàng về kho TQ</span>
+                              </ion-text>
+                            </ion-badge>
+                            <ion-badge mode="md" *ngSwitchCase="3" color="secondary">
+                              <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                                <span>Đang về HCM</span>
+                              </ion-text>
+                            </ion-badge>
+                            <ion-badge mode="md" *ngSwitchCase="4" style="--background	: black !important;">
+                              <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                                <span>Hàng bị kiểm tra</span>
+                              </ion-text>
+                            </ion-badge>
+                            <ion-badge mode="md" *ngSwitchCase="5" style="--background	: orange !important;">
+                              <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                                <span>Đã thông quan</span>
+                              </ion-text>
+                            </ion-badge>
+                            <ion-badge mode="md" *ngSwitchCase="6" color="primary">
+                              <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                                <span>Hàng về tới HCM</span>
+                              </ion-text>
+                            </ion-badge>
+                            <ion-badge mode="md" *ngSwitchCase="7" style="--background	: var(--ion-color-mat-primary) !important;">
+                              <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                                <span>Đã nhận hàng</span>
+                              </ion-text>
+                            </ion-badge>
+                            <ion-badge mode="md" *ngSwitchCase="9" color="dark">
+                              <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                                <span>Đã hủy</span>
+                              </ion-text>
+                            </ion-badge>
+                            <ion-badge mode="md" *ngSwitchCase="11" color="dark">
+                              <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                                <span>Không nhận được hàng</span>
+                              </ion-text>
+                            </ion-badge>
+                          </ng-container>
+                        </ng-template>
                       </div>
                     </div>
                     <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
@@ -471,11 +475,11 @@
                       </div>
                       <div class="d-flex align-items-center">
                         <ion-text class="dynamic-font">
-                          {{(oData.weight ? oData.weight : '0')+'kg'}}
+                          {{(oData.weight != null && oData?.subStatus != 1 ? oData.weight : '0')+'kg'}}
                         </ion-text>
                       </div>
                     </div> 
-                    <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                    <div *ngIf="oData?.note" style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                       <div>
                         <ion-text class="dynamic-font text-dark font-weight-bold">
                           Mô tả
@@ -487,7 +491,23 @@
                         </ion-text>
                       </div>
                     </div> 
-                    <div *ngIf="oData.isWoodPackage || oData.isAirPackage || oData.isInsurance" style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                    <ng-container *ngIf="(oData.weightExchange | tranformDouble) > 0">
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Đo lên
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            {{'('+ (oData.length | number)+'x'+ (oData.width | number) + 'x' + (oData.height | number) +')'}}
+                            &nbsp;
+                            {{(oData.weightExchange | number) +'kg'}}
+                          </ion-text>
+                        </div>
+                      </div> 
+                    </ng-container>
+                    <div *ngIf="oData.isWoodPackage || oData.isAirPackage || oData.isInsurance || (oData.surCharge | tranformDouble) > 0 || (oData.moreCharge | tranformDouble) > 0"  style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                       <div>
                         <ion-text class="text-orange dynamic-font font-weight-bold">
                           Dịch vụ phụ
@@ -502,7 +522,7 @@
                           </ion-text>
                         </div>
                         <div class="d-flex align-items-center">
-                          <i class="bi bi-check2-circle"></i>
+                          <img style="width: 20px" src="../../../../assets/image/1.svg" alt="">
                         </div>
                       </div> 
                       <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
@@ -526,7 +546,8 @@
                           </ion-text>
                         </div>
                         <div class="d-flex align-items-center">
-                          <i class="bi bi-check2-circle"></i>
+                          <!-- <i class="bi bi-check2-circle"></i> -->
+                          <img style="width: 20px" src="../../../../assets/image/2.svg" alt="">
                         </div>
                       </div> 
                       <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
@@ -542,6 +563,30 @@
                         </div>
                       </div> 
                     </ng-container>
+                    <ng-container *ngIf="oData.isInsurance">
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Bảo hiểm
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <i class="bi bi-check2-circle"></i>
+                        </div>
+                      </div> 
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Phí bảo hiểm
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            {{((oData.isInsurancePrice != null ? oData.isInsurancePrice : 0) | number)+'đ'}}
+                          </ion-text>
+                        </div>
+                      </div> 
+                    </ng-container>
                     <ng-container *ngIf="oData.isBrand">
                       <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                         <div>
@@ -550,22 +595,57 @@
                           </ion-text>
                         </div>
                         <div class="d-flex align-items-center">
-                          <i class="bi bi-check2-circle"></i>
+                          <!-- <i class="bi bi-check2-circle"></i> -->
+                          <img style="width: 20px" src="../../../../assets/image/3.svg" alt="">
                         </div>
                       </div> 
                     </ng-container>
-                    <ng-container *ngIf="(oData.weightExchange | tranformDouble) > 0">
+                    <ng-container *ngIf="(oData.surCharge | tranformDouble) > 0">
                       <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
                         <div>
                           <ion-text class="dynamic-font text-dark font-weight-bold">
-                            Đo lên
+                            Phụ phí
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <!-- <i class="bi bi-check2-circle"></i> -->
+                          <img style="width: 20px" src="../../../../assets/image/4.svg" alt="">
+                        </div>
+                      </div> 
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Phụ phí
                           </ion-text>
                         </div>
                         <div class="d-flex align-items-center">
                           <ion-text class="dynamic-font">
-                            {{'('+ (oData.length | number)+'x'+ (oData.width | number) + 'x' + (oData.height | number) +')'}}
-                            &nbsp;
-                            {{(oData.weightExchange | number) +'kg'}}
+                            {{((oData.surCharge != null ? oData.surCharge : 0) | number)+'đ'}}
+                          </ion-text>
+                        </div>
+                      </div> 
+                    </ng-container>
+                    <ng-container *ngIf="(oData.moreCharge | tranformDouble) > 0">
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Phí thu hộ
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <!-- <i class="bi bi-check2-circle"></i> -->
+                          <img style="width: 20px" src="../../../../assets/image/7.svg" alt="">
+                        </div>
+                      </div> 
+                      <div style="justify-content: space-between;padding-bottom: 1em;" class="d-flex align-items-center">
+                        <div>
+                          <ion-text class="dynamic-font text-dark font-weight-bold">
+                            Phí thu hộ
+                          </ion-text>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <ion-text class="dynamic-font">
+                            {{((oData.moreCharge != null ? oData.moreCharge : 0) | number)+'đ'}}
                           </ion-text>
                         </div>
                       </div> 
