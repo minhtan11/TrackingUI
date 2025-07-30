@@ -4,5 +4,5 @@ export const environment = {
   //apiUrl:'https://192.168.2.13:45455/api/',
   apiUrl:'https://tracking.nhanshiphang.vn/api/',
   //apiUrl:'https://192.168.2.6:45455/api/',
-  version:'4.4'
+  version:'4.5'
 };
