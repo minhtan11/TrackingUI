@@ -1,13 +1,32 @@
 {
   "project_info": {
-    "project_number": "443556297052",
-    "project_id": "trakuaidi-app",
-    "storage_bucket": "trakuaidi-app.appspot.com"
+    "project_number": "690194039723",
+    "project_id": "ordernew-18f6b",
+    "storage_bucket": "ordernew-18f6b.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:443556297052:android:f3d84ba33cc03c64c9a999",
+        "mobilesdk_app_id": "1:690194039723:android:554a881d99a01be88a08ee",
+        "android_client_info": {
+          "package_name": "com.nhanshiphang.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIozn0uVO-1PZnytSRFjOyuAqvuZ31PMg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690194039723:android:c40a7c29179368ce8a08ee",
         "android_client_info": {
           "package_name": "com.trakuaidi.app"
         }
@@ -15,7 +34,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBqrbxs-wnqJtnKyHEi0wR8Fb0AIs5u5wU"
+          "current_key": "AIzaSyAIozn0uVO-1PZnytSRFjOyuAqvuZ31PMg"
         }
       ],
       "services": {
