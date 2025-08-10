@@ -406,9 +406,14 @@
                 </div>
                 <div class="d-flex justify-content-end mt-2 mb-2">
                   <ng-container *ngIf="item?.subStatus == 1;else statusDefault">
-                    <ion-badge mode="md" color="secondary">
+                    <!-- <ion-badge mode="md" color="secondary">
                       <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
                         <span>Đang chờ thông quan</span>
+                      </ion-text>
+                    </ion-badge> -->
+                    <ion-badge mode="md" style="--background	: orange !important;">
+                      <ion-text style="font-size: 1rem;color: white !important;" class="dynamic-font">
+                        <span>Đã thông quan</span>
                       </ion-text>
                     </ion-badge>
                   </ng-container>

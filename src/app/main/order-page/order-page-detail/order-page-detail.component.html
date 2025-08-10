@@ -712,12 +712,14 @@
                         Hàng bị HQ kiểm
                       </span>
                       <ion-text color="medium" class="dynamic-font">
-                        <span *ngIf="oDataPackage?.inspectedDate != null" style="font-size: 0.7rem;">
+                        <span *ngIf="oDataPackage?.inspectedDate != null && oDataPackage?.subStatus != 1;else tmpInspectedDate" style="font-size: 0.7rem;">
                           {{oDataPackage?.inspectedDate | formatdate : 'dd/MM/yyyy hh:mm a'}}
                         </span>
-                        <span *ngIf="(oDataPackage?.inspectedDate == null || oDataPackage?.inspectedDate == '')" style="font-size: 0.7rem;">
-                          (chưa có)
-                        </span>
+                        <ng-template #tmpInspectedDate>
+                          <span style="font-size: 0.7rem;">
+                            (chưa có)
+                          </span>
+                        </ng-template>
                       </ion-text>
                     </div>
                   </div>
@@ -768,12 +770,14 @@
                         Đã thông quan
                       </span>
                       <ion-text color="medium" class="dynamic-font">
-                        <span *ngIf="oDataPackage?.clearanceDate != null" style="font-size: 0.7rem;">
+                        <span *ngIf="oDataPackage?.clearanceDate != null && oDataPackage?.subStatus != 1;else tmpClearanceDate" style="font-size: 0.7rem;">
                           {{oDataPackage?.clearanceDate | formatdate : 'dd/MM/yyyy hh:mm a'}}
                         </span>
-                        <span *ngIf="(oDataPackage?.clearanceDate == null || oDataPackage?.clearanceDate == '')" style="font-size: 0.7rem;">
-                          (chưa có)
-                        </span>
+                        <ng-template #tmpClearanceDate>
+                          <span style="font-size: 0.7rem;">
+                            (chưa có)
+                          </span>
+                        </ng-template>
                       </ion-text>
                     </div>
                   </div>
@@ -797,12 +801,14 @@
                         Đã về kho HCM
                       </span>
                       <ion-text color="medium" class="dynamic-font">
-                        <span *ngIf="oDataPackage.importedSGWH != null" style="font-size: 0.7rem;">
+                        <span *ngIf="oDataPackage.importedSGWH != null && oDataPackage?.subStatus != 1;else tmpImportedSGWH" style="font-size: 0.7rem;">
                           {{oDataPackage?.importedSGWH | formatdate : 'dd/MM/yyyy hh:mm a'}}
                         </span>
-                        <span *ngIf="(oDataPackage?.importedSGWH == null || oDataPackage?.importedSGWH == '')" style="font-size: 0.7rem;">
-                          (chưa có)
-                        </span>
+                        <ng-template #tmpImportedSGWH>
+                          <span style="font-size: 0.7rem;">
+                            (chưa có)
+                          </span>
+                        </ng-template>
                       </ion-text>
                     </div>
                   </div>
@@ -828,12 +834,14 @@
                                 Đã nhận hàng
                               </span>
                               <ion-text color="medium" class="dynamic-font">
-                                <span *ngIf="oDataPackage.receivedDate != null" style="font-size: 0.7rem;">
+                                <span *ngIf="oDataPackage.receivedDate != null && oDataPackage?.subStatus != 1;else tmpReceivedDate" style="font-size: 0.7rem;">
                                   {{oDataPackage?.receivedDate | formatdate : 'dd/MM/yyyy hh:mm a'}}
                                 </span>
-                                <span *ngIf="(oDataPackage.receivedDate == null || oDataPackage.receivedDate == '')" style="font-size: 0.7rem;">
-                                  (chưa có)
-                                </span>
+                                <ng-template #tmpReceivedDate>
+                                  <span style="font-size: 0.7rem;">
+                                    (chưa có)
+                                  </span>
+                                </ng-template>
                               </ion-text>
                             </div>
                           </div>
