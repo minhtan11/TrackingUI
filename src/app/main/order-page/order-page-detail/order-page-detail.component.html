@@ -106,7 +106,7 @@
                               </div>
                               <div class="d-flex align-items-center">
                                 <ion-text class="dynamic-font">
-                                  {{((item.weight != null && item?.subStatus != 1 ? item.weight : 0 ) | number)+'kg'}}
+                                  {{((item.weight != null ? item.weight : 0 ) | number)+'kg'}}
                                 </ion-text>
                               </div>
                             </div> 
