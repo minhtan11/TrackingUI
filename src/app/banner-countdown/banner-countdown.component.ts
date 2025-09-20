@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class BannerCountdownComponent{
   @Input() startDate: string = '2025-09-17T00:00:00';
-  @Input() endDate: string = '2025-09-21T23:59:59';
+  @Input() endDate: string = '2025-09-23T23:59:59';
   @Input() message: string ='Thời gian thông quan của tất cả các tuyến tăng từ 1-3 ngày do cửa khẩu vẫn đang kiểm tra nghiêm ngặt dẫn đến dự kiến hàng về chậm 1-3 ngày.';
   countdown: string = '';
   show: boolean = false;
