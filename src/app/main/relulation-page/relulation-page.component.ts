@@ -31,6 +31,7 @@ export class RelulationPageComponent  implements OnInit {
   previousUrl:any;
   isSke:any=false;
   isFilter:any=false;
+  isShowBanner:any=true;
   private destroy$ = new Subject<void>();
   constructor(
     private dt: ChangeDetectorRef,
@@ -254,7 +255,10 @@ export class RelulationPageComponent  implements OnInit {
   //#endregion
 
   onback(){
-    this.navCtrl.navigateBack(this.previousUrl);
+    this.isShowBanner = false;
+    setTimeout(() => {
+      this.navCtrl.navigateBack(this.previousUrl);
+    }, 100);
   }
 
   //#endregion

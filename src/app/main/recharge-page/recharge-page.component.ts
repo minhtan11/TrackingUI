@@ -16,6 +16,7 @@ export class RechargePageComponent  implements OnInit {
   qr2:any;
   isOpenRecharge:any=false;
   isShowRecharge:any=false;
+  isShowBanner:any=true;
   constructor(
     private navCtrl: NavController,
     private platform: Platform,
@@ -74,7 +75,10 @@ export class RechargePageComponent  implements OnInit {
   }
 
   onback(){
+    this.isShowBanner = false;
     this.cancelRecharge();
-    this.navCtrl.navigateBack(this.previousUrl);
+    setTimeout(() => {
+      this.navCtrl.navigateBack(this.previousUrl);
+    }, 100);
   }
 }

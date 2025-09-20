@@ -43,6 +43,7 @@ import { ExchangePageComponent } from './setting-page/exchange-page/exchange-pag
 import { TranformDoublePipe } from '../pipe/tranformDouble/tranform-double.pipe';
 import {ProgressBarMode, MatProgressBarModule} from '@angular/material/progress-bar';
 import { PaymentDoneComponent } from './order-page/payment-done/payment-done.component';
+import { BannerCountdownComponent } from '../banner-countdown/banner-countdown.component';
 
 @NgModule({
   imports: [
@@ -63,10 +64,10 @@ import { PaymentDoneComponent } from './order-page/payment-done/payment-done.com
     ClipboardModule,
     DecodeVNPipe,
     TranformDoublePipe,
-    MatProgressBarModule
+    MatProgressBarModule,
   ],
   declarations: [MainPage, OrderPageComponent, OrderPageDetailComponent,PaymentDoneComponent, PackagePageComponent, RechargePageComponent, ServicechargePageComponent, HomePageComponent, HistoryPageComponent, NotificationPageComponent,SettingPageComponent
-  ,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent,FormatdatePipe,ReportPageComponent,RelulationPageComponent,FaqPageComponent,ExchangePageComponent],
+  ,CreatePageComponent,DetailComponent,OrderStatusComponent,InfomationPageComponent,WithdrawPageComponent,ChangepasswordPageComponent,FormatdatePipe,ReportPageComponent,RelulationPageComponent,FaqPageComponent,ExchangePageComponent,BannerCountdownComponent],
   providers:[NotificationServiceComponent,DatePipe,PreviousRouterServiceService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

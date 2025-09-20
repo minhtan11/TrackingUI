@@ -109,6 +109,9 @@
   </ion-modal>
   <!-- Rechare -->
 </ion-content>
+<ion-footer *ngIf="isShowBanner" class="ion-no-border mobile-toolbar" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+  <app-banner-countdown></app-banner-countdown>
+</ion-footer>
 <!-- <ion-footer *ngIf="platform == 'ios'" class="ion-no-border" style="--background:white;">
   <ion-toolbar style="--background:white;">
     <div>
