@@ -7,17 +7,18 @@
     </div>
   </div>
 </ng-container> -->
-<div class="marquee p-2 alert-warning">
-  <div class="marquee-content">
-    <ng-container *ngFor="let noti of notifications; let last = last">
-      <ng-container *ngIf="noti?.show">
+<ng-container *ngIf="show">
+  <div class="marquee p-2 alert-warning">
+    <div class="marquee-content">
+      <ng-container *ngFor="let noti of notifications ; let last = last">
         <span class="font-weight-bold text-dark">{{ noti.content }}</span>
-        <span class="font-weight-bold text-dark">&nbsp;(Thời gian áp dụng: </span>
-        <span class="font-weight-bold text-danger">&nbsp;{{ noti.countdown }})</span>
-
-        <!-- Thêm dấu phân cách nếu chưa phải item cuối -->
-        <span *ngIf="!last" class="separator">&nbsp;•&nbsp;</span>
+        <span *ngIf="!last" class="font-weight-bold">&nbsp;|&nbsp;</span>
       </ng-container>
-    </ng-container>
+    </div>
+    <div class="d-flex align-items-center justify-content-center">
+      <span class="font-weight-bold text-dark">&nbsp;Thời gian áp dụng: </span>
+      <span class="font-weight-bold text-danger">&nbsp;{{ maxCountdown }}</span>
+    </div>
   </div>
-</div>
+  
+</ng-container>
