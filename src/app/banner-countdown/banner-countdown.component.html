@@ -1,4 +1,4 @@
-<ng-container *ngIf="show">
+<!-- <ng-container *ngIf="show">
   <div class="marquee p-2 alert-warning">
     <div class="marquee-content">
       <span class="font-weight-bold text-dark">{{message}} </span>
@@ -6,4 +6,18 @@
       <span class="font-weight-bold text-danger">&nbsp;{{countdown}}</span>
     </div>
   </div>
-</ng-container>
+</ng-container> -->
+<div class="marquee p-2 alert-warning">
+  <div class="marquee-content">
+    <ng-container *ngFor="let noti of notifications; let last = last">
+      <ng-container *ngIf="noti?.show">
+        <span class="font-weight-bold text-dark">{{ noti.content }}</span>
+        <span class="font-weight-bold text-dark">&nbsp;(Thời gian áp dụng: </span>
+        <span class="font-weight-bold text-danger">&nbsp;{{ noti.countdown }})</span>
+
+        <!-- Thêm dấu phân cách nếu chưa phải item cuối -->
+        <span *ngIf="!last" class="separator">&nbsp;•&nbsp;</span>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
